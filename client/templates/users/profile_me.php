@@ -10,4 +10,10 @@
     <section id="favorites">
     <h2>Favorites</h2>
     </section>
+    <section id="actions">
+        <h2>Actions</h2>
+        <ul>
+            <li><a href="add_pet.php">➕ Add pet</a></li>
+        </ul>
+    </section>
 </section>

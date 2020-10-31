@@ -8,6 +8,36 @@ function getPets(){
     return $pets;
 }
 
+function addPet(
+    string $name,
+    string $species,
+    float  $age,
+    string $sex,
+    string $size,
+    string $color,
+    string $location,
+    string $description,
+    string $postedBy
+){
+    global $db;
+    $stmt = $db->prepare('INSERT INTO Pet
+    (name, species, age, sex, size, color, location, description, postedBy)
+    VALUES
+    (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
+    $stmt->bindParam(':name'       , $name       );
+    $stmt->bindParam(':species'    , $species    );
+    $stmt->bindParam(':age'        , $age        );
+    $stmt->bindParam(':sex'        , $sex        );
+    $stmt->bindParam(':size'       , $size       );
+    $stmt->bindParam(':color'      , $color      );
+    $stmt->bindParam(':location'   , $location   );
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':postedBy'   , $postedBy   );
+    $stmt->execute();
+    $stmt->fetch();
+    return $db->lastInsertId();
+}
+
 function getPet(int $id){
     global $db;
     $stmt = $db->prepare('SELECT *
