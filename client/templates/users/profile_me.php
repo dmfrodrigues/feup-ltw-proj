@@ -7,7 +7,7 @@
     <section id="owned">
         <h2>Pets owned</h2>
     </section>
-    <section id="favourites">
-    <h2>Favourites</h2>
+    <section id="favorites">
+    <h2>Favorites</h2>
     </section>
 </section>
