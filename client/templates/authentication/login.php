@@ -1,5 +1,5 @@
- <section id="login">  
-    <header><h2>Sign in</h2></header>
+<section id="login">  
+    <header><h2>Sign In</h2></header>
     <form method="post" action="../../actions/action_login.php">
       <label> User Name:<br>
       <input type="text" name="username" placeholder="username" required></label>
