@@ -13,7 +13,7 @@
                 <a href="register.php">Register</a>
                 <a href="login.php">Login</a>
             <?php } else { ?>
-                <span><?=$_SESSION['username']?></span>
+                <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 <a href="action_logout.php">Logout</a>
             <?php } ?>
             </div>
