@@ -5,7 +5,7 @@ function getPets(){
     FROM Pet');
     $stmt->execute();
     $pets = $stmt->fetchAll();
-    return (count($pets) == 1);
+    return $pets;
 }
 
 function getPet(int $id){
