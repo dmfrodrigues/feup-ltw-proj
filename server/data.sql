@@ -11,10 +11,13 @@ INSERT INTO User
 
 INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 
-INSERT INTO Pet(id, name, species, size, color, location, status, postedBy, photoUrl, description) VALUES
-(1, "Tareco", "cat", "S", "black", "FEUP", "forAdoption", "dmfr", "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg",
+INSERT INTO Pet(id, name, species, age, sex, size, color, location, status, postedBy, description) VALUES
+(1, "Tareco", "cat", 0.25, "M", "S", "black", "FEUP", "forAdoption", "dmfr",
 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris mollis rhoncus dignissim. Nam ut iaculis sapien. Sed tristique tortor et tellus gravida, tincidunt commodo nisl condimentum. Aliquam at lorem consectetur, lobortis sapien eu, ornare nibh. Aenean cursus nunc egestas, euismod nibh ac, consectetur erat. Suspendisse congue nec quam nec mollis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer posuere euismod tellus sit amet ornare. Nulla eu nunc eget nulla condimentum faucibus. Integer consequat leo ac consectetur ultricies. Vestibulum quis iaculis orci. Donec vestibulum magna arcu, id tristique odio vehicula faucibus.
 
 Fusce auctor a sapien vel rhoncus. Suspendisse eu pretium elit. Vestibulum risus nunc, bibendum non varius vel, pharetra sit amet odio. Phasellus ac nibh pharetra, iaculis diam quis, tincidunt magna. Integer lobortis nulla sed augue facilisis aliquam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec mollis arcu quis hendrerit feugiat. Aliquam euismod, dolor sed volutpat sollicitudin, nulla velit blandit dui, id accumsan mauris turpis semper nisi. Aenean auctor sit amet dui ac imperdiet. Vivamus mi nisi, sagittis varius massa ac, iaculis efficitur erat. Nulla feugiat facilisis nulla a imperdiet. Vivamus non tristique nisl, id rhoncus justo. Sed gravida, urna nec cursus vestibulum, enim ante faucibus risus, id volutpat eros massa nec nisi.
 
 Ut mollis tincidunt diam. Integer eleifend diam quis lorem eleifend ullamcorper. Phasellus id tincidunt felis. Aenean maximus tellus lectus, sit amet pulvinar dolor maximus at. Ut nec orci ut lectus imperdiet congue ac ut diam. Aenean aliquam sollicitudin turpis id pharetra. Donec accumsan sagittis mi, et consequat nisl hendrerit et. Vivamus fringilla metus vitae purus lobortis, vel euismod dui dignissim.');
+
+INSERT INTO PetPhoto(petId, id, url) VALUES
+(1, 1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");

@@ -59,19 +59,22 @@ CREATE TABLE Notification (
 );
 
 CREATE TABLE Pet (
-    id INTEGER,
-    name VARCHAR,
+    id INTEGER NOT NULL,
+    name VARCHAR NOT NULL,
     species VARCHAR NOT NULL,
+    age DECIMAL NOT NULL,
+    sex VARCHAR NOT NULL,
     size VARCHAR NOT NULL,
     color VARCHAR NOT NULL,
     location VARCHAR NOT NULL,
     description VARCHAR NOT NULL,
     status VARCHAR DEFAULT 'forAdoption' NOT NULL,
     postedBy INTEGER NOT NULL,
-    photoUrl VARCHAR,
 
     CONSTRAINT Pet_PK PRIMARY KEY(id),
     CONSTRAINT Pet_FK FOREIGN KEY(postedBy) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT sex CHECK (sex in ("M", "F")),
 
     CONSTRAINT sizeRule CHECK (size LIKE 'XS' OR
                                size LIKE 'S' OR
@@ -86,9 +89,10 @@ CREATE TABLE Pet (
 
 CREATE TABLE PetPhoto (
     petId INTEGER,
+    id INTEGER,
     url VARCHAR NOT NULL, -- Assuming every row has an URL
 
-    CONSTRAINT PetPhoto_PK PRIMARY KEY(petId),
+    CONSTRAINT PetPhoto_PK PRIMARY KEY(petId, id),
     CONSTRAINT PetPhoto_FK FOREIGN KEY(petId) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE
 );
 
