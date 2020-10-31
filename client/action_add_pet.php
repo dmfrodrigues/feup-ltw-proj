@@ -4,14 +4,7 @@ session_start();
 include_once('../server/connection.php');
 include_once('../server/pets.php');
 
-var_dump($_POST);
-
 if (isset($_SESSION['username'])){
-    if($_SESSION['username'] != $_POST["postedBy"]){
-        echo "Error";
-        die();
-    }
-
     $petId = addPet(
         $_POST["name"],
         $_POST["species"],
@@ -21,7 +14,7 @@ if (isset($_SESSION['username'])){
         $_POST["color"],
         $_POST["location"],
         $_POST["description"],
-        $_POST["postedBy"]
+        $_SESSION["username"]
     );
     header('Location: pet.php?id='.$petId);
 }

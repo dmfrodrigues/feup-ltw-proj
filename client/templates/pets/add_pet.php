@@ -4,7 +4,6 @@
             <h1><input type="text" name="name" placeholder="Pet name"></h1>
             <div id="data">
                 <span id="location"><input type="text" name="location" placeholder="Location"></span>
-                <span id="postedBy"><input type="text" name="postedBy" value="<?= $_SESSION['username'] ?>" readonly></span>
             </div>
             <img src="resources/img/no-image.svg" alt="" />
         </header>
