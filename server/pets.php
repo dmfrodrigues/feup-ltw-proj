@@ -49,6 +49,40 @@ function getPet(int $id){
     return $pet;
 }
 
+function editPet(
+    int $id,
+    string $name,
+    string $species,
+    float  $age,
+    string $sex,
+    string $size,
+    string $color,
+    string $location,
+    string $description
+){
+    global $db;
+    $stmt = $db->prepare('UPDATE Pet SET
+    name=:name,
+    species=:species,
+    age=:age,
+    sex=:sex,
+    size=:size,
+    color=:color,
+    location=:location,
+    description=:description
+    WHERE id=:id');
+    $stmt->bindParam(':id'         , $id         );
+    $stmt->bindParam(':name'       , $name       );
+    $stmt->bindParam(':species'    , $species    );
+    $stmt->bindParam(':age'        , $age        );
+    $stmt->bindParam(':sex'        , $sex        );
+    $stmt->bindParam(':size'       , $size       );
+    $stmt->bindParam(':color'      , $color      );
+    $stmt->bindParam(':location'   , $location   );
+    $stmt->bindParam(':description', $description);
+    $stmt->execute();
+}
+
 function getPetMainPhoto(int $id){
     global $db;
     $stmt = $db->prepare('SELECT id, url FROM PetPhoto
