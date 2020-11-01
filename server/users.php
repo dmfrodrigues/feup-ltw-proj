@@ -75,3 +75,19 @@ function addToFavorites(string $username, int $id){
     $stmt->bindParam(':id'      , $id      );
     return $stmt->execute();
 }
+
+/**
+ * Remove pet from user's favorites list.
+ *
+ * @param string $username  User's username
+ * @param integer $id       ID of pet
+ * @return boolean          True if successful, false otherwise
+ */
+function removeFromFavorites(string $username, int $id) : bool {
+    global $db;
+    $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
+    username=:username AND petId=:id)');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':id'      , $id      );
+    return $stmt->execute();
+}
