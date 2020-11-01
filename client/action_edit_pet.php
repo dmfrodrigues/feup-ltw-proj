@@ -7,7 +7,7 @@ $pet = getPet($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet["postedBy"]){
-        echo "Error";
+        header('Location: pet.php?id='.$_GET['id'].'&failed=1');
         die();
     }
 
