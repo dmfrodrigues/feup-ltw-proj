@@ -151,3 +151,24 @@ function getAddedPets(string $username){
     $addedPets = $stmt->fetchAll();
     return $addedPets;
 }
+
+/**
+ * Add adoption request
+ *
+ * @param string $username  Username of user that created request
+ * @param integer $id       ID of pet the adoption request refers to
+ * @param string $text      Text of the adoption request
+ * @return integer          ID of the adoption request
+ */
+function addAdoptionRequest(string $username, int $id, string $text) : int {
+    global $db;
+    $stmt = $db->prepare('INSERT INTO AdoptionRequest
+    (user, pet, text)
+    VALUES
+    (:user, :pet, :text)');
+    $stmt->bindParam(':user'       , $username   );
+    $stmt->bindParam(':pet'        , $id         );
+    $stmt->bindParam(':text'       , $text       );
+    $stmt->execute();
+    return $db->lastInsertId();
+}
