@@ -4,6 +4,7 @@
         <title>Forever home</title>    
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/style.css">
         <link rel="shortcut icon" type="image/ico" href="resources/favicon.ico">
         <?php
             if(isset($javascript_files)){
@@ -18,7 +19,7 @@
     <body>
         <header>
             <h1><a href="index.php">Forever home</a></h1>
-            <div id="signup">
+            <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>

@@ -13,6 +13,6 @@
       <label> Repeat Password:<br>
       <input type="password" id="rpt_pwd" placeholder="Password" required></label>
       <br>
-      <input type="submit" value="Sign up">
+      <input type="submit" value="Sign up" id="submit_signup">
     </form>
 </section>
