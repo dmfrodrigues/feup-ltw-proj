@@ -8,6 +8,28 @@ function getPets(){
     return $pets;
 }
 
+function getFavoritePets(string $username){
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.postedBy
+    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
+    WHERE FavoritePet.username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pet = $stmt->fetch();
+    return $pet;
+}
+
 function addPet(
     string $name,
     string $species,
