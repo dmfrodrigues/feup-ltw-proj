@@ -13,7 +13,7 @@
       <label> Repeat Password:<br>
       <input type="password" name="rpt_pwd" placeholder="Password" required></label>
       <br>
-      <input type="submit" value="SIGN UP">
+      <input type="submit" value="Sign up">
     </form>
     <?php
     if(strcmp($_SESSION['messages'][0]['type'], 'error') == 0)

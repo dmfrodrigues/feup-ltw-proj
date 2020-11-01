@@ -11,6 +11,6 @@
     </form>
     <a href="">Forgot Password?</a>
     <footer>
-        <p>New User?<br><a href="signup.php">SIGN UP</a></p>
+        <p>New User? <a href="signup.php">Sign up</a></p>
     </footer>
 </section>
