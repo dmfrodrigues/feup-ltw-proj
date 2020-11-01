@@ -5,7 +5,37 @@ function getPets(){
     FROM Pet');
     $stmt->execute();
     $pets = $stmt->fetchAll();
-    return (count($pets) == 1);
+    return $pets;
+}
+
+function addPet(
+    string $name,
+    string $species,
+    float  $age,
+    string $sex,
+    string $size,
+    string $color,
+    string $location,
+    string $description,
+    string $postedBy
+){
+    global $db;
+    $stmt = $db->prepare('INSERT INTO Pet
+    (name, species, age, sex, size, color, location, description, postedBy)
+    VALUES
+    (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
+    $stmt->bindParam(':name'       , $name       );
+    $stmt->bindParam(':species'    , $species    );
+    $stmt->bindParam(':age'        , $age        );
+    $stmt->bindParam(':sex'        , $sex        );
+    $stmt->bindParam(':size'       , $size       );
+    $stmt->bindParam(':color'      , $color      );
+    $stmt->bindParam(':location'   , $location   );
+    $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':postedBy'   , $postedBy   );
+    $stmt->execute();
+    $stmt->fetch();
+    return $db->lastInsertId();
 }
 
 function getPet(int $id){
@@ -16,7 +46,61 @@ function getPet(int $id){
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $pet = $stmt->fetch();
-    return (count($pet) == 1);
+    return $pet;
+}
+
+function editPet(
+    int $id,
+    string $name,
+    string $species,
+    float  $age,
+    string $sex,
+    string $size,
+    string $color,
+    string $location,
+    string $description
+){
+    global $db;
+    $stmt = $db->prepare('UPDATE Pet SET
+    name=:name,
+    species=:species,
+    age=:age,
+    sex=:sex,
+    size=:size,
+    color=:color,
+    location=:location,
+    description=:description
+    WHERE id=:id');
+    $stmt->bindParam(':id'         , $id         );
+    $stmt->bindParam(':name'       , $name       );
+    $stmt->bindParam(':species'    , $species    );
+    $stmt->bindParam(':age'        , $age        );
+    $stmt->bindParam(':sex'        , $sex        );
+    $stmt->bindParam(':size'       , $size       );
+    $stmt->bindParam(':color'      , $color      );
+    $stmt->bindParam(':location'   , $location   );
+    $stmt->bindParam(':description', $description);
+    $stmt->execute();
+}
+
+function getPetMainPhoto(int $id){
+    global $db;
+    $stmt = $db->prepare('SELECT id, url FROM PetPhoto
+    WHERE petId=:petId');
+    $stmt->bindParam(':petId', $id);
+    $stmt->execute();
+    $urls = $stmt->fetchAll();
+
+    $id = $urls[0]['id'];
+    $url_ret = $urls[0]['url'];
+    foreach($urls as $url){
+        if($url['id'] < $id){
+            $id = $url['id'];
+            $url_ret = $url['url'];
+        }
+    }
+    
+    return $url_ret;
 }
 
 function getPetComments(int $id){

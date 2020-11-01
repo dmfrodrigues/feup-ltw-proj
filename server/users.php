@@ -1,4 +1,5 @@
 <?php
+
 function userExists(string $username, string $password){
     global $db;
     $password_sha1 = sha1($password);

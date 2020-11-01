@@ -1,6 +1,6 @@
 <section id="signup">  
     <header><h2>Sign Up</h2></header>
-    <form method="post" action="../../actions/action_signup.php">
+    <form method="post" action="action_signup.php">
       <label> Name:<br>
       <input type="text" name="name" placeholder="Name" required></label>
       <br>
