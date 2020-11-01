@@ -151,6 +151,65 @@ function editPet(
 }
 
 /**
+ * Remove pet.
+ *
+ * @param integer $id       ID of pet to be removed
+ * @return void
+ */
+function removePet(int $id){
+    deletePetPhotoFiles($id);
+
+    global $db;
+    $stmt = $db->prepare('DELETE FROM Pet
+    WHERE id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+}
+
+/**
+ * Delete photo files associated to a pet.
+ *
+ * @param integer $id   Pet ID
+ * @return void
+ */
+function deletePetPhotoFiles(int $id){
+    global $db;
+    $stmt = $db->prepare('SELECT url FROM PetPhoto
+    WHERE id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $urls = $stmt->fetchAll();
+    foreach($urls as $url){
+        deletePetPhotoFile($url);
+    }
+}
+
+/**
+ * Delete pet photo from URL.
+ *
+ * @param string $url   URL of photo to delete
+ * @return void
+ */
+function deletePetPhotoFile(string $url){
+    $path = urlToFilepath($url);
+    if(!unlink($path)){
+        throw new Error("failed to unlink ".$path);
+    }
+}
+
+/**
+ * Convert URL to server filepath.
+ * 
+ * TODO: NOT IMPLEMENTED
+ *
+ * @param string $url   URL
+ * @return string       File path
+ */
+function urlToFilepath(string $url) : string {
+    throw new BadFunctionCallException("deletePetPhotoFile is not implemented");
+}
+
+/**
  * Get pet main photo
  *
  * @param integer $id   Pet ID
