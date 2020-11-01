@@ -154,3 +154,33 @@ function getFavoritePets(string $username) : array {
     $pet = $stmt->fetch();
     return $pet;
 }
+
+/**
+ * Get a user's adoption requests.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adoption requests 
+ */
+function getAdoptionRequests(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.postedBy,
+    AdoptionRequest.text,
+    AdoptionRequest.outcome
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.user=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
