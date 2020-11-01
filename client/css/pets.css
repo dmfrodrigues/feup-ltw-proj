@@ -21,7 +21,6 @@
 }
 
 #pet header h1{
-    margin: 1em 0 1em 5em;
     text-align: left;
 }
 
@@ -30,8 +29,7 @@
     color: var(--main-color);
 }
 
-
-#pet #pet-profile-img{
+#pet header #pet-profile-img{
     grid-area: 1 / 1 / span 3 / span 1;
     height: 300px;
     width: auto;
@@ -39,24 +37,30 @@
 
 #pet #favorite{
     grid-area: 1 / 2 / span 1 / span 1;
-    margin: 1em 1em 2em 5em;
-    padding: 0.5em;
+    margin: 1em 0em 1em 5em;
+    padding: 0.5em 0 0 0.5em;
+    width: 12em;
+    height: 2.5em;
     border-radius: 1em;
-    text-decoration: none;
     color: var(--main-color);
     background-color: white;
     text-align: center;
 }
 
+#pet #favorite img{
+    padding: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
 #pet #ask{
     grid-area: 2 / 2 / span 1 / span 1;
-    margin: 1em 1em 1em 5em;
-    padding: 0.5em;
+    margin: 1em 0em 1em 5em;
+    padding: 0.5em 0 0 0.5em;
+    width: 12em;
+    height: 2em;
     border-radius: 1em;
-    text-decoration: none;
     color: white;
     background-color: var(--main-color);
-    margin: 0 0 1em 5em;
     text-align: center;
 }
 
@@ -124,4 +128,14 @@
     grid-area: 2 / 1 / span 1 / span 1;
     align-self: center;
     text-align: center;
+}
+
+#pet-list .pet a{
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+#pet-list .pet img{
+    height: 200px;
+    width: auto;
 }

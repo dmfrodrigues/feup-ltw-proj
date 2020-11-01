@@ -4,7 +4,7 @@
         $photoUrl = getPetMainPhoto($pet['id']);
         ?>
         <img id="pet-profile-img" src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
-        <a id="favorite" href="#">Add to favorites</a>
+        <a id="favorite" href="#"><img src="resources/img/heart.svg" height="30px">Add to favorites</a>
         <a id="ask" href="#">Ask question about pet</a>
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
