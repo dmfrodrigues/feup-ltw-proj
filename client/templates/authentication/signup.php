@@ -15,9 +15,4 @@
       <br>
       <input type="submit" value="Sign up">
     </form>
-    <?php
-    if(strcmp($_SESSION['messages'][0]['type'], 'error') == 0)
-        echo $_SESSION['messages'][0]['content'];
-    session_destroy();
-    ?>
 </section>
