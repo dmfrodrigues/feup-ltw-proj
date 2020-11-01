@@ -7,6 +7,7 @@
         </div>
         <?php
         $photoUrl = getPetMainPhoto($pet['id']);
+        if($photoUrl == '') $photoUrl = "resources/img/no-image.svg";
         ?>
         <img src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
     </header>
