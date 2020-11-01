@@ -45,3 +45,17 @@ function isAdmin(string $username){
     $admins = $stmt->fetchAll();
     return (count($admins) == 1);
 }
+
+function editUser(string $username, string $password, string $name){
+    global $db;
+    $password_sha1 = sha1($password);
+    $stmt = $db->prepare('UPDATE User SET
+    username=:username,
+    password=:password,
+    name=:name
+    WHERE username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password_sha1);
+    $stmt->bindParam(':name'    , $name);
+    return $stmt->execute();
+}
