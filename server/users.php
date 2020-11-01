@@ -59,3 +59,19 @@ function editUser(string $username, string $password, string $name){
     $stmt->bindParam(':name'    , $name);
     return $stmt->execute();
 }
+
+ /**
+  * Add pet to user's favorites list.
+  *
+  * @param string $username User's username
+  * @param integer $id      ID of pet
+  * @return void
+  */
+function addToFavorites(string $username, int $id){
+    global $db;
+    $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
+    (:username, :id)');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':id'      , $id      );
+    return $stmt->execute();
+}
