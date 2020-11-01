@@ -1,5 +1,11 @@
 <?php
-function getPets(){
+
+/**
+ * Get array of all pets.
+ *
+ * @return array    Array of all pets
+ */
+function getPets() : array {
     global $db;
     $stmt = $db->prepare('SELECT *
     FROM Pet');
@@ -8,7 +14,13 @@ function getPets(){
     return $pets;
 }
 
-function getFavoritePets(string $username){
+/**
+ * Get a user's favorite pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of favorite pets of the user 
+ */
+function getFavoritePets(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT
     Pet.id,
@@ -30,6 +42,20 @@ function getFavoritePets(string $username){
     return $pet;
 }
 
+/**
+ * Add new pet to database.
+ *
+ * @param string $name          Pet name
+ * @param string $species       Species
+ * @param float $age            Age (in years; 0.5 for 6 months, for instance)
+ * @param string $sex           'M' or 'F'
+ * @param string $size          XS, S, M, L, XL
+ * @param string $color         Color (as a string)
+ * @param string $location      Location
+ * @param string $description   Description
+ * @param string $postedBy      User that posted the pet
+ * @return integer              ID of the new pet
+ */
 function addPet(
     string $name,
     string $species,
@@ -40,7 +66,7 @@ function addPet(
     string $location,
     string $description,
     string $postedBy
-){
+) : int {
     global $db;
     $stmt = $db->prepare('INSERT INTO Pet
     (name, species, age, sex, size, color, location, description, postedBy)
@@ -59,7 +85,13 @@ function addPet(
     return $db->lastInsertId();
 }
 
-function getPet(int $id){
+/**
+ * Get pet information.
+ *
+ * @param integer $id   ID of pet
+ * @return array        Array of named indexes containing pet information
+ */
+function getPet(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT *
     FROM Pet
@@ -70,6 +102,20 @@ function getPet(int $id){
     return $pet;
 }
 
+/**
+ * Edit pet.
+ *
+ * @param integer $id           Pet ID
+ * @param string $name          Pet name
+ * @param string $species       Species
+ * @param float $age            Age
+ * @param string $sex           M/F
+ * @param string $size          XS, S, M, L, XL
+ * @param string $color         Color
+ * @param string $location      Location
+ * @param string $description   Description
+ * @return void
+ */
 function editPet(
     int $id,
     string $name,
@@ -104,7 +150,13 @@ function editPet(
     $stmt->execute();
 }
 
-function getPetMainPhoto(int $id){
+/**
+ * Get pet main photo
+ *
+ * @param integer $id   Pet ID
+ * @return string       URL of pet main photo
+ */
+function getPetMainPhoto(int $id) : string {
     global $db;
     $stmt = $db->prepare('SELECT id, url FROM PetPhoto
     WHERE petId=:petId');
@@ -126,7 +178,13 @@ function getPetMainPhoto(int $id){
     return $url_ret;
 }
 
-function getPetComments(int $id){
+/**
+ * Get comments about a pet.
+ *
+ * @param integer $id   ID of the pet
+ * @return array        Array of comments about that pet
+ */
+function getPetComments(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT *
     FROM Comment
@@ -136,7 +194,13 @@ function getPetComments(int $id){
     return $comments;
 }
 
-function getPetCommentsPhotos(int $id){
+/**
+ * Get photos associated to comments about a pet.
+ *
+ * @param integer $id   ID of the pet
+ * @return array        Array of photos in comments about a pet
+ */
+function getPetCommentsPhotos(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM PetPhotoInComment 
     WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
@@ -145,7 +209,13 @@ function getPetCommentsPhotos(int $id){
     return $comments;
 }
 
-function getAddedPets(string $username){
+/**
+ * Get pets added by a user.
+ *
+ * @param string $username  User's username
+ * @return array            Array of pets added by that user
+ */
+function getAddedPets(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE postedBy=:username');

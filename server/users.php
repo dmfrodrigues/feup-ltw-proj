@@ -1,6 +1,13 @@
 <?php
 
-function userExists(string $username, string $password){
+/**
+ * Check if user-password pair is valid.
+ *
+ * @param string $username  Username
+ * @param string $password  Password
+ * @return boolean          True if the user-password pair is correct, false otherwise
+ */
+function userExists(string $username, string $password) : bool {
     global $db;
     $password_sha1 = sha1($password);
     $stmt = $db->prepare('SELECT username
@@ -13,6 +20,14 @@ function userExists(string $username, string $password){
     return (count($users) == 1);
 }
 
+/**
+ * Add user to database.
+ *
+ * @param string $username  User's username
+ * @param string $password  Password
+ * @param string $name      Real name
+ * @return void
+ */
 function addUser(string $username, string $password, string $name){
     global $db;
     $password_sha1 = sha1($password);
@@ -24,7 +39,13 @@ function addUser(string $username, string $password, string $name){
     $stmt->execute();
 }
 
-function getUser(string $username){
+/**
+ * Get user data.
+ *
+ * @param string $username      User's username
+ * @return array                Array of user data fields
+ */
+function getUser(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT *
     FROM User
@@ -35,7 +56,13 @@ function getUser(string $username){
     return $user;
 }
 
-function isAdmin(string $username){
+/**
+ * Check if user is admin.
+ *
+ * @param string $username  User's username
+ * @return boolean          True if user is admin, false otherwise
+ */
+function isAdmin(string $username) : bool {
     global $db;
     $stmt = $db->prepare('SELECT username
     FROM Admin
@@ -46,6 +73,14 @@ function isAdmin(string $username){
     return (count($admins) == 1);
 }
 
+/**
+ * Edit user.
+ *
+ * @param string $username  User's username
+ * @param string $password  Password
+ * @param string $name      User's name
+ * @return void
+ */
 function editUser(string $username, string $password, string $name){
     global $db;
     $password_sha1 = sha1($password);
@@ -83,7 +118,7 @@ function addToFavorites(string $username, int $id){
  * @param integer $id       ID of pet
  * @return void
  */
-function removeFromFavorites(string $username, int $id) : bool {
+function removeFromFavorites(string $username, int $id){
     global $db;
     $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
     username=:username AND petId=:id)');
