@@ -126,3 +126,31 @@ function removeFromFavorites(string $username, int $id){
     $stmt->bindParam(':id'      , $id      );
     $stmt->execute();
 }
+
+/**
+ * Get a user's favorite pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of favorite pets of the user 
+ */
+function getFavoritePets(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.postedBy
+    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
+    WHERE FavoritePet.username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pet = $stmt->fetch();
+    return $pet;
+}
