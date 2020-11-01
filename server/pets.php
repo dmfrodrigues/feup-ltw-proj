@@ -112,6 +112,8 @@ function getPetMainPhoto(int $id){
     $stmt->execute();
     $urls = $stmt->fetchAll();
 
+    if(count($urls) == 0) return '';
+
     $id = $urls[0]['id'];
     $url_ret = $urls[0]['url'];
     foreach($urls as $url){
