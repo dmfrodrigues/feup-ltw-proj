@@ -136,7 +136,7 @@ CREATE TABLE Comment (
 );
 
 CREATE TABLE PetPhotoInComment (
-    commentId INTEGER
+    commentId INTEGER,
     url VARCHAR NOT NULL, -- Assuming every row has an URL
 
     CONSTRAINT PetPhotoInComment_PK PRIMARY KEY(commentId),
