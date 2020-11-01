@@ -24,9 +24,9 @@ INSERT INTO Admin
 
 -- Pet
 INSERT INTO Pet
-    VALUES (NULL, 'Kitty', 'Cat', 'S', 'White', 'Marvila', 'Very cute cat.', 'forAdoption', 'Asdrubal007');
+    VALUES (NULL, 'Kitty', 'Cat', 3, 'F', 'S', 'White', 'Marvila', 'Very cute cat.', 'forAdoption', 'Asdrubal007');
 INSERT INTO Pet
-    VALUES (NULL, 'Princesa', 'Cat', 'XS', 'Gray', 'Olaias', 'Another very cute cat.', 'forAdoption', 'Asdrubal007');
+    VALUES (NULL, 'Princesa', 'Cat', 5, 'M', 'XS', 'Gray', 'Olaias', 'Another very cute cat.', 'forAdoption', 'Asdrubal007');
 
 -- AdoptionRequest
 INSERT INTO AdoptionRequest
@@ -40,14 +40,11 @@ INSERT INTO AdoptionRequestMessage
 
 -- Comment
 INSERT INTO Comment
-    VALUES(NULL, strftime("%d/%m/%Y %H:%M", "2019-12-07 09:10"), 'A simple comment.', 1, 'Asdrubal007');
+    VALUES(NULL, strftime("%d/%m/%Y %H:%M", "2019-12-07 09:10"), 'A simple comment.', 1, 'Asdrubal007', NULL);
 
 INSERT INTO Comment
-    VALUES(NULL, strftime("%d/%m/%Y %H:%M", "2019-12-07 09:20"), 'Another simple comment.', 1, 'Asdrubal007');
+    VALUES(NULL, strftime("%d/%m/%Y %H:%M", "2019-12-07 09:20"), 'Another simple comment.', 1, 'Asdrubal007', 1);
 
---AnswerTo
-INSERT INTO AnswerTo
-    VALUES(1, 2);
 
 -- FavoritePet
 INSERT INTO FavoritePet
