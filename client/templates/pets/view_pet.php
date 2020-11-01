@@ -3,7 +3,7 @@
         <h1><?= $pet['name'] ?></h1>
         <div id="data">
             <span id="location"><?= $pet['location'] ?></span>
-            <span id="postedBy"><a href="profile.php?id=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
+            <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
         <?php
         $photoUrl = getPetMainPhoto($pet['id']);
