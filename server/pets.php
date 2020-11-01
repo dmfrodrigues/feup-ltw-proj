@@ -143,3 +143,12 @@ function getPetCommentsPhotos(int $id){
     $comments = $stmt->fetchAll();
     return $comments;
 }
+
+function getAddedPets(string $username){
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Pet 
+    WHERE postedBy=:username');
+    $stmt->bindParam(':username', $username);;
+    $addedPets = $stmt->fetchAll();
+    return $addedPets;
+}
