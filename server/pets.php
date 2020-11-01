@@ -15,34 +15,6 @@ function getPets() : array {
 }
 
 /**
- * Get a user's favorite pets.
- *
- * @param string $username  User's username
- * @return array            Array of favorite pets of the user 
- */
-function getFavoritePets(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.postedBy
-    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
-    WHERE FavoritePet.username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pet = $stmt->fetch();
-    return $pet;
-}
-
-/**
  * Add new pet to database.
  *
  * @param string $name          Pet name
@@ -148,6 +120,65 @@ function editPet(
     $stmt->bindParam(':location'   , $location   );
     $stmt->bindParam(':description', $description);
     $stmt->execute();
+}
+
+/**
+ * Remove pet.
+ *
+ * @param integer $id       ID of pet to be removed
+ * @return void
+ */
+function removePet(int $id){
+    deletePetPhotoFiles($id);
+
+    global $db;
+    $stmt = $db->prepare('DELETE FROM Pet
+    WHERE id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+}
+
+/**
+ * Delete photo files associated to a pet.
+ *
+ * @param integer $id   Pet ID
+ * @return void
+ */
+function deletePetPhotoFiles(int $id){
+    global $db;
+    $stmt = $db->prepare('SELECT url FROM PetPhoto
+    WHERE id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $urls = $stmt->fetchAll();
+    foreach($urls as $url){
+        deletePetPhotoFile($url);
+    }
+}
+
+/**
+ * Delete pet photo from URL.
+ *
+ * @param string $url   URL of photo to delete
+ * @return void
+ */
+function deletePetPhotoFile(string $url){
+    $path = urlToFilepath($url);
+    if(!unlink($path)){
+        throw new Error("failed to unlink ".$path);
+    }
+}
+
+/**
+ * Convert URL to server filepath.
+ * 
+ * TODO: NOT IMPLEMENTED
+ *
+ * @param string $url   URL
+ * @return string       File path
+ */
+function urlToFilepath(string $url) : string {
+    throw new BadFunctionCallException("deletePetPhotoFile is not implemented");
 }
 
 /**
