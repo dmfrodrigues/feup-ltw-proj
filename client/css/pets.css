@@ -1,0 +1,9 @@
+#pet-list {
+    margin: 2em 1em 2em 1em;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}

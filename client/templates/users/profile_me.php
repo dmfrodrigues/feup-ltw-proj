@@ -1,6 +1,6 @@
 <section id="profile">
     <header>
-        <img src="<?=$user['pictureUrl']?>">
+        <img id="profile_img" src="<?=$user['pictureUrl']?>">
         <span id="name"><?=$user['name']?></span>
         <span id="username"><?=$user['username']?></span>
     </header>
