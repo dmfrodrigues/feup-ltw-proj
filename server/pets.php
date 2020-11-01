@@ -56,7 +56,6 @@ function addPet(
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':postedBy'   , $postedBy   );
     $stmt->execute();
-    $stmt->fetch();
     return $db->lastInsertId();
 }
 

@@ -21,7 +21,7 @@ function addUser(string $username, string $password, string $name){
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password_sha1);
     $stmt->bindParam(':name'    , $name);
-    return $stmt->execute();
+    $stmt->execute();
 }
 
 function getUser(string $username){
@@ -57,7 +57,7 @@ function editUser(string $username, string $password, string $name){
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password_sha1);
     $stmt->bindParam(':name'    , $name);
-    return $stmt->execute();
+    $stmt->execute();
 }
 
  /**
@@ -73,7 +73,7 @@ function addToFavorites(string $username, int $id){
     (:username, :id)');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
-    return $stmt->execute();
+    $stmt->execute();
 }
 
 /**
@@ -81,7 +81,7 @@ function addToFavorites(string $username, int $id){
  *
  * @param string $username  User's username
  * @param integer $id       ID of pet
- * @return boolean          True if successful, false otherwise
+ * @return void
  */
 function removeFromFavorites(string $username, int $id) : bool {
     global $db;
@@ -89,5 +89,5 @@ function removeFromFavorites(string $username, int $id) : bool {
     username=:username AND petId=:id)');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
-    return $stmt->execute();
+    $stmt->execute();
 }
