@@ -11,7 +11,7 @@
             <h1><a href="index.php">Forever home</a></h1>
             <div id="signup">
             <?php if (!isset($_SESSION['username'])) { ?>
-                <a href="register.php">Register</a>
+                <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>
             <?php } else { ?>
                 <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
