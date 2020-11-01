@@ -195,6 +195,41 @@ function getPetComments(int $id) : array {
 }
 
 /**
+ * Adds comment about pet.
+ *
+ * @param integer $id       ID of pet
+ * @param string $username  User's username
+ * @param int $answerTo     ID of comment it is replying to
+ * @param string $text      Text of the comment
+ * @param array $photosUrls URLs of the comment photos
+ * @return integer          ID of the new comment
+ */
+function addPetComment(int $id, string $username, int $answerTo, string $text, array $photosUrls) : int {
+    global $db;
+    
+    $stmt = $db->prepare('INSERT INTO Comment
+    (pet, user, answerTo, text)
+    VALUES
+    (:pet, :user, :answerTo, :text)');
+    $stmt->bindParam(':pet'        , $id         );
+    $stmt->bindParam(':user'       , $username   );
+    $stmt->bindParam(':answerTo'   , $answerTo   );
+    $stmt->bindParam(':text'       , $text       );
+    $stmt->execute();
+    $commentId = $db->lastInsertId();
+
+    foreach($photosUrls as $url){
+        $stmt = $db->prepare('INSERT INTO CommentPhoto(commentId, url) VALUES
+        (:commentId, :url)');
+        $stmt->bindParam(':commentId', $commentId);
+        $stmt->bindParam(':url'      , $url      );
+        $stmt->execute();
+    }
+
+    return $commentId;
+}
+
+/**
  * Get photos associated to comments about a pet.
  *
  * @param integer $id   ID of the pet
@@ -202,7 +237,7 @@ function getPetComments(int $id) : array {
  */
 function getPetCommentsPhotos(int $id) : array {
     global $db;
-    $stmt = $db->prepare('SELECT * FROM PetPhotoInComment 
+    $stmt = $db->prepare('SELECT * FROM CommentPhoto 
     WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
     $stmt->bindParam(':id', $id);;
     $comments = $stmt->fetchAll();

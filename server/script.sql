@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS PetPhoto;
 DROP TABLE IF EXISTS AdoptionRequest;
 DROP TABLE IF EXISTS AdoptionRequestMessage;
 DROP TABLE IF EXISTS Comment;
-DROP TABLE IF EXISTS PetPhotoInComment;
+DROP TABLE IF EXISTS CommentPhoto;
 DROP TABLE IF EXISTS FavoritePet;
 
 PRAGMA foreign_keys=ON;
@@ -135,12 +135,13 @@ CREATE TABLE Comment (
     CONSTRAINT Comment_FK2 FOREIGN KEY(pet) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE PetPhotoInComment (
+CREATE TABLE CommentPhoto (
     commentId INTEGER,
+    id INTEGER,
     url VARCHAR NOT NULL, -- Assuming every row has an URL
 
-    CONSTRAINT PetPhotoInComment_PK PRIMARY KEY(commentId),
-    CONSTRAINT PetPhotoInComment_FK FOREIGN KEY(commentId) REFERENCES Comment ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT CommentPhoto_PK PRIMARY KEY(commentId, id),
+    CONSTRAINT CommentPhoto_FK FOREIGN KEY(commentId) REFERENCES Comment ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE FavoritePet (
