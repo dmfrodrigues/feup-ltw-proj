@@ -54,7 +54,7 @@ INSERT INTO PetPhoto(petId, id, url) VALUES
 (1, 1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
 
 -- PetPhotoInComment
-INSERT INTO PetPhotoVALUES
+INSERT INTO PetPhoto VALUES
 (1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
 
 -- FavoritePet
