@@ -132,3 +132,10 @@ CREATE TABLE PetPhotoInComment (
     CONSTRAINT PetPhotoInComment_PK PRIMARY KEY(commentId),
     CONSTRAINT PetPhotoInComment_FK FOREIGN KEY(commentId) REFERENCES Comment ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE FavoritePet (
+    username VARCHAR,
+    petId INTEGER,
+
+    CONSTRAINT FavoritePet_PK PRIMARY KEY(username, petId)
+);

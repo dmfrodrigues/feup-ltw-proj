@@ -48,3 +48,7 @@ INSERT INTO Comment
 --AnswerTo
 INSERT INTO AnswerTo
     VALUES(1, 2);
+
+-- FavoritePet
+INSERT INTO FavoritePet
+    VALUES('Romanoff123', 1);
