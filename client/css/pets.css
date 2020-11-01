@@ -1,3 +1,121 @@
+#pet{
+    margin: 2em 1em 2em 1em;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto;
+}
+
+#pet header{
+    grid-area: 1 / 1 / span 1 / span 1;
+    margin: 0 0 1em 5em;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+}
+
+#pet header h1{
+    margin: 1em 0 1em 5em;
+    text-align: left;
+}
+
+#pet header a{
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+
+#pet #pet-profile-img{
+    grid-area: 1 / 1 / span 3 / span 1;
+    height: 300px;
+    width: auto;
+}
+
+#pet #favorite{
+    grid-area: 1 / 2 / span 1 / span 1;
+    margin: 1em 1em 2em 5em;
+    padding: 0.5em;
+    border-radius: 1em;
+    text-decoration: none;
+    color: var(--main-color);
+    background-color: white;
+    text-align: center;
+}
+
+#pet #ask{
+    grid-area: 2 / 2 / span 1 / span 1;
+    margin: 1em 1em 1em 5em;
+    padding: 0.5em;
+    border-radius: 1em;
+    text-decoration: none;
+    color: white;
+    background-color: var(--main-color);
+    margin: 0 0 1em 5em;
+    text-align: center;
+}
+
+#pet #data{
+    grid-area: 3 / 2 / span 1 / span 1;
+    margin: 0 0 1em 5em;
+    text-align: left;
+}
+
+#pet #description{
+    grid-area: 2 / 1 / span 1 / span 2;
+    margin: 0 0 1em 5em;
+    text-align: left;
+}
+
+#pet #about{
+    grid-area: 3 / 1 / span 1 / span 2;
+    margin: 0 0 1em 5em;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto auto;
+}
+
+#pet #about h2{
+    grid-area: 1 / 1 / span 1 / span 1;
+}
+
+#pet #about #age{
+    margin: 1em;
+    grid-area: 2 / 1 / span 1 / span 1;
+}
+
+#pet #about #species{
+    margin: 1em;
+    grid-area: 3 / 1 / span 1 / span 1;
+}
+
+#pet #about #color{
+    margin: 1em;
+    grid-area: 4 / 1 / span 1 / span 1;
+}
+
+#pet #about #sex{
+    margin: 1em;
+    grid-area: 2 / 2 / span 1 / span 1;
+}
+
+#pet #about #size{
+    margin: 1em;
+    grid-area: 3 / 2 / span 1 / span 1;
+}
+
+#pet #comments{
+    grid-area: 4 / 1 / span 1 / span 2;
+    margin: 0 0 1em 5em;
+    text-align: left;
+}
+
 #pet-list {
     margin: 2em 1em 2em 1em;
     padding: 1em;

@@ -1,14 +1,16 @@
 <article id="pet">
     <header>
-        <h1><?= $pet['name'] ?></h1>
-        <div id="data">
-            <span id="location"><?= $pet['location'] ?></span>
-            <span id="postedBy"><a href="profile.php?id=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
-        </div>
         <?php
         $photoUrl = getPetMainPhoto($pet['id']);
         ?>
-        <img src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
+        <img id="pet-profile-img" src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
+        <a id="favorite" href="#">Add to favorites</a>
+        <a id="ask" href="#">Ask question about pet</a>
+        <div id="data">
+            <h1><?= $pet['name'] ?></h1>
+            <span id="location"><?= $pet['location'] ?></span>
+            <span id="postedBy"><a href="profile.php?id=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
+        </div>
     </header>
     <section id="description">
         <h2>Description</h2>

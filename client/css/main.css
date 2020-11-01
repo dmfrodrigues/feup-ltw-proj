@@ -9,7 +9,6 @@ body {
     --serif-font: 'Merriweather';
     --sans-font: 'Open Sans Condensed';
     background-color: var(--bg-color);
-
 }
 
 body > header {
@@ -18,10 +17,12 @@ body > header {
     grid-template-rows: auto auto auto;
     background-color: var(--light-color);
 }
+
 body > header > h1{
     grid-area: 1 / 1 / span 1 / span 1;
     text-align: center;
 }
+
 body > header > h1 > a {
 
     text-decoration: none;
