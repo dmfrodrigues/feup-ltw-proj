@@ -63,6 +63,7 @@ function rmdir_recursive(string $dir){
     else if(is_dir($dir)) {
         $lst = scandir($dir);
         foreach($lst as $name){
+            if($name === '.' || $name === '..') continue;
             $path = $dir.'/'.$name;
             rmdir_recursive($path);
         }

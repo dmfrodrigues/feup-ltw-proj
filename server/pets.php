@@ -139,7 +139,7 @@ function editPet(
  * @return void
  */
 function removePet(int $id){
-    deletePetPhotos($id);
+    rmdir_recursive(PETS_IMAGES_DIR."/".$id);
 
     global $db;
     $stmt = $db->prepare('DELETE FROM Pet
@@ -155,7 +155,13 @@ function removePet(int $id){
  * @return void
  */
 function deletePetPhotos(int $id){
-    $path = PETS_IMAGES_DIR."/".$id;
+    $dir = PETS_IMAGES_DIR."/".$id;
+    $lst = scandir($dir);
+    foreach($lst as $name){
+        if($name === '.' || $name === '..') continue;
+        $path = $dir.'/'.$name;
+        rmdir_recursive($path);
+    }
     rmdir_recursive($path);
 }
 
