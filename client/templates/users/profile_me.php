@@ -11,8 +11,7 @@
     <section id="favorites">
     <h2>Favorites</h2>
     <?php
-    foreach ($favorite_pets as $pet_id) {
-        $pet = getPet($pet_id);
+    foreach ($favorite_pets as $pet) {
         $photoUrl = getPetMainPhoto($pet['id']);
         ?>
         <article class="pet">
