@@ -53,6 +53,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
+    $user['pictureUrl'] = "../server/resources/img/profiles/".$username.".jpg";
+    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = "resources/img/no-image.svg";
     return $user;
 }
 

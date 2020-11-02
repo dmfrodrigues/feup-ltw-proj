@@ -33,7 +33,6 @@ CREATE TABLE User (
     username VARCHAR NOT NULL,
     password VARCHAR NOT NULL,
     name VARCHAR NOT NULL,
-    pictureUrl VARCHAR,
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     shelter INTEGER,
 
