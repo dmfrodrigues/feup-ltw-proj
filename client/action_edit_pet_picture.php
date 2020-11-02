@@ -5,7 +5,7 @@
  *     - id     ID of pet
  * - _POST:
  *     - idx    Index of image
- * - _FILES     File to upload
+ * - _FILES     File to upload, with name 'pet_picture'
  */
 
 include_once("../server/connection.php");
@@ -21,7 +21,7 @@ $file = $_FILES['profile_picture'];
 $idx  = $_POST['idx'];
 
 try{
-    addPetPhoto($pet['id'], $_FILES['tmp_name'], $idx);
+    addPetPhoto($pet['id'], $_FILES['pet_picture']['tmp_name'], $idx);
 
     header("Location: edit_pet.php?id=".$pet['id']);
 } catch (RuntimeException $e) {
