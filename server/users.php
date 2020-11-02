@@ -1,6 +1,9 @@
 <?php
 
-include_once("../server/files.php");
+include_once __DIR__.'/server.php';
+include_once SERVER_DIR.'/files.php';
+
+define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 /**
  * Check if user-password pair is valid.
@@ -55,8 +58,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
-    $user['pictureUrl'] = "../server/resources/img/profiles/".$username.".jpg";
-    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = "resources/img/no-image.svg";
+    $user['pictureUrl'] = "../server/resources/img/profiles/$username.jpg";
+    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = 'resources/img/no-image.svg';
     return $user;
 }
 
@@ -78,24 +81,38 @@ function isAdmin(string $username) : bool {
 }
 
 /**
- * Edit user.
+ * Edit user name and username.
  *
  * @param string $username  User's username
- * @param string $password  Password
  * @param string $name      User's name
  * @return void
  */
-function editUser(string $username, string $password, string $name){
+function editUser(string $username, string $name){
     global $db;
-    $password_sha1 = sha1($password);
     $stmt = $db->prepare('UPDATE User SET
     username=:username,
-    password=:password,
     name=:name
     WHERE username=:username');
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
     $stmt->bindParam(':name'    , $name);
+    $stmt->execute();
+}
+
+/**
+
+ * Edit user.
+ *
+ * @param string $password  User's password
+ * @return void
+ */
+function editUserPassword(string $username, string $password) {
+    global $db;
+    $password_sha1 = sha1($password);
+    $stmt = $db->prepare('UPDATE User SET
+    password=:password
+    WHERE username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password_sha1);
     $stmt->execute();
 }
 
@@ -103,15 +120,14 @@ function editUser(string $username, string $password, string $name){
  * Save new user picture.
  *
  * @param string $username  User's username
- * @param array $file       File (as obtained from $_FILES['filefield'])
+ * @param array $file       File (as obtained from $_FILES['file_field'])
  * @return void
  */
 function saveUserPicture(string $username, array $file){
     $ext = checkImageFile($file, 1000000);
 
-    $uploaddir = '../server/resources/img/profiles';
-    $uploadfile = $uploaddir."/".$username.".".$ext;
-    if (!move_uploaded_file($file['tmp_name'], $uploadfile)) {
+    $filepath = USERS_IMAGES_DIR."/$username.$ext";
+    if (!move_uploaded_file($file['tmp_name'], $filepath)) {
         throw new RuntimeException('Failed to move uploaded file.');
     }
 }
@@ -172,8 +188,8 @@ function getFavoritePets(string $username) : array {
     WHERE FavoritePet.username=:username');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
-    $pet = $stmt->fetch();
-    return $pet;
+    $pets = $stmt->fetchAll();
+    return $pets;
 }
 
 /**
@@ -205,3 +221,4 @@ function getAdoptionRequests(string $username) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
+

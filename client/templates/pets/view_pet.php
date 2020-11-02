@@ -23,8 +23,8 @@
         <h2>About</h2>
         <div id="age">
             <span class="name">Age</span><span class="value"><?php
-                if ($pet['age'] >= 1) echo $pet['age'] . " years";
-                else                 echo ($pet['age'] * 12) . " months";
+                if ($pet['age'] >= 1) echo "{$pet['age']} years";
+                else                 echo ($pet['age'] * 12) . ' months';
             ?></span>
         </div>
         <div id="sex"><span class="name">Sex</span><span class="value"><?= $pet['sex'] ?></span></div>
@@ -32,7 +32,7 @@
         <div id="size"><span class="name">Size</span><span class="value"><?= $pet['size'] ?></span></div>
         <div id="color"><span class="name">Color</span><span class="value"><?= $pet['color'] ?></span></div>
     </section>
-    <?php if($_SESSION['username'] == $pet['postedBy']){ ?>
+    <?php if(isset($_SESSION['username']) && $_SESSION['username'] == $pet['postedBy']){ ?>
         <section id="actions">
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>">Edit</a></li>

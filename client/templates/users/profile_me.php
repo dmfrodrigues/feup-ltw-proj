@@ -3,6 +3,7 @@
         <img id="profile_img" src="<?=$user['pictureUrl']?>">
         <span id="name"><?=$user['name']?></span>
         <span id="username"><?=$user['username']?></span>
+        <a href="edit_profile.php?username=<?=$_SESSION['username']?>">Edit Profile</a>
     </header>
     <section id="owned">
         <h2>Pets owned</h2>
