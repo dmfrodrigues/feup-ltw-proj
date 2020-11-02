@@ -28,9 +28,15 @@ function filterByAllParameters() {
     for(let x = 0; x < petList.length; x++) 
         petList[x].style.display = "none";
 
+    // sort elements by pet name
+    filtered.sort((a, b) => {
+        return a.firstElementChild.firstElementChild.innerText.toLowerCase().localeCompare(b.firstElementChild.firstElementChild.innerText.toLowerCase());
+    });
+
     filtered.forEach((article) => {
-        console.log(article);
         document.querySelector('section#pet-list').appendChild(article);
         article.style.display = "";
     });
+
+
 }
