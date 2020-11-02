@@ -1,7 +1,8 @@
 <?php
 
-include_once "../server/connection.php";
-include_once "../server/users.php";
+include_once __DIR__.'/../server.php';
+include_once SERVER_DIR.'/connection.php';
+include_once SERVER_DIR.'/users.php';
 
 if($_GET['username'] != $_SESSION['username']){
     header('Location: profile.php?username='.$_SESSION['username']);

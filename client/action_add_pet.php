@@ -1,8 +1,9 @@
 <?php
 session_start();
 
-include_once '../server/connection.php';
-include_once '../server/pets.php';
+include_once __DIR__.'/../server.php';
+include_once SERVER_DIR.'/connection.php';
+include_once SERVER_DIR.'/pets.php';
 
 if (isset($_SESSION['username'])){
     $petId = addPet(

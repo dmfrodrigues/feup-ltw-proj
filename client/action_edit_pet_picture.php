@@ -8,6 +8,7 @@
  * - _FILES     File to upload, with name 'pet_picture'
  */
 
+include_once __DIR__.'/../server.php';
 include_once("../server/connection.php");
 include_once("../server/pets.php");
 
