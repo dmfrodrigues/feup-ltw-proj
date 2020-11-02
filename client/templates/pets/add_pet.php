@@ -1,4 +1,4 @@
-<article id="pet">
+<article id="add-pet">
     <form action="action_add_pet.php" method="post">
         <header>
             <h1><input type="text" name="name" placeholder="Pet name"></h1>
@@ -47,6 +47,6 @@
                 <span class="value"><input type="text" name="color"></span>
             </div>
         </section>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="add-pet-submit">
     </form>
 </article>
