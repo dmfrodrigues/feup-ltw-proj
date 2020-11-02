@@ -148,6 +148,8 @@ function removePet(int $id){
     $stmt->execute();
 }
 
+define('IMAGES_EXTENSIONS', ["jpg"]);
+
 /**
  * Delete photo files associated to a pet.
  *
@@ -165,7 +167,19 @@ function deletePetPhotos(int $id){
     rmdir_recursive($path);
 }
 
-define('IMAGES_EXTENSIONS', ["jpg"]);
+/**
+ * Add pet photo
+ *
+ * @param integer $id           ID of pet
+ * @param string $tmp_filepath  File path to temporary file
+ * @param integer $idx          Index of image (1 is the first image); should be numbered sequentially
+ * @return void
+ */
+function addPetPhoto(int $id, string $tmp_filepath, int $idx){
+    $filepath = PETS_IMAGES_DIR."/".$id."/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
+    if(!move_uploaded_file($tmp_filepath, $filepath))
+        throw new RuntimeException('Failed to move uploaded file.');
+}
 
 /**
  * Get pet main photo
