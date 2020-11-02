@@ -1,5 +1,7 @@
 <?php
 
+include_once("../server/files.php");
+
 /**
  * Check if user-password pair is valid.
  *
@@ -53,6 +55,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
+    $user['pictureUrl'] = "../server/resources/img/profiles/".$username.".jpg";
+    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = "resources/img/no-image.svg";
     return $user;
 }
 
@@ -95,6 +99,23 @@ function editUser(string $username, string $password, string $name){
     $stmt->execute();
 }
 
+/**
+ * Save new user picture.
+ *
+ * @param string $username  User's username
+ * @param array $file       File (as obtained from $_FILES['filefield'])
+ * @return void
+ */
+function saveUserPicture(string $username, array $file){
+    $ext = checkImageFile($file, 1000000);
+
+    $uploaddir = '../server/resources/img/profiles';
+    $uploadfile = $uploaddir."/".$username.".".$ext;
+    if (!move_uploaded_file($file['tmp_name'], $uploadfile)) {
+        throw new RuntimeException('Failed to move uploaded file.');
+    }
+}
+
  /**
   * Add pet to user's favorites list.
   *
@@ -125,4 +146,62 @@ function removeFromFavorites(string $username, int $id){
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
     $stmt->execute();
+}
+
+/**
+ * Get a user's favorite pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of favorite pets of the user 
+ */
+function getFavoritePets(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.postedBy
+    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
+    WHERE FavoritePet.username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pet = $stmt->fetch();
+    return $pet;
+}
+
+/**
+ * Get a user's adoption requests.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adoption requests 
+ */
+function getAdoptionRequests(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.postedBy,
+    AdoptionRequest.text,
+    AdoptionRequest.outcome
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.user=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
 }
