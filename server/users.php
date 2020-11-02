@@ -206,15 +206,4 @@ function getAdoptionRequests(string $username) : array {
     return $pets;
 }
 
-function withdrawAdoptionRequest(string $username, int $petId): bool {
-    global $db;
-
-    $stmt = $db->prepare('DELETE FROM AdoptionRequest
-                            WHERE user=:username AND pet=:petId');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
-    $stmt->execute();
-    return $stmt->rowCount() > 0;
-}
-
 ?>
