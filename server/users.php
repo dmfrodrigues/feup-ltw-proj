@@ -1,5 +1,7 @@
 <?php
 
+include_once("../server/files.php");
+
 /**
  * Check if user-password pair is valid.
  *
@@ -95,6 +97,23 @@ function editUser(string $username, string $password, string $name){
     $stmt->bindParam(':password', $password_sha1);
     $stmt->bindParam(':name'    , $name);
     $stmt->execute();
+}
+
+/**
+ * Save new user picture.
+ *
+ * @param string $username  User's username
+ * @param array $file       File (as obtained from $_FILES['filefield'])
+ * @return void
+ */
+function saveUserPicture(string $username, array $file){
+    $ext = checkImageFile($file, 1000000);
+
+    $uploaddir = '../server/resources/img/profiles';
+    $uploadfile = $uploaddir."/".$username.".".$ext;
+    if (!move_uploaded_file($file['tmp_name'], $uploadfile)) {
+        throw new RuntimeException('Failed to move uploaded file.');
+    }
 }
 
  /**
