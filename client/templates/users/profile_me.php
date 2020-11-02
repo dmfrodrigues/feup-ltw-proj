@@ -11,6 +11,8 @@
     <section id="favorites">
     <h2>Favorites</h2>
     <?php
+    if(empty($pets)) echo 'No favorite pets';
+    else
     foreach ($favorite_pets as $pet) {
         $photoUrl = getPetMainPhoto($pet['id']);
         ?>
