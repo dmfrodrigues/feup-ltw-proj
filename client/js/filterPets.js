@@ -25,6 +25,7 @@ function filterByAllParameters() {
     
     let petList = document.querySelector('section#pet-list').children;
     
+    // removing the visibility of all the elements
     for(let x = 0; x < petList.length; x++) 
         petList[x].style.display = "none";
 
@@ -35,7 +36,7 @@ function filterByAllParameters() {
 
     filtered.forEach((article) => {
         document.querySelector('section#pet-list').appendChild(article);
-        article.style.display = "";
+        article.style.display = ""; // making the filtered elements visible
     });
 
 
