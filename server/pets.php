@@ -310,3 +310,23 @@ function addAdoptionRequest(string $username, int $id, string $text) : int {
     $stmt->execute();
     return $db->lastInsertId();
 }
+
+/**
+ * Withdraw adoption Request.
+ * 
+ * @param string $username User's username
+ * @param integer $petId   Pet's Id
+ * @return boolean         True if withdraw was successful, false otherwise
+ */
+function withdrawAdoptionRequest(string $username, int $petId): bool {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM AdoptionRequest
+                            WHERE user=:username AND pet=:petId');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
+
+?>

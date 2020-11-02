@@ -74,6 +74,8 @@ CREATE TABLE Pet (
     CONSTRAINT Pet_PK PRIMARY KEY(id),
     CONSTRAINT Pet_FK FOREIGN KEY(postedBy) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
 
+    CONSTRAINT age CHECK(age >= 0),
+
     CONSTRAINT sex CHECK (sex in ("M", "F")),
 
     CONSTRAINT sizeRule CHECK (size LIKE 'XS' OR
@@ -101,7 +103,7 @@ CREATE TABLE AdoptionRequest (
     text VARCHAR NOT NULL,
     outcome VARCHAR DEFAULT 'pending' NOT NULL,
     pet INTEGER NOT NULL,
-    user VARCHAR, -- Response User
+    user VARCHAR NOT NULL, -- Response User
 
     CONSTRAINT AdoptionRequest_PK PRIMARY KEY(id),
     CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(pet) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE,

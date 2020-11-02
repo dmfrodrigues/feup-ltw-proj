@@ -35,7 +35,7 @@ INSERT INTO Pet
 
 -- AdoptionRequest
 INSERT INTO AdoptionRequest
-    VALUES(NULL, 'Please adoptme', 'pending', 1, NULL);
+    VALUES(NULL, 'Please adoptme', 'pending', 1, '2dukes');
 INSERT INTO AdoptionRequest
     VALUES(NULL, 'Please adopt this little cat!', 'accepted', 1, 'Romanoff123');
 
