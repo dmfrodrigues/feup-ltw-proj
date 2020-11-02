@@ -12,6 +12,7 @@ if (isset($_SESSION['username'])){
     }
 
     editUserPassword(
+        $user["username"],
         $_POST['pwd']
     );
     header('Location: profile.php?username='.$_GET['username']);

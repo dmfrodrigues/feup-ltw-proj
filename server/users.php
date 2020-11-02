@@ -97,12 +97,13 @@ function editUser(string $username, string $name){
  * @param string $password  User's password
  * @return void
  */
-function editUserPassword(string $password) {
+function editUserPassword(string $username, string $password) {
     global $db;
     $password_sha1 = sha1($password);
     $stmt = $db->prepare('UPDATE User SET
     password=:password
     WHERE username=:username');
+    $stmt->bindParam(':username', $username     );
     $stmt->bindParam(':password', $password_sha1);
     $stmt->execute();
 }
