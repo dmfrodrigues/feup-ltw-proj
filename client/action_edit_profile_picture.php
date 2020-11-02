@@ -1,5 +1,6 @@
 <?php
 
+include_once("../server/connection.php");
 include_once("../server/users.php");
 
 if($_GET['username'] != $_SESSION['username']){
