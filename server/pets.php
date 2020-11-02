@@ -1,8 +1,8 @@
 <?php
 
-include_once(__DIR__."/server.php");
+include_once __DIR__.'/server.php';
 
-define('PETS_IMAGES_DIR', SERVER_DIR."/resources/img/pets");
+define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 
 /**
  * Get array of all pets.
@@ -61,7 +61,7 @@ function addPet(
     $id = $db->lastInsertId();
 
     // Create images folder
-    $path = PETS_IMAGES_DIR."/".$id;
+    $path = PETS_IMAGES_DIR."/$id";
     mkdir($path);
 
     return $id;
@@ -139,7 +139,7 @@ function editPet(
  * @return void
  */
 function removePet(int $id){
-    rmdir_recursive(PETS_IMAGES_DIR."/".$id);
+    rmdir_recursive(PETS_IMAGES_DIR."/$id");
 
     global $db;
     $stmt = $db->prepare('DELETE FROM Pet
@@ -148,7 +148,7 @@ function removePet(int $id){
     $stmt->execute();
 }
 
-define('IMAGES_EXTENSIONS', ["jpg"]);
+define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
  * Delete photo files associated to a pet.
@@ -157,11 +157,11 @@ define('IMAGES_EXTENSIONS', ["jpg"]);
  * @return void
  */
 function deletePetPhotos(int $id){
-    $dir = PETS_IMAGES_DIR."/".$id;
+    $dir = PETS_IMAGES_DIR."/$id";
     $lst = scandir($dir);
     foreach($lst as $name){
         if($name === '.' || $name === '..') continue;
-        $path = $dir.'/'.$name;
+        $path = "$dir/$name";
         rmdir_recursive($path);
     }
     rmdir_recursive($path);
@@ -176,7 +176,7 @@ function deletePetPhotos(int $id){
  * @return void
  */
 function addPetPhoto(int $id, string $tmp_filepath, int $idx){
-    $filepath = PETS_IMAGES_DIR."/".$id."/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
+    $filepath = PETS_IMAGES_DIR."/$id/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
     if(!move_uploaded_file($tmp_filepath, $filepath))
         throw new RuntimeException('Failed to move uploaded file.');
 }
@@ -188,12 +188,12 @@ function addPetPhoto(int $id, string $tmp_filepath, int $idx){
  * @return string       URL of pet main photo
  */
 function getPetMainPhoto(int $id) : string {
-    $dir = PETS_IMAGES_DIR."/".$id;
+    $dir = PETS_IMAGES_DIR."/$id";
     if(!is_dir($dir)) return 'resources/img/no-image.svg';
     
     $lst = scandir($dir);
     foreach($lst as $filename){
-        $filepath = $dir.'/'.$filename;
+        $filepath = "$dir/$filename";
         if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
             $url = serverpathToUrl($filepath);
             return $url;

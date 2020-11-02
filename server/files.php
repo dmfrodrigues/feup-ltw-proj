@@ -68,5 +68,5 @@ function rmdir_recursive(string $dir){
             rmdir_recursive($path);
         }
         rmdir($dir);
-    } else throw new RuntimeException("Can't delete unknown file type");
+    } else throw new RuntimeException('Can\'t delete unknown file type');
 }

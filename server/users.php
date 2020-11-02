@@ -1,7 +1,7 @@
 <?php
 
-include_once __DIR__."/server.php";
-include_once SERVER_DIR."/files.php";
+include_once __DIR__.'/server.php';
+include_once SERVER_DIR.'/files.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
@@ -58,8 +58,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
-    $user['pictureUrl'] = "../server/resources/img/profiles/".$username.".jpg";
-    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = "resources/img/no-image.svg";
+    $user['pictureUrl'] = "../server/resources/img/profiles/$username.jpg";
+    if(!file_exists($user['pictureUrl'])) $user['pictureUrl'] = 'resources/img/no-image.svg';
     return $user;
 }
 
@@ -112,7 +112,7 @@ function editUser(string $username, string $password, string $name){
 function saveUserPicture(string $username, array $file){
     $ext = checkImageFile($file, 1000000);
 
-    $filepath = USERS_IMAGES_DIR."/".$username.".".$ext;
+    $filepath = USERS_IMAGES_DIR."/$username.$ext";
     if (!move_uploaded_file($file['tmp_name'], $filepath)) {
         throw new RuntimeException('Failed to move uploaded file.');
     }
