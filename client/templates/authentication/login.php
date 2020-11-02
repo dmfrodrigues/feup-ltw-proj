@@ -7,7 +7,7 @@
         <label>
             Password <input type="password" name="password" required>
         </label>
-        <input type="submit" value="Login">
+        <input type="submit" value="Login" id="submit_login">
     </form>
     <a href="">Forgot Password?</a>
     <footer>

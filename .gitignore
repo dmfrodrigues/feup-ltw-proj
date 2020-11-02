@@ -1,4 +1,5 @@
 *.db
+server/resources/img/profiles
 
 # Created by https://www.gitignore.io/api/intellij
 

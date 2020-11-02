@@ -1,0 +1,66 @@
+#authenticate {
+    margin: 2em;
+    grid-area: 1 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: right;
+}
+
+#authenticate a {
+    margin: 1em;
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+#login, #signup {
+    margin: 2em auto 2em auto;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    width: 25em;
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+#login header, #signup header {
+    display: block;
+    margin: 1em;
+    border-bottom: solid  0.25em;
+    color: var(--main-color);
+}
+
+#login form label{
+    display: block;
+}
+#signup form label{
+    display: block;
+    text-align: right;
+}
+
+#login input, #signup input {
+    margin: 1em;
+    border: 0;
+    background-color: var(--bg-color);
+}
+
+#login #submit_login, #signup #submit_signup {
+    color: white;
+    background-color: var(--main-color);
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+#login a {
+    margin-top: 1em;
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+#login footer {
+    margin: 1em;
+    border-top: solid  0.25em;
+    color: var(--main-color);
+}
+
+#login footer p {
+    color: black;
+}
