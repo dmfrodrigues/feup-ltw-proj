@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])){
     }
 
     editUser(
-        $_POST["username"],
+        $user["username"],
         $_POST["name"]
     );
 

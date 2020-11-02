@@ -10,11 +10,7 @@
         </section>
         <section id="name">
             <h3>Name:</h3>
-            <textarea name="name"><?=$user['name']?></textarea>
-        </section>
-        <section id="username">
-            <h3>Username:</h3>
-            <textarea name="username"><?=$user['username']?></textarea>
+            <input type="text" name="name" placeholder="user's name" value="<?=$user['name']?>">
         </section>
         <section id="password">
             <h3>Change password</h3>
