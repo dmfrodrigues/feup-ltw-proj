@@ -22,7 +22,8 @@ if (isset($_SESSION['username'])){
         $_POST["location"],
         $_POST["description"]
     );
-    header('Location: pet.php?id='.$_GET['id']);
 }
+
+header('Location: pet.php?id='.$_GET['id']);
 
 die();
