@@ -1,12 +1,15 @@
-<article id="change-password">
-    <form action="action_change_password.php?username=<?= $user['username']?>" method="post">
-        <header>
-            <h1>Change Password</h1>
-        </header>
-        <section id="password">
-            <h3>New Password:</h3>
-            <input type="password" name="password" id="password">
-        </section>
-        <input type="submit" value="Submit">
-    </form>
-</article>
+<?php
+
+session_start();
+
+$javascript_files = ["js/signup.js"];
+
+include_once('../server/connection.php');
+include_once('../server/users.php');
+$user = getUser($_GET['username']);
+
+include_once('templates/common/header.php');
+if (isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username'])
+    include_once('templates/users/change_password.php');
+
+include_once('templates/common/footer.php');

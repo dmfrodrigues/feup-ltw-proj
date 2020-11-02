@@ -1,5 +1,5 @@
 <article id="edit-profile">
-    <form action="action_edit_profile.php?username=<?= $user['username']?>" method="post">
+    <form action="action_edit_profile.php?username=<?=$user['username']?>" method="post">
         <header>
             <h1>Edit Profile</h1>
         </header>
