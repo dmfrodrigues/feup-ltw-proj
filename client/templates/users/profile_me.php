@@ -9,6 +9,18 @@
     </section>
     <section id="favorites">
     <h2>Favorites</h2>
+    <?php
+    foreach ($favorite_pets as $pet_id) {
+        $pet = getPet($pet_id);
+        $photoUrl = getPetMainPhoto($pet['id']);
+        ?>
+        <article class="pet">
+            <header>
+                <h2><a href="pet.php?id=<?= $pet['id']?>"><?= $pet['name'] ?></a></h2>
+            </header>
+            <img src="<?= $photoUrl ?>" alt="photo of <?= $pet['name'] ?>" />
+        </article>
+    <?php } ?>
     </section>
     <section id="actions">
         <h2>Actions</h2>
