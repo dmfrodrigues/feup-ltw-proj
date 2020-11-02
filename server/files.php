@@ -51,3 +51,22 @@ function checkImageFile(array $file, int $size) : string {
 
     return $ext;
 }
+
+/**
+ * Recursively remove directory and all content.
+ *
+ * @param string $dir   Path to directory
+ * @return void
+ */
+function rmdir_recursive(string $dir){
+    if(is_file($dir)) unlink($dir);
+    else if(is_dir($dir)) {
+        $lst = scandir($dir);
+        foreach($lst as $name){
+            if($name === '.' || $name === '..') continue;
+            $path = $dir.'/'.$name;
+            rmdir_recursive($path);
+        }
+        rmdir($dir);
+    } else throw new RuntimeException('Can\'t delete unknown file type');
+}

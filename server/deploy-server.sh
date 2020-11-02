@@ -1,6 +1,7 @@
 rm *.db
 sqlite3 database.db ".read script.sql"
 sqlite3 database.db ".read populate.sql"
+
 mkdir -p resources/img/profiles
 cd resources/img/profiles
 curl -L "https://avatars3.githubusercontent.com/u/43684166?s=400&u=03a088a2de6621066111b4d05f40d7489abd494d&v=4" --output dmfr.jpg
@@ -10,3 +11,12 @@ curl -L "https://avatars3.githubusercontent.com/u/50210213?s=400&u=037938f750516
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output Asdrubal007.jpg
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output balves.jpg
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output Romanoff123.jpg
+cd ../../..
+
+mkdir -p resources/img/pets
+cd resources/img/pets
+
+mkdir -p 1
+curl -L "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg" --output 1/001.jpg
+
+mkdir -p 2
