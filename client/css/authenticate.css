@@ -23,9 +23,18 @@
 }
 
 #login header, #signup header {
+    display: block;
     margin: 1em;
     border-bottom: solid  0.25em;
     color: var(--main-color);
+}
+
+#login form label{
+    display: block;
+}
+#signup form label{
+    display: block;
+    text-align: right;
 }
 
 #login input, #signup input {
@@ -35,7 +44,8 @@
 }
 
 #login #submit_login, #signup #submit_signup {
-    background-color: white;
+    color: white;
+    background-color: var(--main-color);
     padding: 0.5em 1em 0.5em 1em;
 }
 

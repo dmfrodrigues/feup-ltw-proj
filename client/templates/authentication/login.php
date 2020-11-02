@@ -3,10 +3,10 @@
     <form action="action_login.php" method="post">
         <label>
             Username <input type="text" name="username" required>
-        </label><br>
+        </label>
         <label>
             Password <input type="password" name="password" required>
-        </label><br>
+        </label>
         <input type="submit" value="Login" id="submit_login">
     </form>
     <a href="">Forgot Password?</a>
