@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include_once('../server/connection.php');
-include_once('../server/users.php');
+include_once '../server/connection.php';
+include_once '../server/users.php';
 
 if (userExists($_POST['username'], $_POST['password'])){
     $_SESSION['username'] = $_POST['username'];

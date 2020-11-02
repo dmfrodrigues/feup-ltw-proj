@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-include_once('../server/connection.php');
-include_once('../server/pets.php');
+include_once '../server/connection.php';
+include_once '../server/pets.php';
 $pet = getPet($_GET['id']);
 
 if (isset($_SESSION['username'])){
