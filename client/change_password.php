@@ -5,7 +5,7 @@
         </header>
         <section id="password">
             <h3>New Password:</h3>
-            <input type="password" name="password">
+            <input type="password" name="password" id="password">
         </section>
         <input type="submit" value="Submit">
     </form>
