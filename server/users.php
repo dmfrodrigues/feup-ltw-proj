@@ -81,24 +81,38 @@ function isAdmin(string $username) : bool {
 }
 
 /**
- * Edit user.
+ * Edit user name and username.
  *
  * @param string $username  User's username
- * @param string $password  Password
  * @param string $name      User's name
  * @return void
  */
-function editUser(string $username, string $password, string $name){
+function editUser(string $username, string $name){
     global $db;
-    $password_sha1 = sha1($password);
     $stmt = $db->prepare('UPDATE User SET
     username=:username,
-    password=:password,
     name=:name
     WHERE username=:username');
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
     $stmt->bindParam(':name'    , $name);
+    $stmt->execute();
+}
+
+/**
+
+ * Edit user.
+ *
+ * @param string $password  User's password
+ * @return void
+ */
+function editUserPassword(string $username, string $password) {
+    global $db;
+    $password_sha1 = sha1($password);
+    $stmt = $db->prepare('UPDATE User SET
+    password=:password
+    WHERE username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password_sha1);
     $stmt->execute();
 }
 
@@ -207,3 +221,4 @@ function getAdoptionRequests(string $username) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
+
