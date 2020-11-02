@@ -1,5 +1,9 @@
 <?php
 
+include_once(__DIR__."/server.php");
+
+define('PETS_IMAGES_DIR', SERVER_DIR."/resources/img/pets");
+
 /**
  * Get array of all pets.
  *
@@ -54,7 +58,13 @@ function addPet(
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':postedBy'   , $postedBy   );
     $stmt->execute();
-    return $db->lastInsertId();
+    $id = $db->lastInsertId();
+
+    // Create images folder
+    $path = PETS_IMAGES_DIR."/".$id;
+    mkdir($path);
+
+    return $id;
 }
 
 /**
@@ -129,7 +139,7 @@ function editPet(
  * @return void
  */
 function removePet(int $id){
-    deletePetPhotoFiles($id);
+    deletePetPhotos($id);
 
     global $db;
     $stmt = $db->prepare('DELETE FROM Pet
@@ -144,42 +154,12 @@ function removePet(int $id){
  * @param integer $id   Pet ID
  * @return void
  */
-function deletePetPhotoFiles(int $id){
-    global $db;
-    $stmt = $db->prepare('SELECT url FROM PetPhoto
-    WHERE id=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $urls = $stmt->fetchAll();
-    foreach($urls as $url){
-        deletePetPhotoFile($url);
-    }
+function deletePetPhotos(int $id){
+    $path = PETS_IMAGES_DIR."/".$id;
+    rmdir_recursive($path);
 }
 
-/**
- * Delete pet photo from URL.
- *
- * @param string $url   URL of photo to delete
- * @return void
- */
-function deletePetPhotoFile(string $url){
-    $path = urlToFilepath($url);
-    if(!unlink($path)){
-        throw new Error("failed to unlink ".$path);
-    }
-}
-
-/**
- * Convert URL to server filepath.
- * 
- * TODO: NOT IMPLEMENTED
- *
- * @param string $url   URL
- * @return string       File path
- */
-function urlToFilepath(string $url) : string {
-    throw new BadFunctionCallException("deletePetPhotoFile is not implemented");
-}
+define('IMAGES_EXTENSIONS', ["jpg"]);
 
 /**
  * Get pet main photo
@@ -188,25 +168,19 @@ function urlToFilepath(string $url) : string {
  * @return string       URL of pet main photo
  */
 function getPetMainPhoto(int $id) : string {
-    global $db;
-    $stmt = $db->prepare('SELECT id, url FROM PetPhoto
-    WHERE petId=:petId');
-    $stmt->bindParam(':petId', $id);
-    $stmt->execute();
-    $urls = $stmt->fetchAll();
-
-    if(count($urls) == 0) return '';
-
-    $id = $urls[0]['id'];
-    $url_ret = $urls[0]['url'];
-    foreach($urls as $url){
-        if($url['id'] < $id){
-            $id = $url['id'];
-            $url_ret = $url['url'];
+    $dir = PETS_IMAGES_DIR."/".$id;
+    if(!is_dir($dir)) return 'resources/img/no-image.svg';
+    
+    $lst = scandir($dir);
+    foreach($lst as $filename){
+        $filepath = $dir.'/'.$filename;
+        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
+            $url = serverpathToUrl($filepath);
+            return $url;
         }
     }
-    
-    return $url_ret;
+
+    return 'resources/img/no-image.svg';
 }
 
 /**

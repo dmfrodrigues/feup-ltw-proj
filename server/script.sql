@@ -89,15 +89,6 @@ CREATE TABLE Pet (
                                  status LIKE 'delivered')
 );
 
-CREATE TABLE PetPhoto (
-    petId INTEGER,
-    id INTEGER,
-    url VARCHAR NOT NULL, -- Assuming every row has an URL
-
-    CONSTRAINT PetPhoto_PK PRIMARY KEY(petId, id),
-    CONSTRAINT PetPhoto_FK FOREIGN KEY(petId) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE AdoptionRequest (
     id INTEGER NOT NULL,
     text VARCHAR NOT NULL,

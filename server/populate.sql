@@ -50,10 +50,6 @@ INSERT INTO Comment
 INSERT INTO Comment
     VALUES(NULL, strftime("%d/%m/%Y %H:%M", "2019-12-07 09:20"), 'Another simple comment.', 1, 'Asdrubal007', 1);
 
--- PetPhoto
-INSERT INTO PetPhoto(petId, id, url) 
-    VALUES (1, 1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
-
 -- CommentPhoto
 INSERT INTO CommentPhoto(commentId, url) 
     VALUES (1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
