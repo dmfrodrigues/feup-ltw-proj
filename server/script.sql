@@ -101,7 +101,7 @@ CREATE TABLE AdoptionRequest (
     text VARCHAR NOT NULL,
     outcome VARCHAR DEFAULT 'pending' NOT NULL,
     pet INTEGER NOT NULL,
-    user VARCHAR, -- Response User
+    user VARCHAR NOT NULL, -- Response User
 
     CONSTRAINT AdoptionRequest_PK PRIMARY KEY(id),
     CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(pet) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE,
