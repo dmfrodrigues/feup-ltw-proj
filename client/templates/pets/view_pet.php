@@ -2,6 +2,7 @@
     <header>
         <?php
         $photoUrl = getPetMainPhoto($pet['id']);
+        if($photoUrl == '') $photoUrl = "resources/img/no-image.svg";
         ?>
         <img id="pet-profile-img" src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
         <a id="favorite" href="#"><img src="resources/img/heart.svg" height="30px">Add to favorites</a>
@@ -9,7 +10,7 @@
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
             <span id="location"><?= $pet['location'] ?></span>
-            <span id="postedBy"><a href="profile.php?id=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
+            <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
     </header>
     <section id="description">
