@@ -108,10 +108,12 @@ function editUserPassword(string $username, string $password) {
     $stmt = $db->prepare('UPDATE User SET
     password=:password
     WHERE username=:username');
-    $stmt->bindParam(':username', $username     );
+    $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password_sha1);
     $stmt->execute();
+}
 
+/**
  * Save new user picture.
  *
  * @param string $username  User's username
@@ -217,3 +219,4 @@ function getAdoptionRequests(string $username) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
+
