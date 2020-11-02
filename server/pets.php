@@ -265,8 +265,8 @@ function getPetCommentsPhotos(int $id) : array {
     $stmt = $db->prepare('SELECT * FROM CommentPhoto 
     WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
     $stmt->bindParam(':id', $id);;
-    $comments = $stmt->fetchAll();
-    return $comments;
+    $photos = $stmt->fetchAll();
+    return $photos;
 }
 
 /**

@@ -188,8 +188,8 @@ function getFavoritePets(string $username) : array {
     WHERE FavoritePet.username=:username');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
-    $pet = $stmt->fetch();
-    return $pet;
+    $pets = $stmt->fetchAll();
+    return $pets;
 }
 
 /**
