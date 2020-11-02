@@ -205,5 +205,3 @@ function getAdoptionRequests(string $username) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
-
-?>
