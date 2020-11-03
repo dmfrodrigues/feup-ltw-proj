@@ -1,7 +1,7 @@
-function filterByAllParameters() {
+function filterByTextParameters() {
 
-    const parameters_ids = ["name", "location", "species", "age", "color", "size", "sex"];
-    const query_selectors = ["header h2 a", "p#hidden_location", "p#hidden_species", "p#hidden_age", "p#hidden_color", "p#hidden_size", "p#hidden_sex"];
+    const parameters_ids = ["name", "location", "species", "age", "color"];
+    const query_selectors = ["header h2 a", "p#hidden_location", "p#hidden_species", "p#hidden_age", "p#hidden_color"];
 
     let pet_elements = document.querySelectorAll('article.pet');
     for(let i = 0; i < pet_elements.length; ++i){
@@ -20,4 +20,51 @@ function filterByAllParameters() {
         pet_element.style.display = (isVisible ? "" : "none");
     }
 
+}
+
+function filterByCheckBoxes() {
+    let sizes = [], genders = [];
+    let checkbox = document.getElementById('size').nextElementSibling;
+    while(checkbox.type == "checkbox") {
+        if(checkbox.checked) 
+            sizes.push(checkbox.value);
+        
+        checkbox = checkbox.nextElementSibling.nextElementSibling;
+    }
+
+    checkbox = document.getElementById('sex').nextElementSibling;
+    while(checkbox != null) {
+        if(checkbox.checked) 
+            genders.push(checkbox.value);
+        
+        checkbox = checkbox.nextElementSibling.nextElementSibling;
+    }
+
+    let pet_elements = document.querySelectorAll('article.pet');
+    let query_selectors = ["p#hidden_size", "p#hidden_sex"];
+
+    for(let i = 0; i < pet_elements.length; ++i){
+        let pet_element = pet_elements[i];
+        let isVisible = true;
+
+        if(pet_element.style.display != "none") {
+            if(sizes.length > 0) {
+                let pet_parameter = pet_element.querySelector(query_selectors[0]).innerHTML;
+                isVisible &= sizes.includes(pet_parameter.toUpperCase());  
+            }
+            if(genders.length > 0 && isVisible) {
+                let pet_parameter = pet_element.querySelector(query_selectors[1]).innerHTML;
+                isVisible &= genders.includes(pet_parameter.toUpperCase());
+            }
+
+            pet_element.style.display = (isVisible ? "" : "none");
+        }
+    }
+
+
+}
+
+function filterByAllParameters() {
+    filterByTextParameters();
+    filterByCheckBoxes();
 }
