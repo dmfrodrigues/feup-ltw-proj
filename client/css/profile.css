@@ -1,3 +1,9 @@
+img.profile-pic {
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
 #profile {
     margin: 2em 1em 2em 1em;
     padding: 1em;
@@ -18,7 +24,7 @@
 
 #profile #profile_img {
     width: 200px;
-    height: auto;
+    height: 200px;
     grid-area: 1 / 1 / span 1 / span 1;
     color: black;
     text-decoration: none;
@@ -40,4 +46,71 @@
     grid-area: 2 / 1 / span 1 / span 1;
     color: black;
     text-decoration: none;
+}
+
+#edit-profile #profile-photo #photo {
+    position: relative;
+}
+
+#edit-profile #profile-photo {
+    width: 300px;
+}
+
+#edit-profile #profile-photo img {
+    display: inline;
+    width:  300px;
+    height: 300px;
+}
+
+#edit-profile #profile-photo details {
+    position: absolute;
+    left: 222px;
+    top: 263px;
+}
+
+#edit-profile #profile-photo details summary {
+    list-style: none;
+}
+
+.dropdown-main {
+    padding: 4px 8px;
+    cursor: pointer;
+
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 6px;
+}
+
+#edit-profile #profile-photo div#edit {
+    width: 50px;
+}
+
+.dropdown {
+    padding: 6px 0;
+    cursor: pointer;
+
+    border: 1px solid lightgray;
+    background-color: white;
+    border-radius: 6px;
+}
+
+.dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown ul li {
+    white-space: nowrap;
+    padding: 0.3em 8px;
+    /* height: 27px; */
+}
+
+.dropdown ul li * {
+    cursor: inherit;
+}
+
+.dropdown ul li:hover {
+    background-color: var(--main-color);
+    color: white;
 }

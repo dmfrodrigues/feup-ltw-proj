@@ -130,12 +130,12 @@
     text-align: center;
 }
 
-#pet-list .pet a{
+.pet a{
     text-decoration: none;
     color: var(--main-color);
 }
 
-#pet-list .pet img{
+.pet img{
     height: 200px;
     width: auto;
     border-radius: 1em;

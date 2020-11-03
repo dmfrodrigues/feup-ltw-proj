@@ -126,10 +126,13 @@ function editUserPassword(string $username, string $password) {
 function saveUserPicture(string $username, array $file){
     $ext = checkImageFile($file, 1000000);
 
-    $filepath = USERS_IMAGES_DIR."/$username.$ext";
-    if (!move_uploaded_file($file['tmp_name'], $filepath)) {
-        throw new RuntimeException('Failed to move uploaded file.');
-    }
+    $filepath = USERS_IMAGES_DIR."/$username.jpg";
+    convertImage(
+        $file['tmp_name'],
+        pathinfo($file['name'], PATHINFO_EXTENSION),
+        $filepath,
+        85
+    );
 }
 
  /**
