@@ -14,6 +14,8 @@ server/resources/img/pets
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+.idea/ltw-project-g22.iml
+.idea/modules.xml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
