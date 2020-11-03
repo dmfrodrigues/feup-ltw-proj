@@ -264,7 +264,8 @@ function getPetCommentsPhotos(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM CommentPhoto 
     WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
-    $stmt->bindParam(':id', $id);;
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
     $photos = $stmt->fetchAll();
     return $photos;
 }
@@ -279,7 +280,8 @@ function getAddedPets(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE postedBy=:username');
-    $stmt->bindParam(':username', $username);;
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
     $addedPets = $stmt->fetchAll();
     return $addedPets;
 }
