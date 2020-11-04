@@ -1,6 +1,4 @@
 <h1>Pets available for adoption</h1>
-<script src="js/filterPets.js"></script>
-<script src="js/addCheckBoxes.js" defer></script>
 <article id="searches">
     <input type="text" id="name" onkeyup="filterByAllParameters()" placeholder="Pet name" title="Pet name">
     <input type="text" id="location" onkeyup="filterByAllParameters()" placeholder="Pet location" title="Pet location">
