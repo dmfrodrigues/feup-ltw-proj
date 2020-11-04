@@ -1,27 +1,26 @@
 #pet{
-    margin: 2em 1em 2em 1em;
-    padding: 1em;
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 3em 5em;
     border-radius: 1em;
     background-color: var(--light-color);
     grid-area: 2 / 1 / span 1 / span 1;
     align-self: center;
-    text-align: center;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
 }
 
-#pet header{
-    grid-area: 1 / 1 / span 1 / span 1;
-    margin: 0 0 1em 5em;
-    text-align: left;
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto auto;
+#pet header,
+#pet section {
+    margin: 0 0 1em 0;
 }
 
-#pet header h1{
-    text-align: left;
+#pet header{
+    grid-area: 1 / 1 / span 1 / span 1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
 }
 
 #pet header a{
@@ -30,55 +29,61 @@
 }
 
 #pet header #pet-profile-img{
-    grid-area: 1 / 1 / span 3 / span 1;
+    grid-area: 1 / 1 / span 2   ;
     height: 300px;
     width: auto;
 }
 
-#pet #favorite{
-    grid-area: 1 / 2 / span 1 / span 1;
-    margin: 1em 0em 1em 5em;
-    padding: 0.5em 0 0 0.5em;
-    width: 12em;
-    height: 2.5em;
-    border-radius: 1em;
-    color: var(--main-color);
-    background-color: white;
-    text-align: center;
+#pet header #actions,
+#pet header #data {
+    padding: 0 2em;
 }
 
-#pet #favorite img{
+#pet header #data{
+    grid-area: 1 / 2;
+    margin: 0;
+}
+
+#pet header #actions {
+    grid-area: 2 / 2;
+}
+
+#pet header #actions #favorite img{
     padding: 0 0.5em 0 0;
     vertical-align: middle;
 }
 
-#pet #ask{
-    grid-area: 2 / 2 / span 1 / span 1;
-    margin: 1em 0em 1em 5em;
-    padding: 0.5em 0 0 0.5em;
-    width: 12em;
+#pet header * div {
+    max-width: 13em;
     height: 2em;
+    line-height: 2em;
+    padding: 0.5em;
+    margin: 0 1em 1em 0;
     border-radius: 1em;
-    color: white;
-    background-color: var(--main-color);
     text-align: center;
 }
 
-#pet #data{
-    grid-area: 3 / 2 / span 1 / span 1;
-    margin: 0 0 1em 5em;
-    text-align: left;
+#pet header #actions #favorite{
+    color: var(--main-color);
+    background-color: white;
+}
+
+#pet header #actions #ask{
+    color: white;
+    background-color: var(--main-color);
+}
+
+#pet header #actions #ask a{
+    color: white;
 }
 
 #pet #description{
     grid-area: 2 / 1 / span 1 / span 2;
-    margin: 0 0 1em 5em;
     text-align: left;
 }
 
 #pet #about{
     grid-area: 3 / 1 / span 1 / span 2;
-    margin: 0 0 1em 5em;
     text-align: left;
     display: grid;
     grid-template-columns: auto auto;
@@ -87,6 +92,15 @@
 
 #pet #about h2{
     grid-area: 1 / 1 / span 1 / span 1;
+}
+
+#pet #about .name{
+    width: 100px;
+    font-weight: bold;
+}
+
+#pet #about div *{
+    display: inline-block;
 }
 
 #pet #about #age{
@@ -116,7 +130,6 @@
 
 #pet #comments{
     grid-area: 4 / 1 / span 1 / span 2;
-    margin: 0 0 1em 5em;
     text-align: left;
 }
 
@@ -130,12 +143,12 @@
     text-align: center;
 }
 
-#pet-list .pet a{
+.pet a{
     text-decoration: none;
     color: var(--main-color);
 }
 
-#pet-list .pet img{
+.pet img{
     height: 200px;
     width: auto;
     border-radius: 1em;

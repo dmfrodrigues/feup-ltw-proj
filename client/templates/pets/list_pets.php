@@ -1,14 +1,30 @@
 <h1>Pets available for adoption</h1>
 <script src="js/filterPets.js"></script>
-
+<script src="js/addCheckBoxes.js" defer></script>
 <article id="searches">
     <input type="text" id="name" onkeyup="filterByAllParameters()" placeholder="Pet name" title="Pet name">
     <input type="text" id="location" onkeyup="filterByAllParameters()" placeholder="Pet location" title="Pet location">
     <input type="text" id="species" onkeyup="filterByAllParameters()" placeholder="Pet species" title="Pet species">
     <input type="number" id="age" onkeyup="filterByAllParameters()" placeholder="Pet age" title="Pet age">
     <input type="text" id="color" onkeyup="filterByAllParameters()" placeholder="Pet color" title="Pet color">
-    <input type="text" id="size" onkeyup="filterByAllParameters()" placeholder="Pet size" title="Pet size">
-    <input type="text" id="sex" onkeyup="filterByAllParameters()" placeholder="Pet sex" title="Pet sex">
+    
+    <p id="size">Size</p>
+    <input type="checkbox" id="size_XS" name="size_XS" value="XS" onClick="filterByAllParameters()">
+    <label for="size_XS">XS</label>
+    <input type="checkbox" id="size_S" name="size_S" value="S" onClick="filterByAllParameters()">
+    <label for="size_S">S</label>
+    <input type="checkbox" id="size_M" name="size_M" value="M" onClick="filterByAllParameters()">
+    <label for="size_M">M</label>
+    <input type="checkbox" id="size_L" name="size_L" value="L" onClick="filterByAllParameters()">
+    <label for="size_L">L</label>
+    <input type="checkbox" id="size_XL" name="size_XL" value="XL" onClick="filterByAllParameters()">
+    <label for="size_XL">XL</label>
+
+    <p id="sex">Sex</p>
+    <input type="checkbox" id="male" name="male" value="M" onClick="filterByAllParameters()">
+    <label for="male">Male</label> 
+    <input type="checkbox" id="female" name="female" value="F" onClick="filterByAllParameters()">
+    <label for="female">Female</label>
 </article>
     
 <section id="pet-list">

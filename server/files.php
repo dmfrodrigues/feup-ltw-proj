@@ -70,3 +70,31 @@ function rmdir_recursive(string $dir){
         rmdir($dir);
     } else throw new RuntimeException('Can\'t delete unknown file type');
 }
+
+/**
+ * Convert between any type of image.
+ * 
+ * From https://stackoverflow.com/a/14549647/12283316.
+ *
+ * @param string $originalImage     Path of original image
+ * @param string $outputImage       Path of output image
+ * @param integer $quality          Value from 0 (worst) to 100 (best)
+ * @return void
+ */
+function convertImage(string $originalImage, string $ext, string $outputImage, int $quality){
+    // jpg, png, gif or bmp?
+    
+    if (preg_match('/jpg|jpeg/i',$ext))
+        $imageTmp=imagecreatefromjpeg($originalImage);
+    else if (preg_match('/png/i',$ext))
+        $imageTmp=imagecreatefrompng($originalImage);
+    else if (preg_match('/gif/i',$ext))
+        $imageTmp=imagecreatefromgif($originalImage);
+    else if (preg_match('/bmp/i',$ext))
+        $imageTmp=imagecreatefrombmp($originalImage);
+    else
+        throw new RuntimeException("Unknown image type");
+
+    imagejpeg($imageTmp, $outputImage, $quality);
+    imagedestroy($imageTmp);
+}
