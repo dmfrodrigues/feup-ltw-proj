@@ -211,10 +211,9 @@ function getPetMainPhoto(int $id) : string {
  */
 function getPetComments(int $id) : array {
     global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM Comment
-    WHERE pet=:id');
-    $stmt->bindParam(':id', $id);;
+    $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
     $comments = $stmt->fetchAll();
     return $comments;
 }
