@@ -1,0 +1,35 @@
+#comments article.comment>.user a{
+    text-decoration: inherit;
+    color: inherit;
+}
+
+#comments article.comment>.date{
+    float: right;
+}
+
+#comments article.comment>p {
+    background-color: lightgray;
+    margin: 0.4em 0;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+#comments>details details{
+    margin: 0 0 0 2em;
+}
+
+#comments details>summary{
+    list-style: none;
+}
+
+#comments details>summary {
+    margin: 1em 0;
+}
+
+#comments details>summary::after {
+    content: '► Open answers';
+}
+
+#comments details[open]>summary:after {
+    content: '▼ Close answers';
+}
