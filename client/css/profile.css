@@ -113,3 +113,9 @@ img.profile-pic {
     background-color: var(--main-color);
     color: white;
 }
+
+.dropdown a,
+.dropdown-main a {
+    color: inherit;
+    text-decoration: none;
+}

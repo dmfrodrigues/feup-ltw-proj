@@ -135,6 +135,18 @@ function saveUserPicture(string $username, array $file){
     );
 }
 
+/**
+ * Erase user picture.
+ *
+ * @param string $username  User's username
+ * @return void
+ */
+function eraseUserPicture(string $username){
+    $filepath = USERS_IMAGES_DIR."/$username.jpg";
+    if(!unlink($filepath))
+        throw new RuntimeException("Could not delete '$filepath'");
+}
+
  /**
   * Add pet to user's favorites list.
   *
