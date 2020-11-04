@@ -111,7 +111,7 @@ CREATE TABLE AdoptionRequestMessage (
     request INTEGER NOT NULL,
 
     CONSTRAINT AdoptionRequestMessage_PK PRIMARY KEY(id),
-    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON DELETE CASCADE
+    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comment (
