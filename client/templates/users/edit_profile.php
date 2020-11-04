@@ -28,7 +28,9 @@
                                 </label>
                             </form>
                         </li>
-                        <li>Erase picture</li>
+                        <li>
+                            <a href="action_erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
+                        </li>
                     </ul>
                 </div>
             </details>
