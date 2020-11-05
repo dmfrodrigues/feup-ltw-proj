@@ -1,0 +1,55 @@
+#comments article.comment {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 0.5em;
+}
+#comments article.comment>img.profile-pic{ grid-area: 1 / 1 / span 2; }
+#comments article.comment>.user          { grid-area: 1 / 2; }
+#comments article.comment>.date          { grid-area: 1 / 3; }
+#comments article.comment>p              { grid-area: 2 / 2 / span 1 / span 2; }
+
+#comments article.comment {
+    margin: 0.5em 0;
+}
+
+#comments article.comment>img.profile-pic{
+    max-width : 76px;
+    max-height: 76px;
+}
+
+#comments article.comment>.user a{
+    text-decoration: inherit;
+    color: inherit;
+}
+
+#comments article.comment>.date{
+    text-align: right;
+}
+
+#comments article.comment>p {
+    background-color: lightgray;
+    margin: 0.4em 0 0 0;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+#comments>details details{
+    margin: 0 0 0 2em;
+}
+
+#comments details>summary{
+    list-style: none;
+}
+
+#comments details>summary {
+    margin: 1em 0;
+}
+
+#comments details>summary::after {
+    content: '► Open answers';
+}
+
+#comments details[open]>summary:after {
+    content: '▼ Close answers';
+}
