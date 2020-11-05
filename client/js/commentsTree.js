@@ -44,6 +44,10 @@ function addCommentToDocument(parent, comment){
     let img_user = document.createElement("img");
     img_user.classList = ["profile-pic"];
     img_user.src = comment.pictureUrl;
+    let img_link_user = document.createElement("a");
+    img_link_user.href = `profile.php?username=${comment.user}`;
+    img_link_user.classList = ["profile-pic"];
+    img_link_user.appendChild(img_user);
 
     let span_date = document.createElement("span");
     span_date.classList = ["date"];
@@ -53,12 +57,21 @@ function addCommentToDocument(parent, comment){
     p_comment.classList = ["comment-text"]
     p_comment.innerHTML = comment.text;
 
+    let action_answer = document.createElement("img");
+    action_answer.classList = ["icon"];
+    action_answer.src = "resources/img/reply.svg";
+    let actions = document.createElement("div");
+    actions.classList = ["actions"];
+    actions.appendChild(action_answer);
+
     let commentElement = document.createElement("article");
+    commentElement.id = `comment-${comment.id}`;
     commentElement.classList = ["comment"];
     commentElement.appendChild(span_user);
-    commentElement.appendChild(img_user);
+    commentElement.appendChild(img_link_user);
     commentElement.appendChild(span_date);
     commentElement.appendChild(p_comment);
+    commentElement.appendChild(actions);
 
     let summaryElement = document.createElement("summary");
     summaryElement.appendChild(commentElement);

@@ -1,15 +1,21 @@
 #comments article.comment {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto auto;
     grid-template-rows: auto auto 1fr;
     grid-column-gap: 0.5em;
 }
-#comments article.comment>img.profile-pic{ grid-area: 1 / 1 / span 3; }
+#comments article.comment>a.profile-pic{ grid-area: 1 / 1 / span 3; }
 #comments article.comment>.user          { grid-area: 1 / 2; }
-#comments article.comment>.date          { grid-area: 1 / 3; }
-#comments article.comment>p.comment-text { grid-area: 2 / 2 / span 2 / span 2; }
-#comments article.comment>textarea.comment-text { grid-area: 2 / 2 / span 2; }
-#comments article.comment>input#submit-comment { grid-area: 2 / 3; }
+#comments article.comment>.date          { grid-area: 1 / 3 / span 1 / span 2; }
+#comments article.comment>p.comment-text,
+#comments article.comment>textarea.comment-text { grid-area: 2 / 2 / span 2 / span 2; }
+#comments article.comment>input#submit-comment { grid-area: 2 / 4; }
+#comments article.comment>.actions { grid-area: 2 / 4; }
+
+#comments article.comment>.actions .icon {
+    height: 20px;
+    cursor: pointer;
+}
 
 #comments article.comment>textarea.comment-text {
     font-family: inherit;
@@ -21,7 +27,7 @@
     margin: 0.5em 0;
 }
 
-#comments article.comment>img.profile-pic{
+#comments article.comment img.profile-pic{
     max-width : 67px;
     max-height: 67px;
 }
