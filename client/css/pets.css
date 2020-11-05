@@ -143,6 +143,34 @@
     text-align: center;
 }
 
+.pet-card-grid{
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 5em;
+    column-gap: 2em;
+}
+
+.pet-card{
+    cursor: pointer;
+    position: relative;
+    height: 250px;
+    width: 250px;
+}
+
+.pet-card img{
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 2em;
+}
+
+.pet-card-content{
+    position: absolute;
+    top: 50%;
+    padding: 1em;
+    color: var(--main-color);
+}
+
 .pet a{
     text-decoration: none;
     color: var(--main-color);

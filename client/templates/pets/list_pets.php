@@ -26,26 +26,27 @@
 </article>
     
 <section id="pet-list">
+    <div class="pet-card-grid">
     <?php
     foreach ($pets as $pet) {
         $intro = explode(PHP_EOL, $pet['description'])[0];
         $photoUrl = getPetMainPhoto($pet['id']);
     ?>
-        <article class="pet">
-            <header>
-                <h2><a href="pet.php?id=<?= $pet['id'] ?>"><?= $pet['name'] ?></a></h2>
-            </header>
-            <img src="<?= $photoUrl ?>" alt="photo of <?= $pet['name'] ?>" />
+    <div class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet['id'] ?>';">
+        <img src="<?= $photoUrl ?>">
+        <div class="pet-card-content">
+            <h2><?= $pet['name'] ?></h2>
             <p><?= $intro ?></p>
-            <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
-            <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
-            <p id="hidden_age" style="display: none"><?= $pet['age'] ?></p>
-            <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
-            <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
-            <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
-
-        </article>
+        </div>
+        <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
+        <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
+        <p id="hidden_age" style="display: none"><?= $pet['age'] ?></p>
+        <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
+        <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
+        <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
+    </div>
     <?php
     }
     ?>
+    </div>
 </section>
