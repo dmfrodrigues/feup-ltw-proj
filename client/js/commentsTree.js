@@ -23,10 +23,8 @@ function createTree(comments){
             (c.answerTo === null ? null : parseInt(c.answerTo))
         ));
     }
-    console.log(tree);
     /// Build tree
     for(let [id, c] of tree){
-        console.log(c);
         if(c.parent === null) root.addChild(c);
         else                  tree.get(c.parent).addChild(c);
     }
@@ -39,8 +37,6 @@ function createTree(comments){
 }
 
 function addCommentToDocument(parent, comment){
-    console.log(comment);
-
     let span_user = document.createElement("span");
     span_user.classList = ["user"];
     span_user.innerHTML = `<a href="profile.php?username=${comment.user}">${comment.user}</a>`;
@@ -48,20 +44,34 @@ function addCommentToDocument(parent, comment){
     let img_user = document.createElement("img");
     img_user.classList = ["profile-pic"];
     img_user.src = comment.pictureUrl;
+    let img_link_user = document.createElement("a");
+    img_link_user.href = `profile.php?username=${comment.user}`;
+    img_link_user.classList = ["profile-pic"];
+    img_link_user.appendChild(img_user);
 
     let span_date = document.createElement("span");
     span_date.classList = ["date"];
     span_date.innerHTML = comment.postedOn;
 
     let p_comment = document.createElement("p");
+    p_comment.classList = ["comment-text"]
     p_comment.innerHTML = comment.text;
 
+    let action_answer = document.createElement("img");
+    action_answer.classList = ["icon"];
+    action_answer.src = "resources/img/reply.svg";
+    let actions = document.createElement("div");
+    actions.classList = ["actions"];
+    actions.appendChild(action_answer);
+
     let commentElement = document.createElement("article");
+    commentElement.id = `comment-${comment.id}`;
     commentElement.classList = ["comment"];
     commentElement.appendChild(span_user);
-    commentElement.appendChild(img_user);
+    commentElement.appendChild(img_link_user);
     commentElement.appendChild(span_date);
     commentElement.appendChild(p_comment);
+    commentElement.appendChild(actions);
 
     let summaryElement = document.createElement("summary");
     summaryElement.appendChild(commentElement);
