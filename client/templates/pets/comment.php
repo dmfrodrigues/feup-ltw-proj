@@ -1,5 +1,4 @@
-<details class="comment-details" id="comment" open>
-    <summary>
+<div class="comment" id="comment">
         <article class="comment" id="">
             <span class="user">
                 <a href="profile.php?username="></a>
@@ -13,5 +12,7 @@
                 <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="">
             </div>
         </article>
-    </summary>
-</details>
+    <details class="comment-details" open>
+        <summary></summary>
+    </details>
+</div>

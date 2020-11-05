@@ -45,22 +45,22 @@ function cloneNodeRecursive(element){
     return ret;
 }
 
-function createDetailsElement(comment){
-    let detailsElement = cloneNodeRecursive(document.querySelector("#templates > #comment"));
-    detailsElement.id = `comment-${comment.id}`;
+function createCommentElement(comment){
+    let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
+    commentElement.id = `comment-${comment.id}`;
     
-    let el_user = detailsElement.getElementsByClassName("user")[0];
+    let el_user = commentElement.getElementsByClassName("user")[0];
     el_user.children[0].href = `profile.php?username=${comment.user}`;
     el_user.children[0].innerHTML = comment.user;
     
-    let el_pic = detailsElement.getElementsByClassName("profile-pic-a")[0];
+    let el_pic = commentElement.getElementsByClassName("profile-pic-a")[0];
     el_pic.href=`profile.php?username=${comment.user}`;
     el_pic.children[0].src = comment.pictureUrl;
 
-    let el_date = detailsElement.getElementsByClassName("date")[0]; el_date.innerHTML = comment.postedOn;
-    let el_text = detailsElement.getElementsByClassName("comment-text")[0]; el_text.innerHTML = comment.text;
+    let el_date = commentElement.getElementsByClassName("date")[0]; el_date.innerHTML = comment.postedOn;
+    let el_text = commentElement.getElementsByClassName("comment-text")[0]; el_text.innerHTML = comment.text;
 
-    return detailsElement;
+    return commentElement;
 }
 
 function createAnswerElement(commentId){
@@ -79,10 +79,11 @@ function createAnswerElement(commentId){
 }
 
 function addCommentToDocument(parent, comment){
-    let detailsElement = createDetailsElement(comment);
+    let commentElement = createCommentElement(comment);
+    let detailsElement = commentElement.querySelector("details");
 
     if(typeof user !== 'undefined'){
-        let actions_el = detailsElement.querySelector(".actions");
+        let actions_el = commentElement.querySelector(".actions");
         actions_el.style.display = "";
 
         let action_reply_el = actions_el.querySelector("#action-reply");
@@ -90,18 +91,26 @@ function addCommentToDocument(parent, comment){
 
         let answerElement = createAnswerElement(comment.id);
         answerElement.style.display="none";
-        detailsElement.appendChild(answerElement);
+        commentElement.insertBefore(
+            answerElement,
+            detailsElement
+        );
     }
 
-    parent.appendChild(detailsElement);
+    parent.appendChild(commentElement);
 
-    for(let i = 0; i < comment.children.length; ++i){
-        addCommentToDocument(detailsElement, comment.children[i]);
+    if(comment.children.length > 0){
+        for(let i = 0; i < comment.children.length; ++i){
+            addCommentToDocument(detailsElement, comment.children[i]);
+        }
+    } else {
+        detailsElement.style.display = "none"; 
     }
 }
 
 function clickedCommentReply(event){
-    let id_string = event.target.parentElement.parentElement.parentElement.parentElement.id;
+    let id_string = event.target.parentElement.parentElement.parentElement.id;
+    console.log(id_string);
     let id = parseInt(id_string.split("-")[1]);
 
     let new_comment_el = document.getElementById(`new-comment-${id}`);

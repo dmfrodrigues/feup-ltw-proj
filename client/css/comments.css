@@ -61,10 +61,11 @@
     color: white;
 }
 
-#comments>details details{
+#comments div.comment form.answer{
     margin: 0 0 0 2em;
 }
-#comments>details form.answer{
+
+#comments details>div.comment{
     margin: 0 0 0 2em;
 }
 
@@ -73,7 +74,7 @@
 }
 
 #comments details>summary {
-    margin: 1em 0;
+    margin: 0.5em 0 1em 0;
 }
 
 #comments details>summary::after {
