@@ -49,16 +49,16 @@ function createCommentElement(comment){
     let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
     commentElement.id = `comment-${comment.id}`;
     
-    let el_user = commentElement.getElementsByClassName("user")[0];
+    let el_user = commentElement.querySelector("#comment-user");
     el_user.children[0].href = `profile.php?username=${comment.user}`;
     el_user.children[0].innerHTML = comment.user;
     
-    let el_pic = commentElement.getElementsByClassName("profile-pic-a")[0];
+    let el_pic = commentElement.querySelector("#comment-profile-pic-a");
     el_pic.href=`profile.php?username=${comment.user}`;
     el_pic.children[0].src = comment.pictureUrl;
 
-    let el_date = commentElement.getElementsByClassName("date")[0]; el_date.innerHTML = comment.postedOn;
-    let el_text = commentElement.getElementsByClassName("comment-text")[0]; el_text.innerHTML = comment.text;
+    let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
+    let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
 
     return commentElement;
 }
@@ -67,11 +67,11 @@ function createAnswerElement(commentId){
     let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
     answerElement.id = `new-comment-${commentId}`;
 
-    let el_user = answerElement.getElementsByClassName("user")[0];
+    let el_user = answerElement.querySelector("#comment-user");
     el_user.children[0].href = `profile.php?username=${user.username}`;
     el_user.children[0].innerHTML = user.username;
     
-    let el_pic = answerElement.getElementsByClassName("profile-pic-a")[0];
+    let el_pic = answerElement.querySelector("#comment-profile-pic-a");
     el_pic.href=`profile.php?username=${user.username}`;
     el_pic.children[0].src = user.pictureUrl;
 
@@ -110,7 +110,6 @@ function addCommentToDocument(parent, comment){
 
 function clickedCommentReply(event){
     let id_string = event.target.parentElement.parentElement.parentElement.id;
-    console.log(id_string);
     let id = parseInt(id_string.split("-")[1]);
 
     let new_comment_el = document.getElementById(`new-comment-${id}`);
