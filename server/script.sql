@@ -36,7 +36,7 @@ CREATE TABLE User (
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     shelter INTEGER,
 
-    CONSTRAINT User_PK PRIMARY KEY(username)
+    CONSTRAINT User_PK PRIMARY KEY(username),
     CONSTRAINT User_FK FOREIGN KEY (shelter) REFERENCES Shelter ON DELETE SET NULL ON UPDATE CASCADE
 );
 
@@ -106,17 +106,17 @@ CREATE TABLE AdoptionRequest (
 );
 
 CREATE TABLE AdoptionRequestMessage (
-    id INTEGER,
+    id INTEGER NOT NULL,
     text VARCHAR NOT NULL,
     request INTEGER NOT NULL,
 
     CONSTRAINT AdoptionRequestMessage_PK PRIMARY KEY(id),
-    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON DELETE CASCADE
+    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comment (
-    id INTEGER,
-    postedOn INTEGER NOT NULL,
+    id INTEGER NOT NULL,
+    postedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     text VARCHAR NOT NULL,
     pet INTEGER NOT NULL,
     user INTEGER NOT NULL,
@@ -128,12 +128,12 @@ CREATE TABLE Comment (
 );
 
 CREATE TABLE CommentPhoto (
-    commentId INTEGER,
-    id INTEGER,
+    commentId INTEGER NOT NULL,
+    id INTEGER NOT NULL,
     url VARCHAR NOT NULL, -- Assuming every row has an URL
 
-    CONSTRAINT CommentPhoto_PK PRIMARY KEY(commentId, id),
-    CONSTRAINT CommentPhoto_FK FOREIGN KEY(commentId) REFERENCES Comment ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT CommentPhoto_PK PRIMARY KEY(id),
+    CONSTRAINT CommentPhoto_FK FOREIGN KEY(commentId) REFERENCES Comment(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE FavoritePet (

@@ -6,6 +6,8 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/pets.php';
 $pets = getPets();
 
+$javascript_files = ['js/filterPets.js', 'js/addCheckBoxes.js'];
+
 include_once 'templates/common/header.php';
 include_once 'templates/pets/list_pets.php';
 include_once 'templates/common/footer.php';

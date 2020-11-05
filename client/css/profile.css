@@ -72,6 +72,10 @@ img.profile-pic {
     list-style: none;
 }
 
+#edit-profile #profile-photo div#edit {
+    width: 50px;
+}
+
 .dropdown-main {
     padding: 4px 8px;
     cursor: pointer;
@@ -79,10 +83,6 @@ img.profile-pic {
     border: 1px solid lightgray;
     background-color: white;
     border-radius: 6px;
-}
-
-#edit-profile #profile-photo div#edit {
-    width: 50px;
 }
 
 .dropdown {
@@ -103,7 +103,6 @@ img.profile-pic {
 .dropdown ul li {
     white-space: nowrap;
     padding: 0.3em 8px;
-    /* height: 27px; */
 }
 
 .dropdown ul li * {
@@ -113,4 +112,10 @@ img.profile-pic {
 .dropdown ul li:hover {
     background-color: var(--main-color);
     color: white;
+}
+
+.dropdown a,
+.dropdown-main a {
+    color: inherit;
+    text-decoration: none;
 }

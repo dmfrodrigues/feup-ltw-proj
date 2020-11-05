@@ -5,12 +5,14 @@
         if($photoUrl == '') $photoUrl = "resources/img/no-image.svg";
         ?>
         <img id="pet-profile-img" src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
-        <a id="favorite" href="#"><img src="resources/img/heart.svg" height="30px">Add to favorites</a>
-        <a id="ask" href="#">Ask question about pet</a>
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
             <span id="location"><?= $pet['location'] ?></span>
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
+        </div>
+        <div id="actions">
+            <div id="favorite"><a href="#"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+            <div id="ask"><a href="#comments">Ask question about pet</a></div>
         </div>
     </header>
     <section id="description">
