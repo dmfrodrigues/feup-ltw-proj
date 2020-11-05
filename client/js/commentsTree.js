@@ -36,32 +36,29 @@ function createTree(comments){
     return root;
 }
 
+function cloneNodeRecursive(element){
+    let ret = element.cloneNode();
+    for(let i = 0; i < element.children.length; ++i){
+        let child = cloneNodeRecursive(element.children[i]);
+        ret.appendChild(child);
+    }
+    return ret;
+}
+
 function addCommentToDocument(parent, comment){
-    let commentElement = document.createElement("article");
-    commentElement.id = `comment-${comment.id}`;
-    commentElement.classList = ["comment"];
-    commentElement.innerHTML=`
-        <span class="user">
-            <a href="profile.php?username=${comment.user}">
-                ${comment.user}
-            </a>
-        </span>
-        <a class="profile-pic-a" href="profile.php?username=${comment.user}">
-            <img class="profile-pic" src="${comment.pictureUrl}">
-        </a>
-        <span class="date">${comment.postedOn}</span>
-        <p class="comment-text">${comment.text}</p>
-        <div class="actions">
-            <img class="icon" src="resources/img/reply.svg">
-        </div>
-    `;
+    let detailsElement = cloneNodeRecursive(document.querySelector("#templates > #comment"));
+    detailsElement.id = `comment-${comment.id}`;
+    
+    let el_user = detailsElement.getElementsByClassName("user")[0];
+    el_user.children[0].href = `profile.php?username=${comment.user}`;
+    el_user.children[0].innerHTML = comment.user;
+    
+    let el_pic = detailsElement.getElementsByClassName("profile-pic-a")[0];
+    el_pic.href=`profile.php?username=${comment.user}`;
+    el_pic.children[0].src = comment.pictureUrl;
 
-    let summaryElement = document.createElement("summary");
-    summaryElement.appendChild(commentElement);
-
-    let detailsElement = document.createElement("details");
-    detailsElement.classList = ["comment-details"];
-    detailsElement.appendChild(summaryElement)
+    let el_date = detailsElement.getElementsByClassName("date")[0]; el_date.innerHTML = comment.postedOn;
+    let el_text = detailsElement.getElementsByClassName("comment-text")[0]; el_text.innerHTML = comment.text;
 
     parent.appendChild(detailsElement);
 
