@@ -9,8 +9,8 @@
             </a>
             <span class="date">2020-31-12 00:00:00</span>
             <p class="comment-text"></p>
-            <div class="actions">
-                <img class="icon" src="resources/img/reply.svg">
+            <div class="actions" style="display: none;">
+                <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="">
             </div>
         </article>
     </summary>

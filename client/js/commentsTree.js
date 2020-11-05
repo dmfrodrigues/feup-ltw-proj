@@ -64,8 +64,6 @@ function createDetailsElement(comment){
 }
 
 function createAnswerElement(commentId){
-    console.log("L67");
-
     let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
     answerElement.id = `new-comment-${commentId}`;
 
@@ -84,6 +82,12 @@ function addCommentToDocument(parent, comment){
     let detailsElement = createDetailsElement(comment);
 
     if(typeof user !== 'undefined'){
+        let actions_el = detailsElement.querySelector(".actions");
+        actions_el.style.display = "";
+
+        let action_reply_el = actions_el.querySelector("#action-reply");
+        action_reply_el.onclick = clickedCommentReply;
+
         let answerElement = createAnswerElement(comment.id);
         answerElement.style.display="none";
         detailsElement.appendChild(answerElement);
@@ -94,6 +98,14 @@ function addCommentToDocument(parent, comment){
     for(let i = 0; i < comment.children.length; ++i){
         addCommentToDocument(detailsElement, comment.children[i]);
     }
+}
+
+function clickedCommentReply(event){
+    let id_string = event.target.parentElement.parentElement.parentElement.parentElement.id;
+    let id = parseInt(id_string.split("-")[1]);
+
+    let new_comment_el = document.getElementById(`new-comment-${id}`);
+    new_comment_el.style.display = (new_comment_el.style.display === "none" ? "" : "none");
 }
 
 $(document).ready(function(){
