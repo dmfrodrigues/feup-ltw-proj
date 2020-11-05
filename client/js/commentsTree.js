@@ -23,10 +23,8 @@ function createTree(comments){
             (c.answerTo === null ? null : parseInt(c.answerTo))
         ));
     }
-    console.log(tree);
     /// Build tree
     for(let [id, c] of tree){
-        console.log(c);
         if(c.parent === null) root.addChild(c);
         else                  tree.get(c.parent).addChild(c);
     }
@@ -39,8 +37,6 @@ function createTree(comments){
 }
 
 function addCommentToDocument(parent, comment){
-    console.log(comment);
-
     let span_user = document.createElement("span");
     span_user.classList = ["user"];
     span_user.innerHTML = `<a href="profile.php?username=${comment.user}">${comment.user}</a>`;
@@ -54,6 +50,7 @@ function addCommentToDocument(parent, comment){
     span_date.innerHTML = comment.postedOn;
 
     let p_comment = document.createElement("p");
+    p_comment.classList = ["comment-text"]
     p_comment.innerHTML = comment.text;
 
     let commentElement = document.createElement("article");
