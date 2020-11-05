@@ -92,27 +92,31 @@ function isAdmin(string $username) : bool {
 }
 
 /**
- * Edit user name and username.
+ * Edit user name.
  *
- * @param string $username  User's username
- * @param string $name      User's name
+ * @param string $lastUsername  User's last username
+ * @param string $newUsername   User's new username
+ * @param string $name          User's name
  * @return void
  */
-function editUser(string $username, string $name){
+function editUser(string $lastUsername, string $newUsername, string $name){
     global $db;
     $stmt = $db->prepare('UPDATE User SET
-    username=:username,
+    username=:newUsername,
     name=:name
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
+    WHERE username=:lastUsername');
+    $stmt->bindParam(':newUsername', $newUsername);
+    $stmt->bindParam(':lastUsername', $lastUsername);
     $stmt->bindParam(':name'    , $name);
     $stmt->execute();
 }
 
+
 /**
 
- * Edit user.
+ * Edit user password.
  *
+ * @param string $username  User's username
  * @param string $password  User's password
  * @return void
  */

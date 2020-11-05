@@ -37,6 +37,10 @@
         </div>
     </section>
     <form action="action_edit_profile.php?username=<?=$user['username']?>" method="post">
+        <section id="username">
+            <h3>Username</h3>
+            <input type="text" name="username" placeholder="user's username" value="<?=$user['username']?>">
+        </section>
         <section id="name">
             <h3>Name</h3>
             <input type="text" name="name" placeholder="user's name" value="<?=$user['name']?>">
