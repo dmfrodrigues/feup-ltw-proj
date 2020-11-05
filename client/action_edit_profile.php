@@ -14,10 +14,13 @@ if (isset($_SESSION['username'])){
 
     editUser(
         $user["username"],
+        $_POST["username"],
         $_POST["name"]
     );
 
-    header('Location: profile.php?username='.$_GET['username']);
+    $_SESSION['username'] = $_POST['username'];
+
+    header('Location: profile.php?username='.$_POST["username"]);
 }
 
 die();
