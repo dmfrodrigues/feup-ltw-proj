@@ -1,6 +1,7 @@
 <?php
 
 include_once __DIR__.'/server.php';
+include_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 
@@ -215,6 +216,9 @@ function getPetComments(int $id) : array {
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $comments = $stmt->fetchAll();
+    for($i = 0; $i < count($comments); ++$i){
+        $comments[$i]['pictureUrl'] = getUserPicture($comments[$i]['user']);
+    }
     return $comments;
 }
 
@@ -263,8 +267,7 @@ function getPetCommentsPhotos(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM CommentPhoto 
     WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
+    $stmt->bindParam(':id', $id);;
     $photos = $stmt->fetchAll();
     return $photos;
 }
@@ -279,8 +282,7 @@ function getAddedPets(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE postedBy=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
+    $stmt->bindParam(':username', $username);;
     $addedPets = $stmt->fetchAll();
     return $addedPets;
 }

@@ -41,7 +41,7 @@
             </ul>
         </section>
     <?php } ?>
-    <section id="comments">
-        <h2>Comments</h2>
-    </section>
+    <?php
+        include_once 'templates/pets/comments.php';
+    ?>
 </article>

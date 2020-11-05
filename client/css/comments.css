@@ -1,0 +1,82 @@
+#comments article.comment {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-rows: auto auto 1fr;
+    grid-column-gap: 0.5em;
+}
+#comments article.comment>a.profile-pic{ grid-area: 1 / 1 / span 3; }
+#comments article.comment>.user          { grid-area: 1 / 2; }
+#comments article.comment>.date          { grid-area: 1 / 3 / span 1 / span 2; }
+#comments article.comment>p.comment-text,
+#comments article.comment>textarea.comment-text { grid-area: 2 / 2 / span 2 / span 2; }
+#comments article.comment>input#submit-comment { grid-area: 2 / 4; }
+#comments article.comment>.actions { grid-area: 2 / 4; }
+
+#comments article.comment>.actions .icon {
+    height: 20px;
+    cursor: pointer;
+}
+
+#comments article.comment>textarea.comment-text {
+    font-family: inherit;
+    font-size: inherit;
+    resize: none;
+}
+
+#comments article.comment {
+    margin: 0.5em 0;
+}
+
+#comments article.comment img.profile-pic{
+    max-width : 67px;
+    max-height: 67px;
+}
+
+#comments article.comment>.user {
+    margin: 0 0 0.4em 0;
+}
+
+#comments article.comment>.user a{
+    text-decoration: inherit;
+    color: inherit;
+}
+
+#comments article.comment>.date{
+    text-align: right;
+}
+
+#comments article.comment>.comment-text {
+    background-color: lightgray;
+    margin: 0;
+    padding: 0.75em;
+    border: none;
+    border-radius: 1em;
+}
+
+#comments article.comment>input[type=submit]{
+    border: none;
+    border-radius: 1em;
+    padding: 0.75em 1.5em;
+    background-color: var(--main-color);
+    color: white;
+}
+
+#comments>details details{
+    margin: 0 0 0 2em;
+}
+
+#comments details>summary{
+    list-style: none;
+}
+
+#comments details>summary {
+    margin: 1em 0;
+}
+
+#comments details>summary::after {
+    content: '► Open answers';
+}
+
+#comments details[open]>summary:after {
+    content: '▼ Close answers';
+}
