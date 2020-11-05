@@ -1,4 +1,4 @@
-<details class="comment-details" id="comment">
+<details class="comment-details" id="comment" open>
     <summary>
         <article class="comment" id="">
             <span class="user">

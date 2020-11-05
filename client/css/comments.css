@@ -64,6 +64,9 @@
 #comments>details details{
     margin: 0 0 0 2em;
 }
+#comments>details form.answer{
+    margin: 0 0 0 2em;
+}
 
 #comments details>summary{
     list-style: none;

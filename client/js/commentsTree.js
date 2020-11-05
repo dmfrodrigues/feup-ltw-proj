@@ -63,8 +63,31 @@ function createDetailsElement(comment){
     return detailsElement;
 }
 
+function createAnswerElement(commentId){
+    console.log("L67");
+
+    let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
+    answerElement.id = `new-comment-${commentId}`;
+
+    let el_user = answerElement.getElementsByClassName("user")[0];
+    el_user.children[0].href = `profile.php?username=${user.username}`;
+    el_user.children[0].innerHTML = user.username;
+    
+    let el_pic = answerElement.getElementsByClassName("profile-pic-a")[0];
+    el_pic.href=`profile.php?username=${user.username}`;
+    el_pic.children[0].src = user.pictureUrl;
+
+    return answerElement;
+}
+
 function addCommentToDocument(parent, comment){
     let detailsElement = createDetailsElement(comment);
+
+    if(typeof user !== 'undefined'){
+        let answerElement = createAnswerElement(comment.id);
+        answerElement.style.display="none";
+        detailsElement.appendChild(answerElement);
+    }
 
     parent.appendChild(detailsElement);
 
@@ -76,6 +99,9 @@ function addCommentToDocument(parent, comment){
 $(document).ready(function(){
     let root = createTree(comments);
     let commentsSection = document.getElementById("comments");
+    if(typeof user !== 'undefined'){
+        commentsSection.appendChild(createAnswerElement(null));
+    }
     for(let i = 0; i < root.children.length; ++i){
         addCommentToDocument(commentsSection, root.children[i]);
     }    

@@ -14,6 +14,15 @@ let comments = <?= json_encode($comments) ?>;
 </script>
 <?php
 
+if (isset($_SESSION['username'])) {
+    $user = getUser($_SESSION['username']);
+?>
+    <script>
+        let user = <?= json_encode($user) ?>;
+    </script>
+<?php
+}
+
 $javascript_files = ['js/Comment.js', 'js/commentsTree.js'];
 
 include_once 'templates/common/header.php';
