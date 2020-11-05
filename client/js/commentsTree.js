@@ -37,41 +37,24 @@ function createTree(comments){
 }
 
 function addCommentToDocument(parent, comment){
-    let span_user = document.createElement("span");
-    span_user.classList = ["user"];
-    span_user.innerHTML = `<a href="profile.php?username=${comment.user}">${comment.user}</a>`;
-
-    let img_user = document.createElement("img");
-    img_user.classList = ["profile-pic"];
-    img_user.src = comment.pictureUrl;
-    let img_link_user = document.createElement("a");
-    img_link_user.href = `profile.php?username=${comment.user}`;
-    img_link_user.classList = ["profile-pic"];
-    img_link_user.appendChild(img_user);
-
-    let span_date = document.createElement("span");
-    span_date.classList = ["date"];
-    span_date.innerHTML = comment.postedOn;
-
-    let p_comment = document.createElement("p");
-    p_comment.classList = ["comment-text"]
-    p_comment.innerHTML = comment.text;
-
-    let action_answer = document.createElement("img");
-    action_answer.classList = ["icon"];
-    action_answer.src = "resources/img/reply.svg";
-    let actions = document.createElement("div");
-    actions.classList = ["actions"];
-    actions.appendChild(action_answer);
-
     let commentElement = document.createElement("article");
     commentElement.id = `comment-${comment.id}`;
     commentElement.classList = ["comment"];
-    commentElement.appendChild(span_user);
-    commentElement.appendChild(img_link_user);
-    commentElement.appendChild(span_date);
-    commentElement.appendChild(p_comment);
-    commentElement.appendChild(actions);
+    commentElement.innerHTML=`
+        <span class="user">
+            <a href="profile.php?username=${comment.user}">
+                ${comment.user}
+            </a>
+        </span>
+        <a class="profile-pic" href="profile.php?username=${comment.user}">
+            <img class="profile-pic" src="${comment.pictureUrl}">
+        </a>
+        <span class="date">${comment.postedOn}</span>
+        <p class="comment-text">${comment.text}</p>
+        <div class="actions">
+            <img class="icon" src="resources/img/reply.svg">
+        </div>
+    `;
 
     let summaryElement = document.createElement("summary");
     summaryElement.appendChild(commentElement);
