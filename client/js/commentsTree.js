@@ -45,7 +45,7 @@ function cloneNodeRecursive(element){
     return ret;
 }
 
-function addCommentToDocument(parent, comment){
+function createDetailsElement(comment){
     let detailsElement = cloneNodeRecursive(document.querySelector("#templates > #comment"));
     detailsElement.id = `comment-${comment.id}`;
     
@@ -59,6 +59,12 @@ function addCommentToDocument(parent, comment){
 
     let el_date = detailsElement.getElementsByClassName("date")[0]; el_date.innerHTML = comment.postedOn;
     let el_text = detailsElement.getElementsByClassName("comment-text")[0]; el_text.innerHTML = comment.text;
+
+    return detailsElement;
+}
+
+function addCommentToDocument(parent, comment){
+    let detailsElement = createDetailsElement(comment);
 
     parent.appendChild(detailsElement);
 
