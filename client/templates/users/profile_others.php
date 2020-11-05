@@ -1,7 +1,4 @@
-<?php
-$user = getUser($_GET['username']);
-?>
-<section id="profile-others">
+<section id="profile">
     <header>
         <img class="profile-pic" id="profile_img" src="<?=$user['pictureUrl']?>">
         <span id="name"><?=$user['name']?></span>
