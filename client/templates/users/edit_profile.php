@@ -49,6 +49,6 @@
             <h3>Change password</h3>
             <a href="change_password.php?username=<?= $user['username']?>"><h1>✎</h1></br></a>
         </section>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="edit-profile-submit">
     </form>
 </article>

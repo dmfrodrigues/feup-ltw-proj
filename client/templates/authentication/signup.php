@@ -9,6 +9,6 @@
       <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
       <label> Repeat Password:
       <input type="password" id="rpt_pwd" placeholder="Password" required></label>
-      <input type="submit" value="Sign up" id="submit_signup">
+      <input type="submit" value="Sign up" id="submit-signup">
     </form>
 </section>

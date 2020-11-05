@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="css/authenticate.css">
         <link rel="stylesheet" href="css/profile.css">
         <link rel="stylesheet" href="css/pets.css">
+        <link rel="stylesheet" href="css/searches.css">
         <link rel="stylesheet" href="css/comments.css">
         <link rel="shortcut icon" type="image/ico" href="resources/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
