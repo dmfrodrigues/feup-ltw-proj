@@ -7,6 +7,7 @@ function createTree(comments){
         null,
         null,
         null,
+        null,
         null
     );
     for(let i = 0; i < comments.length; ++i){
@@ -16,6 +17,7 @@ function createTree(comments){
             parseInt(c.id),
             parseInt(c.pet),
             c.user,
+            c.pictureUrl,
             c.postedOn,
             c.text,
             (c.answerTo === null ? null : parseInt(c.answerTo))
@@ -43,6 +45,10 @@ function addCommentToDocument(parent, comment){
     span_user.classList = ["user"];
     span_user.innerHTML = `<a href="profile.php?username=${comment.user}">${comment.user}</a>`;
 
+    let img_user = document.createElement("img");
+    img_user.classList = ["profile-pic"];
+    img_user.src = comment.pictureUrl;
+
     let span_date = document.createElement("span");
     span_date.classList = ["date"];
     span_date.innerHTML = comment.postedOn;
@@ -53,6 +59,7 @@ function addCommentToDocument(parent, comment){
     let commentElement = document.createElement("article");
     commentElement.classList = ["comment"];
     commentElement.appendChild(span_user);
+    commentElement.appendChild(img_user);
     commentElement.appendChild(span_date);
     commentElement.appendChild(p_comment);
 
