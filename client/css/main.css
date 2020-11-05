@@ -34,3 +34,7 @@ body > footer {
     color: white;
     background-color: var(--dark-color);
 }
+
+#templates{
+    display: none;
+}
