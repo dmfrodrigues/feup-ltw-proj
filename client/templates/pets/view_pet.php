@@ -10,10 +10,12 @@
             <span id="location"><?= $pet['location'] ?></span>
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
+        <?php if(isset($_SESSION['username'])) { ?>
         <div id="actions">
-            <div id="favorite"><a href="#"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+            <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
             <div id="ask"><a href="#comments">Ask question about pet</a></div>
         </div>
+        <?php } ?>
     </header>
     <section id="description">
         <h2>Description</h2>
