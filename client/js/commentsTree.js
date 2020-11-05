@@ -46,7 +46,7 @@ function addCommentToDocument(parent, comment){
                 ${comment.user}
             </a>
         </span>
-        <a class="profile-pic" href="profile.php?username=${comment.user}">
+        <a class="profile-pic-a" href="profile.php?username=${comment.user}">
             <img class="profile-pic" src="${comment.pictureUrl}">
         </a>
         <span class="date">${comment.postedOn}</span>
