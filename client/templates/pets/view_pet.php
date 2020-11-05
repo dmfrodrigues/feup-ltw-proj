@@ -1,3 +1,9 @@
+<div id="templates">
+    <?php
+    include_once 'templates/pets/comment.php';
+    include_once 'templates/pets/new_comment.php';
+    ?>
+</div>
 <article id="pet">
     <header>
         <?php
