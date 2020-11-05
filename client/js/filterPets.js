@@ -1,9 +1,9 @@
 function filterByTextParameters() {
 
     const parameters_ids = ["name", "location", "species", "age", "color"];
-    const query_selectors = ["header h2 a", "p#hidden_location", "p#hidden_species", "p#hidden_age", "p#hidden_color"];
+    const query_selectors = ["div div div h2", "p#hidden_location", "p#hidden_species", "p#hidden_age", "p#hidden_color"];
 
-    let pet_elements = document.querySelectorAll('article.pet');
+    let pet_elements = document.querySelectorAll('article.pet-card');
     for(let i = 0; i < pet_elements.length; ++i){
         let pet_element = pet_elements[i];
         let isVisible = true;
@@ -40,7 +40,7 @@ function filterByCheckBoxes() {
         checkbox = checkbox.nextElementSibling.nextElementSibling;
     }
 
-    let pet_elements = document.querySelectorAll('article.pet');
+    let pet_elements = document.querySelectorAll('article.pet-card');
     let query_selectors = ["p#hidden_size", "p#hidden_sex"];
 
     for(let i = 0; i < pet_elements.length; ++i){

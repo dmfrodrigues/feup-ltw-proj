@@ -32,11 +32,19 @@
         $intro = explode(PHP_EOL, $pet['description'])[0];
         $photoUrl = getPetMainPhoto($pet['id']);
     ?>
-    <div class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet['id'] ?>';">
-        <img src="<?= $photoUrl ?>">
-        <div class="pet-card-content">
-            <h2><?= $pet['name'] ?></h2>
-            <p><?= $intro ?></p>
+    <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet['id'] ?>';">
+        <div class="pet-card-inner">
+            <div class="pet-card-front">
+                <img src="<?= $photoUrl ?>">
+                <div class="pet-card-content-front">
+                    <h2><?= $pet['name'] ?></h2>
+                </div>
+            </div>
+            <div class="pet-card-back">
+                <div class="pet-card-content-back">
+                    <p><?= $intro ?></p>
+                </div>
+            </div>
         </div>
         <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
         <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
@@ -44,7 +52,7 @@
         <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
         <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
         <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
-    </div>
+    </article>
     <?php
     }
     ?>
