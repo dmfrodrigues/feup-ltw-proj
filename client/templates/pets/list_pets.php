@@ -26,26 +26,35 @@
 </article>
     
 <section id="pet-list">
+    <div class="pet-card-grid">
     <?php
     foreach ($pets as $pet) {
         $intro = explode(PHP_EOL, $pet['description'])[0];
         $photoUrl = getPetMainPhoto($pet['id']);
     ?>
-        <article class="pet">
-            <header>
-                <h2><a href="pet.php?id=<?= $pet['id'] ?>"><?= $pet['name'] ?></a></h2>
-            </header>
-            <img src="<?= $photoUrl ?>" alt="photo of <?= $pet['name'] ?>" />
-            <p><?= $intro ?></p>
-            <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
-            <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
-            <p id="hidden_age" style="display: none"><?= $pet['age'] ?></p>
-            <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
-            <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
-            <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
-
-        </article>
+    <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet['id'] ?>';">
+        <div class="pet-card-inner">
+            <div class="pet-card-front">
+                <img src="<?= $photoUrl ?>">
+                <div class="pet-card-content-front">
+                    <h2><?= $pet['name'] ?></h2>
+                </div>
+            </div>
+            <div class="pet-card-back">
+                <div class="pet-card-content-back">
+                    <p><?= $intro ?></p>
+                </div>
+            </div>
+        </div>
+        <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
+        <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
+        <p id="hidden_age" style="display: none"><?= $pet['age'] ?></p>
+        <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
+        <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
+        <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
+    </article>
     <?php
     }
     ?>
+    </div>
 </section>

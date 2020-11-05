@@ -171,8 +171,12 @@ function eraseUserPicture(string $username){
   */
 function addToFavorites(string $username, int $id){
     global $db;
+    $favoritePets = getFavoritePets($username);
+    foreach ($favoritePets as $pet)
+        if ($pet['id'] == $id)
+            return;
     $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
-    (:username, :id)');
+            (:username, :id)');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
     $stmt->execute();
