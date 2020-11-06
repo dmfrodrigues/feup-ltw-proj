@@ -5,7 +5,7 @@
     <section id="profile-photo">
         <h3>Profile photo</h3>
         <div id="photo">
-            <img class="profile-pic" src="<?=$user['pictureUrl']?>">
+            <img class="profile-pic" src="<?php echo (is_null($user['pictureUrl']) ? "resources/img/no-image.svg": $user['pictureUrl']) ?>">
             <details>
                 <summary>
                     <a href="action_delete_user.php?username=<?= $user['username'] ?>">Delete Account</a>

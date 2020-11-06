@@ -66,11 +66,11 @@ function getUser(string $username) : array {
  * Get user profile picture URL.
  *
  * @param string $username  Username
- * @return string           URL of user profile picture
+ * @return ?string           URL of user profile picture, or null if there is none
  */
-function getUserPicture(string $username) : string {
+function getUserPicture(string $username) : ?string {
     $url = "../server/resources/img/profiles/$username.jpg";
-    if(!file_exists($url)) $url = 'resources/img/no-image.svg';
+    if(!file_exists($url)) $url = null;
     return $url;
 }
 
