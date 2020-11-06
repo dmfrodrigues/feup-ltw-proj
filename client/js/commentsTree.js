@@ -73,7 +73,7 @@ function createAnswerElement(commentId){
     
     let el_pic = answerElement.querySelector("#comment-profile-pic-a");
     el_pic.href=`profile.php?username=${user.username}`;
-    el_pic.children[0].src = user.userPictureUrl;
+    el_pic.children[0].src = user.pictureUrl;
 
     return answerElement;
 }
