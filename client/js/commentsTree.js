@@ -8,6 +8,7 @@ function createTree(comments){
         null,
         null,
         null,
+        null,
         null
     );
     for(let i = 0; i < comments.length; ++i){
@@ -20,6 +21,7 @@ function createTree(comments){
             c.userPictureUrl,
             c.postedOn,
             c.text,
+            c.commentPictureUrl,
             (c.answerTo === null ? null : parseInt(c.answerTo))
         ));
     }
@@ -46,6 +48,8 @@ function cloneNodeRecursive(element){
 }
 
 function createCommentElement(comment){
+    console.log(comment);
+
     let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
     commentElement.id = `comment-${comment.id}`;
     
@@ -59,6 +63,7 @@ function createCommentElement(comment){
 
     let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
     let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
+    let el_img  = commentElement.querySelector("#comment-picture"); el_img.src = comment.commentPictureUrl;
 
     return commentElement;
 }

@@ -7,7 +7,10 @@
             <img class="profile-pic" src="">
         </a>
         <span id="comment-date" class="date">2020-31-12 00:00:00</span>
-        <p id="comment-text" class="comment-text"></p>
+        <div id="comment-content">
+            <p id="comment-text" class="comment-text"></p>
+            <img id="comment-picture" class="comment-picture" src="">
+        </div>
         <div id="comment-actions" class="actions" style="display: none;">
             <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="">
         </div>
