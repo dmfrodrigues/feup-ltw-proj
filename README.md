@@ -20,4 +20,16 @@ TODO
 
 ## Database
 
-TODO
+![](https://drive.google.com/uc?id=1GCfSFqCDMwwdoo5dfPFMRIUeBxZViuS2)
+
+Shelter(<ins>id</ins>, name, location, description, pictureUrl, registeredOn)  
+Notification(<ins>id</ins>, read, subject, text, user→User)  
+User(<ins>username</ins>, password, name, registeredOn, shelter→Shelter)  
+Admin(<ins>username</ins>→User)  
+Pet(<ins>id</ins>, name, species, age, sex, size, color, location, description, status, postedBy→User)  
+FavoritePet(<ins>username</ins>→User, <ins>petId</ins>→Pet)  
+Comment(<ins>id</ins>, pet→Pet, user→User, postedOn, text, answerTo→Comment)  
+CommentPhoto(<ins>id</ins>, commentId→Comment, url)  
+AdoptionRequest(<ins>id</ins>, user→User, pet→Pet, text, outcome)  
+AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)  
+
