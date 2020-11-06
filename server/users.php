@@ -208,7 +208,7 @@ function addToFavorites(string $username, int $id){
 function removeFromFavorites(string $username, int $id){
     global $db;
     $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
-    username=:username AND petId=:id)');
+    username=:username AND petId=:id');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
     $stmt->execute();
