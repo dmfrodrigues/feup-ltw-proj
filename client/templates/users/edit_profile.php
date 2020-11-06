@@ -8,6 +8,7 @@
             <img class="profile-pic" src="<?=$user['pictureUrl']?>">
             <details>
                 <summary>
+                    <a href="action_delete_user.php?username=<?= $user['username'] ?>">Delete Account</a>
                     <div class="dropdown-main" id="edit">✎ Edit</button>
                 </summary>
                 <div class="dropdown" id="edit-options">
