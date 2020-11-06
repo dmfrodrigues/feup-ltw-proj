@@ -20,7 +20,7 @@ try {
         $file
     );
 
-    // header("Location: " . $_SERVER['HTTP_REFERER']);
+    header("Location: " . $_SERVER['HTTP_REFERER']);
 } catch (RuntimeException $e) {
     echo $e->getMessage();
     header("{$_SERVER['SERVER_PROTOCOL']} 500 Internal Server Error", true, 500);

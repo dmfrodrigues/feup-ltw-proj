@@ -248,15 +248,18 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     $stmt->execute();
     $commentId = $db->lastInsertId();
 
-    $ext = checkImageFile($file, 1000000);
+    try{
+        $ext = checkImageFile($file, 1000000);
 
-    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    convertImage(
-        $file['tmp_name'],
-        $ext,
-        $filepath,
-        85
-    );
+        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        convertImage(
+            $file['tmp_name'],
+            $ext,
+            $filepath,
+            85
+        );
+    } catch(NoFileSentException $e){
+    }
 
     return $commentId;
 }
