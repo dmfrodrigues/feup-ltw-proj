@@ -16,12 +16,17 @@
             <span id="location"><?= $pet['location'] ?></span>
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
-        <?php if(isset($_SESSION['username'])) { ?>
         <div id="actions">
-            <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+            <?php if(isset($_SESSION['username'])) {
+            $favorite_pets = getFavoritePets($_SESSION['username']);
+            if (in_array($pet, $favorite_pets)) { ?>
+                <div id="favorite"><a href="action_remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Remove from favorites</a></div>
+            <?php } else { ?>
+                <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+            <?php } ?>
             <div id="ask"><a href="#comments">Ask question about pet</a></div>
         </div>
-        <?php } ?>
+    <?php } ?>
     </header>
     <section id="description">
         <h2>Description</h2>
@@ -34,8 +39,8 @@
         <div id="age">
             <span class="name">Age</span><span class="value"><?php
                 if ($pet['age'] >= 1) echo "{$pet['age']} years";
-                else                 echo ($pet['age'] * 12) . ' months';
-            ?></span>
+                else                  echo ($pet['age'] * 12) . ' months';
+                ?></span>
         </div>
         <div id="sex"><span class="name">Sex</span><span class="value"><?= $pet['sex'] ?></span></div>
         <div id="species"><span class="name">Species</span><span class="value"><?= $pet['species'] ?></span></div>
@@ -50,6 +55,6 @@
         </section>
     <?php } ?>
     <?php
-        include_once 'templates/pets/comments.php';
+    include_once 'templates/pets/comments.php';
     ?>
 </article>
