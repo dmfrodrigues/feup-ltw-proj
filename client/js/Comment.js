@@ -1,9 +1,9 @@
 class Comment {
-    constructor(id, pet, user, pictureUrl, postedOn, text, parent){
+    constructor(id, pet, user, userPictureUrl, postedOn, text, parent){
         this.id = id;
         this.pet = pet;
         this.user = user;
-        this.pictureUrl = pictureUrl;
+        this.userPictureUrl = userPictureUrl;
         this.postedOn = postedOn;
         this.text = text;
         this.parent = parent;

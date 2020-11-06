@@ -17,7 +17,7 @@ function createTree(comments){
             parseInt(c.id),
             parseInt(c.pet),
             c.user,
-            c.pictureUrl,
+            c.userPictureUrl,
             c.postedOn,
             c.text,
             (c.answerTo === null ? null : parseInt(c.answerTo))
@@ -55,7 +55,7 @@ function createCommentElement(comment){
     
     let el_pic = commentElement.querySelector("#comment-profile-pic-a");
     el_pic.href=`profile.php?username=${comment.user}`;
-    el_pic.children[0].src = comment.pictureUrl;
+    el_pic.children[0].src = comment.userPictureUrl;
 
     let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
     let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
@@ -73,7 +73,7 @@ function createAnswerElement(commentId){
     
     let el_pic = answerElement.querySelector("#comment-profile-pic-a");
     el_pic.href=`profile.php?username=${user.username}`;
-    el_pic.children[0].src = user.pictureUrl;
+    el_pic.children[0].src = user.userPictureUrl;
 
     return answerElement;
 }
