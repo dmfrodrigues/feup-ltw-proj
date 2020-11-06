@@ -48,8 +48,6 @@ function cloneNodeRecursive(element){
 }
 
 function createCommentElement(comment){
-    console.log(comment);
-
     let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
     commentElement.id = `comment-${comment.id}`;
     

@@ -160,7 +160,7 @@ function saveUserPicture(string $username, array $file){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     convertImage(
         $file['tmp_name'],
-        pathinfo($file['name'], PATHINFO_EXTENSION),
+        $ext,
         $filepath,
         85
     );
