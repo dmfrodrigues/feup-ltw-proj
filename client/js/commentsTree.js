@@ -67,6 +67,9 @@ function createAnswerElement(commentId){
     let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
     answerElement.id = `new-comment-${commentId}`;
 
+    let el_answerTo = answerElement.querySelector('#comment-answerTo');
+    el_answerTo.value = commentId;
+
     let el_user = answerElement.querySelector("#comment-user");
     el_user.children[0].href = `profile.php?username=${user.username}`;
     el_user.children[0].innerHTML = user.username;
