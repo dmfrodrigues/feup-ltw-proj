@@ -16,6 +16,9 @@ DROP TABLE IF EXISTS Comment;
 DROP TABLE IF EXISTS CommentPhoto;
 DROP TABLE IF EXISTS FavoritePet;
 
+DROP TRIGGER IF EXISTS Comment_answerPet;
+DROP TRIGGER IF EXISTS Comment_answerTime;
+
 PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
@@ -145,3 +148,21 @@ CREATE TABLE FavoritePet (
     CONSTRAINT FavoritePet_FK1 FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FavoritePet_FK2 FOREIGN KEY(petId) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TRIGGER Comment_answerPet
+BEFORE INSERT ON Comment
+FOR EACH ROW
+WHEN NEW.answerTo IS NOT NULL AND
+(SELECT pet FROM Comment WHERE id=NEW.answerTo) != NEW.pet
+BEGIN
+    SELECT raise(rollback, 'Answer must have same pet');
+END;
+
+CREATE TRIGGER Comment_answerTime
+BEFORE INSERT ON Comment
+FOR EACH ROW
+WHEN NEW.answerTo IS NOT NULL AND
+(SELECT postedOn FROM Comment WHERE id=NEW.answerTo) > NEW.postedOn
+BEGIN
+    SELECT raise(rollback, 'Answer must come after comment it answers to');
+END;
