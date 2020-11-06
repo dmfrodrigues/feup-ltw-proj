@@ -20,7 +20,7 @@
             <?php if(isset($_SESSION['username'])) {
             $favorite_pets = getFavoritePets($_SESSION['username']);
             if (in_array($pet, $favorite_pets)) { ?>
-                <div id="favorite"><a href="action_remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Remove from favorites</a></div>
+                <div id="favorite"><a href="action_remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
             <?php } else { ?>
                 <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
             <?php } ?>
