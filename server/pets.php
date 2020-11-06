@@ -205,6 +205,29 @@ function getPetMainPhoto(int $id) : string {
 }
 
 /**
+ * Get pet photos
+ *
+ * @param integer $id   Pet ID
+ * @return array       Pet photos
+ */
+function getPetPhotos(int $id) : array {
+    $dir = PETS_IMAGES_DIR."/$id";
+    $photos = array();
+    if(!is_dir($dir)) return $photos;
+    
+    $lst = scandir($dir);
+    foreach($lst as $filename){
+        $filepath = "$dir/$filename";
+        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
+            $url = serverpathToUrl($filepath);
+            array_push($photos, $url);
+        }
+    }
+
+    return $photos;
+}
+
+/**
  * Get comments about a pet.
  *
  * @param integer $id   ID of the pet

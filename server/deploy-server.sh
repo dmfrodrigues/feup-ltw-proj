@@ -19,5 +19,8 @@ cd resources/img/pets
 
 mkdir -p 1
 curl -L "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg" --output 1/001.jpg
+curl -L "https://images.pexels.com/photos/7470/eyes-cats-cat-couch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output 1/002.jpg
+curl -L "https://images.pexels.com/photos/881142/pexels-photo-881142.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output 1/003.jpg
+
 
 mkdir -p 2
