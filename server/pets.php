@@ -218,6 +218,7 @@ function getPetComments(int $id) : array {
     $comments = $stmt->fetchAll();
     for($i = 0; $i < count($comments); ++$i){
         $comments[$i]['userPictureUrl'] = getUserPicture($comments[$i]['user']);
+        $comments[$i]['commentPictureUrl'] = getCommentPicture($id);
     }
     return $comments;
 }
@@ -260,17 +261,13 @@ function addPetComment(int $id, string $username, int $answerTo, string $text, a
 /**
  * Get photos associated to comments about a pet.
  *
- * @param integer $id   ID of the pet
- * @return array        Array of photos in comments about a pet
+ * @param integer $id   ID of the comment
+ * @return string        URL of comment photo
  */
-function getPetCommentsPhotos(int $id) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM CommentPhoto 
-    WHERE commentId IN (SELECT id FROM Comment WHERE id=:id)');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $photos = $stmt->fetchAll();
-    return $photos;
+function getCommentPicture(int $id) : string {
+    $url = "../server/resources/img/comments/$id.jpg";
+    if(!file_exists($url)) $url = '';
+    return $url;
 }
 
 /**
