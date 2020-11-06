@@ -5,6 +5,8 @@ include_once SERVER_DIR.'/files.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
+class CouldNotDeleteFileException extends RuntimeException{}
+
 /**
  * Check if user-password pair is valid.
  *
@@ -175,7 +177,7 @@ function saveUserPicture(string $username, array $file){
 function eraseUserPicture(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     if(!unlink($filepath))
-        throw new RuntimeException("Could not delete '$filepath'");
+        throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
 
  /**
