@@ -158,6 +158,10 @@ img.profile-pic {
     text-decoration: none;
 }
 
+.dropdown ul li.disabled      { color: var(--disabled-color) !important; }
+.dropdown ul li.disabled:hover{ color:white !important; background-color: var(--main-color-light) !important; }
+.dropdown ul li.disabled a    { pointer-events: none !important; }
+
 #change-password {
     margin: 2em auto 2em auto;
     padding: 1em;

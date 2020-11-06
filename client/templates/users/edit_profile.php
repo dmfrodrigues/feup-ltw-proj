@@ -29,7 +29,7 @@
                                 </label>
                             </form>
                         </li>
-                        <li>
+                        <li <?php if(is_null($user['pictureUrl'])) echo 'class="disabled"';?>>
                             <a href="action_erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
                         </li>
                     </ul>

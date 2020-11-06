@@ -3,8 +3,10 @@ body {
 
     --bg-color: #dfdfdf;
     --main-color: #fc9d04;
+    --main-color-light: #fccd81;
     --dark-color: #333;
     --light-color: #f1f1f1;
+    --disabled-color: #808080;
 
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--bg-color);
