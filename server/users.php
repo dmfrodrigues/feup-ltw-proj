@@ -132,6 +132,22 @@ function editUserPassword(string $username, string $password) {
 }
 
 /**
+
+ * Delete user.
+ *
+ * @param string $username  User's username
+ * @return void
+ */
+function deleteUser(string $username) {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM User 
+    WHERE username=:username');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+}
+
+/**
  * Save new user picture.
  *
  * @param string $username  User's username
