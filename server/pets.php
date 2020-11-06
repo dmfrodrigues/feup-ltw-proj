@@ -228,12 +228,12 @@ function getPetComments(int $id) : array {
  *
  * @param integer $id       ID of pet
  * @param string $username  User's username
- * @param int $answerTo     ID of comment it is replying to
+ * @param ?int $answerTo     ID of comment it is replying to, or null if not a reply
  * @param string $text      Text of the comment
  * @param array $photosUrls URLs of the comment photos
  * @return integer          ID of the new comment
  */
-function addPetComment(int $id, string $username, int $answerTo, string $text, array $photosUrls) : int {
+function addPetComment(int $id, string $username, ?int $answerTo, string $text, array $photosUrls) : int {
     global $db;
     
     $stmt = $db->prepare('INSERT INTO Comment

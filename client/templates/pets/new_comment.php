@@ -1,4 +1,7 @@
-<form id="new-comment" class="answer" action="action_add_comment" method="post">
+<form id="new-comment" class="answer" action="action_add_comment.php" method="post">
+    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
+    <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
+    <input id="comment-answerTo" name="answerTo" type="hidden">
     <article class="comment">
         <span id="comment-user" class="user"><a href="profile.php?username=#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="profile.php?username?#"><img class="profile-pic" src="#"></a>
