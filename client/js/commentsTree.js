@@ -61,6 +61,7 @@ function createCommentElement(comment){
 
     let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
     let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
+    if(el_text.innerHTML === '') el_text.style.display = "none";
     let el_img  = commentElement.querySelector("#comment-picture"); el_img.src = comment.commentPictureUrl;
 
     return commentElement;
