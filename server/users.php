@@ -111,6 +111,7 @@ function editUser(string $lastUsername, string $newUsername, string $name){
     $stmt->bindParam(':lastUsername', $lastUsername);
     $stmt->bindParam(':name'    , $name);
     $stmt->execute();
+    changePictureUsername($lastUsername, $newUsername);
 }
 
 
@@ -178,6 +179,19 @@ function eraseUserPicture(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     if(!unlink($filepath))
         throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+}
+
+/**
+ * Change the name of the user picture when the username is changed
+ *
+ * @param string $oldUsername  User's old username
+ * @param string $newUsername  User's new username
+ * @return void
+ */
+function changePictureUsername(string $oldUsername, string $newUsername) {
+    $oldFilepath = USERS_IMAGES_DIR."/$oldUsername.jpg";
+    $newFilepath = USERS_IMAGES_DIR."/$newUsername.jpg";
+    rename($oldFilepath, $newFilepath);
 }
 
  /**
