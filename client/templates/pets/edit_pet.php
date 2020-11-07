@@ -50,6 +50,6 @@
         <input type="submit" value="Submit">
     </form>
     <div id="delete-pet">
-        <a href="action_delete_pet.php?id=<?= $pet['id'] ?>">Delete Pet</a>
+        <a href="action_delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

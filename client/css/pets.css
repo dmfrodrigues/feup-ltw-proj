@@ -264,3 +264,20 @@
     background-color: var(--main-color);
     padding: 0.5em 1em 0.5em 1em;
 }
+
+#pet #delete-pet {
+    margin: 2em auto 2em auto;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: #ff6c6a;
+    width: 12em;
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+#pet #delete-pet a {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
