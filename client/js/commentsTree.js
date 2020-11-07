@@ -93,9 +93,6 @@ function addCommentToDocument(parent, comment){
         let actions_el = commentElement.querySelector(".actions");
         actions_el.style.display = "";
 
-        let action_reply_el = actions_el.querySelector("#action-reply");
-        action_reply_el.onclick = clickedCommentReply;
-
         let answerElement = createAnswerElement(comment.id);
         answerElement.style.display="none";
         commentElement.insertBefore(
@@ -115,8 +112,8 @@ function addCommentToDocument(parent, comment){
     }
 }
 
-function clickedCommentReply(event){
-    let id_string = event.target.parentElement.parentElement.parentElement.id;
+function clickedCommentReply(comment_el){
+    let id_string = comment_el.id;
     let id = parseInt(id_string.split("-")[1]);
 
     let new_comment_el = document.getElementById(`new-comment-${id}`);
