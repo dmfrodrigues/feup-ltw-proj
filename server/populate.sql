@@ -5,8 +5,8 @@ PRAGMA foreign_keys=ON;
 PRAGMA encoding="UTF-8";
 
 -- Shelter
-INSERT INTO Shelter
-    VALUES(NULL, 'AnimalAdoption', 'Lisbon', 'We take care of animals.', NULL, strftime("%d/%m/%Y %H:%M", "2018-08-12 20:00"));
+INSERT INTO Shelter(name, location, description) VALUES
+('AnimalAdoption', 'Lisbon', 'We take care of animals.');
 
 -- User
 INSERT INTO User
