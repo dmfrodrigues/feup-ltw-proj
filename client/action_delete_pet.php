@@ -12,9 +12,9 @@ if (isset($_SESSION['username'])){
         die();
     }
 
-    removePet(
-        $_GET['id']
-    );
+    deletePetPhotos($_GET['id']);
+
+    removePet($_GET['id']);
 }
 
 header("Location: pets.php");
