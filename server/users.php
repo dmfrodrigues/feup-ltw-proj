@@ -5,6 +5,8 @@ include_once SERVER_DIR.'/files.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
+class CouldNotDeleteFileException extends RuntimeException{}
+
 /**
  * Check if user-password pair is valid.
  *
@@ -66,11 +68,11 @@ function getUser(string $username) : array {
  * Get user profile picture URL.
  *
  * @param string $username  Username
- * @return string           URL of user profile picture
+ * @return ?string           URL of user profile picture, or null if there is none
  */
-function getUserPicture(string $username) : string {
+function getUserPicture(string $username) : ?string {
     $url = "../server/resources/img/profiles/$username.jpg";
-    if(!file_exists($url)) $url = 'resources/img/no-image.svg';
+    if(!file_exists($url)) $url = null;
     return $url;
 }
 
@@ -109,6 +111,7 @@ function editUser(string $lastUsername, string $newUsername, string $name){
     $stmt->bindParam(':lastUsername', $lastUsername);
     $stmt->bindParam(':name'    , $name);
     $stmt->execute();
+    changePictureUsername($lastUsername, $newUsername);
 }
 
 
@@ -140,7 +143,7 @@ function editUserPassword(string $username, string $password) {
  */
 function deleteUser(string $username) {
     global $db;
-
+    eraseUserPicture($username);
     $stmt = $db->prepare('DELETE FROM User 
     WHERE username=:username');
     $stmt->bindParam(':username', $username);
@@ -160,7 +163,7 @@ function saveUserPicture(string $username, array $file){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     convertImage(
         $file['tmp_name'],
-        pathinfo($file['name'], PATHINFO_EXTENSION),
+        $ext,
         $filepath,
         85
     );
@@ -175,7 +178,20 @@ function saveUserPicture(string $username, array $file){
 function eraseUserPicture(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     if(!unlink($filepath))
-        throw new RuntimeException("Could not delete '$filepath'");
+        throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+}
+
+/**
+ * Change the name of the user picture when the username is changed
+ *
+ * @param string $oldUsername  User's old username
+ * @param string $newUsername  User's new username
+ * @return void
+ */
+function changePictureUsername(string $oldUsername, string $newUsername) {
+    $oldFilepath = USERS_IMAGES_DIR."/$oldUsername.jpg";
+    $newFilepath = USERS_IMAGES_DIR."/$newUsername.jpg";
+    rename($oldFilepath, $newFilepath);
 }
 
  /**
@@ -208,7 +224,7 @@ function addToFavorites(string $username, int $id){
 function removeFromFavorites(string $username, int $id){
     global $db;
     $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
-    username=:username AND petId=:id)');
+    username=:username AND petId=:id');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':id'      , $id      );
     $stmt->execute();

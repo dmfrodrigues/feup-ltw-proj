@@ -158,6 +158,10 @@ img.profile-pic {
     text-decoration: none;
 }
 
+.dropdown ul li.disabled      { color: var(--disabled-color) !important; }
+.dropdown ul li.disabled:hover{ color:white !important; background-color: var(--main-color-light) !important; }
+.dropdown ul li.disabled a    { pointer-events: none !important; }
+
 #change-password {
     margin: 2em auto 2em auto;
     padding: 1em;
@@ -178,4 +182,21 @@ img.profile-pic {
     color: white;
     background-color: var(--main-color);
     padding: 0.5em 1em 0.5em 1em;
+}
+
+#edit-profile #delete-user {
+    margin: 2em auto 2em auto;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: #ff6c6a;
+    width: 12em;
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+#edit-profile #delete-user a {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
 }

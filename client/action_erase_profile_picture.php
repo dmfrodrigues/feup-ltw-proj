@@ -13,6 +13,9 @@ try{
     eraseUserPicture($_GET['username']);
 
     header("Location: profile.php?username={$_GET['username']}");
+} catch(CouldNotDeleteFileException $e){
+    echo "Could not delete file";
+    header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);
 } catch (RuntimeException $e) {
     echo $e->getMessage();
     header("{$_SERVER['SERVER_PROTOCOL']} 500 Internal Server Error", true, 500);
