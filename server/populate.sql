@@ -48,10 +48,6 @@ INSERT INTO Comment(pet, user, text, answerTo) VALUES
 (1, 'Asdrubal007', 'A simple comment.', NULL),
 (1, 'Asdrubal007', 'Another simple comment.', 1);
 
--- CommentPhoto
-INSERT INTO CommentPhoto(commentId, url) VALUES
-(1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
-
 -- FavoritePet
 INSERT INTO FavoritePet(username, petId) VALUES
 ('Romanoff123', 1);

@@ -258,6 +258,14 @@ function getPetComments(int $id) : array {
  * @return integer          ID of the new comment
  */
 function addPetComment(int $id, string $username, ?int $answerTo, string $text, array $file) : int {
+    $noFileSent = false;
+    try{
+        $ext = checkImageFile($file, 1000000);
+    } catch(NoFileSentException $e){
+        $noFileSent = true;
+    }
+    if($text === '' && $noFileSent) throw new RuntimeException('Comment must have a text or an image');
+
     global $db;
     
     $stmt = $db->prepare('INSERT INTO Comment
@@ -271,9 +279,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     $stmt->execute();
     $commentId = $db->lastInsertId();
 
-    try{
-        $ext = checkImageFile($file, 1000000);
-
+    if(!$noFileSent){
         $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
         convertImage(
             $file['tmp_name'],
@@ -281,7 +287,6 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
             $filepath,
             85
         );
-    } catch(NoFileSentException $e){
     }
 
     return $commentId;
