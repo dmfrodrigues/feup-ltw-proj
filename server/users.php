@@ -14,7 +14,7 @@ class CouldNotDeleteFileException extends RuntimeException{}
  * @param string $password  Password
  * @return boolean          True if the user-password pair is correct, false otherwise
  */
-function userExists(string $username, string $password) : bool {
+function userPasswordExists(string $username, string $password) : bool {
     global $db;
     $password_sha1 = sha1($password);
     $stmt = $db->prepare('SELECT username
@@ -22,6 +22,23 @@ function userExists(string $username, string $password) : bool {
     WHERE username=:username AND password=:password');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password_sha1);
+    $stmt->execute();
+    $users = $stmt->fetchAll();
+    return (count($users) == 1);
+}
+
+/**
+ * Check if user already exists.
+ *
+ * @param string $username  Username
+ * @return boolean          True if the user exists, false otherwise
+ */
+function userAlreadyExists(string $username) : bool {
+    global $db;
+    $stmt = $db->prepare('SELECT username
+    FROM User
+    WHERE username=:username');
+    $stmt->bindParam(':username', $username);
     $stmt->execute();
     $users = $stmt->fetchAll();
     return (count($users) == 1);
@@ -101,8 +118,15 @@ function isAdmin(string $username) : bool {
  * @param string $name          User's name
  * @return void
  */
-function editUser(string $lastUsername, string $newUsername, string $name){
+function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
+
+    if (userAlreadyExists($newUsername)) {
+        echo "User ".$newUsername." already exists! Choose another one!";
+        die();
+    }
+        
+
     $stmt = $db->prepare('UPDATE User SET
     username=:newUsername,
     name=:name
