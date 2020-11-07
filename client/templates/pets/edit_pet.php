@@ -49,4 +49,7 @@
         </section>
         <input type="submit" value="Submit">
     </form>
+    <div id="delete-pet">
+        <a href="action_delete_pet.php?id=<?= $pet['id'] ?>">Delete Pet</a>
+    </div>
 </article>
