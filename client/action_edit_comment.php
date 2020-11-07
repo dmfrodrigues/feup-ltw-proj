@@ -5,7 +5,9 @@ include_once __DIR__ . '/../server/server.php';
 include_once SERVER_DIR . '/connection.php';
 include_once SERVER_DIR . '/pets.php';
 
-if ($_POST['username'] != $_SESSION['username']) {
+$oldComment = getPetComment($_POST['commentId']);
+
+if ($oldComment['user'] != $_SESSION['username']) {
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
 
