@@ -7,6 +7,8 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class CouldNotDeleteFileException extends RuntimeException{}
 
+class UserAlreadyExistsException extends RuntimeException{}
+
 /**
  * Check if user-password pair is valid.
  *
@@ -121,12 +123,9 @@ function isAdmin(string $username) : bool {
 function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
 
-    if (userAlreadyExists($newUsername)) {
-        echo "User ".$newUsername." already exists! Choose another one!";
-        die();
-    }
+    if (userAlreadyExists($newUsername))
+        throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
         
-
     $stmt = $db->prepare('UPDATE User SET
     username=:newUsername,
     name=:name
