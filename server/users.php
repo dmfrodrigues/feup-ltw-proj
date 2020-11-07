@@ -5,8 +5,6 @@ include_once SERVER_DIR.'/files.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
-class CouldNotDeleteFileException extends RuntimeException{}
-
 class UserAlreadyExistsException extends RuntimeException{}
 
 /**

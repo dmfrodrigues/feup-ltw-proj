@@ -8,3 +8,5 @@ function serverpathToUrl($path) : string {
     $url = str_replace(SERVER_DIR, SERVER_URL, $path);
     return $url;
 }
+
+class CouldNotDeleteFileException extends RuntimeException{}

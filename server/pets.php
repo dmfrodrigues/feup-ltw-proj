@@ -248,6 +248,23 @@ function getPetComments(int $id) : array {
 }
 
 /**
+ * Get comment about a pet.
+ *
+ * @param integer $commentId    ID of comment
+ * @return array                Comment
+ */
+function getPetComment(int $commentId) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
+    $stmt->bindParam(':id', $commentId);
+    $stmt->execute();
+    $comment = $stmt->fetch();
+    $comment['userPictureUrl'   ] = getUserPicture   ($comment['user']);
+    $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
+    return $comment;
+}
+
+/**
  * Adds comment about pet.
  *
  * @param integer $id       ID of pet
@@ -302,6 +319,18 @@ function getCommentPicture(int $id) : string {
     $url = "../server/resources/img/comments/$id.jpg";
     if(!file_exists($url)) $url = '';
     return $url;
+}
+
+/**
+ * Delete comment photo.
+ *
+ * @param integer $commentId    ID of comment
+ * @return void
+ */
+function deletePetCommentPhoto(int $commentId){
+    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+    if(!unlink($filepath))
+        throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
 
 /**
