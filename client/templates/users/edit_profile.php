@@ -52,6 +52,6 @@
         <input type="submit" value="Submit" id="edit-profile-submit">
     </form>
     <section id='delete-user'>
-        <a href="action_delete_user.php?username=<?= $user['username'] ?>">⚠ Delete Account</a>
+        <a href="action_delete_user.php?username=<?= $user['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
     </section>
 </article>
