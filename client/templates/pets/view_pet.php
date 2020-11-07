@@ -6,11 +6,23 @@
 </div>
 <article id="pet">
     <header>
+        <div id="pet-photos">
         <?php
-        $photoUrl = getPetMainPhoto($pet['id']);
-        if($photoUrl == '') $photoUrl = "resources/img/no-image.svg";
+        $photos = getPetPhotos($pet['id']); 
+        if(empty($photos)) $photoSelected = "resources/img/no-image.svg";
+        else $photoSelected = $photos[0];
         ?>
-        <img id="pet-profile-img" src="<?= $photoUrl ?>" alt="photo 1 of <?= $pet['name'] ?>" />
+        <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
+        <div id=pet-photos-row>
+        <img class="selected" src="<?= $photoSelected ?>" alt="photo 1 of <?= $pet['name'] ?>" 
+            onclick="selectPhoto()" />
+        <?php
+            for($i=1; $i < count($photos); $i++){?>
+                <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" 
+                onclick="selectPhoto()" />
+        <?php } ?>
+        </div>
+        </div>
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
             <span id="location"><?= $pet['location'] ?></span>

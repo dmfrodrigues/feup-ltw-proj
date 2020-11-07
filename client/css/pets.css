@@ -28,10 +28,28 @@
     color: var(--main-color);
 }
 
-#pet header #pet-profile-img{
-    grid-area: 1 / 1 / span 2   ;
+#pet header #pet-photos{
+    grid-area: 1 / 1 / span 2;
+    height: 350px;
+    width: auto;
+    display: block
+}
+
+#pet #pet-photos #pet-selected-img{
     height: 300px;
     width: auto;
+}
+
+#pet #pet-photos #pet-photos-row img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+}
+
+#pet #pet-photos #pet-photos-row .selected{
+    border: solid var(--main-color);
 }
 
 #pet header #actions,

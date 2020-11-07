@@ -124,15 +124,6 @@ CREATE TABLE Comment (
     CONSTRAINT Comment_FK3 FOREIGN KEY(answerTo) REFERENCES Comment ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE CommentPhoto (
-    commentId INTEGER NOT NULL,
-    id INTEGER NOT NULL,
-    url VARCHAR NOT NULL, -- Assuming every row has an URL
-
-    CONSTRAINT CommentPhoto_PK PRIMARY KEY(id),
-    CONSTRAINT CommentPhoto_FK FOREIGN KEY(commentId) REFERENCES Comment(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE FavoritePet (
     username VARCHAR,
     petId INTEGER,
