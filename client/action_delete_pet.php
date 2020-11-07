@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])){
         die();
     }
 
-    deletePetPhotos($_GET['id']);
+    deleteAllPetCommentPhotos($_GET['id']);
 
     removePet($_GET['id']);
 }

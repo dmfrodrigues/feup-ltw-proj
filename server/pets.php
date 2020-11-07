@@ -153,23 +153,6 @@ function removePet(int $id){
 define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
- * Delete photo files associated to a pet.
- *
- * @param integer $id   Pet ID
- * @return void
- */
-function deletePetPhotos(int $id){
-    $dir = PETS_IMAGES_DIR."/$id";
-    $lst = scandir($dir);
-    foreach($lst as $name){
-        if($name === '.' || $name === '..') continue;
-        $path = "$dir/$name";
-        rmdir_recursive($path);
-    }
-    rmdir_recursive($path);
-}
-
-/**
  * Add pet photo
  *
  * @param integer $id           ID of pet
@@ -177,7 +160,7 @@ function deletePetPhotos(int $id){
  * @param integer $idx          Index of image (1 is the first image); should be numbered sequentially
  * @return void
  */
-function addPetPhoto(int $id, string $tmp_filepath, int $idx){
+function addPetPhoto(int $id, string $tmp_filepath, int $idx) {
     $filepath = PETS_IMAGES_DIR."/$id/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
     if(!move_uploaded_file($tmp_filepath, $filepath))
         throw new RuntimeException('Failed to move uploaded file.');
@@ -312,7 +295,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 /**
  * Get photos associated to comments about a pet.
  *
- * @param integer $id   ID of the comment
+ * @param integer $id    ID of the comment
  * @return string        URL of comment photo
  */
 function getCommentPicture(int $id) : string {
@@ -332,6 +315,20 @@ function deletePetCommentPhoto(int $commentId){
     if(!unlink($filepath))
         throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
+
+/**
+ * Delete all the photos that are in the comments related to the pet.
+ *
+ * @param integer $id    ID of pet
+ * @return void
+ */
+function deleteAllPetCommentPhotos(int $id){
+    $comments = getPetComments($id);
+    foreach($comments as $comment)
+        if (getCommentPicture($comment['id']) !== '') // if the comment has a picture
+            deletePetCommentPhoto($comment['id']);
+}
+
 
 /**
  * Get pets added by a user.
