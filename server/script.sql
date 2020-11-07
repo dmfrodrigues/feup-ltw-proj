@@ -23,19 +23,18 @@ PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
     id INTEGER,
-    name VARCHAR NOT NULL,
-    location VARCHAR NOT NULL,
-    description VARCHAR NOT NULL,
-    pictureUrl VARCHAR,
+    name        VARCHAR NOT NULL CHECK(name         <> ''),
+    location    VARCHAR NOT NULL CHECK(location     <> ''),
+    description VARCHAR NOT NULL CHECK(description  <> ''),
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT Shelter_PK PRIMARY KEY(id)
 );
 
 CREATE TABLE User (
-    username VARCHAR NOT NULL,
-    password VARCHAR NOT NULL,
-    name VARCHAR NOT NULL,
+    username    VARCHAR NOT NULL CHECK(username <> ''),
+    password    VARCHAR NOT NULL,
+    name        VARCHAR NOT NULL CHECK(name     <> ''),
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     shelter INTEGER,
 
@@ -51,28 +50,28 @@ CREATE TABLE Admin (
 );
 
 CREATE TABLE Notification (
-    id INTEGER,
-    read INTEGER DEFAULT 0 NOT NULL,
-    subject VARCHAR NOT NULL,
-    text VARCHAR,
-    user VARCHAR NOT NULL,
+    id          INTEGER,
+    read        INTEGER NOT NULL DEFAULT 0,
+    subject     VARCHAR NOT NULL,
+    text        VARCHAR,
+    user        VARCHAR NOT NULL,
 
     CONSTRAINT Notification_PK PRIMARY KEY(id),
     CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Pet (
-    id INTEGER NOT NULL,
-    name VARCHAR NOT NULL,
-    species VARCHAR NOT NULL,
-    age DECIMAL NOT NULL,
-    sex VARCHAR NOT NULL,
-    size VARCHAR NOT NULL,
-    color VARCHAR NOT NULL,
-    location VARCHAR NOT NULL,
-    description VARCHAR NOT NULL,
-    status VARCHAR DEFAULT 'forAdoption' NOT NULL,
-    postedBy VARCHAR NOT NULL,
+    id          INTEGER NOT NULL,
+    name        VARCHAR NOT NULL CHECK(name         <> ''),
+    species     VARCHAR NOT NULL CHECK(species      <> ''),
+    age         DECIMAL NOT NULL CHECK(age          >   0),
+    sex         VARCHAR NOT NULL CHECK(sex IN ('M', 'F')),
+    size        VARCHAR NOT NULL CHECK(size IN ('XS', 'S', 'M', 'L', 'XL')),
+    color       VARCHAR NOT NULL CHECK(color        <> ''),
+    location    VARCHAR NOT NULL CHECK(location     <> ''),
+    description VARCHAR NOT NULL CHECK(description  <> ''),
+    status      VARCHAR NOT NULL DEFAULT 'forAdoption',
+    postedBy    VARCHAR NOT NULL,
 
     CONSTRAINT Pet_PK PRIMARY KEY(id),
     CONSTRAINT Pet_FK FOREIGN KEY(postedBy) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
@@ -81,23 +80,17 @@ CREATE TABLE Pet (
 
     CONSTRAINT sex CHECK (sex in ("M", "F")),
 
-    CONSTRAINT sizeRule CHECK (size LIKE 'XS' OR
-                               size LIKE 'S' OR
-                               size LIKE 'M' OR
-                               size LIKE 'L' OR
-                               size LIKE 'XL'),
+    CONSTRAINT sizeRule CHECK (size IN ('XS','S','M','L','XL')),
 
-    CONSTRAINT statusRule CHECK (status LIKE 'forAdoption' OR
-                                 status LIKE 'addopted' OR
-                                 status LIKE 'delivered')
+    CONSTRAINT statusRule CHECK (status IN ('forAdoption','addopted','delivered'))
 );
 
 CREATE TABLE AdoptionRequest (
-    id INTEGER NOT NULL,
-    text VARCHAR NOT NULL,
-    outcome VARCHAR DEFAULT 'pending' NOT NULL,
-    pet INTEGER NOT NULL,
-    user VARCHAR NOT NULL, -- Response User
+    id      INTEGER NOT NULL,
+    text    VARCHAR NOT NULL CHECK(text <> ''),
+    outcome VARCHAR NOT NULL DEFAULT 'pending',
+    pet     INTEGER NOT NULL,
+    user    VARCHAR NOT NULL, -- Response User
 
     CONSTRAINT AdoptionRequest_PK PRIMARY KEY(id),
     CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(pet) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE,
@@ -109,8 +102,8 @@ CREATE TABLE AdoptionRequest (
 );
 
 CREATE TABLE AdoptionRequestMessage (
-    id INTEGER NOT NULL,
-    text VARCHAR NOT NULL,
+    id      INTEGER NOT NULL,
+    text    VARCHAR NOT NULL CHECK(text <> ''),
     request INTEGER NOT NULL,
 
     CONSTRAINT AdoptionRequestMessage_PK PRIMARY KEY(id),
@@ -118,12 +111,12 @@ CREATE TABLE AdoptionRequestMessage (
 );
 
 CREATE TABLE Comment (
-    id INTEGER NOT NULL,
-    postedOn TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    text VARCHAR NOT NULL,
-    pet INTEGER NOT NULL,
-    user VARCHAR NOT NULL,
-    answerTo INTEGER,
+    id          INTEGER   NOT NULL,
+    postedOn    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    text        VARCHAR   NOT NULL CHECK(text <> ''),
+    pet         INTEGER   NOT NULL,
+    user        VARCHAR   NOT NULL,
+    answerTo    INTEGER,
 
     CONSTRAINT Comment_PK PRIMARY KEY(id),
     CONSTRAINT Comment_FK1 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,

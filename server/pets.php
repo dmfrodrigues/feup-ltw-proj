@@ -4,6 +4,7 @@ include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
+define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 
 /**
  * Get array of all pets.
@@ -251,12 +252,12 @@ function getPetComments(int $id) : array {
  *
  * @param integer $id       ID of pet
  * @param string $username  User's username
- * @param ?int $answerTo     ID of comment it is replying to, or null if not a reply
+ * @param ?int $answerTo    ID of comment it is replying to, or null if not a reply
  * @param string $text      Text of the comment
- * @param array $photosUrls URLs of the comment photos
+ * @param array $file       File (as obtained from $_FILES['file_field'])
  * @return integer          ID of the new comment
  */
-function addPetComment(int $id, string $username, ?int $answerTo, string $text, array $photosUrls) : int {
+function addPetComment(int $id, string $username, ?int $answerTo, string $text, array $file) : int {
     global $db;
     
     $stmt = $db->prepare('INSERT INTO Comment
@@ -270,12 +271,17 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     $stmt->execute();
     $commentId = $db->lastInsertId();
 
-    foreach($photosUrls as $url){
-        $stmt = $db->prepare('INSERT INTO CommentPhoto(commentId, url) VALUES
-        (:commentId, :url)');
-        $stmt->bindParam(':commentId', $commentId);
-        $stmt->bindParam(':url'      , $url      );
-        $stmt->execute();
+    try{
+        $ext = checkImageFile($file, 1000000);
+
+        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        convertImage(
+            $file['tmp_name'],
+            $ext,
+            $filepath,
+            85
+        );
+    } catch(NoFileSentException $e){
     }
 
     return $commentId;

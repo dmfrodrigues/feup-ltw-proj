@@ -1,9 +1,9 @@
 <article id="add-pet">
     <form action="action_add_pet.php" method="post">
         <header>
-            <h1><input type="text" name="name" placeholder="Pet name"></h1>
+            <h1><input type="text" name="name" placeholder="Pet name" required></h1>
             <div id="data">
-                <span id="location"><input type="text" name="location" placeholder="Location"></span>
+                <span id="location"><input type="text" name="location" placeholder="Location" required></span>
             </div>
             <img src="resources/img/no-image.svg" alt="" />
         </header>
@@ -15,7 +15,7 @@
             <h2>About</h2>
             <div id="age">
                 <span class="name">Age</span>
-                <span class="value"><input type="number" name="age" step="any"></span>
+                <span class="value"><input type="number" name="age" step="any" required></span>
             </div>
             <div id="sex">
                 <span class="name">Sex </span>
@@ -28,7 +28,7 @@
             </div>
             <div id="species">
                 <span class="name">Species</span>
-                <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..."></span>
+                <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." required></span>
             </div>
             <div id="size">
                 <span class="name">Size </span>
@@ -44,7 +44,7 @@
             </div>
             <div id="color">
                 <span class="name">Color </span>
-                <span class="value"><input type="text" name="color"></span>
+                <span class="value"><input type="text" name="color" required></span>
             </div>
         </section>
         <input type="submit" value="Submit" id="add-pet-submit">
