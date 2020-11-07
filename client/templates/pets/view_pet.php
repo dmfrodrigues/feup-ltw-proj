@@ -17,7 +17,7 @@
         <img class="selected" src="<?= $photos[0] ?>" alt="photo 1 of <?= $pet['name'] ?>" 
             onclick="selectPhoto()" />
         <?php
-            for($i=1; $i < count($photos) ; $i++){?>
+            for($i=1; $i < count($photos); $i++){?>
                 <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" 
                 onclick="selectPhoto()" />
         <?php } ?>
