@@ -142,7 +142,7 @@ function editUserPassword(string $username, string $password) {
  */
 function deleteUser(string $username) {
     global $db;
-
+    eraseUserPicture($username);
     $stmt = $db->prepare('DELETE FROM User 
     WHERE username=:username');
     $stmt->bindParam(':username', $username);
