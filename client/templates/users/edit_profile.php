@@ -23,7 +23,7 @@
                                 </script>
                                 <label>
                                     <span onclick="document.getElementById('profile_picture').click()">Choose new picture</span>
-                                    <input type="file" id="profile_picture" name="profile_picture" style="display:none;" onchange="onFileChange()">
+                                    <input type="file" id="profile_picture" name="profile_picture" style="display:none;" onchange="onFileChange()" required>
                                     <input type="submit" id="submit-file" value="Submit" style="display:none">
                                 </label>
                             </form>
@@ -39,11 +39,11 @@
     <form action="action_edit_profile.php?username=<?=$user['username']?>" method="post">
         <section id="username">
             <h3>Username</h3>
-            <input type="text" name="username" placeholder="user's username" value="<?=$user['username']?>">
+            <input type="text" name="username" placeholder="user's username" value="<?=$user['username']?>" required pattern="^[a-zA-Z0-9]+$">
         </section>
         <section id="name">
             <h3>Name</h3>
-            <input type="text" name="name" placeholder="user's name" value="<?=$user['name']?>">
+            <input type="text" name="name" placeholder="user's name" value="<?=$user['name']?>" required>
         </section>
         <section id="password">
             <h3>Change password</h3>
