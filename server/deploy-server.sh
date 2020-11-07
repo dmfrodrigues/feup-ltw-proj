@@ -3,6 +3,8 @@ rm -f *.db
 sqlite3 database.db ".read script.sql"
 sqlite3 database.db ".read populate.sql"
 
+chmod 777 database.db
+
 mkdir -p resources/img/profiles
 curl -L "https://avatars3.githubusercontent.com/u/43684166?s=400&u=03a088a2de6621066111b4d05f40d7489abd494d&v=4" --output resources/img/profiles/dmfr.jpg
 curl -L "https://avatars3.githubusercontent.com/u/43919387?s=400&u=dd552fba69b0469db1c0bb3911e13fd46733bd4d&v=4" --output resources/img/profiles/BrenoAccioly.jpg
