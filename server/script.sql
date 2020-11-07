@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS PetPhoto;
 DROP TABLE IF EXISTS AdoptionRequest;
 DROP TABLE IF EXISTS AdoptionRequestMessage;
 DROP TABLE IF EXISTS Comment;
-DROP TABLE IF EXISTS CommentPhoto;
 DROP TABLE IF EXISTS FavoritePet;
 
 DROP TRIGGER IF EXISTS Comment_answerPet;
@@ -71,6 +70,7 @@ CREATE TABLE Pet (
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
     status      VARCHAR NOT NULL DEFAULT 'forAdoption',
+    adoptionDate DATE            CHECK(adoptionDate IS strftime('%Y-%m-%d', adoptionDate)), -- Check date format
     postedBy    VARCHAR NOT NULL,
 
     CONSTRAINT Pet_PK PRIMARY KEY(id),
@@ -82,7 +82,10 @@ CREATE TABLE Pet (
 
     CONSTRAINT sizeRule CHECK (size IN ('XS','S','M','L','XL')),
 
-    CONSTRAINT statusRule CHECK (status IN ('forAdoption','addopted','delivered'))
+    CONSTRAINT statusRule CHECK (status IN ('forAdoption','adopted','delivered')),
+
+    CONSTRAINT adoption CHECK ((status = 'forAdoption' AND adoptionDate IS NULL) OR
+                               (status IN ('adopted','delivered') AND adoptionDate IS NOT NULL))
 );
 
 CREATE TABLE AdoptionRequest (
@@ -113,7 +116,7 @@ CREATE TABLE AdoptionRequestMessage (
 CREATE TABLE Comment (
     id          INTEGER   NOT NULL,
     postedOn    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    text        VARCHAR   NOT NULL CHECK(text <> ''),
+    text        VARCHAR   NOT NULL,
     pet         INTEGER   NOT NULL,
     user        VARCHAR   NOT NULL,
     answerTo    INTEGER,

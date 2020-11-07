@@ -29,9 +29,9 @@ INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess"
 
 -- Pet
 INSERT INTO Pet
-    VALUES (NULL, 'Kitty', 'Cat', 3, 'F', 'S', 'White', 'Marvila', 'Very cute cat.', 'forAdoption', 'Asdrubal007');
-INSERT INTO Pet
-    VALUES (NULL, 'Princesa', 'Cat', 5, 'M', 'XS', 'Gray', 'Olaias', 'Another very cute cat.', 'forAdoption', 'Asdrubal007');
+(name      , species, age, sex, size, color  , location , description             , status       , postedBy     ) VALUES
+(   'Kitty',   'Cat',   3, 'F',  'S', 'White', 'Marvila', 'Very cute cat.'        , 'forAdoption', 'Asdrubal007'),
+('Princesa',   'Cat',   5, 'M', 'XS',  'Gray',  'Olaias', 'Another very cute cat.', 'forAdoption', 'Asdrubal007');
 
 -- AdoptionRequest
 INSERT INTO AdoptionRequest
@@ -47,10 +47,6 @@ INSERT INTO AdoptionRequestMessage
 INSERT INTO Comment(pet, user, text, answerTo) VALUES
 (1, 'Asdrubal007', 'A simple comment.', NULL),
 (1, 'Asdrubal007', 'Another simple comment.', 1);
-
--- CommentPhoto
-INSERT INTO CommentPhoto(commentId, url) VALUES
-(1, "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg");
 
 -- FavoritePet
 INSERT INTO FavoritePet(username, petId) VALUES
