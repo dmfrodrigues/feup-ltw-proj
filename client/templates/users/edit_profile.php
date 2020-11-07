@@ -8,7 +8,6 @@
             <img class="profile-pic" src="<?php echo (is_null($user['pictureUrl']) ? "resources/img/no-image.svg": $user['pictureUrl']) ?>">
             <details>
                 <summary>
-                    <a href="action_delete_user.php?username=<?= $user['username'] ?>">Delete Account</a>
                     <div class="dropdown-main" id="edit">✎ Edit</button>
                 </summary>
                 <div class="dropdown" id="edit-options">
@@ -52,4 +51,7 @@
         </section>
         <input type="submit" value="Submit" id="edit-profile-submit">
     </form>
+    <section id='delete-user'>
+        <a href="action_delete_user.php?username=<?= $user['username'] ?>">⚠ Delete Account</a>
+    </section>
 </article>

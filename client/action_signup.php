@@ -16,6 +16,8 @@ try{
     header('Location: profile.php?username='.$_SESSION['username']);
 } catch(PDOException $e) {
     header('Location: signup.php?failed=1');
+    echo $e->getMessage();
 }
+
 
 die();
