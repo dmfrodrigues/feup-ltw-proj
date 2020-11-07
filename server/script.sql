@@ -116,7 +116,7 @@ CREATE TABLE AdoptionRequestMessage (
 CREATE TABLE Comment (
     id          INTEGER   NOT NULL,
     postedOn    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    text        VARCHAR   NOT NULL CHECK(text <> ''),
+    text        VARCHAR   NOT NULL,
     pet         INTEGER   NOT NULL,
     user        VARCHAR   NOT NULL,
     answerTo    INTEGER,
