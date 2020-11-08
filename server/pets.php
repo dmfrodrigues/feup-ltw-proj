@@ -339,6 +339,21 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, array $f
 }
 
 /**
+ * Delete pet comment.
+ *
+ * @param integer $id   Pet comment ID
+ * @return void
+ */
+function deletePetComment(int $id){
+    global $db;
+    
+    $stmt = $db->prepare('DELETE FROM Comment
+    WHERE id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+}
+
+/**
  * Get photos associated to comments about a pet.
  *
  * @param integer $id    ID of the comment

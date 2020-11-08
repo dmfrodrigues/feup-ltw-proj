@@ -42,6 +42,8 @@ class Comment {
         if (el_text.innerHTML === '') el_text.style.display = "none";
         let el_img = commentElement.querySelector("#comment-picture"); el_img.src = this.commentPictureUrl;
 
+        let el_deleteId = commentElement.querySelector("#action-delete-id"); el_deleteId.value = `${this.id}`;
+
         return commentElement;
     }
     /**
@@ -103,6 +105,8 @@ class Comment {
             if (user_name === user.username) {
                 let edit_el = actions_el.querySelector("#action-edit");
                 edit_el.style.display = "";
+                let delete_el = actions_el.querySelector("#action-delete");
+                delete_el.style.display = "";
             }
 
             let editElement = this.createEditElement();
