@@ -23,7 +23,7 @@ if (isset($_SESSION['username'])) {
 <?php
 }
 
-$javascript_files = ['js/Comment.js', 'js/commentsTree.js', 'js/petPhotos.js', 'js/commentImage.js'];
+$javascript_files = ['js/utils.js', 'js/Comment.js', 'js/commentsTree.js', 'js/petPhotos.js', 'js/commentImage.js'];
 
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_pet.php';
