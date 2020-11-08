@@ -38,6 +38,7 @@
                 <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
             <?php } ?>
             <div id="ask"><a href="#comments">Ask question about pet</a></div>
+            <div id="propose"><a href="">Propose to adopt</a></div>
         </div>
     <?php } ?>
     </header>
