@@ -46,24 +46,6 @@ class CommentTree {
     }
 }
 
-function createAnswerElement(commentId){
-    let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
-    answerElement.id = `new-comment-${commentId}`;
-
-    let el_answerTo = answerElement.querySelector('#comment-answerTo');
-    el_answerTo.value = commentId;
-
-    let el_user = answerElement.querySelector("#comment-user");
-    el_user.children[0].href = `profile.php?username=${user.username}`;
-    el_user.children[0].innerHTML = user.username;
-    
-    let el_pic = answerElement.querySelector("#comment-profile-pic-a");
-    el_pic.href=`profile.php?username=${user.username}`;
-    el_pic.children[0].src = user.pictureUrl;
-
-    return answerElement;
-}
-
 function createEditElement(commentId, commentElement){
     let userElement = commentElement.querySelector('#comment-user');
     let userImgElement = commentElement.querySelector('#comment-profile-pic-a');
@@ -115,7 +97,7 @@ function addCommentToDocument(parent, comment){
             detailsElement
         );
 
-        let answerElement = createAnswerElement(comment.id);
+        let answerElement = comment.createAnswerElement(user);
         answerElement.style.display="none";
         commentElement.insertBefore(
             answerElement,
@@ -157,7 +139,7 @@ $(document).ready(function(){
     let tree = new CommentTree(comments);
     let commentsSection = document.getElementById("comments");
     if(typeof user !== 'undefined'){
-        commentsSection.appendChild(createAnswerElement(null));
+        commentsSection.appendChild(tree.root.createAnswerElement(user));
     }
     tree.addToElement(commentsSection);
 });

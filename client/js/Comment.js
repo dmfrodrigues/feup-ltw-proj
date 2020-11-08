@@ -44,4 +44,26 @@ class Comment {
     
         return commentElement;
     }
+    /**
+     * @brief Create answer element.
+     * 
+     * @param {User} user User that is answering
+     */
+    createAnswerElement(user){
+        let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
+        answerElement.id = `new-comment-${this.id}`;
+    
+        let el_answerTo = answerElement.querySelector('#comment-answerTo');
+        el_answerTo.value = this.id;
+    
+        let el_user = answerElement.querySelector("#comment-user");
+        el_user.children[0].href = `profile.php?username=${user.username}`;
+        el_user.children[0].innerHTML = user.username;
+        
+        let el_pic = answerElement.querySelector("#comment-profile-pic-a");
+        el_pic.href=`profile.php?username=${user.username}`;
+        el_pic.children[0].src = user.pictureUrl;
+    
+        return answerElement;
+    }
 }
