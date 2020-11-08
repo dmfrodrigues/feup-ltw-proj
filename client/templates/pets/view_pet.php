@@ -2,6 +2,7 @@
     <?php
     include_once 'templates/pets/comment.php';
     include_once 'templates/pets/new_comment.php';
+    include_once 'templates/pets/edit_comment.php';
     ?>
 </div>
 <article id="pet">
