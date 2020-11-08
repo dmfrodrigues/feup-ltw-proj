@@ -1,7 +1,8 @@
-function createTree(comments){
+class CommentTree {
+    constructor(comments){
     /// Initialize tree
     let tree = new Map();
-    root = new Comment(
+    this.root = new Comment(
         null,
         null,
         null,
@@ -27,15 +28,17 @@ function createTree(comments){
     }
     /// Build tree
     for(let [id, c] of tree){
-        if(c.parent === null) root.addChild(c);
-        else                  tree.get(c.parent).addChild(c);
+        // Replace parent ID by reference to parent
+        if(c.parent !== null) c.parent = tree.get(c.parent);
+        // Add children
+        if(c.parent === null) this.root.addChild(c);
+        else                  c.parent.addChild(c);
     }
     /// Sort children
-    root.sortChildren();
+    this.root.sortChildren();
     for(let [id, c] of tree)
         c.sortChildren();
-    /// Return
-    return root;
+    }
 }
 
 function cloneNodeRecursive(element){
@@ -175,12 +178,12 @@ function clickedCommentEdit(comment_el){
 }
 
 $(document).ready(function(){
-    let root = createTree(comments);
+    let tree = new CommentTree(comments);
     let commentsSection = document.getElementById("comments");
     if(typeof user !== 'undefined'){
         commentsSection.appendChild(createAnswerElement(null));
     }
-    for(let i = 0; i < root.children.length; ++i){
-        addCommentToDocument(commentsSection, root.children[i]);
+    for(let i = 0; i < tree.root.children.length; ++i){
+        addCommentToDocument(commentsSection, tree.root.children[i]);
     }    
 });
