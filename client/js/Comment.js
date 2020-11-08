@@ -131,3 +131,22 @@ class Comment {
         }
     }
 }
+
+function clickedCommentReply(comment_el){
+    let id_string = comment_el.id;
+    let id = parseInt(id_string.split("-")[1]);
+
+    let new_comment_el = document.getElementById(`new-comment-${id}`);
+    new_comment_el.style.display = (new_comment_el.style.display === "none" ? "" : "none");
+}
+
+function clickedCommentEdit(comment_el){
+    let id_string = comment_el.id;
+    let id = parseInt(id_string.split("-")[1]);
+
+    let article_el = comment_el.querySelector(".comment");
+    article_el.style.display = "none";
+
+    let edit_comment_el = document.getElementById(`edit-comment-${id}`);
+    edit_comment_el.style.display = "";
+}
