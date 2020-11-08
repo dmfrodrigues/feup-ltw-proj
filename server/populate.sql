@@ -44,9 +44,10 @@ INSERT INTO AdoptionRequestMessage
     VALUES(NULL, 'Sure...', 2);
 
 -- Comment
-INSERT INTO Comment(pet, user, text, answerTo) VALUES
-(1, 'Asdrubal007', 'A simple comment.', NULL),
-(1, 'Asdrubal007', 'Another simple comment.', 1);
+INSERT INTO Comment(id, pet, user, text, answerTo) VALUES
+(1, 1, 'Asdrubal007', 'A simple comment.', NULL),
+(2, 1, 'dmfr'       , 'Hello!'           , NULL),
+(3, 1, 'Asdrubal007', 'Another simple comment.', 1);
 
 -- FavoritePet
 INSERT INTO FavoritePet(username, petId) VALUES
