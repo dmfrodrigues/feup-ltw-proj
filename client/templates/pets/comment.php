@@ -13,6 +13,11 @@
         </div>
         <div id="comment-actions" class="actions" style="display: none;">
             <img id="action-edit"  class="icon" src="resources/img/edit.svg"  onclick="clickedCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;">
+            <form id="action-delete" action="action_delete_comment.php" method="post" style="display: none;">
+                <input id="action-delete-id" name="id" type="hidden">
+                <input id="action-delete-submit" type="submit" style="display: none">
+                <img class="icon" src="resources/img/trash.svg" onclick="this.parentNode.querySelector('#action-delete-submit').click()">
+            </form>
             <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="clickedCommentReply(this.parentNode.parentNode.parentNode)">
         </div>
     </article>
