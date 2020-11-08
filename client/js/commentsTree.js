@@ -39,6 +39,11 @@ class CommentTree {
     for(let [id, c] of tree)
         c.sortChildren();
     }
+    addToElement(commentsSection){
+        for(let i = 0; i < this.root.children.length; ++i){
+            addCommentToDocument(commentsSection, this.root.children[i]);
+        }
+    }
 }
 
 function cloneNodeRecursive(element){
@@ -183,7 +188,5 @@ $(document).ready(function(){
     if(typeof user !== 'undefined'){
         commentsSection.appendChild(createAnswerElement(null));
     }
-    for(let i = 0; i < tree.root.children.length; ++i){
-        addCommentToDocument(commentsSection, tree.root.children[i]);
-    }    
+    tree.addToElement(commentsSection);
 });
