@@ -41,7 +41,7 @@
 
             <?php $added_pets = getAddedPets($_SESSION['username']);
             if (!in_array($pet, $added_pets)) { ?>
-                <span id="propose"><a href="proposal.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to propose to adopt this pet?')"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
+                <span id="propose"><a href="add_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
             <?php }
             ?>
         </div>
