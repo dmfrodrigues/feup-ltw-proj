@@ -96,12 +96,7 @@
 }
 
 #pet header #actions #propose{
-    color: white;
-    background-color: white;
-}
-
-#pet header #actions #propose a{
-    color: var(--main-color);
+    margin-left: 4.5em;
 }
 
 #pet #description{
