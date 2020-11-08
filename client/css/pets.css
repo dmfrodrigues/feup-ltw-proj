@@ -37,7 +37,9 @@
 
 #pet #pet-photos #pet-selected-img{
     height: 300px;
-    width: auto;
+    width: 400px;
+    object-fit: cover;
+    object-position: center;
 }
 
 #pet #pet-photos #pet-photos-row img{
@@ -213,6 +215,8 @@
 }
 
 .pet-card img{
+    object-fit: cover;
+    object-position: center;
     height: 100%;
     width: 100%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
