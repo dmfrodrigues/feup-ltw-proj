@@ -1,7 +1,6 @@
 $(function(){
     $("input#comment-picture-input").change(function(e){
-        let element = e.target.parentNode.parentNode;
-        console.log(element);
+        let element = e.target.parentNode;
         let file = e.originalEvent.srcElement.files[0];
         let img = element.querySelector("#comment-picture");
         changedCommentPicture(img, file);
