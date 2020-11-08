@@ -41,49 +41,9 @@ class CommentTree {
     }
     addToElement(commentsSection){
         for(let i = 0; i < this.root.children.length; ++i){
-            addCommentToDocument(commentsSection, this.root.children[i]);
+            let child = this.root.children[i];
+            child.addToDocument(commentsSection);
         }
-    }
-}
-
-function addCommentToDocument(parent, comment){
-    let commentElement = comment.createElement();
-    let detailsElement = commentElement.querySelector("details");
-
-    if(typeof user !== 'undefined'){
-        let actions_el = commentElement.querySelector(".actions");
-        actions_el.style.display = "";
-
-        let user_el = commentElement.querySelector("#comment-user");
-        let user_name = user_el.children[0].innerHTML;
-        if(user_name === user.username){
-            let edit_el = actions_el.querySelector("#action-edit");
-            edit_el.style.display = "";
-        }
-
-        let editElement = comment.createEditElement();
-        editElement.style.display = "none";
-        commentElement.insertBefore(
-            editElement,
-            detailsElement
-        );
-
-        let answerElement = comment.createAnswerElement(user);
-        answerElement.style.display="none";
-        commentElement.insertBefore(
-            answerElement,
-            detailsElement
-        );
-    }
-
-    parent.appendChild(commentElement);
-
-    if(comment.children.length > 0){
-        for(let i = 0; i < comment.children.length; ++i){
-            addCommentToDocument(detailsElement, comment.children[i]);
-        }
-    } else {
-        detailsElement.style.display = "none"; 
     }
 }
 

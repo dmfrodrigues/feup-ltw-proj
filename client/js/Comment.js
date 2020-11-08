@@ -89,4 +89,45 @@ class Comment {
     
         return editElement;
     }
+
+    addToDocument(parent){
+        let commentElement = this.createElement();
+        let detailsElement = commentElement.querySelector("details");
+    
+        if(typeof user !== 'undefined'){
+            let actions_el = commentElement.querySelector(".actions");
+            actions_el.style.display = "";
+    
+            let user_el = commentElement.querySelector("#comment-user");
+            let user_name = user_el.children[0].innerHTML;
+            if(user_name === user.username){
+                let edit_el = actions_el.querySelector("#action-edit");
+                edit_el.style.display = "";
+            }
+    
+            let editElement = this.createEditElement();
+            editElement.style.display = "none";
+            commentElement.insertBefore(
+                editElement,
+                detailsElement
+            );
+    
+            let answerElement = this.createAnswerElement(user);
+            answerElement.style.display="none";
+            commentElement.insertBefore(
+                answerElement,
+                detailsElement
+            );
+        }
+    
+        parent.appendChild(commentElement);
+    
+        if(this.children.length > 0){
+            for(let i = 0; i < this.children.length; ++i){
+                this.children[i].addToDocument(detailsElement);
+            }
+        } else {
+            detailsElement.style.display = "none"; 
+        }
+    }
 }
