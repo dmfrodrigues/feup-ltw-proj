@@ -270,6 +270,7 @@ function getFavoritePets(string $username) : array {
     Pet.location,
     Pet.description,
     Pet.status,
+    Pet.adoptionDate,
     Pet.postedBy
     FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
     WHERE FavoritePet.username=:username');
