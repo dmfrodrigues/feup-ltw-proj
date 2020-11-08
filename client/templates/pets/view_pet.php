@@ -38,7 +38,12 @@
                 <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
             <?php } ?>
             <div id="ask"><a href="#comments">Ask question about pet</a></div>
-            <span id="propose"><a href=""> <img src="resources/img/adopt-me.png" height="100px" width="100px"></a></span>
+            <?php 
+                $added_pets = getAddedPets($_SESSION['username']);
+                if (!in_array($pet, $added_pets)) { ?>
+                    <span id="propose"><a href="proposal.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"></a></span>
+                <?php }
+            ?>
         </div>
     <?php } ?>
     </header>
