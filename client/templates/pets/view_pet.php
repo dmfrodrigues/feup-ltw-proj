@@ -40,7 +40,8 @@
             <div id="ask"><a href="#comments">Ask question about pet</a></div>
 
             <?php $added_pets = getAddedPets($_SESSION['username']);
-            if (!in_array($pet, $added_pets)) { ?>
+            $adoption_requests = getAdoptionRequests($_SESSION['username']);
+            if (!in_array($pet, $added_pets) && !userRequestedPet($_SESSION['username'], $pet['id'])) { ?>
                 <span id="propose"><a href="add_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
             <?php }
             ?>
