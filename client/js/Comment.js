@@ -66,12 +66,7 @@ class Comment {
     
         return answerElement;
     }
-    createEditElement(commentElement){
-        let userElement       = commentElement.querySelector('#comment-user');
-        let userImgElement    = commentElement.querySelector('#comment-profile-pic-a');
-        let textElement       = commentElement.querySelector('#comment-text');
-        let commentImgElement = commentElement.querySelector('#comment-picture');
-    
+    createEditElement(){
         let editElement = cloneNodeRecursive(document.querySelector("#templates>#edit-comment"));
         editElement.id = `edit-comment-${this.id}`;
     
@@ -79,18 +74,18 @@ class Comment {
         el_commentId.value = this.id;
     
         let el_user = editElement.querySelector("#comment-user");
-        el_user.children[0].href = userElement.children[0].href;
-        el_user.children[0].innerHTML = userElement.children[0].innerHTML;
+        el_user.children[0].href = `profile.php?username=${this.user}`;
+        el_user.children[0].innerHTML = this.user;
     
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
-        el_userPic.href=userImgElement.href;
-        el_userPic.children[0].src = userImgElement.children[0].src;
+        el_userPic.href = `profile.php?username=${this.user}`;
+        el_userPic.children[0].src = this.userPictureUrl;
     
         let el_text = editElement.querySelector("#comment-text");
-        el_text.value = textElement.innerHTML;
+        el_text.value = this.text;
     
         let el_img = editElement.querySelector("#comment-picture");
-        el_img.src = commentImgElement.attributes.src.value;
+        el_img.src = this.commentPictureUrl;
     
         return editElement;
     }

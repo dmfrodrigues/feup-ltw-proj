@@ -61,7 +61,7 @@ function addCommentToDocument(parent, comment){
             edit_el.style.display = "";
         }
 
-        let editElement = comment.createEditElement(commentElement);
+        let editElement = comment.createEditElement();
         editElement.style.display = "none";
         commentElement.insertBefore(
             editElement,
