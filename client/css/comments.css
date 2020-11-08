@@ -73,6 +73,10 @@
     margin: 0 0 0 2em;
 }
 
+#comments div.comment form.edit{
+    margin: 0 0 0 0;
+}
+
 #comments details>div.comment{
     margin: 0 0 0 2em;
 }

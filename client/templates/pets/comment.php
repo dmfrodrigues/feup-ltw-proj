@@ -12,6 +12,7 @@
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions" style="display: none;">
+            <img id="action-edit"  class="icon" src="resources/img/edit.svg"  onclick="clickedCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;">
             <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="clickedCommentReply(this.parentNode.parentNode.parentNode)">
         </div>
     </article>

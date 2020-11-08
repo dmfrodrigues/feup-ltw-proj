@@ -293,6 +293,52 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 }
 
 /**
+ * Edits comment about pet.
+ *
+ * @param integer   $commentId      ID of comment
+ * @param string    $text           Text of comment
+ * @param array     $file           Picture file (as obtained from $_FILES['file_field'])
+ * @return void
+ */
+function editPetComment(int $commentId, string $text, bool $deleteFile, array $file){
+    $oldComment = getPetComment($commentId);
+
+    $noFileSent = false;
+    try{
+        $ext = checkImageFile($file, 1000000);
+    } catch(NoFileSentException $e){
+        $noFileSent = true;
+    }
+    if($text === '' && $noFileSent && ($deleteFile || $oldComment['commentPictureUrl'] === ''))
+        throw new RuntimeException('Comment must have a text or an image');
+
+    global $db;
+    
+    $stmt = $db->prepare('UPDATE Comment SET
+    text=:text
+    WHERE id=:id');
+    $stmt->bindParam(':text', $text     );
+    $stmt->bindParam(':id'  , $commentId);
+    $stmt->execute();
+    
+    if($deleteFile){
+        deletePetCommentPhoto($commentId);
+    }
+
+    if(!$noFileSent){
+        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        convertImage(
+            $file['tmp_name'],
+            $ext,
+            $filepath,
+            85
+        );
+    }
+
+    return $commentId;
+}
+
+/**
  * Get photos associated to comments about a pet.
  *
  * @param integer $id    ID of the comment
