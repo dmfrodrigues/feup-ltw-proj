@@ -46,35 +46,6 @@ class CommentTree {
     }
 }
 
-function createEditElement(commentId, commentElement){
-    let userElement = commentElement.querySelector('#comment-user');
-    let userImgElement = commentElement.querySelector('#comment-profile-pic-a');
-    let textElement = commentElement.querySelector('#comment-text');
-    let commentImgElement = commentElement.querySelector('#comment-picture');
-
-    let editElement = cloneNodeRecursive(document.querySelector("#templates>#edit-comment"));
-    editElement.id = `edit-comment-${commentId}`;
-
-    let el_commentId = editElement.querySelector('#commentId');
-    el_commentId.value = commentId;
-
-    let el_user = editElement.querySelector("#comment-user");
-    el_user.children[0].href = userElement.children[0].href;
-    el_user.children[0].innerHTML = userElement.children[0].innerHTML;
-
-    let el_userPic = editElement.querySelector("#comment-profile-pic-a");
-    el_userPic.href=userImgElement.href;
-    el_userPic.children[0].src = userImgElement.children[0].src;
-
-    let el_text = editElement.querySelector("#comment-text");
-    el_text.value = textElement.innerHTML;
-
-    let el_img = editElement.querySelector("#comment-picture");
-    el_img.src = commentImgElement.attributes.src.value;
-
-    return editElement;
-}
-
 function addCommentToDocument(parent, comment){
     let commentElement = comment.createElement();
     let detailsElement = commentElement.querySelector("details");
@@ -90,7 +61,7 @@ function addCommentToDocument(parent, comment){
             edit_el.style.display = "";
         }
 
-        let editElement = createEditElement(comment.id, commentElement);
+        let editElement = comment.createEditElement(commentElement);
         editElement.style.display = "none";
         commentElement.insertBefore(
             editElement,

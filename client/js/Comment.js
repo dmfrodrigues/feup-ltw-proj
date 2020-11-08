@@ -66,4 +66,32 @@ class Comment {
     
         return answerElement;
     }
+    createEditElement(commentElement){
+        let userElement       = commentElement.querySelector('#comment-user');
+        let userImgElement    = commentElement.querySelector('#comment-profile-pic-a');
+        let textElement       = commentElement.querySelector('#comment-text');
+        let commentImgElement = commentElement.querySelector('#comment-picture');
+    
+        let editElement = cloneNodeRecursive(document.querySelector("#templates>#edit-comment"));
+        editElement.id = `edit-comment-${this.id}`;
+    
+        let el_commentId = editElement.querySelector('#commentId');
+        el_commentId.value = this.id;
+    
+        let el_user = editElement.querySelector("#comment-user");
+        el_user.children[0].href = userElement.children[0].href;
+        el_user.children[0].innerHTML = userElement.children[0].innerHTML;
+    
+        let el_userPic = editElement.querySelector("#comment-profile-pic-a");
+        el_userPic.href=userImgElement.href;
+        el_userPic.children[0].src = userImgElement.children[0].src;
+    
+        let el_text = editElement.querySelector("#comment-text");
+        el_text.value = textElement.innerHTML;
+    
+        let el_img = editElement.querySelector("#comment-picture");
+        el_img.src = commentImgElement.attributes.src.value;
+    
+        return editElement;
+    }
 }
