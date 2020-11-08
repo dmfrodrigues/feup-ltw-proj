@@ -310,3 +310,19 @@ function getAdoptionRequests(string $username) : array {
     return $pets;
 }
 
+/**
+ * Have the user requested the pet?
+ *
+ * @param string $username  User's username
+ * @param int $petId        Pet's ID
+ * @return bool             Have the user requested the pet?
+ */
+function userRequestedPet(string $username, int $petId) : bool {
+    $adoption_requests = getAdoptionRequests($username);
+    foreach ($adoption_requests as $request)
+        if (in_array($petId, $request)) return true;
+    
+    return false;
+}
+
+

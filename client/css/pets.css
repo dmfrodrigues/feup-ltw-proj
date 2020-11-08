@@ -97,6 +97,10 @@
     color: white;
 }
 
+#pet header #actions #propose{
+    margin-left: 4.5em;
+}
+
 #pet #description{
     grid-area: 2 / 1 / span 1 / span 2;
     text-align: left;
