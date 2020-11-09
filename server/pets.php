@@ -21,6 +21,20 @@ function getPets() : array {
 }
 
 /**
+ * Get array of all pets listed for adoption.
+ *
+ * @return array    Array of all pets listed for adoption
+ */
+function getPetsListedForAdoption() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * 
+    FROM Pet WHERE status="forAdoption"');
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
+/**
  * Add new pet to database.
  *
  * @param string $name          Pet name
@@ -405,4 +419,23 @@ function getAddedPets(string $username) : array {
     $stmt->execute();
     $addedPets = $stmt->fetchAll();
     return $addedPets;
+}
+
+
+/**
+ * Change pet status.
+ * 
+ * @param int $petId      Pet's Id
+ * @param string $status  Pet status
+ * @return boolean        True if withdraw was successful, false otherwise
+ */
+function changePetStatus(int $petId, string $status): bool {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE Pet SET status=:status 
+                            WHERE id=:petId');
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
 }
