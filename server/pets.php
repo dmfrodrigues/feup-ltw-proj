@@ -21,6 +21,20 @@ function getPets() : array {
 }
 
 /**
+ * Get array of all pets listed for adoption.
+ *
+ * @return array    Array of all pets listed for adoption
+ */
+function getPetsListedForAdoption() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * 
+    FROM Pet WHERE status="forAdoption"');
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
+/**
  * Add new pet to database.
  *
  * @param string $name          Pet name
