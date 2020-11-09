@@ -123,6 +123,10 @@
     color: var(--text-button-color-2);
 }
 
+#pet header #actions #propose img:hover{
+    box-shadow: -1px 3px 20px 11px var(--main-color);
+}
+
 #pet header #actions #remove-proposal{
     background-color: white;
 }
