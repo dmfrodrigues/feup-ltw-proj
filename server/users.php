@@ -381,12 +381,12 @@ function userRequestedPet(string $username, int $petId) : bool {
 function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     global $db;
     $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
-    WHERE user=:username AND pet=:petId');
+    WHERE user=:username AND pet=:petId ORDER BY requestDate DESC');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
-    $request = $stmt->fetch();
-    return $request['outcome'];
+    $request = $stmt->fetchAll();
+    return $request[0]['outcome'];
 }
 
 /**
