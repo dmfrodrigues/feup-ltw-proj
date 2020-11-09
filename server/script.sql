@@ -70,7 +70,7 @@ CREATE TABLE Pet (
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
     status      VARCHAR NOT NULL DEFAULT 'forAdoption',
-    adoptionDate DATE            CHECK(adoptionDate IS strftime('%Y-%m-%d', adoptionDate)), -- Check date format
+    adoptionDate TIMESTAMP, -- Check date format
     postedBy    VARCHAR NOT NULL,
 
     CONSTRAINT Pet_PK PRIMARY KEY(id),
@@ -82,10 +82,7 @@ CREATE TABLE Pet (
 
     CONSTRAINT sizeRule CHECK (size IN ('XS','S','M','L','XL')),
 
-    CONSTRAINT statusRule CHECK (status IN ('forAdoption','adopted','delivered')),
-
-    CONSTRAINT adoption CHECK ((status = 'forAdoption' AND adoptionDate IS NULL) OR
-                               (status IN ('adopted','delivered') AND adoptionDate IS NOT NULL))
+    CONSTRAINT statusRule CHECK (status IN ('forAdoption','adopted','delivered'))
 );
 
 CREATE TABLE AdoptionRequest (
@@ -154,4 +151,12 @@ WHEN NEW.answerTo IS NOT NULL AND
 (SELECT postedOn FROM Comment WHERE id=NEW.answerTo) > NEW.postedOn
 BEGIN
     SELECT raise(rollback, 'Answer must come after comment it answers to');
+END;
+
+CREATE TRIGGER Adoption_accepted
+BEFORE UPDATE ON Pet
+FOR EACH ROW
+WHEN NEW.status = 'adopted' OR NEW.status = 'delivered'
+BEGIN
+    UPDATE Pet SET adoptionDate = CURRENT_TIMESTAMP WHERE id = NEW.id;
 END;

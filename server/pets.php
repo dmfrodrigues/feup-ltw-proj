@@ -446,4 +446,22 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
     return $stmt->rowCount() > 0;
 }
 
+/**
+ * Change pet status.
+ * 
+ * @param int $petId      Pet's Id
+ * @param string $status  Pet status
+ * @return boolean        True if withdraw was successful, false otherwise
+ */
+function changePetStatus(int $petId, string $status): bool {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE Pet SET status=:status 
+                            WHERE id=:petId');
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
+
 ?>
