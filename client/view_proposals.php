@@ -9,7 +9,7 @@ include_once('templates/common/header.php');
 include_once('../server/users.php');
 include_once('templates/pets/view_proposal.php');
 
-$adoptionRequests = getAdoptionRequests($_SESSION['username']);
+$adoptionRequests = getAdoptionRequestsOfUserPets($_SESSION['username']);
 
 drawProposals($adoptionRequests);
 

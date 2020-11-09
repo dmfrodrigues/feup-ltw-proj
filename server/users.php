@@ -314,6 +314,29 @@ function getAdoptionRequests(string $username) : array {
 }
 
 /**
+ * Get a user's adoption requests for his pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adoption requests 
+ */
+function getAdoptionRequestsOfUserPets(string $username) : array {
+    global $db;
+
+$stmt = $db->prepare('SELECT
+    Pet.name,
+    AdoptionRequest.text,
+    AdoptionRequest.outcome,
+    AdoptionRequest.user,
+    AdoptionRequest.requestDate
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.pet IN (SELECT id FROM Pet WHERE Pet.postedBy=:username)');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
+/**
  * Have the user requested the pet?
  *
  * @param string $username  User's username

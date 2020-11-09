@@ -101,3 +101,9 @@ button#answerRequest:hover {
     background-color: orange;
     color: white;
 }
+
+a#button {
+    text-decoration: none;
+    width: 100;
+
+}
