@@ -421,6 +421,22 @@ function getAddedPets(string $username) : array {
     return $addedPets;
 }
 
+/**
+ * Get pets added by a user that were not adopted yet.
+ *
+ * @param string $username  User's username
+ * @return array            Array of pets added by that user
+ */
+function getAddedPetsNotAdopted(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Pet 
+    WHERE postedBy=:username AND status="forAdoption"');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $addedPets = $stmt->fetchAll();
+    return $addedPets;
+}
+
 
 /**
  * Change pet status.
@@ -435,6 +451,21 @@ function changePetStatus(int $petId, string $status): bool {
     $stmt = $db->prepare('UPDATE Pet SET status=:status 
                             WHERE id=:petId');
     $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
+
+/**
+ * Change pet status.
+ * 
+ * @param int $petId      Pet's Id
+ * @return boolean        True if the pet was adopted, false otherwise.
+ */
+function checkIfAdopted(int $petId) : bool {
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Pet 
+    WHERE id=:petId AND status<>"forAdoption"');
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
