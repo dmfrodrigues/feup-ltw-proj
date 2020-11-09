@@ -343,7 +343,7 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
  *
  * @param string $reqId    Adoption Request Id
  * @param string $outcome  Adoption Request outcome
- * @return array            True if successful, false otherwise.
+ * @return bool            True if successful, false otherwise.
  */
 function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
     global $db;
@@ -372,19 +372,60 @@ function userRequestedPet(string $username, int $petId) : bool {
 }
 
 /**
- * Remove adoption request.
+ * Get the adoption request outcome.
  *
- * @param string $username  User's username
- * @param int $petId        Pet's ID
- * @return void             
+ * @param string $username    User's username
+ * @param string $petId       Pet's ID
+ * @return ?string            Outcome of the adoption request made by the user to the pet, or null if there is none
  */
-function removeAdoptionRequest(string $username, int $petId) {
+function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     global $db;
-    $stmt = $db->prepare('DELETE FROM AdoptionRequest
-    WHERE user=:username AND pet=:petId');
+    $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
+    WHERE user=:username AND pet=:petId ORDER BY requestDate DESC');
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
+    $request = $stmt->fetchAll();
+    return $request[0]['outcome'];
+}
+
+/**
+ * Add adoption request
+ *
+ * @param string $username  Username of user that created request
+ * @param integer $id       ID of pet the adoption request refers to
+ * @param string $text      Text of the adoption request
+ * @return integer          ID of the adoption request
+ */
+function addAdoptionRequest(string $username, int $id, string $text) : int {
+    global $db;
+    $stmt = $db->prepare('INSERT INTO AdoptionRequest
+    (user, pet, text)
+    VALUES
+    (:user, :pet, :text)');
+    $stmt->bindParam(':user'       , $username   );
+    $stmt->bindParam(':pet'        , $id         );
+    $stmt->bindParam(':text'       , $text       );
+    $stmt->execute();
+    return $db->lastInsertId();
+}
+
+/**
+ * Withdraw adoption Request.
+ * 
+ * @param string $username User's username
+ * @param integer $petId   Pet's Id
+ * @return boolean         True if withdraw was successful, false otherwise
+ */
+function withdrawAdoptionRequest(string $username, int $petId): bool {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM AdoptionRequest
+                            WHERE user=:username AND pet=:petId');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
 }
 
 

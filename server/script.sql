@@ -94,7 +94,7 @@ CREATE TABLE AdoptionRequest (
     outcome VARCHAR NOT NULL DEFAULT 'pending',
     pet     INTEGER NOT NULL,
     user    VARCHAR NOT NULL, -- Response User
-    requestDate DATE CHECK(requestDate IS strftime('%Y-%m-%d', requestDate)), -- Check date format
+    requestDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT AdoptionRequest_PK PRIMARY KEY(id),
     CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(pet) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE,
