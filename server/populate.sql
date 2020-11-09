@@ -30,18 +30,18 @@ INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess"
 -- Pet
 INSERT INTO Pet
 (name      , species, age, sex, size, color  , location , description             , status       , postedBy     ) VALUES
-(   'Kitty',   'Cat',   3, 'F',  'S', 'White', 'Marvila', 'Very cute cat.'        , 'forAdoption', 'Asdrubal007'),
-('Princesa',   'Cat',   5, 'M', 'XS',  'Gray',  'Olaias', 'Another very cute cat.', 'forAdoption', 'Asdrubal007');
+(   'Kitty',   'Cat',   3, 'F',  'S', 'White', 'Marvila', 'Very cute cat.'        , 'forAdoption', '2dukes'),
+('Princesa',   'Cat',   5, 'M', 'XS',  'Gray',  'Olaias', 'Another very cute cat.', 'forAdoption', 'dmfr');
 
 -- AdoptionRequest
 INSERT INTO AdoptionRequest
-    VALUES(NULL, 'Please adoptme', 'pending', 1, '2dukes');
+    VALUES(NULL, 'Please adoptme', 'pending', 1, '2dukes', '2020-12-01');
 INSERT INTO AdoptionRequest
-    VALUES(NULL, 'Please adopt this little cat!', 'accepted', 1, 'Romanoff123');
+    VALUES(NULL, 'Please adopt this little cat!', 'accepted', 1, 'Romanoff123', '2020-12-05');
 
 -- AdoptionRequestMessage
 INSERT INTO AdoptionRequestMessage
-    VALUES(NULL, 'Sure...', 2);
+    VALUES(NULL, 'Sure...', 2, '2020-12-06');
 
 -- Comment
 INSERT INTO Comment(id, pet, user, text, answerTo) VALUES

@@ -288,6 +288,7 @@ function getFavoritePets(string $username) : array {
  */
 function getAdoptionRequests(string $username) : array {
     global $db;
+
     $stmt = $db->prepare('SELECT
     Pet.id,
     Pet.name,
@@ -301,13 +302,58 @@ function getAdoptionRequests(string $username) : array {
     Pet.status,
     Pet.postedBy,
     AdoptionRequest.text,
-    AdoptionRequest.outcome
+    AdoptionRequest.outcome,
+    AdoptionRequest.user,
+    AdoptionRequest.requestDate
     FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
     WHERE AdoptionRequest.user=:username');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
+}
+
+/**
+ * Get a user's adoption requests for his pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adoption requests 
+ */
+function getAdoptionRequestsOfUserPets(string $username) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    AdoptionRequest.id AS requestId,
+    AdoptionRequest.text,
+    AdoptionRequest.outcome,
+    AdoptionRequest.user,
+    AdoptionRequest.requestDate
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.pet IN (SELECT id FROM Pet WHERE Pet.postedBy=:username)');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
+/**
+ * Change adoption request outcome
+ *
+ * @param string $reqId    Adoption Request Id
+ * @param string $outcome  Adoption Request outcome
+ * @return array            True if successful, false otherwise.
+ */
+function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
+    global $db;
+    
+    $stmt = $db->prepare('UPDATE
+    AdoptionRequest SET outcome=:outcome WHERE id=:reqId'); 
+    $stmt->bindParam(':outcome', $outcome);
+    $stmt->bindParam(':reqId', $reqId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
 }
 
 /**
