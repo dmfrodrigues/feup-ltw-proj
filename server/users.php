@@ -372,22 +372,6 @@ function userRequestedPet(string $username, int $petId) : bool {
 }
 
 /**
- * Remove adoption request.
- *
- * @param string $username  User's username
- * @param int $petId        Pet's ID
- * @return void             
- */
-function removeAdoptionRequest(string $username, int $petId) {
-    global $db;
-    $stmt = $db->prepare('DELETE FROM AdoptionRequest
-    WHERE user=:username AND pet=:petId');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
-    $stmt->execute();
-}
-
-/**
  * Get the adoption request outcome.
  *
  * @param string $username    User's username
@@ -403,6 +387,45 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     $stmt->execute();
     $request = $stmt->fetch();
     return $request['outcome'];
+}
+
+/**
+ * Add adoption request
+ *
+ * @param string $username  Username of user that created request
+ * @param integer $id       ID of pet the adoption request refers to
+ * @param string $text      Text of the adoption request
+ * @return integer          ID of the adoption request
+ */
+function addAdoptionRequest(string $username, int $id, string $text) : int {
+    global $db;
+    $stmt = $db->prepare('INSERT INTO AdoptionRequest
+    (user, pet, text)
+    VALUES
+    (:user, :pet, :text)');
+    $stmt->bindParam(':user'       , $username   );
+    $stmt->bindParam(':pet'        , $id         );
+    $stmt->bindParam(':text'       , $text       );
+    $stmt->execute();
+    return $db->lastInsertId();
+}
+
+/**
+ * Withdraw adoption Request.
+ * 
+ * @param string $username User's username
+ * @param integer $petId   Pet's Id
+ * @return boolean         True if withdraw was successful, false otherwise
+ */
+function withdrawAdoptionRequest(string $username, int $petId): bool {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM AdoptionRequest
+                            WHERE user=:username AND pet=:petId');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
 }
 
 
