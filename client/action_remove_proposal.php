@@ -9,7 +9,7 @@ include_once SERVER_DIR.'/users.php';
 $petId = $_GET['id'];
 
 if (isset($_SESSION['username'])){
-    removeAdoptionRequest($_SESSION['username'], $petId);
+    withdrawAdoptionRequest($_SESSION['username'], $petId);
     header("Location: pet.php?id=$petId");
 }
 
