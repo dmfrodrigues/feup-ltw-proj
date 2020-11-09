@@ -73,6 +73,11 @@
     vertical-align: middle;
 }
 
+#pet header #actions #remove-proposal img{
+    padding: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
 #pet header * div {
     max-width: 13em;
     height: 2em;
@@ -84,12 +89,12 @@
 }
 
 #pet header #actions #favorite{
-    color: var(--main-color);
+    /*color: var(--main-color);*/
     background-color: white;
 }
 
 #pet header #actions #ask{
-    color: white;
+    /*color: white;*/
     background-color: var(--main-color);
 }
 
@@ -97,8 +102,13 @@
     color: white;
 }
 
-#pet header #actions #propose{
-    margin-left: 4.5em;
+#pet header #actions #remove-proposal{
+    background-color: white;
+}
+
+#pet header #actions #remove-proposal a{
+    color: red;
+    background-color: white;
 }
 
 #pet #description{
