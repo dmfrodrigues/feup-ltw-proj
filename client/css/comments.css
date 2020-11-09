@@ -20,8 +20,11 @@
     display: inline;
 }
 
-#comments article.comment>.actions>*+* {
-    margin: 0 0 0 0.4em;
+#comments article.comment>.actions>* {
+    margin: 0 0.4em 0 0;
+}
+#comments article.comment>.actions>*:last-child {
+    margin: 0;
 }
 
 #comments article.comment>#comment-content>textarea.comment-text {
