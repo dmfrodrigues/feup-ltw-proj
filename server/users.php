@@ -343,7 +343,7 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
  *
  * @param string $reqId    Adoption Request Id
  * @param string $outcome  Adoption Request outcome
- * @return array            True if successful, false otherwise.
+ * @return bool            True if successful, false otherwise.
  */
 function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
     global $db;
@@ -385,6 +385,24 @@ function removeAdoptionRequest(string $username, int $petId) {
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
+}
+
+/**
+ * Get the adoption request outcome.
+ *
+ * @param string $username    User's username
+ * @param string $petId       Pet's ID
+ * @return ?string            Outcome of the adoption request made by the user to the pet, or null if there is none
+ */
+function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
+    global $db;
+    $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
+    WHERE user=:username AND pet=:petId');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    $request = $stmt->fetch();
+    return $request['outcome'];
 }
 
 
