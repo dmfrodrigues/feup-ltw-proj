@@ -45,7 +45,7 @@
                 if (!userRequestedPet($_SESSION['username'], $pet['id'])) { ?>
                     <div id="propose"><a href="add_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
                 <?php } else { ?>
-                    <div id="remove-proposal"><a href="remove_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/remove-proposal.svg" height="30px">Remove Proposal</a></span>
+                    <div id="remove-proposal"><a href="action_remove_proposal.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove the adoption request?')"> <img src="resources/img/remove-proposal.svg" height="30px">Remove Proposal</a></span>
                 <?php }
              }
             ?>
