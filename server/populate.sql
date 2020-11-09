@@ -35,13 +35,13 @@ INSERT INTO Pet
 
 -- AdoptionRequest
 INSERT INTO AdoptionRequest
-    VALUES(NULL, 'Please adoptme', 'pending', 1, '2dukes');
+    VALUES(NULL, 'Please adoptme', 'pending', 1, '2dukes', '2020-12-01');
 INSERT INTO AdoptionRequest
-    VALUES(NULL, 'Please adopt this little cat!', 'accepted', 1, 'Romanoff123');
+    VALUES(NULL, 'Please adopt this little cat!', 'accepted', 1, 'Romanoff123', '2020-12-05');
 
 -- AdoptionRequestMessage
 INSERT INTO AdoptionRequestMessage
-    VALUES(NULL, 'Sure...', 2);
+    VALUES(NULL, 'Sure...', 2, '2020-12-06');
 
 -- Comment
 INSERT INTO Comment(id, pet, user, text, answerTo) VALUES

@@ -1,0 +1,66 @@
+div#proposal {
+    background-color: var(--light-color);
+    width: 100%;
+    height: 12em;
+    text-align: center;
+}
+
+h3 {
+    display: block;
+}
+
+img {
+    border-radius: 100%;
+    width: 5em;
+    height: 5em;
+}
+
+
+
+#proposal-text {
+    width: 15em;
+    height: 5em;
+    background-color: red;
+    vertical-align: top;
+    margin: auto;
+}
+
+#proposal-header {
+    display: inline-block;
+    height: 5em;
+    width: 7em;
+}
+
+div#proposal-info {
+    display: inline-block;
+    height: 7em;
+    vertical-align: top;
+    height: 80%;
+    margin-top: 0em;
+}
+
+div#proposal-message {
+    background-color: lightgray;
+    border-radius: 2%;
+    height: 60%;
+}
+
+div#proposal-message textarea {
+    width: 50em;
+    overflow: auto;
+    height: 100%;
+    border: 1px solid #888; 
+    background-color: lightgray;
+    border-radius: 2%;
+    border: 0px;
+    resize: none;
+}
+
+div#proposal-message textarea:focus {
+    outline: none;
+}
+
+a#proposal-pet {
+    font-weight: bold;
+    text-decoration: none;
+}

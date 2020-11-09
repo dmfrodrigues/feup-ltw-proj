@@ -288,6 +288,7 @@ function getFavoritePets(string $username) : array {
  */
 function getAdoptionRequests(string $username) : array {
     global $db;
+
     $stmt = $db->prepare('SELECT
     Pet.id,
     Pet.name,
@@ -301,7 +302,9 @@ function getAdoptionRequests(string $username) : array {
     Pet.status,
     Pet.postedBy,
     AdoptionRequest.text,
-    AdoptionRequest.outcome
+    AdoptionRequest.outcome,
+    AdoptionRequest.user,
+    AdoptionRequest.requestDate
     FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
     WHERE AdoptionRequest.user=:username');
     $stmt->bindParam(':username', $username);
