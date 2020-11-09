@@ -15,8 +15,6 @@ h3 {
     height: 5em;
 }
 
-
-
 #proposal-text {
     width: 15em;
     height: 5em;
@@ -83,11 +81,11 @@ button#acceptRequest:hover {
     color: white;
 }
 
-button#refuseRequest {
+button#refuseRequest, button#cancelRequest {
     background-color: #ff726f;
 }
 
-button#refuseRequest:hover {
+button#refuseRequest:hover, button#cancelRequest:hover {
     background-color: #f70d1a;
     color: white;
 }
@@ -99,8 +97,4 @@ button#answerRequest {
 button#answerRequest:hover {
     background-color: orange;
     color: white;
-}
-
-form#proposal-form {
-    display: inline-block;
 }

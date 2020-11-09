@@ -12,7 +12,8 @@
         <h2>Actions</h2>
         <ul>
             <li><a href="add_pet.php">➕ Add pet</a></li>
-            <li><a href="view_proposals.php">➕ View Proposals</a></li>
+            <li><a href="view_proposals.php">➕ Proposals Made To My Pets</a></li>
+            <li><a href="my_proposals.php">➕ My Proposals</a></li>
         </ul>
     </section>
 </section>

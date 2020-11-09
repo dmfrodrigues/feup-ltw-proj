@@ -6,8 +6,6 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/pets.php';
 
-
-
 if ($_GET['username'] != $_SESSION['username']) 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 
