@@ -37,7 +37,7 @@
             <?php } else { ?>
                 <div id="favorite"><a href="action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
             <?php } ?>
-            <div id="ask"><a href="#comments">Ask question about pet</a></div>
+            <div id="ask"><a href="#comments"><img src="resources/img/question-mark.png" height="42px">Ask question</a></div>
 
             <?php $added_pets = getAddedPets($_SESSION['username']);
             $adoption_requests = getAdoptionRequests($_SESSION['username']);
