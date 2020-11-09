@@ -371,4 +371,21 @@ function userRequestedPet(string $username, int $petId) : bool {
     return false;
 }
 
+/**
+ * Remove adoption request.
+ *
+ * @param string $username  User's username
+ * @param int $petId        Pet's ID
+ * @return void             
+ */
+function removeAdoptionRequest(string $username, int $petId) {
+    global $db;
+    $stmt = $db->prepare('DELETE FROM AdoptionRequest
+    WHERE user=:username AND pet=:petId');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+}
+
+
 

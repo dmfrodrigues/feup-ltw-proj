@@ -9,6 +9,9 @@
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
+    --text-button-color-1: #fc9d04;
+    --text-button-color-2: #fc9d04;
+    --text-button-color-3: red;
 }
 
 #pet header,
@@ -73,6 +76,17 @@
     vertical-align: middle;
 }
 
+#pet header #actions #remove-proposal img{
+    padding: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
+#pet header #actions #ask img{
+    padding: 0 0.5em 0 0;
+    vertical-align: top;
+    margin-bottom: auto;
+}
+
 #pet header * div {
     max-width: 13em;
     height: 2em;
@@ -84,21 +98,46 @@
 }
 
 #pet header #actions #favorite{
-    color: var(--main-color);
     background-color: white;
 }
 
-#pet header #actions #ask{
-    color: white;
+#pet header #actions #favorite:hover {
     background-color: var(--main-color);
+    --text-button-color-1: white;
+}
+
+#pet header #actions #favorite a{
+    color: var(--text-button-color-1);
+}
+
+#pet header #actions #ask{
+    background-color: white;
+}
+
+#pet header #actions #ask:hover{
+    background-color: var(--main-color);
+    --text-button-color-2: white;
 }
 
 #pet header #actions #ask a{
-    color: white;
+    color: var(--text-button-color-2);
 }
 
-#pet header #actions #propose{
-    margin-left: 4.5em;
+#pet header #actions #propose img:hover{
+    box-shadow: -1px 3px 20px 11px var(--main-color);
+}
+
+#pet header #actions #remove-proposal{
+    background-color: white;
+}
+
+#pet header #actions #remove-proposal:hover{
+    background-color: var(--main-color);
+    --text-button-color-3: white;
+}
+
+#pet header #actions #remove-proposal a{
+    color: var(--text-button-color-3);
 }
 
 #pet #description{
