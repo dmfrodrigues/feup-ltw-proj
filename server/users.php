@@ -323,7 +323,9 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
     global $db;
 
 $stmt = $db->prepare('SELECT
+    Pet.id,
     Pet.name,
+    AdoptionRequest.id AS requestId,
     AdoptionRequest.text,
     AdoptionRequest.outcome,
     AdoptionRequest.user,
