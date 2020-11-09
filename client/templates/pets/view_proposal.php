@@ -21,14 +21,10 @@
             </div>
         </div>
             
-
-   
     <?php } ?>
 
     <?php function drawProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) {
             drawSingleProposal($adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'], $adoptionReq['user'], $adoptionReq['requestDate']);
-            drawSingleProposal($adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'], $adoptionReq['user'], $adoptionReq['requestDate']);
-
         }
     }
