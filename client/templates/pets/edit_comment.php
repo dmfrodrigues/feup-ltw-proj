@@ -11,8 +11,8 @@
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()">
-            <img class="icon" src="resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)">
+            <img class="icon" src="resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()" title="Add picture">
+            <img class="icon" src="resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
             <input type="submit" id="comment-submit" value="Submit">
         </div>
     </article>
