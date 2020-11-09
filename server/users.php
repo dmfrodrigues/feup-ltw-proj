@@ -338,6 +338,13 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
     return $pets;
 }
 
+/**
+ * Change adoption request outcome
+ *
+ * @param string $reqId    Adoption Request Id
+ * @param string $outcome  Adoption Request outcome
+ * @return array            True if successful, false otherwise.
+ */
 function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
     global $db;
     
