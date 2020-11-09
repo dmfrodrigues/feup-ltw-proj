@@ -322,7 +322,7 @@ function getAdoptionRequests(string $username) : array {
 function getAdoptionRequestsOfUserPets(string $username) : array {
     global $db;
 
-$stmt = $db->prepare('SELECT
+    $stmt = $db->prepare('SELECT
     Pet.id,
     Pet.name,
     AdoptionRequest.id AS requestId,
@@ -336,6 +336,17 @@ $stmt = $db->prepare('SELECT
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
+}
+
+function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
+    global $db;
+    
+    $stmt = $db->prepare('UPDATE
+    AdoptionRequest SET outcome=:outcome WHERE id=:reqId'); 
+    $stmt->bindParam(':outcome', $outcome);
+    $stmt->bindParam(':reqId', $reqId);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
 }
 
 /**

@@ -40,7 +40,6 @@ div#proposal-info {
 }
 
 div#proposal-message {
-    background-color: lightgray;
     border-radius: 2%;
     height: 50%;
 }
@@ -51,7 +50,7 @@ div#proposal-message textarea {
     overflow: auto;
     border: 1px solid #888; 
     background-color: lightgray;
-    border-radius: 2%;
+    border-radius: 1em;
     border: 0px;
     resize: none;
 }
@@ -102,8 +101,6 @@ button#answerRequest:hover {
     color: white;
 }
 
-a#button {
-    text-decoration: none;
-    width: 100;
-
+form#proposal-form {
+    display: inline-block;
 }
