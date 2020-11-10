@@ -36,9 +36,11 @@
     <?php 
 
     function drawProposals($adoptionRequests) {
-        foreach($adoptionRequests as $adoptionReq) 
-            drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
-                $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], true);   
+        foreach($adoptionRequests as $adoptionReq) {
+            if ($adoptionReq['outcome'] !== 'accepted')
+                drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
+                    $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], true);
+            }    
     }
 
     function drawMyProposals($adoptionRequests) {
