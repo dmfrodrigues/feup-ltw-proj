@@ -1,11 +1,18 @@
 <article id="add-pet">
-    <form action="action_add_pet.php" method="post">
+    <form action="action_add_pet.php" method="post" enctype="multipart/form-data">
         <header>
             <h1><input type="text" name="name" placeholder="Pet name" required></h1>
             <div id="data">
                 <span id="location"><input type="text" name="location" placeholder="Location" required></span>
             </div>
-            <img src="resources/img/no-image.svg" alt="" />
+            <div id="pet-photos">
+                <a id="add-photo" onclick="addPetPhoto(this.parentNode)">Add photo</a>
+                <div id="pet-photos-inputs">
+                    <input id="photo-number" name="photo-number" type="hidden" value="0">
+                </div>
+                <div id=pet-photos-row>
+                </div>
+            </div>
         </header>
         <section id="description">
             <h2>Description</h2>
