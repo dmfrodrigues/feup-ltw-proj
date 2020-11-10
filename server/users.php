@@ -365,8 +365,9 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
  */
 function userRequestedPet(string $username, int $petId) : bool {
     $adoption_requests = getAdoptionRequests($username);
-    foreach ($adoption_requests as $request)
-        if ($request['id'] === $petId) return true;
+    foreach ($adoption_requests as $request) {
+        if ($request['id'] == $petId) return true;
+    }
     
     return false;
 }
@@ -386,7 +387,7 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
     $request = $stmt->fetchAll();
-    return $stmt->rowCount() > 0 ? $request[0]['outcome'] : null;
+    return $request[0]['outcome'];
 }
 
 /**
