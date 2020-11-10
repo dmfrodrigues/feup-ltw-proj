@@ -78,10 +78,10 @@ function addPet(
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':postedBy'   , $postedBy   );
     $stmt->execute();
-    $id = $db->lastInsertId();
+    $petId = $db->lastInsertId();
 
     // Add images
-    $path = PETS_IMAGES_DIR."/$id";
+    $path = PETS_IMAGES_DIR."/$petId";
     mkdir($path);
 
     foreach($files as $id => $file){
@@ -95,7 +95,7 @@ function addPet(
         );
     }
 
-    return $id;
+    return $petId;
 }
 
 /**
