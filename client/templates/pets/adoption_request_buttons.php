@@ -12,7 +12,7 @@
                     <div id="propose"><a href="add_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
                 <?php } else if (getAdoptionRequestOutcome($_SESSION['username'], $pet['id']) === 'accepted') { ?>
                     <div id="rejected-proposal">The proposal was accepted! :)</div>
-                <?php } 
+                <?php } else echo "Não devia de entrar aqui";
                 }
             } 
     } else if ($_SESSION['username'] !== $pet['postedBy']) { ?>
