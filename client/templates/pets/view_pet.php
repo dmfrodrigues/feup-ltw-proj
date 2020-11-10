@@ -8,21 +8,19 @@
 <article id="pet">
     <header>
         <div id="pet-photos">
-        <?php
-        $photos = getPetPhotos($pet['id']); 
-        if(empty($photos)) $photoSelected = "resources/img/no-image.svg";
-        else $photoSelected = $photos[0];
-        ?>
-        <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
-        <div id=pet-photos-row>
-        <img class="selected" src="<?= $photoSelected ?>" alt="photo 1 of <?= $pet['name'] ?>" 
-            onclick="selectPhoto()" />
-        <?php
-            for($i=1; $i < count($photos); $i++){?>
-                <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" 
-                onclick="selectPhoto()" />
-        <?php } ?>
-        </div>
+            <?php
+            $photos = getPetPhotos($pet['id']);
+            if (empty($photos)) $photoSelected = "resources/img/no-image.svg";
+            else $photoSelected = $photos[0];
+            ?>
+            <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
+            <div id=pet-photos-row>
+                <img class="selected" src="<?= $photoSelected ?>" alt="photo 0 of <?= $pet['name'] ?>" onclick="selectPhoto()" />
+                <?php
+                for ($i = 1; $i < count($photos); $i++) { ?>
+                    <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" onclick="selectPhoto()" />
+                <?php } ?>
+            </div>
         </div>
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
