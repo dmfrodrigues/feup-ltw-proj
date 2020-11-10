@@ -57,8 +57,12 @@ function addPet(
     string $color,
     string $location,
     string $description,
-    string $postedBy
+    string $postedBy,
+    array  $files
 ) : int {
+    // Check if files are OK
+    foreach($files as $id => $file) checkImageFile($file, 1000000);
+
     global $db;
     $stmt = $db->prepare('INSERT INTO Pet
     (name, species, age, sex, size, color, location, description, postedBy)
@@ -76,9 +80,20 @@ function addPet(
     $stmt->execute();
     $id = $db->lastInsertId();
 
-    // Create images folder
+    // Add images
     $path = PETS_IMAGES_DIR."/$id";
     mkdir($path);
+
+    foreach($files as $id => $file){
+        $ext = checkImageFile($file, 1000000);
+        $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
+        convertImage(
+            $file['tmp_name'],
+            $ext,
+            $filepath,
+            85
+        );
+    }
 
     return $id;
 }
