@@ -301,6 +301,7 @@ function getAdoptionRequests(string $username) : array {
     Pet.description,
     Pet.status,
     Pet.postedBy,
+    AdoptionRequest.id AS requestId,
     AdoptionRequest.text,
     AdoptionRequest.outcome,
     AdoptionRequest.user,
@@ -325,6 +326,7 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
     $stmt = $db->prepare('SELECT
     Pet.id,
     Pet.name,
+    Pet.status,
     AdoptionRequest.id AS requestId,
     AdoptionRequest.text,
     AdoptionRequest.outcome,
@@ -427,6 +429,22 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
+}
+
+/**
+ * Refuses other proposals made to the pet, because the pet was adopted.
+ * 
+ * @param integer $requestId    Request Id
+ * @param integer $petId        Pet's Id
+ * @return void
+ */
+function refuseOtherProposals(int $requestId, int $petId) {
+    $adoption_requests = getAdoptionRequestsOfUserPets($petId);
+    foreach ($adoption_requests as $request)
+        if ($request['requestId'] != $requestId) {
+            changeAdoptionRequestOutcome($requestId, "rejected");
+            changePetStatus($petId, "adopted");
+        }
 }
 
 

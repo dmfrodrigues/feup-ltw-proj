@@ -470,3 +470,26 @@ function checkIfAdopted(int $petId) : bool {
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
+
+/**
+ * Get a pet's adoption requests.
+ *
+ * @param string $petId     Pet's ID
+ * @return array            Array of adoption requests
+ */
+function getPetAdoptionRequests(string $petId) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT
+    id,
+    outcome,
+    pet,
+    user
+    FROM AdoptionRequest
+    WHERE pet=:petId');
+    $stmt->bindParam(':petId', $petId);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
