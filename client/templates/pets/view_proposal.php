@@ -37,7 +37,7 @@
 
     function drawProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) 
-            drawPetProposal($adoptionReq['id'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
+            drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
                 $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], true);   
     }
 
