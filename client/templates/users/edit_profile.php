@@ -13,7 +13,7 @@
                 <div class="dropdown" id="edit-options">
                     <ul>
                         <li>
-                            <form action="action_edit_profile_picture.php?username=<?= $user['username'] ?>" enctype="multipart/form-data" method="POST">
+                            <form action="<?= SERVER_URL ?>/action_edit_profile_picture.php?username=<?= $user['username'] ?>" enctype="multipart/form-data" method="POST">
                                 <script>
                                     function onFileChange(){
                                         if(document.getElementById('profile_picture').value != ''){
@@ -29,14 +29,14 @@
                             </form>
                         </li>
                         <li <?php if(is_null($user['pictureUrl'])) echo 'class="disabled"';?>>
-                            <a href="action_erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
+                            <a href="<?= SERVER_URL ?>/action_erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
                         </li>
                     </ul>
                 </div>
             </details>
         </div>
     </section>
-    <form action="action_edit_profile.php?username=<?=$user['username']?>" method="post">
+    <form action="<?= SERVER_URL ?>/action_edit_profile.php?username=<?=$user['username']?>" method="post">
         <section id="username">
             <h3>Username</h3>
             <input type="text" name="username" placeholder="user's username" value="<?=$user['username']?>" required pattern="^[a-zA-Z0-9]+$">
@@ -52,6 +52,6 @@
         <input type="submit" value="Submit" id="edit-profile-submit">
     </form>
     <section id='delete-user'>
-        <a href="action_delete_user.php?username=<?= $user['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+        <a href="<?= SERVER_URL ?>/action_delete_user.php?username=<?= $user['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
     </section>
 </article>

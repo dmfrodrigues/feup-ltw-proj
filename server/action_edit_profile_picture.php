@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
+include_once __DIR__ . '/server.php';
 include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/users.php';
 
@@ -9,14 +9,13 @@ if($_GET['username'] != $_SESSION['username']){
     header("Location: profile.php?username={$_SESSION['username']}");
 }
 
+$file = $_FILES['profile_picture'];
+
 try{
-    eraseUserPicture($_GET['username']);
+    saveUserPicture($_GET['username'], $file);
 
     header("Location: profile.php?username={$_GET['username']}");
-} catch(CouldNotDeleteFileException $e){
-    echo "Could not delete file";
-    header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);
 } catch (RuntimeException $e) {
     echo $e->getMessage();
-    header("{$_SERVER['SERVER_PROTOCOL']} 500 Internal Server Error", true, 500);
+    header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);
 }

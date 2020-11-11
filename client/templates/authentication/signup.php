@@ -1,6 +1,6 @@
 <section id="signup">  
     <header><h2>Sign Up</h2></header>
-    <form method="post" onsubmit="return signup_check()" action="action_signup.php">
+    <form method="post" onsubmit="return signup_check()" action="<?= SERVER_URL ?>/action_signup.php">
       <label> Name:
       <input type="text" id="name" name="name" placeholder="Name" required></label>
       <label> Username:

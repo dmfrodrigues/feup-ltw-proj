@@ -1,5 +1,5 @@
 <article id="add-pet">
-    <form action="action_add_pet.php" method="post" enctype="multipart/form-data">
+    <form action="<?= SERVER_URL ?>/action_add_pet.php" method="post" enctype="multipart/form-data">
         <header>
             <h1><input type="text" name="name" placeholder="Pet name" required></h1>
             <div id="data">

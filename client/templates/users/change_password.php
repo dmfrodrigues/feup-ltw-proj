@@ -1,5 +1,5 @@
 <article id="change-password">
-    <form method="post" onsubmit="return signup_check()" action="action_change_password.php?username=<?=$user['username']?>">
+    <form method="post" onsubmit="return signup_check()" action="<?= SERVER_URL ?>/action_change_password.php?username=<?=$user['username']?>">
         <header>
             <h1>Change Password</h1>
         </header>

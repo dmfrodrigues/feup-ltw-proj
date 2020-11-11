@@ -1,7 +1,9 @@
 <?php
     session_start();
-    include_once('../server/connection.php');
-    include_once('../server/users.php');
+
+    include_once __DIR__ . '/server.php';
+    include_once SERVER_DIR . '/connection.php';
+    include_once SERVER_DIR . '/users.php';
 
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         deleteUser($_SESSION['username']);
@@ -11,5 +13,3 @@
     }
     else 
         header('Location: profile.php?username='.$_GET['username'].'&failed=1');
-    
-?>
