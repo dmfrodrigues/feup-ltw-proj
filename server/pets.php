@@ -380,6 +380,8 @@ function deletePetComment(int $id){
     WHERE id=:id');
     $stmt->bindParam(':id', $id);
     $stmt->execute();
+
+    deletePetCommentPhoto($id);
 }
 
 /**
