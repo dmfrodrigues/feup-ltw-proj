@@ -173,10 +173,6 @@ function editPet(
  * @return void
  */
 function editPetPictures(int $petId, array $pictures){
-    echo "<pre>";
-    var_dump($pictures);
-    echo "</pre>";
-    
     $path = PETS_IMAGES_DIR."/$petId";
     
     $swappic = [];
