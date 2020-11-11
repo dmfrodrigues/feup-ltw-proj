@@ -19,19 +19,11 @@ function addPetPhoto(element){
         let id = e.target.id.split("-")[2];
         let file = e.originalEvent.srcElement.files[0];
         let img  = e.target.parentNode.parentNode.querySelector(`#pet-picture-${id}-img`);
-        changedPetPicture(img, file);
+        updateImgFromFile(img, file);
     });
     // Num_inputs
     N += 1;
     num_inputs.value = `${N}`;
     // Click
     input.click();
-}
-
-function changedPetPicture(img, file){
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        img.src = reader.result;
-    }
-    reader.readAsDataURL(file);
 }

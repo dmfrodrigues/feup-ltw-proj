@@ -3,17 +3,9 @@ $(function(){
         let element = e.target.parentNode;
         let file = e.originalEvent.srcElement.files[0];
         let img = element.querySelector("#comment-picture");
-        changedCommentPicture(img, file);
+        updateImgFromFile(img, file);
     });
 });
-
-function changedCommentPicture(img, file){
-    var reader = new FileReader();
-    reader.onloadend = function() {
-        img.src = reader.result;
-    }
-    reader.readAsDataURL(file);
-}
 
 function newComment_checkTextOrImage(comment){
     let text = comment.querySelector('#comment-text');
