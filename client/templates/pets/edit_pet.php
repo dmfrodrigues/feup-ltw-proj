@@ -1,3 +1,6 @@
+<?php
+$photos = getPetPhotos($pet['id']);
+?>
 <article id="pet">
     <form action="action_edit_pet.php?id=<?= $pet['id'] ?>" method="post">
         <header>
@@ -5,7 +8,25 @@
             <div id="data">
                 <span id="location"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
             </div>
-            <img src="resources/img/no-image.svg" alt="" />
+            <div id="pet-photos">
+                <a id="add-photo" onclick="addPetPhoto(this.parentNode)">Add photo</a>
+                <div id="pet-photos-inputs">
+                    <input id="photo-number" name="photo-number" type="hidden" value="<?= count($photos) ?>">
+                    <?php for ($i = 0; $i < count($photos); $i++) { ?>
+                        <input id="old-<?= $i ?>" name="old-<?= $i ?>" value="<?= $i ?>" type="hidden"/>
+                        <input id="new-<?= $i ?>" name="new-<?= $i ?>" value="" type="file" style="display: none"/>
+                    <?php } ?>
+                </div>
+                <div id=pet-photos-row>
+                    <?php for ($i = 0; $i < count($photos); $i++) { ?>
+                        <div id="picture-<?= $i ?>">
+                            <img id="img-<?= $i ?>" src="<?= $photos[$i] ?>"/>
+                            <a onclick="browsePetPhoto(this)">Browse new picture</a>
+                            <a onclick="deletePetPhoto(this)">Delete</a>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
         </header>
         <section id="description">
             <h2>Description</h2>
