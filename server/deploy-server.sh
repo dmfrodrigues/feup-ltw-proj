@@ -16,11 +16,17 @@ curl -L "https://picsum.photos/seed/picsum/400/400"                             
 
 mkdir -p resources/img/pets
 mkdir -p resources/img/pets/1
-curl -L "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg" --output resources/img/pets/1/001.jpg
-curl -L "https://images.pexels.com/photos/7470/eyes-cats-cat-couch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output resources/img/pets/1/002.jpg
-curl -L "https://images.pexels.com/photos/881142/pexels-photo-881142.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output resources/img/pets/1/003.jpg
+curl -L "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg"                                          --output resources/img/pets/1/000.jpg
+curl -L "https://images.pexels.com/photos/7470/eyes-cats-cat-couch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"    --output resources/img/pets/1/001.jpg
+curl -L "https://images.pexels.com/photos/881142/pexels-photo-881142.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output resources/img/pets/1/002.jpg
 
 mkdir -p resources/img/pets/2
+
+mkdir -p resources/img/pets/3
+
+mkdir -p resources/img/pets/4
+curl -L "https://t1.ea.ltmcdn.com/en/images/9/6/2/img_caring_for_a_white_cat_not_albino_1269_orig.jpg" --output resources/img/pets/4/000.jpg
+curl -L "https://www.titania-foto.com/wp-content/uploads/2018/09/weisse-katze.jpg"                     --output resources/img/pets/4/001.jpg
 
 mkdir -p resources/img/comments
 curl -L "https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/08/bombay-card-small.jpg" --output resources/img/comments/1.jpg
