@@ -2,7 +2,7 @@
 $photos = getPetPhotos($pet['id']);
 ?>
 <article id="pet">
-    <form action="<?= SERVER_URL ?>/action_edit_pet.php?id=<?= $pet['id'] ?>" method="post">
+    <form action="<?= SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post">
         <header>
             <h1><input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required></h1>
             <div id="data">
@@ -71,6 +71,6 @@ $photos = getPetPhotos($pet['id']);
         <input type="submit" value="Submit">
     </form>
     <div id="delete-pet">
-        <a href="<?= SERVER_URL ?>/action_delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+        <a href="<?= SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

@@ -30,9 +30,9 @@
             <?php if(isset($_SESSION['username'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <div id="favorite"><a href="<?= SERVER_URL ?>/action_remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
+                    <div id="favorite"><a href="<?= SERVER_URL ?>/actions/remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
                 <?php } else { ?>
-                    <div id="favorite"><a href="<?= SERVER_URL ?>/action_add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+                    <div id="favorite"><a href="<?= SERVER_URL ?>/actions/add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
                 <?php } ?>
                 <div id="ask"><a href="#comments"><img src="resources/img/question-mark.png" height="42px">Ask question</a></div>
                 <?php include_once 'templates/pets/adoption_request_buttons.php'; ?>

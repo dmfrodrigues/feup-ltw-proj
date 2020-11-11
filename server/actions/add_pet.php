@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/server.php';
+include_once __DIR__ . '/../server.php';
 include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/pets.php';
 
@@ -26,7 +26,7 @@ if (isset($_SESSION['username'])){
         $_SESSION['username'],
         $files
     );
-    header("Location: pet.php?id=$petId");
+    header("Location: " . CLIENT_URL . "/pet.php?id=$petId");
 }
 
 die();
