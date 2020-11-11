@@ -32,7 +32,7 @@
                 <a href="login.php">Login</a>
             <?php } else { ?>
                 <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
-                <a href="action_logout.php">Logout</a>
+                <a href="<?= SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
             </div>
         </header>

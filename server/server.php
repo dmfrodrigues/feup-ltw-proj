@@ -1,6 +1,8 @@
 <?php
-define('SERVER_DIR', __DIR__);
-define('SERVER_URL', '../server');
+define('SERVER_DIR', __DIR__);          // For server
+define('SERVER_URL', '../server');      // For client
+
+define('CLIENT_URL', '../../client');   // For server
 
 function serverpathToUrl($path) : string {
     $pos = strpos($path, SERVER_DIR);

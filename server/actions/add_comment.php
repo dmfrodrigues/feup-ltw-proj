@@ -1,23 +1,22 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/../server/server.php';
+include_once __DIR__ . '/../server.php';
 include_once SERVER_DIR . '/connection.php';
 include_once SERVER_DIR . '/pets.php';
 
-$oldComment = getPetComment($_POST['commentId']);
-
-if ($oldComment['user'] != $_SESSION['username']) {
+if ($_POST['username'] != $_SESSION['username']) {
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
 
 $file = $_FILES['picture'];
 
 try {
-    editPetComment(
-        $_POST['commentId'],
+    addPetComment(
+        $_POST['petId'],
+        $_POST['username'],
+        ($_POST['answerTo'] === '' ? null : intval($_POST['answerTo'])),
         $_POST['text'],
-        $_POST['deleteFile'],
         $file
     );
 
