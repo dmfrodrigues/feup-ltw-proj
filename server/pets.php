@@ -138,7 +138,8 @@ function editPet(
     string $size,
     string $color,
     string $location,
-    string $description
+    string $description,
+    array  $pictures
 ){
     global $db;
     $stmt = $db->prepare('UPDATE Pet SET
@@ -161,6 +162,85 @@ function editPet(
     $stmt->bindParam(':location'   , $location   );
     $stmt->bindParam(':description', $description);
     $stmt->execute();
+
+    editPetPictures($id, $pictures);
+}
+
+/**
+ * Edit pet pictures.
+ *
+ * @param array $pictures   Pictures
+ * @return void
+ */
+function editPetPictures(int $petId, array $pictures){
+    echo "<pre>";
+    var_dump($pictures);
+    echo "</pre>";
+    
+    $path = PETS_IMAGES_DIR."/$petId";
+    
+    $swappic = [];
+    $newpic  = [];
+    foreach($pictures as $key => $picture){
+        if($picture['new'] !== null){ // new picture
+            $newpic[$key] = $picture;
+        } else if($picture['old'] !== ''){ //swap picture
+            $swappic[$key] = $picture['old'];
+        }
+    }
+    swapPetPictures($petId, $swappic);
+    newPetPictures($petId, $newpic);
+
+    $N = count($pictures);
+    $images = scandir($path);
+    foreach($images as $i => $filename){
+        if($filename == '.' || $filename == '..') continue;
+        $id = intval(explode('.', $filename)[0]);
+        $filepath = "$path/$filename";
+        if($id >= $N) unlink($filepath);
+    }
+}
+
+/**
+ * Swap pet pictures.
+ *
+ * @param integer $petId    Pet ID
+ * @param array $swappic    Pictures to swap
+ * @return void
+ */
+function swapPetPictures(int $petId, array $swappic){
+    $path = PETS_IMAGES_DIR."/$petId";
+    foreach($swappic as $newId => $oldId){
+        $oldFilepath = $path.'/'    .str_pad(strval($oldId), 3, '0', STR_PAD_LEFT).'.jpg';
+        $newFilepath = $path.'/new-'.str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
+        if(!rename($oldFilepath, $newFilepath)) throw new RuntimeException("Failed to rename pet picture $oldFilepath to $newFilepath");
+    }
+    foreach($swappic as $newId => $oldId){
+        $tmpFilepath   = $path.'/new-'.str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
+        $finalFilepath = $path.'/'    .str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
+        if(!rename($tmpFilepath, $finalFilepath)) throw new RuntimeException("Failed to rename pet picture $oldFilepath to $newFilepath");
+    }
+}
+
+/**
+ * Add new pet pictures.
+ *
+ * @param integer $petId    Pet ID
+ * @param array $newpic     Pictures to add
+ * @return void
+ */
+function newPetPictures(int $petId, array $newpic){
+    $path = PETS_IMAGES_DIR."/$petId";
+    foreach($newpic as $id => $file){
+        $ext = checkImageFile($file, 1000000);
+        $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
+        convertImage(
+            $file['tmp_name'],
+            $ext,
+            $filepath,
+            85
+        );
+    }
 }
 
 /**
