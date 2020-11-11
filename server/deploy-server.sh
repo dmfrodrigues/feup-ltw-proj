@@ -25,8 +25,8 @@ mkdir -p resources/img/pets/2
 mkdir -p resources/img/pets/3
 
 mkdir -p resources/img/pets/4
-curl -L "https://t1.ea.ltmcdn.com/en/images/9/6/2/img_caring_for_a_white_cat_not_albino_1269_orig.jpg" --output resources/img/pets/4/001.jpg
-curl -L "https://www.titania-foto.com/wp-content/uploads/2018/09/weisse-katze.jpg"                     --output resources/img/pets/4/002.jpg
+curl -L "https://t1.ea.ltmcdn.com/en/images/9/6/2/img_caring_for_a_white_cat_not_albino_1269_orig.jpg" --output resources/img/pets/4/000.jpg
+curl -L "https://www.titania-foto.com/wp-content/uploads/2018/09/weisse-katze.jpg"                     --output resources/img/pets/4/001.jpg
 
 mkdir -p resources/img/comments
 curl -L "https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/08/bombay-card-small.jpg" --output resources/img/comments/1.jpg
