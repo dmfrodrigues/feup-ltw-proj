@@ -1,0 +1,330 @@
+#pet{
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 3em 5em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto;
+    --text-button-color-1: #fc9d04;
+    --text-button-color-2: #fc9d04;
+    --text-button-color-3: red;
+}
+
+#pet header,
+#pet section {
+    margin: 0 0 1em 0;
+}
+
+#pet header{
+    grid-area: 1 / 1 / span 1 / span 1;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+}
+
+#pet header a{
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+#pet header #pet-photos{
+    grid-area: 1 / 1 / span 2;
+    height: 350px;
+    width: auto;
+    display: block
+}
+
+#pet #pet-photos #pet-selected-img{
+    height: 300px;
+    width: 400px;
+    object-fit: cover;
+    object-position: center;
+}
+
+#pet #pet-photos #pet-photos-row img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+}
+
+#pet #pet-photos #pet-photos-row .selected{
+    border: solid var(--main-color);
+}
+
+#pet header #actions,
+#pet header #data {
+    padding: 0 2em;
+}
+
+#pet header #data{
+    grid-area: 1 / 2;
+    margin: 0;
+}
+
+#pet header #actions {
+    grid-area: 2 / 2;
+}
+
+#pet header #actions #favorite img{
+    padding: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
+#pet header #actions #remove-proposal img{
+    padding: 0 0.5em 0 0;
+    vertical-align: middle;
+}
+
+#pet header #actions #ask img{
+    padding: 0 0.5em 0 0;
+    vertical-align: top;
+    margin-bottom: auto;
+}
+
+#pet header * div {
+    max-width: 13em;
+    height: 2em;
+    line-height: 2em;
+    padding: 0.5em;
+    margin: 0 1em 1em 0;
+    border-radius: 1em;
+    text-align: center;
+}
+
+#pet header #actions #favorite{
+    background-color: white;
+}
+
+#pet header #actions #favorite:hover {
+    background-color: var(--main-color);
+    --text-button-color-1: white;
+}
+
+#pet header #actions #favorite a{
+    color: var(--text-button-color-1);
+}
+
+#pet header #actions #ask{
+    background-color: white;
+}
+
+#pet header #actions #ask:hover{
+    background-color: var(--main-color);
+    --text-button-color-2: white;
+}
+
+#pet header #actions #ask a{
+    color: var(--text-button-color-2);
+}
+
+#pet header #actions #propose img:hover{
+    box-shadow: -1px 3px 20px 11px var(--main-color);
+}
+
+#pet header #actions #remove-proposal{
+    background-color: white;
+}
+
+#pet header #actions #remove-proposal:hover{
+    background-color: var(--main-color);
+    --text-button-color-3: white;
+}
+
+#pet header #actions #remove-proposal a{
+    color: var(--text-button-color-3);
+}
+
+#pet #description{
+    grid-area: 2 / 1 / span 1 / span 2;
+    text-align: left;
+}
+
+#pet #about{
+    grid-area: 3 / 1 / span 1 / span 2;
+    text-align: left;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto auto;
+}
+
+#pet #about h2{
+    grid-area: 1 / 1 / span 1 / span 1;
+}
+
+#pet #about .name{
+    width: 100px;
+    font-weight: bold;
+}
+
+#pet #about div *{
+    display: inline-block;
+}
+
+#pet #about #age{
+    margin: 1em;
+    grid-area: 2 / 1 / span 1 / span 1;
+}
+
+#pet #about #species{
+    margin: 1em;
+    grid-area: 3 / 1 / span 1 / span 1;
+}
+
+#pet #about #color{
+    margin: 1em;
+    grid-area: 4 / 1 / span 1 / span 1;
+}
+
+#pet #about #sex{
+    margin: 1em;
+    grid-area: 2 / 2 / span 1 / span 1;
+}
+
+#pet #about #size{
+    margin: 1em;
+    grid-area: 3 / 2 / span 1 / span 1;
+}
+
+#pet #comments{
+    grid-area: 4 / 1 / span 1 / span 2;
+    text-align: left;
+}
+
+#pet-list {
+    margin: 2em 1em 2em 1em;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+.pet-card-grid{
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 5em;
+    column-gap: 2em;
+}
+
+.pet-card{
+    cursor: pointer;
+    position: relative;
+    height: 250px;
+    width: 250px;
+    perspective: 1000px; 
+}
+
+.pet-card-inner{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.pet-card:hover .pet-card-inner{
+    transform: rotateY(180deg);
+}
+
+.pet-card-front{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.pet-card-back{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 2em;
+    transform: rotateY(180deg);
+    background-color: var(--main-color);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.pet-card-front div, .pet-card-back div{
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.pet-card img{
+    object-fit: cover;
+    object-position: center;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 2em;
+}
+
+.pet-card-content-front{
+    position: absolute;
+    top: 50%;
+    padding: 1em;
+    color: var(--main-color);
+}
+
+.pet-card-content-back{
+    position: absolute;
+    padding: 1em;
+    color: white;
+    text-align: center;
+}
+
+.pet a{
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+.pet img{
+    height: 200px;
+    width: auto;
+    border-radius: 1em;
+}
+
+#add-pet {
+    margin: 2em 1em 2em 1em;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: var(--light-color);
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+#add-pet input{
+    margin: 1em;
+}
+
+#add-pet #add-pet-submit {
+    border: 0;
+    color: white;
+    background-color: var(--main-color);
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+#pet #delete-pet {
+    margin: 2em auto 2em auto;
+    padding: 1em;
+    border-radius: 1em;
+    background-color: #ff6c6a;
+    width: 12em;
+    grid-area: 2 / 1 / span 1 / span 1;
+    align-self: center;
+    text-align: center;
+}
+
+#pet #delete-pet a {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
