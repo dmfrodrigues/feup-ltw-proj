@@ -9,6 +9,5 @@ $pets = getPetsListedForAdoption();
 $javascript_files = ['js/filterPets.js'];
 
 include_once 'templates/common/header.php';
-?> <h1>Pets available for adoption</h1> <?php
-include_once 'templates/pets/list_pets.php';
+include_once 'templates/pets/list_pets_for_adoption.php';
 include_once 'templates/common/footer.php';
