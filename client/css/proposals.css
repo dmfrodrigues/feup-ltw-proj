@@ -1,6 +1,14 @@
 div#proposal {
     background-color: var(--light-color);
     width: 100%;
+    height: 15em;
+    text-align: center;
+    position: relative;
+}
+
+div#proposal-msg {
+    background-color: var(--light-color);
+    width: 100%;
     height: 8em;
     text-align: center;
     position: relative;

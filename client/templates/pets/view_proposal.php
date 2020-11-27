@@ -26,6 +26,7 @@
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=rejected'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/remove_proposal.php?id=<?=$petId?>'"id="cancelRequest">Cancel Request</button>
+                    <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">View Chat</button>
                 <?php } ?>
 
             </div>
@@ -37,7 +38,7 @@
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
             <script src="js/handleAdoptionMessages.js" defer></script>
-            <div id="proposal"> 
+            <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$adoptionRequest['user']?>">
@@ -58,7 +59,7 @@
 
     function drawAllOtherMessages($adoptionRequestMessages) { 
         foreach($adoptionRequestMessages as $reqMessage) { ?>
-            <div id="proposal"> 
+            <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$reqMessage['user']?>">
@@ -79,7 +80,7 @@
     <?php 
 
     function drawAnswerAdoptionRequest() { ?>
-        <div id="proposal"> 
+        <div id="proposal-msg"> 
             <input type="hidden" value="1">
             <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
             <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
@@ -112,6 +113,6 @@
 
     function drawMyProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) 
-            drawPetProposal($adoptionReq['id'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
+            drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
                 $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], false);
     }

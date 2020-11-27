@@ -1,4 +1,4 @@
-let proposals = document.querySelectorAll('div#proposal');
+let proposals = document.querySelectorAll('div#proposal-msg');
 
 proposals.forEach((proposal) => {
     let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
