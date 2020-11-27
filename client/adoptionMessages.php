@@ -9,13 +9,10 @@ include_once 'templates/common/header.php';
 $adoptionRequest = getAdoptionRequest($_GET['id']);
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
     include_once 'templates/pets/view_proposal.php';
-    // print_r($adoptionRequest);
     drawAdoptionRequestInitialMessage($adoptionRequest);
     $adoptionRequestMessages = getAdoptionRequestMessages($adoptionRequest['id']);
-    // print_r($adoptionRequestMessages);
     drawAllOtherMessages($adoptionRequestMessages);
     drawAnswerAdoptionRequest();
 }
 
-// drawProposals($adoptionRequests);
 include_once 'templates/common/footer.php';
