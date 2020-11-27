@@ -35,44 +35,42 @@
 
     <?php 
 
-    function drawAdoptionRequestInitialMessage($adoptionRequest) { 
-        if($adoptionRequest['outcome'] == 'pending') { ?>
+    function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$adoptionRequest['user']?>">
                         <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
                     </a>
                 </div>
-            <div id="proposal-info">
-                    <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
-                
-                <div id="proposal-message">
-                    <textarea readonly><?=$adoptionRequest['text']?></textarea>
-                </div>  
+                <div id="proposal-info">
+                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                    
+                    <div id="proposal-message">
+                        <textarea readonly><?=$adoptionRequest['text']?></textarea>
+                    </div>  
+                </div>
             </div>
-        </div>
-        <?php } ?> 
     <?php } ?>
     
     <?php 
 
     function drawAllOtherMessages($adoptionRequestMessages) { 
-        if($adoptionRequest['outcome'] == 'pending') { ?>
+        foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
-                    <a href="profile.php?username=<?=$adoptionRequest['user']?>">
-                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
+                    <a href="profile.php?username=<?=$reqMessage['user']?>">
+                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$reqMessage['user']?>.jpg">
                     </a>
                 </div>
-            <div id="proposal-info">
-                    <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
-                
-                <div id="proposal-message">
-                    <textarea readonly><?=$adoptionRequest['text']?></textarea>
-                </div>  
+                <div id="proposal-info">
+                        <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
+                    
+                    <div id="proposal-message">
+                        <textarea readonly><?=$reqMessage['text']?></textarea>
+                    </div>  
+                </div>
             </div>
-        </div>
-        <?php } ?> 
+        <?php } ?>      
     <?php } ?>
 
     <?php

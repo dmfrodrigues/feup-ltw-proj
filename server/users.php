@@ -309,8 +309,19 @@ function getAdoptionRequest(int $id): array {
 function getAdoptionRequestMessages(int $reqId) : array {
     global $db;
 
-    $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage 
-        WHERE request=:reqId');
+    $stmt = $db->prepare('SELECT 
+        AdoptionRequestMessage.text, 
+        AdoptionRequestMessage.request,
+        AdoptionRequestMessage.id,
+        AdoptionRequestMessage.messageDate AS messDate,
+        AdoptionRequestMessage.user,
+        AdoptionRequest.outcome,
+        AdoptionRequest.pet,
+        Pet.name AS petName
+        FROM AdoptionRequestMessage 
+        INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
+        INNER JOIN Pet ON AdoptionRequest.pet=Pet.id
+        WHERE AdoptionRequestMessage.request=:reqId');
     $stmt->bindParam(':reqId', $reqId);
     $stmt->execute();
     $adoptionRequestMessages = $stmt->fetchAll();
