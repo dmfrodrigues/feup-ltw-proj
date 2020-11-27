@@ -40,17 +40,17 @@ div#proposal-info {
     height: 95%;
 }
 
-div#proposal-message {
+div#proposal-message, div#proposal-message-submit {
     border-radius: 2%;
     height: 50%;
 }
 
-div.proposal-message-submit {
-    margin-left: 9em;
+div#proposal-message-submit {
 
+    height: 50%;
 }
 
-div#proposal-message textarea {
+div#proposal-message textarea, div#proposal-message-submit textarea {
     width: 45em;
     height: 100%;
     overflow: auto;
@@ -61,7 +61,7 @@ div#proposal-message textarea {
     resize: none;
 }
 
-div#proposal-message textarea:focus {
+div#proposal-message textarea:focus, div#proposal-message-submit textarea:focus {
     outline: none;
 }
 

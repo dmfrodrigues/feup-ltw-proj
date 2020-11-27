@@ -8,3 +8,7 @@ proposals.forEach((proposal) => {
         proposal.querySelector('div#proposal-info').style.marginLeft = "15em";
     }
 })
+
+window.onload = function(event) {
+    window.location='#proposal-message-submit';
+}

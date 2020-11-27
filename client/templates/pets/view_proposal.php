@@ -89,12 +89,13 @@
             <div id="proposal-info">
                     <p>&nbsp;</p>
                 
-                <div id="proposal-message" class="proposal-message-submit">
+                <div id="proposal-message-submit">
                     <textarea>&nbsp;</textarea>
                     <button onclick="" id="submitAnswer">Submit</button>
                 </div>  
             </div>
         </div>
+        <div id="asd"> </div>
     <?php } ?>      
 
     <?php
