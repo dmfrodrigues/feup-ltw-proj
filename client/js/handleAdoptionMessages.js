@@ -14,5 +14,13 @@ window.onload = function(event) {
 }
 
 function addNewAdoptionRequestMsg() {
-    alert('asd');
+    let inputDiv = document.querySelector('#proposal-message-submit');
+    let requestId = document.querySelector('input[name=requestID]').value;
+    let user = document.querySelector('input[name=username]').value;
+
+    let Msgtext = inputDiv.querySelector('textarea').value.slice(1);
+    console.log(requestId, user, Msgtext);
+
+
+    // Next step: ASYNC Request!
 }

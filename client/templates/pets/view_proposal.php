@@ -81,6 +81,8 @@
     function drawAnswerAdoptionRequest() { ?>
         <div id="proposal"> 
             <input type="hidden" value="1">
+            <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
+            <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
             <div id="proposal-header">
                 <a href="profile.php?username=<?=$_SESSION['username']?>">
                     <img id="proposal-pic" src="../server/resources/img/profiles/<?=$_SESSION['username']?>.jpg">
