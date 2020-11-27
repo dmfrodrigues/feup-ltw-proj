@@ -198,8 +198,9 @@ function saveUserPicture(string $username, array $file){
  */
 function eraseUserPicture(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
-    if(!unlink($filepath))
-        throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+    if(file_exists($filepath))
+        if(!unlink($filepath))
+            throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
 
 /**

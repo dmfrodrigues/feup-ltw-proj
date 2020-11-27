@@ -8,7 +8,7 @@
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         deleteUser($_SESSION['username']);
         session_destroy();
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . CLIENT_URL . '/index.php');
         die();
     }
     else 
