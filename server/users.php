@@ -2,6 +2,7 @@
 
 include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/files.php';
+include_once __DIR__.'/pets.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
@@ -160,10 +161,16 @@ function editUserPassword(string $username, string $password) {
  * Delete user.
  *
  * @param string $username  User's username
- * @return void
+ * @return voidSERVER_DIR
  */
 function deleteUser(string $username) {
     global $db;
+    $user_pets = getAddedPets($username);
+    foreach($user_pets as $i => $pet){
+        $id = $pet['id'];
+        $dir = PETS_IMAGES_DIR."/$id";
+        rmdir_recursive($dir);
+    }
     eraseUserPicture($username);
     $stmt = $db->prepare('DELETE FROM User 
     WHERE username=:username');
