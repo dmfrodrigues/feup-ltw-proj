@@ -49,7 +49,7 @@ div#proposal-message {
 }
 
 div#proposal-message textarea {
-    width: 50em;
+    width: 45em;
     height: 100%;
     overflow: auto;
     border: 1px solid #888; 
