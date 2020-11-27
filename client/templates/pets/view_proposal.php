@@ -36,7 +36,9 @@
     <?php 
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+            <script src="js/handleAdoptionMessages.js" defer></script>
             <div id="proposal"> 
+                <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$adoptionRequest['user']?>">
                         <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
@@ -46,7 +48,7 @@
                         <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
                     
                     <div id="proposal-message">
-                        <textarea readonly><?=$adoptionRequest['text']?></textarea>
+                        <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
                     </div>  
                 </div>
             </div>
@@ -57,6 +59,7 @@
     function drawAllOtherMessages($adoptionRequestMessages) { 
         foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal"> 
+                <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$reqMessage['user']?>">
                         <img id="proposal-pic" src="../server/resources/img/profiles/<?=$reqMessage['user']?>.jpg">
@@ -66,7 +69,7 @@
                         <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
                     
                     <div id="proposal-message">
-                        <textarea readonly><?=$reqMessage['text']?></textarea>
+                        <textarea readonly>&nbsp;<?=$reqMessage['text']?></textarea>
                     </div>  
                 </div>
             </div>
