@@ -455,5 +455,35 @@ function refuseOtherProposals(int $requestId, int $petId) {
         }
 }
 
+/**
+ * Get the user's adopted pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adopted pets
+ */
+function getPetsAdoptedByUser(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.adoptionDate,
+    Pet.postedBy
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.user=:username
+    AND Pet.status="adopted" AND AdoptionRequest.outcome="accepted"');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
+}
+
 
 
