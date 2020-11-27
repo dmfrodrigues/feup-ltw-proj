@@ -22,7 +22,7 @@
                 
                 <?php if($isMyPetProposal) { ?>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$petId?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='requestAdoption.php?id=<?=$reqId?>'"id="answerRequest">Answer Request</button>
+                    <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">Answer Request</button>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=rejected'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/remove_proposal.php?id=<?=$petId?>'"id="cancelRequest">Cancel Request</button>
@@ -34,6 +34,27 @@
     <?php } ?>
 
     <?php 
+
+    function drawAdoptionRequestInitialMessage($adoptionRequest, $myMessage) { 
+        if($adoptionRequest['outcome'] == 'pending') { ?>
+            <div id="proposal"> 
+                <div id="proposal-header">
+                    <a href="profile.php?username=<?=$adoptionRequest['user']?>">
+                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
+                    </a>
+                </div>
+            <div id="proposal-info">
+                    <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                
+                <div id="proposal-message">
+                    <textarea readonly><?=$adoptionRequest['text']?></textarea>
+                </div>  
+            </div>
+        </div>
+        <?php } ?> 
+    <?php } ?>
+    
+    <?php
 
     function drawProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) {

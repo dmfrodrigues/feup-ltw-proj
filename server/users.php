@@ -281,6 +281,43 @@ function getFavoritePets(string $username) : array {
 }
 
 /**
+ * Get a specific adoption request given it's id.
+ * 
+ * @param int $id   Adoption Request id
+ * @return array    The adoption request with the pet's owner.
+ */
+function getAdoptionRequest(int $id): array {
+    global $db;
+    
+    $stmt = $db->prepare('SELECT 
+        AdoptionRequest.id,
+        AdoptionRequest.text,
+        AdoptionRequest.outcome,
+        AdoptionRequest.pet,
+        AdoptionRequest.user,
+        AdoptionRequest.requestDate AS reqDate,
+        Pet.postedBy,
+        Pet.name AS petName
+        FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet
+        WHERE AdoptionRequest.id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $adoptionRequest = $stmt->fetch();
+    return $adoptionRequest;
+}
+
+function getAdoptionRequestMessages(int $reqId) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage 
+        WHERE request=:reqId');
+    $stmt->bindParam(':reqId', $reqId);
+    $stmt->execute();
+    $adoptionRequestMessages = $stmt->fetchAll();
+    return $adoptionRequestMessages;
+} 
+
+/**
  * Get a user's adoption requests.
  *
  * @param string $username  User's username
