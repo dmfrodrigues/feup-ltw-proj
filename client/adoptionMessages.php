@@ -10,10 +10,10 @@ $adoptionRequest = getAdoptionRequest($_GET['id']);
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
     include_once 'templates/pets/view_proposal.php';
     // print_r($adoptionRequest);
-    drawAdoptionRequestInitialMessage($adoptionRequest, $_SESSION['username'] == $adoptionRequest['user']);
+    drawAdoptionRequestInitialMessage($adoptionRequest);
     $adoptionRequestMessages = getAdoptionRequestMessages($adoptionRequest['id']);
-    print_r($adoptionRequestMessages);
-    // drawAllOtherMessages();
+    // print_r($adoptionRequestMessages);
+    drawAllOtherMessages($adoptionRequestMessages);
 }
 
 // drawProposals($adoptionRequests);

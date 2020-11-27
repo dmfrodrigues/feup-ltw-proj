@@ -35,7 +35,7 @@
 
     <?php 
 
-    function drawAdoptionRequestInitialMessage($adoptionRequest, $myMessage) { 
+    function drawAdoptionRequestInitialMessage($adoptionRequest) { 
         if($adoptionRequest['outcome'] == 'pending') { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
@@ -54,6 +54,27 @@
         <?php } ?> 
     <?php } ?>
     
+    <?php 
+
+    function drawAllOtherMessages($adoptionRequestMessages) { 
+        if($adoptionRequest['outcome'] == 'pending') { ?>
+            <div id="proposal"> 
+                <div id="proposal-header">
+                    <a href="profile.php?username=<?=$adoptionRequest['user']?>">
+                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
+                    </a>
+                </div>
+            <div id="proposal-info">
+                    <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                
+                <div id="proposal-message">
+                    <textarea readonly><?=$adoptionRequest['text']?></textarea>
+                </div>  
+            </div>
+        </div>
+        <?php } ?> 
+    <?php } ?>
+
     <?php
 
     function drawProposals($adoptionRequests) {
