@@ -14,6 +14,7 @@ if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['u
     $adoptionRequestMessages = getAdoptionRequestMessages($adoptionRequest['id']);
     // print_r($adoptionRequestMessages);
     drawAllOtherMessages($adoptionRequestMessages);
+    drawAnswerAdoptionRequest();
 }
 
 // drawProposals($adoptionRequests);

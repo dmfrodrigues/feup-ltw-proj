@@ -76,6 +76,27 @@
         <?php } ?>      
     <?php } ?>
 
+    <?php 
+
+    function drawAnswerAdoptionRequest() { ?>
+        <div id="proposal"> 
+            <input type="hidden" value="1">
+            <div id="proposal-header">
+                <a href="profile.php?username=<?=$_SESSION['username']?>">
+                    <img id="proposal-pic" src="../server/resources/img/profiles/<?=$_SESSION['username']?>.jpg">
+                </a>
+            </div>
+            <div id="proposal-info">
+                    <p>&nbsp;</p>
+                
+                <div id="proposal-message" class="proposal-message-submit">
+                    <textarea>&nbsp;</textarea>
+                    <button onclick="" id="submitAnswer">Submit</button>
+                </div>  
+            </div>
+        </div>
+    <?php } ?>      
+
     <?php
 
     function drawProposals($adoptionRequests) {
