@@ -586,3 +586,16 @@ function getPetAdoptionRequests(string $petId) : array {
     return $pets;
 }
 
+/**
+ * Get adopted pets.
+ * 
+ * @return array            Array of adopted pets
+ */
+function getAdoptedPets() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Pet 
+    WHERE status="adopted"');
+    $stmt->execute();
+    $addedPets = $stmt->fetchAll();
+    return $addedPets;
+}
