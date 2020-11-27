@@ -12,3 +12,7 @@ proposals.forEach((proposal) => {
 window.onload = function(event) {
     window.location='#proposal-message-submit';
 }
+
+function addNewAdoptionRequestMsg() {
+    alert('asd');
+}

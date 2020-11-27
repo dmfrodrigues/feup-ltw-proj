@@ -46,8 +46,7 @@ div#proposal-message, div#proposal-message-submit {
 }
 
 div#proposal-message-submit {
-
-    height: 50%;
+    margin-left: 9em;
 }
 
 div#proposal-message textarea, div#proposal-message-submit textarea {
