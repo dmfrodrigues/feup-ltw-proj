@@ -106,10 +106,12 @@ CREATE TABLE AdoptionRequestMessage (
     id      INTEGER NOT NULL,
     text    VARCHAR NOT NULL CHECK(text <> ''),
     request INTEGER NOT NULL,
-    messageDate DATE CHECK(messageDate IS strftime('%Y-%m-%d', messageDate)), -- Check date format
+    messageDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user VARCHAR NOT NULL,
 
     CONSTRAINT AdoptionRequestMessage_PK PRIMARY KEY(id),
-    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT AdoptionRequestMessage_FK1 FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT AdoptionRequestMessage_FK2 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comment (

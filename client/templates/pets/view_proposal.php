@@ -22,10 +22,11 @@
                 
                 <?php if($isMyPetProposal) { ?>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$petId?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='requestAdoption.php?id=<?=$reqId?>'"id="answerRequest">Answer Request</button>
+                    <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">Answer Request</button>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=rejected'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= SERVER_URL ?>/actions/remove_proposal.php?id=<?=$petId?>'"id="cancelRequest">Cancel Request</button>
+                    <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">View Chat</button>
                 <?php } ?>
 
             </div>
@@ -34,6 +35,73 @@
     <?php } ?>
 
     <?php 
+
+    function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+            <script src="js/handleAdoptionMessages.js" defer></script>
+            <div id="proposal-msg"> 
+                <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
+                <div id="proposal-header">
+                    <a href="profile.php?username=<?=$adoptionRequest['user']?>">
+                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
+                    </a>
+                </div>
+                <div id="proposal-info">
+                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                    
+                    <div id="proposal-message">
+                        <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
+                    </div>  
+                </div>
+            </div>
+    <?php } ?>
+    
+    <?php 
+
+    function drawAllOtherMessages($adoptionRequestMessages) { 
+        foreach($adoptionRequestMessages as $reqMessage) { ?>
+            <div id="proposal-msg"> 
+                <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
+                <div id="proposal-header">
+                    <a href="profile.php?username=<?=$reqMessage['user']?>">
+                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$reqMessage['user']?>.jpg">
+                    </a>
+                </div>
+                <div id="proposal-info">
+                        <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
+                    
+                    <div id="proposal-message">
+                        <textarea readonly>&nbsp;<?=$reqMessage['text']?></textarea>
+                    </div>  
+                </div>
+            </div>
+        <?php } ?>      
+    <?php } ?>
+
+    <?php 
+
+    function drawAnswerAdoptionRequest() { ?>
+        <div id="proposal-msg"> 
+            <input type="hidden" value="1">
+            <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
+            <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
+            <div id="proposal-header">
+                <a href="profile.php?username=<?=$_SESSION['username']?>">
+                    <img id="proposal-pic" src="../server/resources/img/profiles/<?=$_SESSION['username']?>.jpg">
+                </a>
+            </div>
+            <div id="proposal-info">
+                    <p>&nbsp;</p>
+                
+                <div id="proposal-message-submit">
+                    <textarea>&nbsp;</textarea>
+                    <button onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
+                </div>  
+            </div>
+        </div>
+        <div id="asd"> </div>
+    <?php } ?>      
+
+    <?php
 
     function drawProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) {
@@ -45,6 +113,6 @@
 
     function drawMyProposals($adoptionRequests) {
         foreach($adoptionRequests as $adoptionReq) 
-            drawPetProposal($adoptionReq['id'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
+            drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
                 $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], false);
     }
