@@ -561,7 +561,7 @@ function checkIfAdopted(int $petId) : bool {
     WHERE id=:petId AND status<>"forAdoption"');
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
-    return $stmt->rowCount() > 0;
+    return $stmt->fetchColumn() > 0;
 }
 
 /**
