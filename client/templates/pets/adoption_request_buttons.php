@@ -1,6 +1,6 @@
 <?php $added_pets = getAddedPets($_SESSION['username']);
     $adoption_requests = getAdoptionRequests($_SESSION['username']);
-    if (checkIfAdopted($pet['id']) === false) {
+    if (!checkIfAdopted($pet['id'])) {
         if (!in_array($pet, $added_pets)) { 
             if (!userRequestedPet($_SESSION['username'], $pet['id'])) { ?>
                 <div id="propose"><a href="add_proposal.php?id=<?= $pet['id'] ?>"> <img src="resources/img/adopt-me.png" height="100px" width="100px"> </a></span>
