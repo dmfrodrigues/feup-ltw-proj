@@ -63,9 +63,10 @@
 
 #comments article.comment>#comment-content>.comment-picture {
     max-height: 270px;
-    max-width: 480px;
+    max-width: 400px;
     margin: 0 0 0.5em 0;
     border-radius: 1em;
+    
 }
 
 #comments article.comment input#comment-submit{

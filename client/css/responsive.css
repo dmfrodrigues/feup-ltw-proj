@@ -1,0 +1,9 @@
+@media (max-width: 60em) {
+    .pet-card-grid { grid-template-columns: repeat(2, 1fr); }
+    #profile{ display: block;}
+    #pet header { display: block;}
+}
+
+@media (max-width: 40em) {
+    .pet-card-grid { grid-template-columns: repeat(1, 1fr); }
+}
