@@ -124,3 +124,21 @@ button#submitAnswer:hover {
     background-color: orange;
     color: white;
 }
+
+#adoption-request{
+    align-self: center;
+    margin: 1em;
+}
+
+#proposal-request form *{
+    display: block;
+    text-align: left;
+}
+
+#add-proposal-submit{
+    cursor: pointer;
+    border: 0;
+    color: white;
+    background-color: var(--main-color);
+    padding: 0.5em 1em 0.5em 1em;
+}

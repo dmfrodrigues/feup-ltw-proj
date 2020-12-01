@@ -74,6 +74,7 @@
     padding: 0.75em 1.5em;
     background-color: var(--main-color);
     color: white;
+    cursor: pointer;
 }
 
 #comments div.comment form.answer{
@@ -96,10 +97,15 @@
     margin: 0.5em 0 1em 0;
 }
 
+#comments details::hover{
+    cursor: pointer;
+}
+
 #comments details>summary::after {
-    content: '► Open answers';
+    content: 'Open answers';
+    cursor: pointer;
 }
 
 #comments details[open]>summary:after {
-    content: '▼ Close answers';
+    content: 'Close answers';
 }

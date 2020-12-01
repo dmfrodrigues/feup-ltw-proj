@@ -58,10 +58,16 @@ img.profile-pic {
     grid-area: 2 / 1 / span 1 / span 1;
     color: black;
     text-decoration: none;
+
 }
 
 #profile #actions ul{
     list-style: none;
+    text-align: left;
+}
+
+#profile #actions ul li{
+    padding: 0.5em;
 }
 
 #edit-profile{
