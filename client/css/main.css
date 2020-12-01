@@ -1,5 +1,6 @@
 body {
     margin: 0 auto;
+    min-height: 100vh; 
 
     --bg-color: #dfdfdf;
     --main-color: #fc9d04;
@@ -10,6 +11,8 @@ body {
 
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--bg-color);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 body > header {
@@ -31,8 +34,7 @@ body > header > h1 > a {
 }
 
 body > footer {
-    grid-area: 3 / 1 / span 1 / span 3;
-    padding: 1em 0 1em 0;
+    padding: 1em 0 1em 1em;
     color: white;
     background-color: var(--dark-color);
 }

@@ -161,7 +161,7 @@ function editUserPassword(string $username, string $password) {
  * Delete user.
  *
  * @param string $username  User's username
- * @return voidSERVER_DIR
+ * @return void
  */
 function deleteUser(string $username) {
     global $db;
