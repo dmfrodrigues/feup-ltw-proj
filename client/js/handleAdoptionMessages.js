@@ -13,7 +13,7 @@ window.onload = function(event) {
     window.location='#proposal-message-submit';
 }
 
-function addNewAdoptionRequestMsg() {
+async function addNewAdoptionRequestMsg() {
     let inputDiv = document.querySelector('#proposal-message-submit');
     let requestId = document.querySelector('input[name=requestID]').value;
     let user = document.querySelector('input[name=username]').value;
@@ -21,6 +21,23 @@ function addNewAdoptionRequestMsg() {
     let Msgtext = inputDiv.querySelector('textarea').value.slice(1);
     console.log(requestId, user, Msgtext);
 
+    let params = [];
+    let data = { requestId: requestId, user: user, Msgtext: Msgtext};
+
+    for (i in data)
+        params.push(encodeURIComponent(i) + "=" + encodeURIComponent(data[i]));
+    
+    console.log(params);
+
+    let response = await fetch('AJAXRequests/addAdoptionMessage.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params.join('&')
+    });
+    // let jsonResponse = await response.json();
+    // console.log(json);
 
     // Next step: ASYNC Request!
 }
