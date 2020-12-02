@@ -36,8 +36,8 @@ async function addNewAdoptionRequestMsg() {
         },
         body: params.join('&')
     });
-    // let jsonResponse = await response.json();
-    // console.log(json);
+    let jsonResponse = await response.json();
+    console.log(jsonResponse);
 
     // Next step: ASYNC Request!
 }
