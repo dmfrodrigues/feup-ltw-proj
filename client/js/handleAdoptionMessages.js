@@ -22,18 +22,16 @@ async function addNewAdoptionRequestMsg() {
 
     let Msgtext = inputDiv.querySelector('textarea').value;
 
-    let params = [];
     let data = { requestId: requestId, user: user, Msgtext: Msgtext};
 
-    for (i in data)
-        params.push(encodeURIComponent(i) + "=" + encodeURIComponent(data[i]));
+    let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     
     let response = await fetch('AJAXRequests/addAdoptionMessage.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: params.join('&')
+        body: params
     });
     let jsonResponse = await response.json();
 
