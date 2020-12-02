@@ -98,7 +98,6 @@
                 </div>  
             </div>
         </div>
-        <div id="asd"> </div>
     <?php } ?>      
 
     <?php
