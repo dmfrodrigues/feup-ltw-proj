@@ -1,4 +1,6 @@
 let proposals = document.querySelectorAll('div#proposal-msg');
+let allMsgs = document.querySelectorAll('#proposal-msg');
+let submitMsg = allMsgs[allMsgs.length - 1];
 
 proposals.forEach((proposal) => {
     let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
@@ -34,11 +36,21 @@ async function addNewAdoptionRequestMsg() {
         body: params.join('&')
     });
     let jsonResponse = await response.json();
-    console.log(jsonResponse);
-    // addCommentToChat(jsonResponse);
+
+    let mainObject = document.querySelector("header ~ div");
+    mainObject.innerHTML = '';
+
+    jsonResponse.comments.forEach((comment) => {
+        addCommentToChat(comment, user, jsonResponse.petId.pet, jsonResponse.petName.name);
+    });
+    
+    submitMsg.querySelector('textarea').value = "";
+    mainObject.appendChild(submitMsg);
+    window.location='#proposal-message-submit';
 }
 
-function addCommentToChat(lastInsertedComment) {
+function addCommentToChat(lastInsertedComment, user, petId, petName) {
+    // console.log(lastInsertedComment);
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
 
@@ -48,7 +60,6 @@ function addCommentToChat(lastInsertedComment) {
 
     let proposalHeader = document.createElement("div");
     proposalHeader.id = "proposal-header";
-    proposalHeader.style.right = "35em";
 
     let aLink = document.createElement("a");
     aLink.href = "profile.php?username=" + lastInsertedComment.user;
@@ -59,12 +70,16 @@ function addCommentToChat(lastInsertedComment) {
 
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
-    proposalInfo.style.marginLeft = "15em";
+    
+    if(lastInsertedComment.user == user) {
+        proposalHeader.style.right = "35em";
+        proposalInfo.style.marginLeft = "15em";
+    }
 
     // 5 | NewPet hardcode - CHANGE!
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messageDate} <a id="proposal-pet" href="pet.php?id=5">NewPet</a></p>`;
+        ${lastInsertedComment.messageDate} <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';
@@ -85,11 +100,8 @@ function addCommentToChat(lastInsertedComment) {
     proposal.appendChild(proposalInfo);
 
     let mainObject = document.querySelector("header ~ div");
-    let messages = mainObject.querySelectorAll('div#proposal-msg');
-    let lastMsg = messages[messages.length - 1];
     
-    mainObject.insertBefore(proposal, lastMsg);
-    window.location='#proposal-message-submit';
+    mainObject.appendChild(proposal);
 
-    document.querySelector('#proposal-message-submit').querySelector('textarea').value = " ";
+    // document.querySelector('#proposal-message-submit').querySelector('textarea').value = " ";
 }
