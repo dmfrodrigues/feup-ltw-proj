@@ -7,7 +7,7 @@
     $stmt1->execute(array($_POST['Msgtext'], $_POST['requestId'], $_POST['user']));
     $lastInsertedID = $db->lastInsertId();
 
-    $stmt2 = $db->prepare('SELECT text, request, messageDate, user FROM AdoptionRequestMessage WHERE id = ?');
+    $stmt2 = $db->prepare('SELECT text, request, messageDate, user FROM AdoptionRequestMessage;');
     $stmt2->execute(array($lastInsertedID));
     $lastInsertedMsg = $stmt2->fetch();
 
