@@ -4,7 +4,7 @@ let submitMsg = allMsgs[allMsgs.length - 1];
 
 proposals.forEach((proposal) => {
     let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
-    // console.log(myMessage);
+
     if(myMessage) {
         proposal.querySelector('div#proposal-header').style.right = "35em";
         proposal.querySelector('div#proposal-info').style.marginLeft = "15em";
@@ -50,7 +50,6 @@ async function addNewAdoptionRequestMsg() {
 }
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
-    // console.log(lastInsertedComment);
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
 
@@ -76,7 +75,6 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
         proposalInfo.style.marginLeft = "15em";
     }
 
-    // 5 | NewPet hardcode - CHANGE!
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
         ${lastInsertedComment.messageDate} <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
@@ -103,5 +101,4 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     
     mainObject.appendChild(proposal);
 
-    // document.querySelector('#proposal-message-submit').querySelector('textarea').value = " ";
 }
