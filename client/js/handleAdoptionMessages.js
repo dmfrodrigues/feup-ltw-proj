@@ -26,13 +26,7 @@ async function addNewAdoptionRequestMsg() {
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     
-    let response = await fetch('AJAXRequests/addAdoptionMessage.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: params
-    });
+    let response = await ajaxAddAdoptionRequest('POST', params);
     let jsonResponse = await response.json();
 
     let mainObject = document.querySelector("header ~ div");
@@ -45,6 +39,16 @@ async function addNewAdoptionRequestMsg() {
     submitMsg.querySelector('textarea').value = "";
     mainObject.appendChild(submitMsg);
     window.location='#proposal-message-submit';
+}
+
+async function ajaxAddAdoptionRequest(method, bodyParams) {
+    return fetch('AJAXRequests/addAdoptionMessage.php', {
+        method: method,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: bodyParams
+    });
 }
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
