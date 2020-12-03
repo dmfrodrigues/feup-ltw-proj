@@ -41,3 +41,7 @@ body > footer {
 #templates {
 	display: none;
 }
+
+* {
+	font-family: "Inter", sans-serif;
+}
