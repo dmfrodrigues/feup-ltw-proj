@@ -15,6 +15,7 @@
                 <?php }
                 }
             }
-    } else if ($_SESSION['username'] !== $pet['postedBy']) { ?>
-        <div id="pet-already-adopted">The pet was already adopted!</div>
+    } else if ($_SESSION['username'] !== $pet['postedBy']) {
+        $userWhoAdoptedPet = getUserWhoAdoptedPet($pet['id']); ?>
+        <div id="pet-already-adopted">The pet was already adopted by <a href="profile.php?username=<?=$userWhoAdoptedPet['username']?>"><?=$userWhoAdoptedPet['username']?></a> </div>
     <?php }
