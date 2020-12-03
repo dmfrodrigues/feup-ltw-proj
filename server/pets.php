@@ -599,3 +599,23 @@ function getAdoptedPets() : array {
     $addedPets = $stmt->fetchAll();
     return $addedPets;
 }
+
+/**
+ * Get the user who adopted the given pet.
+ *
+ * @param string $id        Pet's ID
+ * @return array            User who adopted the pet
+ */
+function getUserWhoAdoptedPet(int $id): array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    User.username,
+    User.name,
+    User.shelter
+    FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet INNER JOIN User ON User.username=AdoptionRequest.user
+    WHERE AdoptionRequest.outcome="accepted" AND Pet.status="adopted" AND AdoptionRequest.pet=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $user = $stmt->fetch();
+    return $user;
+}

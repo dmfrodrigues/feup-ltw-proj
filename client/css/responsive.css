@@ -1,9 +1,47 @@
+@media (max-width: 110em) {
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 90em) {
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
 @media (max-width: 60em) {
-    .pet-card-grid { grid-template-columns: repeat(2, 1fr); }
-    #profile{ display: block;}
-    #pet header { display: block;}
+	.pet-card-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.adopted-pets-profile-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	#profile {
+		display: block;
+	}
+	#pet header {
+		display: block;
+	}
 }
 
 @media (max-width: 40em) {
-    .pet-card-grid { grid-template-columns: repeat(1, 1fr); }
+	.pet-card-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.adopted-pets-profile-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.pets-owned-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
 }
