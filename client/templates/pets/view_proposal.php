@@ -93,12 +93,11 @@
                     <p>&nbsp;</p>
                 
                 <div id="proposal-message-submit">
-                    <textarea>&nbsp;</textarea>
+                    <textarea></textarea>
                     <button onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
                 </div>  
             </div>
         </div>
-        <div id="asd"> </div>
     <?php } ?>      
 
     <?php
