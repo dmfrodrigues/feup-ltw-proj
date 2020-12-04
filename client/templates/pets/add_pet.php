@@ -18,10 +18,10 @@
             </div>
         </div>
         <div class="pets-description">
-            <label for="pets-description">Description<textarea name="description"></textarea></label>
+            <label for="pets-description">Description<textarea name="description" placeholder="Pet's description"></textarea></label>
         </div>
         <div id="age">
-            <label for="age">Age<span class="value"><input type="number" name="age" step="any" required></span></label>
+            <label for="age">Age<span class="value"><input type="number" name="age" step="any" placeholder="Pet's age" required></span></label>
         </div>
         <div id="sex">
             <label for="sex">Sex
@@ -34,7 +34,7 @@
         </div>
         <div id="species">
             <label for="species">Species
-            <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." required></span>
+            <span class="value"><input type="text" name="species" placeholder="Pet's species" required></span>
         </div></label>
         <div id="size">
             <label for="size">Size
@@ -50,7 +50,7 @@
         </div>
         <div id="color">
             <label for="color">Color
-            <span class="value"><input type="text" name="color" required></span>
+            <span class="value"><input type="text" name="color" placeholder="Pet's color" required></span>
         </div></label>
         <input type="submit" value="Submit" id="add-pet-submit">
     </form>
