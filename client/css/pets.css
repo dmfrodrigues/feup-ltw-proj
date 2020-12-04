@@ -292,27 +292,6 @@
 	border-radius: 1em;
 }
 
-#add-pet {
-	margin: 2em 1em 2em 1em;
-	padding: 1em;
-	border-radius: 1em;
-	background-color: var(--light-color);
-	grid-area: 2 / 1 / span 1 / span 1;
-	align-self: center;
-	text-align: center;
-}
-
-#add-pet input {
-	margin: 1em;
-}
-
-#add-pet #add-pet-submit {
-	border: 0;
-	color: white;
-	background-color: var(--main-color);
-	padding: 0.5em 1em 0.5em 1em;
-}
-
 #pet #delete-pet {
 	margin: 2em auto 2em auto;
 	padding: 1em;
