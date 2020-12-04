@@ -26,7 +26,7 @@ async function addNewAdoptionRequestMsg() {
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     
-    let response = await ajaxAddAdoptionRequest('POST', params);
+    let response = await ajaxAddAdoptionRequest(params);
     let jsonResponse = await response.json();
 
     let mainObject = document.querySelector("header ~ div");
@@ -41,9 +41,9 @@ async function addNewAdoptionRequestMsg() {
     window.location='#proposal-message-submit';
 }
 
-async function ajaxAddAdoptionRequest(method, bodyParams) {
+async function ajaxAddAdoptionRequest(bodyParams) {
     return fetch('AJAXRequests/addAdoptionMessage.php', {
-        method: method,
+        method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
