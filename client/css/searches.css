@@ -9,11 +9,103 @@ h1 {
 	background-color: var(--light-color);
 	align-self: center;
 	text-align: center;
+	max-width: 20em;
+}
+
+#searches h2 {
+	margin-bottom: 1em;
+}
+
+#searches #body-search {
+	margin-left: 3em;
 }
 
 #searches input {
 	margin: 0.5em;
-	padding: 0.5em;
+	margin-bottom: 1.5em;
 	border: 0;
 	background-color: var(--bg-color);
+	padding: 1em;
+	border-radius: 12px;
+	cursor: pointer;
+	display: block;
+}
+
+#searches label {
+	display: block;
+	text-align: center;
+	width: 20em;
+	text-align: start;
+	padding-left: 0.5em;
+}
+
+#searches input:hover {
+	transition: transform 0.3s;
+	transform: scale(1.1);
+}
+
+#searches #size {
+	text-align: center;
+	margin-right: 5em;
+	margin-bottom: 1.5em;
+	margin-top: 2em;
+	font-weight: 500;
+	font-size: 1.1em;
+}
+
+#searches #sex {
+	text-align: center;
+	margin-right: 5em;
+	margin-bottom: 1.5em;
+	margin-top: 1em;
+	font-weight: 500;
+	font-size: 1.1em;
+}
+
+#searches #size-area {
+	margin-left: 3.5em;
+}
+
+#searches #sex-area {
+	margin-left: 3em;
+}
+
+#searches input[type="checkbox"] {
+	position: absolute;
+	top: -0.8em;
+	left: -3em;
+	cursor: pointer;
+	height: 25px;
+	width: 25px;
+	background-color: #eee;
+	border-radius: 20px;
+	margin-left: 6em;
+}
+
+#searches #sex-area .container input[type="checkbox"] {
+	margin-left: 3.5em;
+}
+
+.container {
+	display: block;
+	position: relative;
+	padding-left: 4em;
+	margin-bottom: 12px;
+	cursor: pointer;
+}
+
+#searches #sex-area .container {
+	padding-left: 2.7em;
+}
+
+#searches input[type="checkbox"]:hover {
+	transition: transform 0.3s;
+	transform: scale(1.2);
+}
+
+#searches label {
+	display: inline-block;
+	padding-right: 10px;
+	white-space: nowrap;
+	vertical-align: middle;
 }
