@@ -43,6 +43,7 @@
 	width: 400px;
 	object-fit: cover;
 	object-position: center;
+	border-radius: 20px;
 }
 
 #pet #pet-photos #pet-photos-row img {
@@ -51,9 +52,18 @@
 	object-fit: cover;
 	object-position: center;
 	cursor: pointer;
+	border-radius: 5px;
+}
+
+#pet #pet-photos #pet-photos-row img:hover {
+	border: solid grey thin;
 }
 
 #pet #pet-photos #pet-photos-row .selected {
+	border: solid var(--main-color);
+}
+
+#pet #pet-photos #pet-photos-row .selected:hover {
 	border: solid var(--main-color);
 }
 
@@ -68,7 +78,44 @@
 }
 
 #pet header #actions {
-	grid-area: 2 / 2;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas:
+		"favorite propose"
+		"ask propose";
+	align-self: center;
+	text-align: center;
+}
+
+#pet header #data #location {
+	padding-left: 0;
+	padding: 2em;
+}
+
+#pet header #data #location img {
+	width: 3em;
+	margin-right: 1em;
+	vertical-align: bottom;
+}
+
+#pet header #data #location #location-text {
+	vertical-align: center;
+}
+
+#pet header #data #postedBy {
+	display: block;
+	margin: 2em;
+	margin-left: 1em;
+	margin-bottom: 0;
+}
+
+#pet header #data #postedBy:hover {
+	transform: scale(1.05) translateX(0.5em);
+	transition: 0.3s;
+}
+
+#pet header #data #postedBy:before {
+	content: "Posted by ";
 }
 
 #pet header #actions #favorite img {
@@ -99,6 +146,8 @@
 
 #pet header #actions #favorite {
 	background-color: white;
+	grid-area: favorite;
+	margin-top: 0;
 }
 
 #pet header #actions #favorite:hover {
@@ -112,6 +161,7 @@
 
 #pet header #actions #ask {
 	background-color: white;
+	grid-area: ask;
 }
 
 #pet header #actions #ask:hover {
@@ -123,12 +173,25 @@
 	color: var(--text-button-color-2);
 }
 
+#pet header #actions #adoption-request-button {
+	grid-area: propose;
+	align-self: flex-start;
+	justify-self: flex-start;
+	vertical-align: middle;
+	margin-left: 2em;
+}
+
 #pet header #actions #propose img:hover {
 	box-shadow: -1px 3px 20px 11px var(--main-color);
+	transform: scale(1.1);
 }
 
 #pet header #actions #remove-proposal {
 	background-color: white;
+	min-width: 15em;
+	align-self: flex-start;
+	justify-self: flex-start;
+	vertical-align: middle;
 }
 
 #pet header #actions #remove-proposal:hover {
@@ -143,6 +206,7 @@
 #pet #description {
 	grid-area: 2 / 1 / span 1 / span 2;
 	text-align: left;
+	margin-top: 1em;
 }
 
 #pet #actions ul {

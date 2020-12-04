@@ -26,6 +26,11 @@
 	cursor: pointer;
 }
 
+#comments article.comment > .actions .icon:hover {
+	transform: scale(1.3);
+	transition: 0.3s;
+}
+
 #comments article.comment > .actions * {
 	display: inline;
 }
@@ -87,6 +92,11 @@
 	cursor: pointer;
 }
 
+#comments article.comment input#comment-submit:hover {
+	transform: scale(1.1);
+	transition: 0.3s;
+}
+
 #comments div.comment form.answer {
 	margin: 0 0 0 2em;
 }
@@ -107,7 +117,7 @@
 	margin: 0.5em 0 1em 0;
 }
 
-#comments details::hover {
+#comments details:hover {
 	cursor: pointer;
 }
 
