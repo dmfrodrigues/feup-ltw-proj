@@ -8,8 +8,11 @@
 }
 
 @media (max-width: 90em) {
-	.favorite-pets-grid {
+	.pets-owned-grid {
 		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(1, 1fr);
 	}
 
 	#pets-page #pet-list {
@@ -25,6 +28,9 @@
 	.pet-card-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
+	.pets-owned-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
 }
 
 @media (max-width: 65em) {
@@ -34,9 +40,6 @@
 }
 
 @media (max-width: 60em) {
-	.adopted-pets-profile-grid {
-		grid-template-columns: repeat(1, 1fr);
-	}
 	#profile {
 		display: block;
 	}
@@ -52,6 +55,13 @@
 	#pet header #actions #adoption-request-button {
 		margin-top: 0.5em;
 		margin-left: 0;
+	}
+
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
