@@ -1,59 +1,57 @@
 <article id="add-pet">
+    <header>
+        <h1>Information about the new pet</h1>
+    </header>
     <form action="<?= SERVER_URL ?>/actions/add_pet.php" method="post" enctype="multipart/form-data">
-        <header>
-            <h1><input type="text" name="name" placeholder="Pet name" required></h1>
-            <div id="data">
-                <span id="location"><input type="text" name="location" placeholder="Location" required></span>
+        <div class="pets-name">
+            <label for="pets-name">Name<input type="text" name="name" placeholder="Pet's name" required></label>
+        </div>
+        <div class="pets-location">
+            <label for="pets-location">Location<input type="text" name="location" placeholder="Pet's location" required></label>
+        </div>
+        <div class="pets-photos">
+            <a id="add-photo" onclick="addPetPhoto(this.parentNode)"><img src="resources/img/upload_image.png"></a>
+            <div id="pet-photos-inputs">
+                <input id="photo-number" name="photo-number" type="hidden" value="0">
             </div>
-            <div id="pet-photos">
-                <a id="add-photo" onclick="addPetPhoto(this.parentNode)">Add photo</a>
-                <div id="pet-photos-inputs">
-                    <input id="photo-number" name="photo-number" type="hidden" value="0">
-                </div>
-                <div id=pet-photos-row>
-                </div>
+            <div id=pet-photos-row>
             </div>
-        </header>
-        <section id="description">
-            <h2>Description</h2>
-            <textarea name="description"></textarea>
-        </section>
-        <section id="about">
-            <h2>About</h2>
-            <div id="age">
-                <span class="name">Age</span>
-                <span class="value"><input type="number" name="age" step="any" required></span>
-            </div>
-            <div id="sex">
-                <span class="name">Sex </span>
-                <span class="value">
-                    <select name="sex">
-                        <option value="M">M</option>
-                        <option value="F">F</option>
-                    </select>
-                </span>
-            </div>
-            <div id="species">
-                <span class="name">Species</span>
-                <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." required></span>
-            </div>
-            <div id="size">
-                <span class="name">Size </span>
-                <span class="value">
-                    <select name="size">
-                        <option value="XS">XS</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                    </select>
-                </span>
-            </div>
-            <div id="color">
-                <span class="name">Color </span>
-                <span class="value"><input type="text" name="color" required></span>
-            </div>
-        </section>
+        </div>
+        <div class="pets-description">
+            <label for="pets-description">Description<textarea name="description"></textarea></label>
+        </div>
+        <div id="age">
+            <label for="age">Age<span class="value"><input type="number" name="age" step="any" required></span></label>
+        </div>
+        <div id="sex">
+            <label for="sex">Sex
+            <span class="value">
+                <select name="sex">
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                </select>
+            </span></label>
+        </div>
+        <div id="species">
+            <label for="species">Species
+            <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." required></span>
+        </div></label>
+        <div id="size">
+            <label for="size">Size
+            <span class="value">
+                <select name="size">
+                    <option value="XS">XS</option>
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                </select>
+            </span></label>
+        </div>
+        <div id="color">
+            <label for="color">Color
+            <span class="value"><input type="text" name="color" required></span>
+        </div></label>
         <input type="submit" value="Submit" id="add-pet-submit">
     </form>
 </article>

@@ -1,0 +1,155 @@
+#add-pet {
+	margin: 2em 1em 2em 1em;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	align-self: center;
+	text-align: center;
+	max-width: 60em;
+}
+
+#add-pet header h1 {
+	grid-area: header;
+	font-size: 2em;
+	margin-bottom: 1.5em;
+}
+
+#add-pet form {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas:
+		"pets-name pets-age"
+		"pets-location pets-species"
+		"pets-description pets-color"
+		"pets-description pets-sex"
+		"pets-photos pets-size"
+		"submit submit";
+}
+
+#add-pet input {
+	padding: 1em;
+	margin-bottom: 2.5em;
+	margin-top: 0.5em;
+	width: 20em;
+	border-radius: 12px;
+}
+
+#add-pet textarea {
+	padding: 1em;
+	margin-top: 0.5em;
+	width: 20em;
+	min-height: 10em;
+	border-radius: 12px;
+}
+
+#add-pet select {
+	padding: 1em;
+	margin-bottom: 2.5em;
+	margin-top: 0.5em;
+	width: 22em;
+	border-radius: 12px;
+}
+
+#add-pet .pets-photos {
+	padding: 1em;
+	margin-bottom: 2.5em;
+	width: 15em;
+	border-radius: 12px;
+}
+
+#add-pet .pets-photos a img {
+	width: 5em;
+}
+
+#add-pet .pets-photos a img:hover {
+	box-shadow: -1px 3px 10px 11px var(--main-color);
+}
+
+#add-pet .pets-photos a #add-photo-text {
+	padding-left: 20px;
+}
+
+#add-pet form .pets-name {
+	grid-area: pets-name;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form .pets-location {
+	grid-area: pets-location;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form .pets-photos {
+	grid-area: pets-photos;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form .pets-description {
+	grid-area: pets-description;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form #age {
+	grid-area: pets-age;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form #sex {
+	grid-area: pets-sex;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form #species {
+	grid-area: pets-species;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form #size {
+	grid-area: pets-size;
+	align-self: center;
+	justify-self: center;
+}
+
+#add-pet form #color {
+	grid-area: pets-color;
+	align-self: center;
+	justify-self: center;
+}
+
+.pets-name label,
+.pets-location label,
+.pets-description label,
+#add-pet form #age label,
+#add-pet form #sex label,
+#add-pet form #species label,
+#add-pet form #size label,
+#add-pet form #color label {
+	display: block;
+	text-align: center;
+	width: 20em;
+	text-align: start;
+}
+
+#add-pet #add-pet-submit {
+	grid-area: submit;
+	border: 0em;
+	color: white;
+	font-weight: 700;
+	font-size: 1.2em;
+	background-color: var(--main-color);
+	padding: 1em 2.5em 1em 2.5em;
+	display: block;
+	margin-inline: auto;
+}
+
+#add-pet #add-pet-submit:hover {
+	background-color: rgb(255, 184, 53);
+	color: black;
+}
