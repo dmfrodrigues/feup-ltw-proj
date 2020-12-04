@@ -145,6 +145,28 @@
 	text-align: left;
 }
 
+#pet #actions ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-align: end;
+}
+
+#pet #actions ul li a {
+	text-decoration: none;
+	list-style-type: none;
+	color: var(--main-color);
+}
+
+#pet #actions ul li img:hover {
+	transform: rotate(360deg) scale(1.5);
+}
+
+#pet #actions ul li img {
+	transition: 1s;
+	width: 3em;
+}
+
 #pet #about {
 	grid-area: 3 / 1 / span 1 / span 2;
 	text-align: left;

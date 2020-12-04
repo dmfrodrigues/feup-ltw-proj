@@ -61,7 +61,7 @@
     <?php if(isset($_SESSION['username']) && $_SESSION['username'] == $pet['postedBy']){ ?>
         <section id="actions">
             <ul>
-                <li><a href="edit_pet.php?id=<?= $pet['id'] ?>">Edit</a></li>
+                <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php } ?>
