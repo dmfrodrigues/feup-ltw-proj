@@ -29,6 +29,16 @@
 	#pet header {
 		display: block;
 	}
+
+	#pet header > * {
+		margin: 2em;
+		margin-left: 0;
+	}
+
+	#pet header #actions #adoption-request-button {
+		margin-top: 0.5em;
+		margin-left: 0;
+	}
 }
 
 @media (max-width: 40em) {
@@ -57,5 +67,15 @@
 			"pets-size"
 			"pets-photos"
 			"submit";
+	}
+	#pet header #actions {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"favorite"
+			"ask"
+			"propose";
+		align-self: start;
+		text-align: start;
 	}
 }

@@ -147,6 +147,7 @@
 #pet header #actions #favorite {
 	background-color: white;
 	grid-area: favorite;
+	min-width: 13em;
 	margin-top: 0;
 }
 
@@ -162,6 +163,7 @@
 #pet header #actions #ask {
 	background-color: white;
 	grid-area: ask;
+	min-width: 13em;
 }
 
 #pet header #actions #ask:hover {
@@ -188,7 +190,7 @@
 
 #pet header #actions #remove-proposal {
 	background-color: white;
-	min-width: 15em;
+	min-width: 13em;
 	align-self: flex-start;
 	justify-self: flex-start;
 	vertical-align: middle;
