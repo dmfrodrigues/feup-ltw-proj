@@ -8,20 +8,34 @@
 }
 
 @media (max-width: 90em) {
-	.pets-owned-grid {
+	.favorite-pets-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
-	.favorite-pets-grid {
+
+	#pets-page #pet-list {
+		min-width: 0em;
+		margin: 2em 2em 2em 2em;
+		padding: 3em;
+		padding-left: 2em;
+		padding-right: 2em;
+	}
+}
+
+@media (max-width: 80em) {
+	.pet-card-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
-@media (max-width: 60em) {
+@media (max-width: 65em) {
 	.pet-card-grid {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(1, 1fr);
 	}
+}
+
+@media (max-width: 60em) {
 	.adopted-pets-profile-grid {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(1, 1fr);
 	}
 	#profile {
 		display: block;
@@ -77,5 +91,15 @@
 			"propose";
 		align-self: start;
 		text-align: start;
+	}
+
+	#pets-page {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"searches"
+			"pet-list";
+	}
+	#pets-page #searches {
+		justify-self: start;
 	}
 }
