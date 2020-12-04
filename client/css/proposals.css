@@ -15,46 +15,47 @@ div#proposal-msg {
 }
 
 h3 {
-    display: block;
+	display: block;
 }
 
 #proposal-pic {
-    border-radius: 100%;
-    width: 3em;
-    height: 3em;
+	border-radius: 100%;
+	width: 3em;
+	height: 3em;
 }
 
 #proposal-text {
-    width: 15em;
-    height: 5em;
-    background-color: red;
-    vertical-align: top;
-    margin: auto;
+	width: 15em;
+	height: 5em;
+	background-color: red;
+	vertical-align: top;
+	margin: auto;
 }
 
 #proposal-header {
-    position: absolute;
-    /* right: 34em; */
-    top: 0;
-    display: inline-block;
-    height: 3em;
-    width: 4em;
+	position: absolute;
+	/* right: 34em; */
+	top: 0;
+	display: inline-block;
+	height: 3em;
+	width: 4em;
 }
 
 div#proposal-info {
-    /* margin-left: 15em; */
-    display: inline-block;
-    vertical-align: top;
-    height: 95%;
+	/* margin-left: 15em; */
+	display: inline-block;
+	vertical-align: top;
+	height: 95%;
 }
 
-div#proposal-message, div#proposal-message-submit {
-    border-radius: 2%;
-    height: 50%;
+div#proposal-message,
+div#proposal-message-submit {
+	border-radius: 2%;
+	height: 50%;
 }
 
 div#proposal-message-submit {
-    margin-left: 9em;
+	margin-left: 9em;
 }
 
 div#proposal-message textarea, div#proposal-message-submit textarea {
@@ -68,77 +69,80 @@ div#proposal-message textarea, div#proposal-message-submit textarea {
     resize: none;
 }
 
-div#proposal-message textarea:focus, div#proposal-message-submit textarea:focus {
-    outline: none;
+div#proposal-message textarea:focus,
+div#proposal-message-submit textarea:focus {
+	outline: none;
 }
 
 a#proposal-pet {
-    font-weight: bold;
-    text-decoration: none;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 button {
-    margin: 1em 1em;
-    width: 13em;
-    height: 2.5em;
-    border-radius: 1em;
-    border: 0px;
-    color: black;
-    transition-duration: 0.3s;
+	margin: 1em 1em;
+	width: 13em;
+	height: 2.5em;
+	border-radius: 1em;
+	border: 0px;
+	color: black;
+	transition-duration: 0.3s;
 }
 
 button#acceptRequest {
-    background-color: lightgreen;
+	background-color: lightgreen;
 }
 
 button#acceptRequest:hover {
-    background-color: green;
-    color: white;
+	background-color: green;
+	color: white;
 }
 
-button#refuseRequest, button#cancelRequest {
-    background-color: #ff726f;
+button#refuseRequest,
+button#cancelRequest {
+	background-color: #ff726f;
 }
 
-button#refuseRequest:hover, button#cancelRequest:hover {
-    background-color: #f70d1a;
-    color: white;
+button#refuseRequest:hover,
+button#cancelRequest:hover {
+	background-color: #f70d1a;
+	color: white;
 }
 
 button#answerRequest {
-    background-color: var(--main-color);
+	background-color: var(--main-color);
 }
 
 button#answerRequest:hover {
-    background-color: orange;
-    color: white;
+	background-color: orange;
+	color: white;
 }
 
 button#submitAnswer {
-    background-color: var(--main-color);
-    width: 7em;
-    vertical-align: top;
+	background-color: var(--main-color);
+	width: 7em;
+	vertical-align: top;
 }
 
 button#submitAnswer:hover {
-    background-color: orange;
-    color: white;
+	background-color: orange;
+	color: white;
 }
 
-#adoption-request{
-    align-self: center;
-    margin: 1em;
+#adoption-request {
+	align-self: center;
+	margin: 1em;
 }
 
-#proposal-request form *{
-    display: block;
-    text-align: left;
+#proposal-request form * {
+	display: block;
+	text-align: left;
 }
 
-#add-proposal-submit{
-    cursor: pointer;
-    border: 0;
-    color: white;
-    background-color: var(--main-color);
-    padding: 0.5em 1em 0.5em 1em;
+#add-proposal-submit {
+	cursor: pointer;
+	border: 0;
+	color: white;
+	background-color: var(--main-color);
+	padding: 0.5em 1em 0.5em 1em;
 }

@@ -1,9 +1,115 @@
+@media (max-width: 110em) {
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 90em) {
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	#pets-page #pet-list {
+		min-width: 0em;
+		margin: 2em 2em 2em 2em;
+		padding: 3em;
+		padding-left: 2em;
+		padding-right: 2em;
+	}
+}
+
+@media (max-width: 80em) {
+	.pet-card-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.pets-owned-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+@media (max-width: 65em) {
+	.pet-card-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
 @media (max-width: 60em) {
-    .pet-card-grid { grid-template-columns: repeat(2, 1fr); }
-    #profile{ display: block;}
-    #pet header { display: block;}
+	#profile {
+		display: block;
+	}
+	#pet header {
+		display: block;
+	}
+
+	#pet header > * {
+		margin: 2em;
+		margin-left: 0;
+	}
+
+	#pet header #actions #adoption-request-button {
+		margin-top: 0.5em;
+		margin-left: 0;
+	}
+
+	.pets-owned-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 @media (max-width: 40em) {
-    .pet-card-grid { grid-template-columns: repeat(1, 1fr); }
+	.pet-card-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.adopted-pets-profile-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.pets-owned-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.favorite-pets-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+	#add-pet form {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"pets-name"
+			"pets-age"
+			"pets-location"
+			"pets-species"
+			"pets-description"
+			"pets-color"
+			"pets-sex"
+			"pets-size"
+			"pets-photos"
+			"submit";
+	}
+	#pet header #actions {
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"favorite"
+			"ask"
+			"propose";
+		align-self: start;
+		text-align: start;
+	}
+
+	#pets-page {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"searches"
+			"pet-list";
+	}
+	#pets-page #searches {
+		justify-self: start;
+	}
 }

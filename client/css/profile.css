@@ -1,208 +1,248 @@
 img.profile-pic {
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center;
 }
 
 #profile {
-    margin: 2em 1em 2em 1em;
-    padding: 1em;
-    border-radius: 1em;
-    background-color: var(--light-color);
-    grid-area: 2 / 1 / span 1 / span 1;
-    align-self: center;
-    text-align: center;
-    display: grid;
-    grid-template-columns: 0.25fr auto auto;
-    grid-template-rows: auto auto auto;
+	margin: 2em 1em 2em 1em;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 0.25fr auto auto;
+	grid-template-rows: auto auto auto;
 }
 
-#profile span{
-    display: block;
+#profile span {
+	display: block;
 }
 
-#profile #name{
-    font-weight: bold;
+#profile #name {
+	font-weight: bold;
 }
 
-#profile #username{
-    color: gray;
+#profile #username {
+	color: gray;
 }
 
 #profile a {
-    color: var(--main-color);
-    text-decoration: none;
+	color: var(--main-color);
+	text-decoration: none;
 }
 
 #profile #profile_img {
-    width: 200px;
-    height: 200px;
-    grid-area: 1 / 1 / span 1 / span 1;
-    color: black;
-    text-decoration: none;
+	width: 200px;
+	height: 200px;
+	grid-area: 1 / 1 / span 1 / span 1;
+	color: black;
+	text-decoration: none;
 }
 
 #profile #owned {
-    grid-area: 1 / 2 / span 1 / span 1;
-    color: black;
-    text-decoration: none;
+	grid-area: 1 / 2 / span 1 / span 1;
+	color: black;
+	text-decoration: none;
+}
+
+.pets-owned-grid {
+	display: inline-grid;
+	grid-template-columns: repeat(3, 1fr);
+	row-gap: 5em;
+	column-gap: 2em;
+	margin-top: 1em;
 }
 
 #profile #favorites {
-    grid-area: 1 / 3 / span 1 / span 1;
-    color: black;
-    text-decoration: none;
+	grid-area: 1 / 3 / span 1 / span 1;
+	color: black;
+	text-decoration: none;
+}
+
+.favorite-pets-grid {
+	display: inline-grid;
+	grid-template-columns: repeat(2, 1fr);
+	row-gap: 5em;
+	column-gap: 2em;
+	margin-top: 1em;
 }
 
 #profile #actions {
-    grid-area: 2 / 1 / span 1 / span 1;
-    color: black;
-    text-decoration: none;
-
+	grid-area: 2 / 1 / span 1 / span 1;
+	color: black;
+	text-decoration: none;
 }
 
-#profile #actions ul{
-    list-style: none;
-    text-align: left;
+#profile #actions ul {
+	list-style: none;
+	text-align: left;
 }
 
-#profile #actions ul li{
-    padding: 0.5em;
+#profile #actions ul li {
+	padding: 0.5em;
 }
 
-#edit-profile{
-    margin: 2em 1em 2em 1em;
-    padding: 1em;
-    border-radius: 1em;
-    background-color: var(--light-color);
-    grid-area: 2 / 1 / span 1 / span 1;
-    align-self: center;
-    text-align: center;
+#edit-profile {
+	margin: 2em 1em 2em 1em;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
 }
 
 #edit-profile #profile-photo #photo {
-    position: relative;
+	position: relative;
 }
 
 #edit-profile #profile-photo {
-    width: 300px;
+	width: 300px;
 }
 
 #edit-profile #profile-photo img {
-    display: inline;
-    width:  300px;
-    height: 300px;
+	display: inline;
+	width: 300px;
+	height: 300px;
 }
 
 #edit-profile #profile-photo details {
-    position: absolute;
-    left: 222px;
-    top: 263px;
+	position: absolute;
+	left: 222px;
+	top: 263px;
 }
 
 #edit-profile #profile-photo details summary {
-    list-style: none;
+	list-style: none;
 }
 
 #edit-profile #profile-photo div#edit {
-    width: 50px;
+	width: 50px;
 }
 
 #edit-profile input {
-    margin: 1em;
-    padding: 0.5em;
-    border: 0;
+	margin: 1em;
+	padding: 0.5em;
+	border: 0;
 }
 
-#edit-profile-submit{
-    color: white;
-    background-color: var(--main-color);
-    padding: 0.5em 1em 0.5em 1em;
+#edit-profile-submit {
+	color: white;
+	background-color: var(--main-color);
+	padding: 0.5em 1em 0.5em 1em;
 }
 
 .dropdown-main {
-    padding: 4px 8px;
-    cursor: pointer;
+	padding: 4px 8px;
+	cursor: pointer;
 
-    border: 1px solid lightgray;
-    background-color: white;
-    border-radius: 6px;
+	border: 1px solid lightgray;
+	background-color: white;
+	border-radius: 6px;
 }
 
 .dropdown {
-    padding: 6px 0;
-    cursor: pointer;
+	padding: 6px 0;
+	cursor: pointer;
 
-    border: 1px solid lightgray;
-    background-color: white;
-    border-radius: 6px;
+	border: 1px solid lightgray;
+	background-color: white;
+	border-radius: 6px;
 }
 
 .dropdown ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
 .dropdown ul li {
-    white-space: nowrap;
-    padding: 0.3em 8px;
+	white-space: nowrap;
+	padding: 0.3em 8px;
 }
 
 .dropdown ul li * {
-    cursor: inherit;
+	cursor: inherit;
 }
 
 .dropdown ul li:hover {
-    background-color: var(--main-color);
-    color: white;
+	background-color: var(--main-color);
+	color: white;
 }
 
 .dropdown a,
 .dropdown-main a {
-    color: inherit;
-    text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
-.dropdown ul li.disabled      { color: var(--disabled-color) !important; }
-.dropdown ul li.disabled:hover{ color:white !important; background-color: var(--main-color-light) !important; }
-.dropdown ul li.disabled a    { pointer-events: none !important; }
+.dropdown ul li.disabled {
+	color: var(--disabled-color) !important;
+}
+.dropdown ul li.disabled:hover {
+	color: white !important;
+	background-color: var(--main-color-light) !important;
+}
+.dropdown ul li.disabled a {
+	pointer-events: none !important;
+}
 
 #change-password {
-    margin: 2em auto 2em auto;
-    padding: 1em;
-    border-radius: 1em;
-    background-color: var(--light-color);
-    width: 25em;
-    grid-area: 2 / 1 / span 1 / span 1;
-    align-self: center;
-    text-align: center;
+	margin: 2em auto 2em auto;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	width: 25em;
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
 }
 
-#change-password input{
-    margin: 1em;
+#change-password input {
+	margin: 1em;
 }
 
 #change-password #submit-password {
-    border: 0;
-    color: white;
-    background-color: var(--main-color);
-    padding: 0.5em 1em 0.5em 1em;
+	border: 0;
+	color: white;
+	background-color: var(--main-color);
+	padding: 0.5em 1em 0.5em 1em;
 }
 
 #edit-profile #delete-user {
-    margin: 2em auto 2em auto;
-    padding: 1em;
-    border-radius: 1em;
-    background-color: #ff6c6a;
-    width: 12em;
-    grid-area: 2 / 1 / span 1 / span 1;
-    align-self: center;
-    text-align: center;
+	margin: 2em auto 2em auto;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: #ff6c6a;
+	width: 12em;
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
 }
 
 #edit-profile #delete-user a {
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
+	color: black;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+#adopted-pets-profile {
+	margin: 2em 1em 2em 1em;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
+}
+
+.adopted-pets-profile-grid {
+	display: inline-grid;
+	grid-template-columns: repeat(3, 1fr);
+	row-gap: 5em;
+	column-gap: 2em;
+	margin-top: 1em;
 }
