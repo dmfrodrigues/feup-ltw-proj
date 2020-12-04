@@ -44,4 +44,18 @@
 	.favorite-pets-grid {
 		grid-template-columns: repeat(1, 1fr);
 	}
+	#add-pet form {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"pets-name"
+			"pets-age"
+			"pets-location"
+			"pets-species"
+			"pets-description"
+			"pets-color"
+			"pets-sex"
+			"pets-size"
+			"pets-photos"
+			"submit";
+	}
 }
