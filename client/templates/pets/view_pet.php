@@ -60,7 +60,7 @@
         <div id="size"><span class="name">Size</span><span class="value"><?= $pet['size'] ?></span></div>
         <div id="color"><span class="name">Color</span><span class="value"><?= $pet['color'] ?></span></div>
     </section>
-    <?php if(isset($_SESSION['username']) && $_SESSION['username'] == $pet['postedBy']){ ?>
+    <?php if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || $_SESSION['username'] == getUserWhoAdoptedPet($pet['id'])['username'])){ ?>
         <section id="actions">
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>

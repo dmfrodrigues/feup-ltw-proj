@@ -57,6 +57,19 @@
 		margin-left: 0;
 	}
 
+	#edit-pet form{
+		width: auto;
+		margin: 0;
+	}
+
+	#edit-pet #pet-photos-row{
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	#edit-pet #description textarea {
+		width: 25em;
+	}
+
 	.pets-owned-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
