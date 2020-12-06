@@ -25,6 +25,8 @@ CREATE TABLE Shelter (
     name        VARCHAR NOT NULL CHECK(name         <> ''),
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
+    username    VARCHAR NOT NULL CHECK(username <> ''),
+    password    VARCHAR NOT NULL,
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT Shelter_PK PRIMARY KEY(id)
