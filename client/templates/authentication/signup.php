@@ -9,6 +9,8 @@
       <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
       <label> Repeat Password:
       <input type="password" id="rpt_pwd" placeholder="Password" required></label>
+      <label for="shelter_check"> Shelter:
+      <input type="checkbox" id="shelter_check" onclick="shelterSignUp(this)"></label>
       <input type="submit" value="Sign up" id="submit-signup">
     </form>
 </section>
