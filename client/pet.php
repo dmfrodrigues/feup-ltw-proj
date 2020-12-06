@@ -20,6 +20,7 @@ if (isset($_SESSION['username'])) {
     <script>
         let user = <?= json_encode($user) ?>;
     </script>
+    <script src="js/handleFavorites.js" defer></script>
 <?php
 }
 
