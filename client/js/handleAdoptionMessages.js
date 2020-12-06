@@ -27,6 +27,10 @@ async function addNewAdoptionRequestMsg() {
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     
     let response = await ajaxAddAdoptionRequest(params);
+    if(!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+    }
     let jsonResponse = await response.json();
 
     let mainObject = document.querySelector("header ~ div");
