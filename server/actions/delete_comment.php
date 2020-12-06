@@ -7,9 +7,12 @@ include_once SERVER_DIR.'/pets.php';
 $comment = getPetComment($_POST['id']);
 
 if (isset($_SESSION['username']) && $_SESSION['username'] === $comment['user']){
-    deletePetComment($_POST['id']);
+    try {
+        deletePetComment($_POST['id']);
+    }
+    catch(Exception $e) { }
 }
 
-header("Location: {$_SERVER['HTTP_REFERER']}");
+header("Location: ". $_SERVER['HTTP_REFERER']);
 
 die();
