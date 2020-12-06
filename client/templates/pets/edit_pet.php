@@ -36,7 +36,7 @@ $photos = getPetPhotos($pet['id']);
             <h2>About</h2>
             <div id="age">
                 <span class="name">Age</span>
-                <span class="value"><input type="number" name="age" step="any" value="<?=$pet['age']?>" required></span>
+                <span class="value"><input type="number" name="age" min="0" step="any" value="<?=$pet['age']?>" required></span>
             </div>
             <div id="sex">
                 <span class="name">Sex </span>
