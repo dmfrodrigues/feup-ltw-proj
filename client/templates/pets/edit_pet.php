@@ -1,15 +1,15 @@
 <?php
 $photos = getPetPhotos($pet['id']);
 ?>
-<article id="pet">
+<article id="edit-pet">
     <form action="<?= SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post">
         <header>
-            <h1><input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required></h1>
+            <input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required>
             <div id="data">
-                <span id="location"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
+                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
             </div>
             <div id="pet-photos">
-                <a id="add-photo" onclick="addPetPhoto(this.parentNode)">Add photo</a>
+                <a id="add-photo" onclick="addPetPhoto(this.parentNode)"> ➕ Add photo</a>
                 <div id="pet-photos-inputs">
                     <input id="photo-number" name="photo-number" type="hidden" value="<?= count($photos) ?>">
                     <?php for ($i = 0; $i < count($photos); $i++) { ?>
@@ -36,7 +36,7 @@ $photos = getPetPhotos($pet['id']);
             <h2>About</h2>
             <div id="age">
                 <span class="name">Age</span>
-                <span class="value"><input type="number" name="age" step="any" value="<?=$pet['age']?>" required></span>
+                <span class="value"><input type="number" name="age" min="0" step="any" value="<?=$pet['age']?>" required></span>
             </div>
             <div id="sex">
                 <span class="name">Sex </span>
@@ -68,7 +68,7 @@ $photos = getPetPhotos($pet['id']);
                 <span class="value"><input type="text" name="color" value="<?=$pet['color']?>" required></span>
             </div>
         </section>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
         <a href="<?= SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
