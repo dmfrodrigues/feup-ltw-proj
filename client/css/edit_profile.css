@@ -15,7 +15,8 @@
 		"profile-photo username"
 		"profile-photo name"
 		"profile-photo password"
-		"profile-photo submit";
+		"profile-photo submit"
+		"delete-user .";
 }
 
 #edit-profile header h1 {
@@ -128,6 +129,11 @@
 	border-radius: 6px;
 }
 
+.dropdown-main:hover {
+	transition: transform 0.3s;
+	transform: scale(1.1);
+}
+
 .dropdown {
 	padding: 6px 0;
 	cursor: pointer;
@@ -174,17 +180,29 @@
 }
 
 #edit-profile #edit-profile-body #delete-user {
-	margin: 2em auto 2em auto;
+	margin: 3em auto 2em 0;
 	padding: 1em;
 	border-radius: 1em;
 	background-color: #ff6c6a;
 	width: 12em;
-	align-self: center;
-	text-align: center;
+	grid-area: delete-user;
+	align-self: start;
+	justify-self: flex-start;
+}
+
+#edit-profile #edit-profile-body #delete-user:hover {
+	transition: transform 0.6s;
+	transform: scale(1.1);
 }
 
 #edit-profile #edit-profile-body #delete-user a {
 	color: black;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+#edit-profile #edit-profile-body #delete-user a:hover {
+	color: rgb(121, 0, 0);
 	text-decoration: none;
 	font-weight: 600;
 }
