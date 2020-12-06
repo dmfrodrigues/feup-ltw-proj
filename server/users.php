@@ -2,6 +2,7 @@
 
 include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/files.php';
+include_once __DIR__.'/pets.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
@@ -121,8 +122,9 @@ function isAdmin(string $username) : bool {
 function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
 
-    if (userAlreadyExists($newUsername))
-        throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+    if($lastUsername != $newUsername)
+        if (userAlreadyExists($newUsername))
+            throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
         
     $stmt = $db->prepare('UPDATE User SET
     username=:newUsername,
@@ -164,6 +166,12 @@ function editUserPassword(string $username, string $password) {
  */
 function deleteUser(string $username) {
     global $db;
+    $user_pets = getAddedPets($username);
+    foreach($user_pets as $i => $pet){
+        $id = $pet['id'];
+        $dir = PETS_IMAGES_DIR."/$id";
+        rmdir_recursive($dir);
+    }
     eraseUserPicture($username);
     $stmt = $db->prepare('DELETE FROM User 
     WHERE username=:username');
@@ -198,8 +206,9 @@ function saveUserPicture(string $username, array $file){
  */
 function eraseUserPicture(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
-    if(!unlink($filepath))
-        throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+    if(file_exists($filepath))
+        if(!unlink($filepath))
+            throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
 
 /**
@@ -279,6 +288,54 @@ function getFavoritePets(string $username) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
+
+/**
+ * Get a specific adoption request given it's id.
+ * 
+ * @param int $id   Adoption Request id
+ * @return array    The adoption request with the pet's owner.
+ */
+function getAdoptionRequest(int $id): array {
+    global $db;
+    
+    $stmt = $db->prepare('SELECT 
+        AdoptionRequest.id,
+        AdoptionRequest.text,
+        AdoptionRequest.outcome,
+        AdoptionRequest.pet,
+        AdoptionRequest.user,
+        AdoptionRequest.requestDate AS reqDate,
+        Pet.postedBy,
+        Pet.name AS petName
+        FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet
+        WHERE AdoptionRequest.id=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $adoptionRequest = $stmt->fetch();
+    return $adoptionRequest;
+}
+
+function getAdoptionRequestMessages(int $reqId) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+        AdoptionRequestMessage.text, 
+        AdoptionRequestMessage.request,
+        AdoptionRequestMessage.id,
+        AdoptionRequestMessage.messageDate AS messDate,
+        AdoptionRequestMessage.user,
+        AdoptionRequest.outcome,
+        AdoptionRequest.pet,
+        Pet.name AS petName
+        FROM AdoptionRequestMessage 
+        INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
+        INNER JOIN Pet ON AdoptionRequest.pet=Pet.id
+        WHERE AdoptionRequestMessage.request=:reqId');
+    $stmt->bindParam(':reqId', $reqId);
+    $stmt->execute();
+    $adoptionRequestMessages = $stmt->fetchAll();
+    return $adoptionRequestMessages;
+} 
 
 /**
  * Get a user's adoption requests.
@@ -445,6 +502,36 @@ function refuseOtherProposals(int $requestId, int $petId) {
             changeAdoptionRequestOutcome($requestId, "rejected");
             changePetStatus($petId, "adopted");
         }
+}
+
+/**
+ * Get the user's adopted pets.
+ *
+ * @param string $username  User's username
+ * @return array            Array of adopted pets
+ */
+function getPetsAdoptedByUser(string $username) : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    Pet.id,
+    Pet.name,
+    Pet.species,
+    Pet.age,
+    Pet.sex,
+    Pet.size,
+    Pet.color,
+    Pet.location,
+    Pet.description,
+    Pet.status,
+    Pet.adoptionDate,
+    Pet.postedBy
+    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
+    WHERE AdoptionRequest.user=:username
+    AND Pet.status="adopted" AND AdoptionRequest.outcome="accepted"');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $pets = $stmt->fetchAll();
+    return $pets;
 }
 
 

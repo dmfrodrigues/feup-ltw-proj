@@ -7,10 +7,15 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/authenticate.css">
         <link rel="stylesheet" href="css/profile.css">
+        <link rel="stylesheet" href="css/edit_profile.css">
         <link rel="stylesheet" href="css/pets.css">
+        <link rel="stylesheet" href="css/add_pet.css">
         <link rel="stylesheet" href="css/searches.css">
         <link rel="stylesheet" href="css/comments.css">
         <link rel="stylesheet" href="css/proposals.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="resources/favicon.ico">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <?php
@@ -36,3 +41,4 @@
             <?php } ?>
             </div>
         </header>
+        <div>

@@ -561,7 +561,7 @@ function checkIfAdopted(int $petId) : bool {
     WHERE id=:petId AND status<>"forAdoption"');
     $stmt->bindParam(':petId', $petId);
     $stmt->execute();
-    return $stmt->rowCount() > 0;
+    return $stmt->fetchColumn() > 0;
 }
 
 /**
@@ -586,3 +586,36 @@ function getPetAdoptionRequests(string $petId) : array {
     return $pets;
 }
 
+/**
+ * Get adopted pets.
+ * 
+ * @return array            Array of adopted pets
+ */
+function getAdoptedPets() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT * FROM Pet 
+    WHERE status="adopted"');
+    $stmt->execute();
+    $addedPets = $stmt->fetchAll();
+    return $addedPets;
+}
+
+/**
+ * Get the user who adopted the given pet.
+ *
+ * @param string $id        Pet's ID
+ * @return array            User who adopted the pet
+ */
+function getUserWhoAdoptedPet(int $id): array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+    User.username,
+    User.name,
+    User.shelter
+    FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet INNER JOIN User ON User.username=AdoptionRequest.user
+    WHERE AdoptionRequest.outcome="accepted" AND Pet.status="adopted" AND AdoptionRequest.pet=:id');
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $user = $stmt->fetch();
+    return $user;
+}

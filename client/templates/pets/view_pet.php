@@ -23,19 +23,21 @@
         </div>
         <div id="data">
             <h1><?= $pet['name'] ?></h1>
-            <span id="location"><?= $pet['location'] ?></span>
+            <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet['location'] ?></span></span>
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
         <div id="actions">
             <?php if(isset($_SESSION['username'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <div id="favorite"><a href="<?= SERVER_URL ?>/actions/remove_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
+                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
                 <?php } else { ?>
-                    <div id="favorite"><a href="<?= SERVER_URL ?>/actions/add_favorite.php?username=<?= $_SESSION['username'] ?>&id=<?= $pet['id'] ?>"><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
                 <?php } ?>
                 <div id="ask"><a href="#comments"><img src="resources/img/question-mark.png" height="42px">Ask question</a></div>
-                <?php include_once 'templates/pets/adoption_request_buttons.php'; ?>
+                <div id="adoption-request-button">
+                    <?php include_once 'templates/pets/adoption_request_buttons.php'; ?>
+                </div>
             <?php } ?>
         </div>
     </header>
@@ -61,7 +63,7 @@
     <?php if(isset($_SESSION['username']) && $_SESSION['username'] == $pet['postedBy']){ ?>
         <section id="actions">
             <ul>
-                <li><a href="edit_pet.php?id=<?= $pet['id'] ?>">Edit</a></li>
+                <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php } ?>
