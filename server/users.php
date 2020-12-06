@@ -122,8 +122,9 @@ function isAdmin(string $username) : bool {
 function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
 
-    if (userAlreadyExists($newUsername))
-        throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+    if($lastUsername != $newUsername)
+        if (userAlreadyExists($newUsername))
+            throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
         
     $stmt = $db->prepare('UPDATE User SET
     username=:newUsername,

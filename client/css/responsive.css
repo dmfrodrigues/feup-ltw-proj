@@ -112,4 +112,15 @@
 	#pets-page #searches {
 		justify-self: start;
 	}
+
+	#edit-profile #edit-profile-body {
+		grid-template-columns: repeat(1, 1fr);
+		grid-template-areas:
+			"profile-photo"
+			"username"
+			"name"
+			"password"
+			"submit"
+			"delete-user";
+	}
 }

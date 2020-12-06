@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/authenticate.css">
         <link rel="stylesheet" href="css/profile.css">
+        <link rel="stylesheet" href="css/edit_profile.css">
         <link rel="stylesheet" href="css/pets.css">
         <link rel="stylesheet" href="css/add_pet.css">
         <link rel="stylesheet" href="css/searches.css">
