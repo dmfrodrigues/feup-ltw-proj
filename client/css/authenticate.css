@@ -39,6 +39,11 @@
 	text-align: right;
 }
 
+#signup form label[for='shelter_check'] {
+	display: block;
+	text-align: center;
+}
+
 #login input,
 #signup input {
 	margin: 1em;
@@ -68,3 +73,4 @@
 #login footer p {
 	color: black;
 }
+
