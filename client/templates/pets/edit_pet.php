@@ -6,7 +6,7 @@ $photos = getPetPhotos($pet['id']);
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required>
             <div id="data">
-                <span id="location"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
+                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
             </div>
             <div id="pet-photos">
                 <a id="add-photo" onclick="addPetPhoto(this.parentNode)"> ➕ Add photo</a>
@@ -21,10 +21,8 @@ $photos = getPetPhotos($pet['id']);
                     <?php for ($i = 0; $i < count($photos); $i++) { ?>
                         <div id="picture-<?= $i ?>">
                             <img id="img-<?= $i ?>" src="<?= $photos[$i] ?>"/>
-                            <div id="edit-photo">
-                                <a onclick="browsePetPhoto(this)">Browse new picture</a>
-                                <a onclick="deletePetPhoto(this)">Delete</a>
-                            </div>
+                            <a onclick="browsePetPhoto(this)">Browse new picture</a>
+                            <a onclick="deletePetPhoto(this)">Delete</a>
                         </div>
                     <?php } ?>
                 </div>

@@ -429,7 +429,14 @@
 }
 
 #edit-pet #data {
-	display: inline;
+	display: inline-block;
+	margin-left: 1em;
+}
+
+#edit-pet #data img{
+	height: 2em;
+	width: auto;
+	vertical-align: text-bottom;
 }
 
 #edit-pet #pet-photos-row{
@@ -440,7 +447,7 @@
 	margin-top: 2em;
 }
 
-#edit-pet #pet-photos-row #edit-photo{
+#edit-pet #pet-photos-row div{
 	width: 10em;
 }
 
@@ -467,7 +474,6 @@
 	resize: none;
 }
 
-
 #edit-pet #about {
 	grid-area: 3 / 1 / span 1 / span 2;
 	text-align: left;
@@ -488,6 +494,7 @@
 #edit-pet #about input,
 #edit-pet #about select
 {
+	width: 5em;
 	border-radius: 1em;
 	padding: 0.5em;
 	border: 0;
@@ -514,6 +521,7 @@
 }
 
 #submit-edit-pet{
+	width: auto;
 	position: relative;
 	cursor: pointer;
 	border: 0;
