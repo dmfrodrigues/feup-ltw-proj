@@ -21,8 +21,10 @@ $photos = getPetPhotos($pet['id']);
                     <?php for ($i = 0; $i < count($photos); $i++) { ?>
                         <div id="picture-<?= $i ?>">
                             <img id="img-<?= $i ?>" src="<?= $photos[$i] ?>"/>
-                            <a onclick="browsePetPhoto(this)">Browse new picture</a>
-                            <a onclick="deletePetPhoto(this)">Delete</a>
+                            <div id="edit-photo">
+                                <a onclick="browsePetPhoto(this)">Browse new picture</a>
+                                <a onclick="deletePetPhoto(this)">Delete</a>
+                            </div>
                         </div>
                     <?php } ?>
                 </div>

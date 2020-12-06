@@ -422,7 +422,10 @@
 }
 
 #edit-pet input {
+	border-radius: 1em;
+	padding: 0.5em;
 	margin: 1em;
+	border: 0;
 }
 
 #edit-pet #data {
@@ -433,8 +436,17 @@
 	display: inline-grid;
 	grid-template-columns: repeat(3, 1fr);
 	row-gap: 5em;
-	column-gap: 5em;
+	column-gap: 4em;
 	margin-top: 2em;
+}
+
+#edit-pet #pet-photos-row #edit-photo{
+	width: 10em;
+}
+
+#edit-pet #pet-photos-row a{
+	cursor: pointer;
+	color: var(--main-color);
 }
 
 #edit-pet #pet-photos #pet-photos-row img {
@@ -444,6 +456,17 @@
 	object-position: center;
 	border-radius: 5px;
 }
+
+#edit-pet #description textarea {
+	border-radius: 1em;
+	padding: 0.5em;
+	width: 35em;
+	height: 8em;
+	border: none;
+	outline: none;
+	resize: none;
+}
+
 
 #edit-pet #about {
 	grid-area: 3 / 1 / span 1 / span 2;
@@ -461,6 +484,13 @@
 }
 #edit-pet #about div * {
 	display: inline-block;
+}
+#edit-pet #about input,
+#edit-pet #about select
+{
+	border-radius: 1em;
+	padding: 0.5em;
+	border: 0;
 }
 #edit-pet #about #age {
 	margin: 1em;
@@ -496,6 +526,11 @@
 	padding: 1em 2.5em 1em 2.5em;
 }
 
+#submit-edit-pet:hover {
+	transition: transform 0.5s;
+	transform: scale(1.1);
+}
+
 #edit-pet #delete-pet {
 	margin: 2em 0 2em auto;
 	padding: 1em;
@@ -505,6 +540,11 @@
 	grid-area: 2 / 1 / span 1 / span 1;
 	align-self: center;
 	text-align: center;
+}
+
+#edit-pet #delete-pet:hover {
+	transition: transform 0.5s;
+	transform: scale(1.1);
 }
 
 #edit-pet #delete-pet a {
