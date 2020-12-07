@@ -47,7 +47,7 @@ class CommentTree {
     }
 }
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function(_event) {
     var tree = new CommentTree(comments);
     let commentsSection = document.getElementById("comments");
     if (typeof user !== 'undefined') {
