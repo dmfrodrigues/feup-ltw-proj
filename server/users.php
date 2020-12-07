@@ -573,8 +573,26 @@ function acceptShelterInvite(string $username, string $shelter) : bool {
         ');
         $stmt->bindParam(':shelter', $shelter);
         $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        deleteShelterInvitation($username, $shelter);
         return true;
     }
 
     return false;
+}
+
+/**
+ * Leave a shelter.
+ *
+ * @param string $username  Username 
+ */
+function leaveShelter(string $username) {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE User
+        SET shelter = NULL WHERE username=:username
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
 }

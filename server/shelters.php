@@ -205,3 +205,21 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
     return $stmt->rowCount() > 0;
 }
 
+/**
+ * Delete Shelter Invitation
+ *
+ * @param string $user     Username (User)
+ * @param string $shelter  Username (Shelter)
+ * @return array           True if successful. False otherwise.
+ */
+function deleteShelterInvitation(string $user, string $shelter) : bool {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM ShelterInvite
+        WHERE user=:username, shelter=:shelter
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
