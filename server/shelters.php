@@ -277,10 +277,10 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
 }
 
 /**
- * Get Shelter Colaborators.
+ * Get Shelter Collaborators.
  *
  * @param string $username  Username (Shelter)
- * @return array            Array containing all the info about the colaborators
+ * @return array            Array containing all the info about the collaborators
  */
 function getShelterCollaborators(string $shelter) : array {
     global $db;
@@ -295,6 +295,7 @@ function getShelterCollaborators(string $shelter) : array {
         WHERE User.shelter=:shelter
     ');
     $stmt->bindParam(':shelter', $shelter);
-    $shelterColaborators = $stmt->execute();
+    $stmt->execute();
+    $shelterColaborators = $stmt->fetchAll();
     return $shelterColaborators;
 }
