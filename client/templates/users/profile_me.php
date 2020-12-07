@@ -15,6 +15,7 @@
             <li><a href="view_proposals.php">➕ Proposals Made To My Pets</a></li>
             <li><a href="my_proposals.php">➕ My Proposals</a></li>
             <li><a href="view_adopted_pets_by_user.php">➕ View adopted pets</a></li>
+            <li><a href="view_shelter_invitations.php">➕ View Shelter Invitations</a></li>
         </ul>
     </section>
 </section>

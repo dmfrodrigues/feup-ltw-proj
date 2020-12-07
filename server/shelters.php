@@ -4,6 +4,28 @@ include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/users.php';
 include_once __DIR__.'/pets.php';
 
+/**
+ * Get Shelter info.
+ *
+ * @param string $shelter  Username (Shelter)
+ * @return array          Array containg the shelter's info.
+ */
+function getShelter(string $shelter) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+        name,
+        location,
+        description,
+        registeredOn
+        FROM Shelter
+        WHERE username=:shelter
+    ');
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    $shelterInfo = $stmt->fetch();
+    return $shelterInfo;
+}
 
 /**
  * Add shelter to database.
@@ -223,3 +245,4 @@ function deleteShelterInvitation(string $user, string $shelter) : bool {
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
+
