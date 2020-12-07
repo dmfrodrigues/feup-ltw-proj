@@ -63,7 +63,7 @@ h1 {
 }
 
 #searches #size-area {
-	margin-left: 3.5em;
+	margin-left: 5.15em;
 }
 
 #searches #sex-area {
@@ -85,6 +85,11 @@ h1 {
 #searches #sex-area .container input[type="checkbox"] {
 	margin-left: 3.5em;
 }
+
+#searches #size-area .container input[type="checkbox"] {
+	left: -8.05em;
+}
+
 
 .container {
 	display: block;
