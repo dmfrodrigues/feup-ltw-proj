@@ -34,6 +34,7 @@ function addPetPhoto(element){
     pictures.appendChild(picture);
 
     $("input[id^='new-'").change(updatePetPhoto);
+    element.querySelector(`#new-${N}`).click();
 
     element.querySelector('#photo-number').value = `${N+1}`;
 }
