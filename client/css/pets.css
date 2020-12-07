@@ -226,11 +226,11 @@
 }
 
 #pet #actions ul li img:hover {
-	transform: rotate(360deg) scale(1.5);
+	transform: scale(1.5);
 }
 
 #pet #actions ul li img {
-	transition: 1s;
+	transition: 0.5s;
 	width: 3em;
 }
 
