@@ -6,7 +6,7 @@
         if(empty($collaborators)) echo '<p>No collaborators</p>';
         else
             foreach ($collaborators as $collaborator) {
-                viewCollaboratorInShelterProfile($pet);
+                viewCollaboratorInShelterProfile($collaborator);
             } ?>
     </div>
 </section>

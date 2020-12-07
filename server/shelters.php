@@ -277,24 +277,31 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
 }
 
 /**
- * Get Shelter Colaborators.
+ * Get Shelter Collaborators.
  *
  * @param string $username  Username (Shelter)
  * @return array            Array containing all the info about the colaborators
  */
-function getShelterColaborators(string $shelter) : array {
+function getShelterCollaborators(string $shelter) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT 
             Shelter.username AS shelter,
-            User.username AS user
-            User.name,
-
+            User.username AS user,
+            User.name
         FROM Shelter
         JOIN User ON Shelter.username = User.shelter
         WHERE User.shelter=:shelter
     ');
     $stmt->bindParam(':shelter', $shelter);
-    $shelterColaborators = $stmt->execute();
-    return $shelterColaborators;
+    $stmt->execute();
+    $shelterCollaborators = $stmt->fetchAll();
+    $collaboratorsWithPhoto = [];
+
+    foreach($shelterCollaborators as $collaborator){
+        $collaborator['pictureUrl'] = getUserPicture($collaborator['user']);
+        array_push($collaboratorsWithPhoto, $collaborator);
+    }
+
+    return $collaboratorsWithPhoto;
 }
