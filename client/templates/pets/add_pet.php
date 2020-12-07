@@ -21,7 +21,7 @@
             <label for="pets-description">Description<textarea name="description" placeholder="Pet's description"></textarea></label>
         </div>
         <div id="age">
-            <label for="age">Age<span class="value"><input type="number" name="age" step="any" placeholder="Pet's age" required></span></label>
+            <label for="age">Age<span class="value"><input type="number" name="age" step="any" min="0" placeholder="Pet's age" required></span></label>
         </div>
         <div id="sex">
             <label for="sex">Sex
