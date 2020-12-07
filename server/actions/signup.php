@@ -16,8 +16,10 @@ try{
     $_SESSION['username'] = $_POST['username'];
     header('Location: ' . CLIENT_URL . '/profile.php?username='.$_SESSION['username']);
 } catch(PDOException $e) {
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
+    $errorMessage = urlencode('Something Went Wrong');
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
 } catch(Exception $e) {
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
+    $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
 }
 die();

@@ -1,7 +1,13 @@
 function signup_check() {
     let pwd     = document.getElementById('pwd'    ).value;
     let rpt_pwd = document.getElementById('rpt_pwd').value;
-    if(pwd != rpt_pwd) return false;
+    if(pwd != rpt_pwd) {
+        let errorMsg = document.createElement('p');
+        errorMsg.id = 'simple-fail-msg';
+        errorMsg.innerHTML = 'Passwords don\'t match!';
+        document.querySelector('form').insertBefore(errorMsg, document.querySelector('form').lastElementChild);
+        return false;
+    } 
     return true;
 }
 

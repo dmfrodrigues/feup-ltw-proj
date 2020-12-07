@@ -19,7 +19,7 @@ function addShelter(string $username, string $name, string $location, string $de
 
     if (userAlreadyExists($username) || shelterAlreadyExists($username))
         throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
-
+    
     $password_sha1 = sha1($password);
     $stmt = $db->prepare('INSERT INTO Shelter(username, name, location, description, password) VALUES
     (:username, :name, :location, :description, :password)');

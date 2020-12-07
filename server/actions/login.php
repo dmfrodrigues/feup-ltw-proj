@@ -15,8 +15,12 @@ try {
     } else {
         header('Location: ' . CLIENT_URL . '/login.php?failed=1');
     }
+} catch(PDOException $e) {
+    $errorMessage = urlencode('Something Went Wrong');
+    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
 } catch(Exception $e) {
-    header('Location: ' . CLIENT_URL . '/login.php?failed=1');
+    $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
 }
 
 die();

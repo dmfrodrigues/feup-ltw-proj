@@ -22,9 +22,11 @@ try {
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     header('Location: ' . CLIENT_URL . '/profile.php?sheltername='. $_SESSION['username']);
 } catch(PDOException $e) {
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
+    $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
 } catch(Exception $e) {
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
+    $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
 }
 
 die();

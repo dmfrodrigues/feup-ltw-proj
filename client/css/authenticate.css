@@ -92,7 +92,7 @@
 	background-color: var(--main-color);
 }
 
-#signup #signup-fail-msg {
+#simple-fail-msg {
 	color: red;
 	font-weight: bolder;
 }
