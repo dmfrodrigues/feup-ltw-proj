@@ -22,7 +22,7 @@
             if(isset($javascript_files)){
                 foreach($javascript_files as $js_file){
                     ?>
-                    <script src="<?= $js_file ?>"></script>
+                    <script src="<?= $js_file ?>" defer></script>
                     <?php
                 }
             }

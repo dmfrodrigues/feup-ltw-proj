@@ -39,6 +39,11 @@
 	text-align: right;
 }
 
+#signup form label[for='shelter_check'] {
+	display: block;
+	text-align: center;
+}
+
 #login input,
 #signup input {
 	margin: 1em;
@@ -67,4 +72,27 @@
 
 #login footer p {
 	color: black;
+}
+
+#signup button#signup-shelter-button, #signup button#signup-user-button {
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+	background-color: var(--main-color-light);
+	border-radius: 0px;	
+	width: 12em;
+}
+
+#signup button#signup-user-button {
+	background-color: var(--main-color);
+}
+
+#signup button#signup-shelter-button:hover, #signup button#signup-user-button:hover {
+	transition: 0.25;
+	background-color: var(--main-color);
+}
+
+#simple-fail-msg {
+	color: red;
+	font-weight: bolder;
 }
