@@ -23,6 +23,11 @@ to
 </Directory>
 ```
 
+### Server constants
+Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server/server_constants_<environment>.php`.
+
+To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from directory `server/`.
+
 ## Mockups
 #### Register
 ![Mockup](https://drive.google.com/uc?id=1LiE9tmwayZv44HtkqKMEm6Amxtdo9xo0)
