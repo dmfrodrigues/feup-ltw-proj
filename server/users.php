@@ -3,6 +3,7 @@
 include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/files.php';
 include_once __DIR__.'/pets.php';
+include_once __DIR__.'/shelters.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
@@ -25,7 +26,7 @@ function userPasswordExists(string $username, string $password) : bool {
     $stmt->bindParam(':password', $password_sha1);
     $stmt->execute();
     $users = $stmt->fetchAll();
-    return (count($users) == 1);
+    return (count($users) > 0);
 }
 
 /**
@@ -42,7 +43,7 @@ function userAlreadyExists(string $username) : bool {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $users = $stmt->fetchAll();
-    return (count($users) == 1);
+    return (count($users) > 0);
 }
 
 /**
@@ -55,6 +56,10 @@ function userAlreadyExists(string $username) : bool {
  */
 function addUser(string $username, string $password, string $name){
     global $db;
+
+    if (userAlreadyExists($username) || shelterAlreadyExists($username))
+        throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
+
     $password_sha1 = sha1($password);
     $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
     (:username, :password, :name)');
@@ -123,7 +128,7 @@ function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
 
     if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername))
+        if (userAlreadyExists($newUsername) || shelterAlreadyExists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
         
     $stmt = $db->prepare('UPDATE User SET

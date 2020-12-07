@@ -7,6 +7,10 @@
         <label>
             Password <input type="password" name="password" required>
         </label>
+        <?php 
+            if(isset($_GET['failed']) && isset($_GET['errorMessage'])) { ?>
+            <p id="simple-fail-msg">Signup Failed! - <?= $_GET['errorMessage'] ?></p>
+        <?php } ?>
         <input type="submit" value="Login" id="submit-login">
     </form>
     <a href="">Forgot Password?</a>

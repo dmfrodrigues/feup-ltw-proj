@@ -5,8 +5,8 @@ PRAGMA foreign_keys=ON;
 PRAGMA encoding="UTF-8";
 
 -- Shelter
-INSERT INTO Shelter(name, location, description) VALUES
-('AnimalAdoption', 'Lisbon', 'We take care of animals.');
+INSERT INTO Shelter(username, password, name, location, description) VALUES
+('AAOrg', '806715632407A53335EA3DE53B4148580870E693', 'AnimalAdoption', 'Lisbon', 'We take care of animals.');
 
 -- User
 INSERT INTO User

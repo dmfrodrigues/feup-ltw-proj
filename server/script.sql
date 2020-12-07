@@ -21,10 +21,12 @@ DROP TRIGGER IF EXISTS Comment_answerTime;
 PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
-    id INTEGER,
+    id INTEGER, 
+    username    VARCHAR NOT NULL CHECK(username <> ''),
     name        VARCHAR NOT NULL CHECK(name         <> ''),
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
+    password    VARCHAR NOT NULL,
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT Shelter_PK PRIMARY KEY(id)

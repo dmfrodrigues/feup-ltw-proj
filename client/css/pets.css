@@ -39,9 +39,10 @@
 }
 
 #pet #pet-photos #pet-selected-img {
+	background-color: white;
 	height: 300px;
 	width: 400px;
-	object-fit: cover;
+	object-fit: contain;
 	object-position: center;
 	border-radius: 20px;
 }
