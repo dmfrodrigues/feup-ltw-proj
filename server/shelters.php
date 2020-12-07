@@ -68,3 +68,4 @@ function shelterAlreadyExists(string $username) : bool {
     $shelters = $stmt->fetchAll();
     return (count($shelters) > 0);
 }
+
