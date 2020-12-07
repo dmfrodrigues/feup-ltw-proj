@@ -31,3 +31,8 @@
                 $invitation['requestDate']
             );
     }
+
+    function drawInvitationError() { 
+        $errorMsg = urldecode($_GET['errorMessage']); ?>
+        <p style="text-align: center" id='simple-fail-msg'><?=$errorMsg?></p>
+    <?php } ?>

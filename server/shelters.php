@@ -227,3 +227,4 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
     return $stmt->rowCount() > 0;
 }
 
+// getShelterColaborator(string $username)

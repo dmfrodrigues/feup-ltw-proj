@@ -550,11 +550,11 @@ function checkUserBelongsToShelter(string $username) : bool {
 
     $stmt = $db->prepare('SELECT 
         * FROM User
-        WHERE username=:username AND shelter <> NULL 
+        WHERE username=:username AND shelter IS NOT NULL 
     ');
     $stmt->bindParam(':username', $username);
     $stmt->execute();
-    return $stmt->fetchColumn() > 0;
+    return (bool) $stmt->fetchColumn() > 0;
 }
 
 /**
@@ -566,6 +566,7 @@ function checkUserBelongsToShelter(string $username) : bool {
  */
 function acceptShelterInvite(string $username, string $shelter) : bool {
     global $db;
+
 
     if(!checkUserBelongsToShelter($username)) {
         $stmt = $db->prepare('UPDATE User
