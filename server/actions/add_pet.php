@@ -26,7 +26,7 @@ if (isset($_SESSION['username'])){
         $_SESSION['username'],
         $files
     );
-    header("Location: " . CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
 }
 
 die();

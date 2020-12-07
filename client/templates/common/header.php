@@ -28,7 +28,7 @@
             }
         ?>
         <script>
-            const API_URL = `${location.protocol}//<?= SERVER_URL ?>/rest/`;
+            const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
         </script>
     </head>
     <body>
@@ -40,7 +40,7 @@
                 <a href="login.php">Login</a>
             <?php } else { ?>
                 <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
-                <a href="<?= SERVER_URL ?>/actions/logout.php">Logout</a>
+                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
             </div>
         </header>

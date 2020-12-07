@@ -6,13 +6,13 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/users.php';
 
 if($_GET['username'] != $_SESSION['username']){
-    header("Location: " . CLIENT_URL . "/profile.php?username={$_SESSION['username']}");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_SESSION['username']}");
 }
 
 try{
     eraseUserPicture($_GET['username']);
 
-    header("Location: " . CLIENT_URL . "/profile.php?username={$_GET['username']}");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
 } catch(CouldNotDeleteFileException $e){
     echo "Could not delete file";
     header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);

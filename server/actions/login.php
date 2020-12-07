@@ -8,19 +8,19 @@ include_once SERVER_DIR.'/users.php';
 try {
     if (userPasswordExists($_POST['username'], $_POST['password'])){
         $_SESSION['username'] = $_POST['username'];
-        header('Location: ' . CLIENT_URL . '/index.php');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
     } else if(shelterPasswordExists($_POST['username'], $_POST['password'])){
         $_SESSION['username'] = $_POST['username'];
-        header('Location: ' . CLIENT_URL . '/index.php');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
     } else {
-        header('Location: ' . CLIENT_URL . '/login.php?failed=1');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1');
     }
 } catch(PDOException $e) {
     $errorMessage = urlencode('Something Went Wrong');
-    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
 } catch(Exception $e) {
     $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
 }
 
 die();

@@ -14,7 +14,7 @@
                     <div class="dropdown" id="edit-options">
                         <ul>
                             <li>
-                                <form action="<?= SERVER_URL ?>/actions/edit_profile_picture.php?username=<?= $user['username'] ?>" enctype="multipart/form-data" method="POST">
+                                <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile_picture.php?username=<?= $user['username'] ?>" enctype="multipart/form-data" method="POST">
                                     <script>
                                         function onFileChange(){
                                             if(document.getElementById('profile_picture').value != ''){
@@ -30,14 +30,14 @@
                                 </form>
                             </li>
                             <li <?php if(is_null($user['pictureUrl'])) echo 'class="disabled"';?>>
-                                <a href="<?= SERVER_URL ?>/actions/erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
+                                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/erase_profile_picture.php?username=<?= $user['username']?>">Erase picture</a>
                             </li>
                         </ul>
                     </div>
                 </details>
             </div>
         </section>
-        <form action="<?= SERVER_URL ?>/actions/edit_profile.php?username=<?=$user['username']?>" method="post">
+        <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile.php?username=<?=$user['username']?>" method="post">
             <section id="username">
                 <label for="username">Username<input type="text" name="username" placeholder="user's username" value="<?=$user['username']?>" required pattern="^[a-zA-Z0-9]+$"></label>
             </section>
@@ -50,7 +50,7 @@
             <input type="submit" value="Submit" id="edit-profile-submit">
         </form>
         <section id='delete-user'>
-            <a href="<?= SERVER_URL ?>/actions/delete_user.php?username=<?= $user['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+            <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?username=<?= $user['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
         </section>
     </section>
 </article>

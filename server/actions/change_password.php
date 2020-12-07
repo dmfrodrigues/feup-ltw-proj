@@ -8,7 +8,7 @@ $user = getUser($_GET['username']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $user["username"]){
-        header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
         die();
     }
 
@@ -16,7 +16,7 @@ if (isset($_SESSION['username'])){
         $user["username"],
         $_POST['pwd']
     );
-    header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username']);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username']);
 }
 
 die();
