@@ -17,7 +17,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="resources/favicon.ico">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <?php
             if(isset($javascript_files)){
                 foreach($javascript_files as $js_file){
@@ -35,8 +34,12 @@
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>
-            <?php } else { ?>
-                <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
+            <?php } else { 
+                if (!isset($_SESSION['isShelter'])) { ?>
+                    <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
+                <?php } else { ?>
+                    <span><a href="profile_shelter.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
+                <?php } ?>
                 <a href="<?= SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
             </div>

@@ -2,7 +2,7 @@
     <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
     <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
     <input id="comment-answerTo" name="answerTo" type="hidden">
-    <input id="comment-picture-input" name="picture" type="file" style="display:none;">
+    <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <article class="comment">
         <span id="comment-user" class="user"><a href="profile.php?username=#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="profile.php?username?#"><img class="profile-pic" src="#"></a>

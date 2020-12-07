@@ -1,11 +1,9 @@
-$(function(){
-    $("input#comment-picture-input").change(function(e){
-        let element = e.target.parentNode;
-        let file = e.originalEvent.srcElement.files[0];
-        let img = element.querySelector("#comment-picture");
-        updateImgFromFile(img, file);
-    });
-});
+function onChangeCommentPictureInput(input){
+    let element = input.parentNode;
+    let file = input.files[0];
+    let img = element.querySelector("#comment-picture");
+    updateImgFromFile(img, file);
+}
 
 function newComment_checkTextOrImage(comment){
     let text = comment.querySelector('#comment-text');

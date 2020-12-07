@@ -11,6 +11,7 @@ try {
         header('Location: ' . CLIENT_URL . '/index.php');
     } else if(shelterPasswordExists($_POST['username'], $_POST['password'])){
         $_SESSION['username'] = $_POST['username'];
+        $_SESSION['isShelter'] = "true";
         header('Location: ' . CLIENT_URL . '/index.php');
     } else {
         header('Location: ' . CLIENT_URL . '/login.php?failed=1');
