@@ -1,14 +1,10 @@
 <?php
-define('SERVER_DIR', __DIR__);          // For server
-define('SERVER_URL', '../server');      // For client
+include_once __DIR__ . '/server_constants.php';
 
-define('CLIENT_URL', '../../client');   // For server
-
-function serverpathToUrl($path) : string {
-    $pos = strpos($path, SERVER_DIR);
-    if($pos === false) throw new RuntimeException("Invalid server path '$path' cannot be converted");
-    $url = str_replace(SERVER_DIR, SERVER_URL, $path);
-    return $url;
+function path2url($file, $Protocol='http://') {
+    return
+        $Protocol.
+        str_replace(SERVER_DIR, SERVER_URL, $file);
 }
 
 class CouldNotDeleteFileException extends RuntimeException{}

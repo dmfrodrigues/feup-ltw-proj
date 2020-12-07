@@ -10,6 +10,7 @@ $comments = getPetComments($_GET['id']);
 
 ?>
 <script>
+let pet = <?= json_encode($pet) ?>;
 let comments = <?= json_encode($comments) ?>;
 </script>
 <?php
