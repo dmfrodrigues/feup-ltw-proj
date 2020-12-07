@@ -23,6 +23,8 @@ try {
     header('Location: ' . CLIENT_URL . '/profile.php?sheltername='. $_SESSION['username']);
 } catch(PDOException $e) {
     header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
+} catch(Exception $e) {
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
 }
 
 die();
