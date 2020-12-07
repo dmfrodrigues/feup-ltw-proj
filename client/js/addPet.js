@@ -15,14 +15,14 @@ function addPetPhoto(element) {
 	img.id = `pet-picture-${N}-img`;
 	imgs.appendChild(img);
 	// Bind
-	$(input).change(function (e) {
-		let id = e.target.id.split("-")[2];
-		let file = e.originalEvent.srcElement.files[0];
-		let img = e.target.parentNode.parentNode.querySelector(
+	input.onchange = function () {
+		let id = input.id.split("-")[2];
+		let file = input.files[0];
+		let img = input.parentNode.parentNode.querySelector(
 			`#pet-picture-${id}-img`
 		);
 		updateImgFromFile(img, file);
-	});
+	};
 	// Num_inputs
 	N += 1;
 	num_inputs.value = `${N}`;
