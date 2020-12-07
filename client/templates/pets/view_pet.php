@@ -16,9 +16,10 @@
             <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
             <div id=pet-photos-row>
                 <img class="selected" src="<?= $photoSelected ?>" alt="photo 0 of <?= $pet['name'] ?>" onclick="selectPhoto()" />
-                <?php for ($i = 1; $i < count($photos); $i++) { ?>
+                <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
                     <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" onclick="selectPhoto()" />
                 <?php } ?>
+                <a href="pet_photos.php?id=<?= $pet['id'] ?>">All Photos</a>
             </div>
         </div>
         <div id="data">

@@ -47,7 +47,24 @@
 	border-radius: 20px;
 }
 
-#pet #pet-photos #pet-photos-row img {
+#pet #pet-photos  #pet-photos-row {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+}
+
+#pet #pet-photos  #pet-photos-row > a{
+	height: 50px;
+	width: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: small;
+	line-height: 25px;
+	border-radius: 5px;
+	color: white;
+	background-color: var(--bg-color);
+}
+
+#pet #pet-photos > #pet-photos-row img {
 	width: 50px;
 	height: 50px;
 	object-fit: cover;
@@ -56,15 +73,16 @@
 	border-radius: 5px;
 }
 
-#pet #pet-photos #pet-photos-row img:hover {
+#pet #pet-photos  #pet-photos-row > a:hover,
+#pet #pet-photos > #pet-photos-row img:hover {
 	border: solid grey thin;
 }
 
-#pet #pet-photos #pet-photos-row .selected {
+#pet #pet-photos > #pet-photos-row .selected {
 	border: solid var(--main-color);
 }
 
-#pet #pet-photos #pet-photos-row .selected:hover {
+#pet #pet-photos > #pet-photos-row .selected:hover {
 	border: solid var(--main-color);
 }
 
