@@ -617,5 +617,6 @@ function getUserWhoAdoptedPet(int $id): array {
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $user = $stmt->fetch();
+    if (!$user) return [];
     return $user;
 }
