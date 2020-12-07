@@ -286,7 +286,7 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
  * Get Shelter Collaborators.
  *
  * @param string $username  Username (Shelter)
- * @return array            Array containing all the info about the colaborators
+ * @return array            Array containing all the info about the collaborators
  */
 function getShelterCollaborators(string $shelter) : array {
     global $db;
