@@ -12,10 +12,15 @@ if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
 }
 
 try {
-
-    addShelter($_POST['username'], $_POST['name'], $_POST['location'], $_POST['description'], $_POST['pwd']);
-    $_SESSION['username'] = $_POST['username'];
-    header('Location: ' . CLIENT_URL . '/profile.php?sheltername='.$_SESSION['username']);
+    addShelter(
+        htmlspecialchars($_POST['username']), 
+        htmlspecialchars($_POST['shelterName']), 
+        htmlspecialchars($_POST['location']), 
+        htmlspecialchars($_POST['description']), 
+        htmlspecialchars($_POST['pwd'])
+    );
+    $_SESSION['username'] = htmlspecialchars($_POST['username']);
+    header('Location: ' . CLIENT_URL . '/profile.php?sheltername='. $_SESSION['username']);
 } catch(PDOException $e) {
     header('Location: ' . CLIENT_URL . '/signup.php?failed=1');
 }

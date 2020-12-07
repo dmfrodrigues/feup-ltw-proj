@@ -33,6 +33,8 @@ function addInputs(target, inputs) {
         input.id = specificInput.id_name;
         input.placeholder = specificInput.placeholder;
         input.required = specificInput.required;
+        if(specificInput.pattern)
+            input.pattern = specificInput.pattern;
         label.appendChild(input);
         target.insertBefore(label, target.lastElementChild);
     });  
@@ -57,7 +59,7 @@ function switchSignUpForms(formType) {
 function generateUserForm(form) {
     let inputs = [
         {name: "Name", id_name: "name", placeholder: "Name", inputType: "text", required: true},
-        {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true},
+        {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true, pattern: '^[a-zA-Z0-9]+$'},
         {name: "Password", id_name: "pwd", placeholder: "Password", inputType: "password", required: false},
         {name: "Repeat Password", id_name: "rpt_pwd", placeholder: "Password", inputType: "password", required: true}
     ];
@@ -69,7 +71,7 @@ function generateShelterForm(form) {
         {name: "Shelter Name", id_name: "shelterName", placeholder: "Shelter Name", inputType: "text", required: true},
         {name: "Description", id_name: "description", placeholder: "Small Description", inputType: "text", required: true},
         {name: "Location", id_name: "location", placeholder: "Location", inputType: "text", required: true},
-        {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true},
+        {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true, pattern: '^[a-zA-Z0-9]+$'},
         {name: "Password", id_name: "pwd", placeholder: "Password", inputType: "password", required: false},
         {name: "Repeat Password", id_name: "rpt_pwd", placeholder: "Password", inputType: "password", required: true}
     ];
