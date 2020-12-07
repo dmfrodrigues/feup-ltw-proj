@@ -2,7 +2,7 @@
 $photos = getPetPhotos($pet['id']);
 ?>
 <article id="edit-pet">
-    <form action="<?= SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post">
+    <form action="<?= SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post" enctype="multipart/form-data">
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required>
             <div id="data">
