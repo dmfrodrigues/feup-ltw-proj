@@ -16,11 +16,11 @@
 
 ## Navigation
 
-TODO
+![Navigation](https://drive.google.com/uc?id=1asqZTfWr9scShQpR50hrRdI_UIT_uc0c)
 
 ## Database
 
-![](https://drive.google.com/uc?id=1GCfSFqCDMwwdoo5dfPFMRIUeBxZViuS2)
+![Database](https://drive.google.com/uc?id=1GCfSFqCDMwwdoo5dfPFMRIUeBxZViuS2)
 
 Shelter(<ins>id</ins>, name, location, description, pictureUrl, registeredOn)  
 Notification(<ins>id</ins>, read, subject, text, user→User)  
