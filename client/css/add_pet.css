@@ -62,7 +62,8 @@
 }
 
 #add-pet .pets-photos a img:hover {
-	box-shadow: -1px 3px 10px 11px var(--main-color);
+	cursor: pointer;
+	box-shadow: -1px 3px 10px 5px var(--main-color);
 }
 
 #add-pet .pets-photos a #add-photo-text {
@@ -98,6 +99,12 @@
 	height: 80px;
 	object-fit: cover;
 	margin: 0.5em;
+	cursor: pointer;
+	border-radius: 1em;
+}
+
+#add-pet #pet-photos-row > img:hover {
+	border: solid red;
 }
 
 #add-pet form #age {
