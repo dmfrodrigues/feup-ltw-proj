@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 include_once __DIR__ . '/../server.php';
@@ -22,6 +21,7 @@ try {
         htmlspecialchars($_POST['pwd'])
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
+    $_SESSION['isShelter'] = "true";
     header('Location: ' . CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
     $errorMessage = urlencode($e->getMessage());
