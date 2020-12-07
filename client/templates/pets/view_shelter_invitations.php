@@ -3,7 +3,7 @@
             <div id="proposal"> 
                 <div id="proposal-header">
                     <a href="profile_shelter.php?username=<?=$shelter?>"> 
-                        <img id="proposal-pic" src="../server/resources/img/shelter/<?=$shelter?>.jpg">
+                        <img id="proposal-pic" src="../server/resources/img/shelters/<?=$shelter?>.jpg">
                     </a>
                 </div>
             <div id="proposal-info">
@@ -31,3 +31,8 @@
                 $invitation['requestDate']
             );
     }
+
+    function drawInvitationError() { 
+        $errorMsg = urldecode($_GET['errorMessage']); ?>
+        <p style="text-align: center" id='simple-fail-msg'><?=$errorMsg?></p>
+    <?php } ?>

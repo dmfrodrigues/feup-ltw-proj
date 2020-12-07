@@ -11,7 +11,7 @@ $shelter = $_GET['shelter'];
 
 if (isset($_SESSION['username'])) {
     deleteShelterInvitation($_SESSION['username'], $shelter);
-    header("Location: " . CLIENT_URL . "/profile_shelter.php?id=" . $_SESSION['username'] . "\"");
+    header("Location: " . CLIENT_URL . "/profile_shelter.php?username=" . $_SESSION['username']);
 }
 
 die();

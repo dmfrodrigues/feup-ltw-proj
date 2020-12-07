@@ -10,5 +10,9 @@ $shelterInvitations = getUserShelterInvitation($_SESSION['username']);
 
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_shelter_invitations.php';
-drawShelterInvitations($shelterInvitations);
+
+if(!isset($_GET['failed']) && !isset($_GET['errorMessage']))
+    drawShelterInvitations($shelterInvitations);
+else
+    drawInvitationError();
 include_once 'templates/common/footer.php';

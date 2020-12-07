@@ -4,6 +4,9 @@ include_once __DIR__.'/server.php';
 include_once SERVER_DIR.'/users.php';
 include_once __DIR__.'/pets.php';
 
+define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
+
+
 /**
  * Get Shelter info.
  *
@@ -24,7 +27,52 @@ function getShelter(string $shelter) : array {
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterInfo = $stmt->fetch();
+    $shelterInfo['pictureUrl'] = getShelterPicture($shelter);
     return $shelterInfo;
+}
+
+/**
+ * Get user Shelter's picture URL.
+ *
+ * @param string $username  Username (Shelter)
+ * @return ?string           URL of user Shelter's picture, or null if there is none
+ */
+function getShelterPicture(string $shelter) : ?string {
+    $url = "../server/resources/img/shelters/$shelter.jpg";
+    if(!file_exists($url)) $url = null;
+    return $url;
+}
+
+/**
+ * Save new shelter picture.
+ *
+ * @param string $username  Shelter's username
+ * @param array $file       File (as obtained from $_FILES['file_field'])
+ * @return void
+ */
+function saveShelterPicture(string $shelter, array $file){
+    $ext = checkImageFile($file, 1000000);
+
+    $filepath = SHELTERS_IMAGES_DIR."/$shelter.jpg";
+    convertImage(
+        $file['tmp_name'],
+        $ext,
+        $filepath,
+        85
+    );
+}
+
+/**
+ * Change the name of the shelter's picture when the username is changed
+ *
+ * @param string $oldUsername  Shelters's old username
+ * @param string $newUsername  Shelters's new username
+ * @return void
+ */
+function changePictureShelter(string $oldUsername, string $newUsername) {
+    $oldFilepath = SHELTERS_IMAGES_DIR."/$oldUsername.jpg";
+    $newFilepath = SHELTERS_IMAGES_DIR."/$newUsername.jpg";
+    rename($oldFilepath, $newFilepath);
 }
 
 /**
@@ -181,6 +229,7 @@ function updateShelterInfo(string $shelter, string $name, string $location, stri
     $stmt->bindParam(':location', $location);
     $stmt->bindParam(':description', $description);
     $stmt->execute();
+    changePictureShelter($lastUsername, $newUsername);
 
     return $stmt->rowCount() > 0;
 }
@@ -227,3 +276,25 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
     return $stmt->rowCount() > 0;
 }
 
+/**
+ * Get Shelter Colaborators.
+ *
+ * @param string $username  Username (Shelter)
+ * @return array            Array containing all the info about the colaborators
+ */
+function getShelterColaborators(string $shelter) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+            Shelter.username AS shelter,
+            User.username AS user
+            User.name,
+
+        FROM Shelter
+        JOIN User ON Shelter.username = User.shelter
+        WHERE User.shelter=:shelter
+    ');
+    $stmt->bindParam(':shelter', $shelter);
+    $shelterColaborators = $stmt->execute();
+    return $shelterColaborators;
+}
