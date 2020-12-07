@@ -596,3 +596,23 @@ function leaveShelter(string $username) {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
 }
+
+/**
+ * Get shelter invitations of a specific user.
+ *
+ * @param string $username  Username 
+ * @return array            Array containing all the Shelter Invitations of the user.
+ */
+function getUserShelterInvitation(string $username) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+        * FROM ShelterInvite
+        WHERE user=:$username
+    ');
+
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $shelterInvitations = $stmt->fetchAll();
+    return $shelterInvitations;
+}
