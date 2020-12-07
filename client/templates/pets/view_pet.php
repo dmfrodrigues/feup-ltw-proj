@@ -19,7 +19,7 @@
                 <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
                     <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" onclick="selectPhoto()" />
                 <?php } ?>
-                <a href="pet_photos.php?id=<?= $pet['id'] ?>">All Photos</a>
+                <a href="pet_album.php?id=<?= $pet['id'] ?>">All Photos</a>
             </div>
         </div>
         <div id="data">

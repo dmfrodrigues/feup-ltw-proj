@@ -5,6 +5,9 @@
 	.favorite-pets-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
+	#pet-album section{
+		grid-template-columns: repeat(2, 1fr);
+	}
 }
 
 @media (max-width: 90em) {
@@ -29,6 +32,10 @@
 		grid-template-columns: repeat(2, 1fr);
 	}
 	.pets-owned-grid {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	#pet-album section{
 		grid-template-columns: repeat(1, 1fr);
 	}
 }

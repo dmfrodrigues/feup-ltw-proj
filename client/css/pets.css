@@ -579,3 +579,47 @@
 	text-decoration: none;
 	font-weight: 600;
 }
+
+#pet-album {
+	max-width: 1200px;
+	margin: 2em auto;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	display: block;
+}
+
+#pet-album a {
+	color: var(--main-color);
+	text-decoration: none;
+	font-weight: bold;
+	font-size: xx-large;
+	text-align: center;
+	margin: 1em;
+	margin-right: 0.1em;
+}
+
+#pet-album span {
+	font-weight: bold;
+	font-size: x-large;
+	text-align: center;
+}
+
+#pet-album section{
+	margin-top: 2em;
+	display: grid;
+	column-gap: 2em;
+	row-gap: 4em;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+#pet-album img {
+	background-color: white;
+	height: 300px;
+	width: 400px;
+	object-fit: contain;
+	object-position: center;
+	border-radius: 20px;
+}
