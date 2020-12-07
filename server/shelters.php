@@ -215,19 +215,25 @@ function getShelterAdoptedPets(string $username) : array {
  * @param string $name          Shelter Name
  * @param string $location      Location
  * @param string $description   Description
- * @return boolean          True if the successful, false otherwise
+ * @return boolean              True if the successful, false otherwise
  */
-function updateShelterInfo(string $shelter, string $name, string $location, string $description) : bool {
+function updateShelterInfo(string $lastUsername, string $newUsername, string $name, string $location, string $description) : bool {
     global $db;
+
+    if($lastUsername != $newUsername)
+        if (userAlreadyExists($newUsername) || shelterAlreadyExists($newUsername))
+            throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
     
     $stmt = $db->prepare('UPDATE Shelter
-        SET name=:name, location=:location, description=:description 
-        WHERE username=:username
+        SET username=:newUsername name=:name, location=:location, description=:description 
+        WHERE username=:lastUsername
     ');
 
+    $stmt->bindParam(':newUsername', $newUsername);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':location', $location);
     $stmt->bindParam(':description', $description);
+    $stmt->bindParam(':lastUsername', $lastUsername);
     $stmt->execute();
     changePictureShelter($lastUsername, $newUsername);
 
@@ -296,8 +302,8 @@ function getShelterCollaborators(string $shelter) : array {
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterCollaborators = $stmt->fetchAll();
-    $collaboratorsWithPhoto = [];
 
+    $collaboratorsWithPhoto = [];
     foreach($shelterCollaborators as $collaborator){
         $collaborator['pictureUrl'] = getUserPicture($collaborator['user']);
         array_push($collaboratorsWithPhoto, $collaborator);
