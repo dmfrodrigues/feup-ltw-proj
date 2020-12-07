@@ -14,7 +14,7 @@ $photos = getPetPhotos($pet['id']);
                     <input id="photo-number" name="photo-number" type="hidden" value="<?= count($photos) ?>">
                     <?php for ($i = 0; $i < count($photos); $i++) { ?>
                         <input id="old-<?= $i ?>" name="old-<?= $i ?>" value="<?= $i ?>" type="hidden"/>
-                        <input id="new-<?= $i ?>" name="new-<?= $i ?>" value="" type="file" style="display: none"/>
+                        <input id="new-<?= $i ?>" name="new-<?= $i ?>" value="" type="file" style="display: none" onchange="updatePetPhoto(this)"/>
                     <?php } ?>
                 </div>
                 <div id=pet-photos-row>

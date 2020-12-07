@@ -3,10 +3,6 @@ function browsePetPhoto(element){
     element.parentNode.parentNode.parentNode.querySelector(`#new-${id}`).click()
 }
 
-$(function(){
-    $("input[id^='new-'").change(updatePetPhoto);
-});
-
 function addPetPhoto(element){
     let N = parseInt(element.querySelector('#photo-number').value);
 
@@ -15,6 +11,7 @@ function addPetPhoto(element){
     old_el.id = `old-${N}`; old_el.name = old_el.id; old_el.value = ''; old_el.type = "hidden";
     let new_el = document.createElement("input");
     new_el.id = `new-${N}`; new_el.name = new_el.id; new_el.value = ''; new_el.type = "file"; new_el.style.display = "none";
+    new_el.onchange = function(){ updatePetPhoto(new_el); };
     inputs.appendChild(old_el);
     inputs.appendChild(new_el);
 
@@ -33,7 +30,6 @@ function addPetPhoto(element){
     let pictures = element.querySelector('#pet-photos-row');
     pictures.appendChild(picture);
 
-    $("input[id^='new-'").change(updatePetPhoto);
     element.querySelector(`#new-${N}`).click();
 
     element.querySelector('#photo-number').value = `${N+1}`;
@@ -57,10 +53,10 @@ function deletePetPhoto(element){
     photo_number.value = `${N-1}`;
 }
 
-function updatePetPhoto(e){
-    let id = parseInt(e.target.id.split('-')[1]);
-    let element = e.target.parentNode.parentNode.parentNode;
-    let file = e.originalEvent.srcElement.files[0];
+function updatePetPhoto(input){
+    let id = parseInt(input.id.split('-')[1]);
+    let element = input.parentNode.parentNode.parentNode;
+    let file = input.files[0];
     let img = element.querySelector(`#img-${id}`);
     updateImgFromFile(img, file);
 }
