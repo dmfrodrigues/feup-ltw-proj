@@ -287,9 +287,8 @@ function getShelterCollaborators(string $shelter) : array {
 
     $stmt = $db->prepare('SELECT 
             Shelter.username AS shelter,
-            User.username AS user
-            User.name,
-
+            User.username AS user,
+            User.name
         FROM Shelter
         JOIN User ON Shelter.username = User.shelter
         WHERE User.shelter=:shelter
