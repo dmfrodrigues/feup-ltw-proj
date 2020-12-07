@@ -14,6 +14,11 @@
       <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
       <label> Repeat Password:
       <input type="password" id="rpt_pwd" placeholder="Password" required></label>
+      <?php 
+        if(isset($_GET['failed'])) { ?>
+          <p id="signup-fail-msg">Signup Failed!</p>
+        <?php } ?>
+          
       <input type="submit" value="Sign up" id="submit-signup">
     </form>
 </section>

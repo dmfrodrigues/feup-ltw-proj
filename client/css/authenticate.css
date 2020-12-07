@@ -91,3 +91,8 @@
 	transition: 0.25;
 	background-color: var(--main-color);
 }
+
+#signup #signup-fail-msg {
+	color: red;
+	font-weight: bolder;
+}
