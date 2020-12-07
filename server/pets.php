@@ -227,11 +227,13 @@ function swapPetPictures(int $petId, array $swappic){
  */
 function newPetPictures(int $petId, array $newpic){
     $path = PETS_IMAGES_DIR."/$petId";
+
     foreach($newpic as $id => $file){
-        $ext = checkImageFile($file, 1000000);
+        if($newpic[$id]['new']['size'] == 0) continue;
+        $ext = checkEditImageFile($file, 1000000);
         $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $file['tmp_name'],
+            $file['new']['tmp_name'],
             $ext,
             $filepath,
             85
@@ -617,5 +619,6 @@ function getUserWhoAdoptedPet(int $id): array {
     $stmt->bindParam(':id', $id);
     $stmt->execute();
     $user = $stmt->fetch();
+    if (!$user) return [];
     return $user;
 }
