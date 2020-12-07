@@ -6,7 +6,7 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/shelters.php';
 
 $shelter = getShelter($_GET['username']);
-$shelterPets = getShelterPetsForAdoption($_GET['username']);
+$added_pets = getShelterPetsForAdoption($_GET['username']);
 $collaborators = getShelterCollaborators($_GET['username']);
 
 include_once 'templates/common/header.php';
