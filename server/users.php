@@ -539,5 +539,42 @@ function getPetsAdoptedByUser(string $username) : array {
     return $pets;
 }
 
+/**
+ * Check if a user's already member of a Shelter
+ *
+ * @param string $username  Username 
+ * @return array            True if it is, false otherwise.
+ */
+function checkUserBelongsToShelter(string $username) : bool {
+    global $db;
 
+    $stmt = $db->prepare('SELECT 
+        * FROM User
+        WHERE username=:username AND shelter <> NULL 
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    return $stmt->fetchColumn() > 0;
+}
 
+/**
+ * Accept a Shelter Invitation
+ *
+ * @param string $username  Username (User)
+ * @param string $shelter   Username (Shelter)
+ * @return array            True if successful, false otherwise.
+ */
+function acceptShelterInvite(string $username, string $shelter) : bool {
+    global $db;
+
+    if(!checkUserBelongsToShelter($username)) {
+        $stmt = $db->prepare('UPDATE User
+            SET shelter=:shelter WHERE username=:username
+        ');
+        $stmt->bindParam(':shelter', $shelter);
+        $stmt->bindParam(':username', $username);
+        return true;
+    }
+
+    return false;
+}
