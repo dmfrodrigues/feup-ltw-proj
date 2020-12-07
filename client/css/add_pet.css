@@ -93,6 +93,13 @@
 	justify-self: center;
 }
 
+#add-pet #pet-photos-row > img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	margin: 0.5em;
+}
+
 #add-pet form #age {
 	grid-area: pets-age;
 	align-self: center;
