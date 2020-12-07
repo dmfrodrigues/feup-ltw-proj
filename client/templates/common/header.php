@@ -17,7 +17,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="resources/favicon.ico">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <?php
             if(isset($javascript_files)){
                 foreach($javascript_files as $js_file){
