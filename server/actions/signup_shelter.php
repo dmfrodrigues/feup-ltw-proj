@@ -21,7 +21,7 @@ try {
         htmlspecialchars($_POST['pwd'])
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
-    $_SESSION['isShelter'] = "true";
+    $_SESSION['isShelter'] = 1;
     header('Location: ' . CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
     $errorMessage = urlencode($e->getMessage());
