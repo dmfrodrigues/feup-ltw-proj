@@ -636,3 +636,16 @@ function getUserShelterInvitation(string $username) : array {
     $shelterInvitations = $stmt->fetchAll();
     return $shelterInvitations;
 }
+
+function getUserShelter(string $username) : ?string {
+    global $db;
+
+    $stmt = $db->prepare('SELECT shelter
+        FROM User
+        WHERE username=:username
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $shelter = $stmt->fetch();
+    return $shelter['shelter'];
+}
