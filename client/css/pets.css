@@ -304,15 +304,14 @@
 }
 
 .pet-card-grid {
-	display: inline-grid;
-	grid-template-columns: repeat(3, 1fr);
-	row-gap: 5em;
-	column-gap: 2em;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .pet-card {
 	cursor: pointer;
 	position: relative;
+	padding: 1em;
 	height: 250px;
 	width: 250px;
 	perspective: 1000px;
@@ -391,8 +390,8 @@
 
 #pets-page {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	grid-template-areas: "searches pet-list pet-list pet-list";
+	grid-template-columns: auto 1fr;
+	grid-template-areas: "searches pet-list";
 }
 
 #pets-page #searches {
@@ -403,15 +402,8 @@
 
 #pets-page #pet-list {
 	grid-area: pet-list;
-	align-self: center;
-	justify-self: start;
-	justify-content: center;
-	min-width: 50em;
-	min-height: 46em;
-	margin: 2em 4em 2em 4em;
-	padding: 5em;
-	padding-left: 10em;
-	padding-right: 10em;
+	margin: 2em 2em 2em 2em;
+	padding: 3em 5em;
 	border-radius: 1em;
 	background-color: var(--light-color);
 }

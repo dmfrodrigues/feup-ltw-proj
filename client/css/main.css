@@ -32,6 +32,11 @@ body > header > h1 > a {
 	color: var(--main-color);
 }
 
+main {
+	max-width: 1690px;
+	margin: 0 auto;
+}
+
 body > footer {
 	padding: 1em 0 1em 1em;
 	color: white;

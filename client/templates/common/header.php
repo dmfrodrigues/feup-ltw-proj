@@ -45,4 +45,4 @@
             <?php } ?>
             </div>
         </header>
-        <div>
+        <main>

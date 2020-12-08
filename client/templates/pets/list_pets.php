@@ -2,27 +2,31 @@
 <article id="pets-page">
     <article id="searches">
         <h2>Filter by</h2>
-        <section id="body-search">
-        <label for="name">Name</label><input type="text" id="name" onkeyup="filterByAllParameters()" placeholder="Pet's name" title="Pet name">
-        <label for="location">Location</label><input type="text" id="location" onkeyup="filterByAllParameters()" placeholder="Pet's location" title="Pet location">
-        <label for="species">Species</label><input type="text" id="species" onkeyup="filterByAllParameters()" placeholder="Pet's species" title="Pet species">
-        <label for="age">Age</label><input type="number" id="age" onkeyup="filterByAllParameters()" placeholder="Pet's age" title="Pet age">
-        <label for="color">Color</label><input type="text" id="color" onkeyup="filterByAllParameters()" placeholder="Pet's color" title="Pet color">
-        
-        <p id="size">Size</p>
-        <article id="size-area">
-            <label class="container" for="size_XS">XS<input type="checkbox" id="size_XS" name="size_XS" value="XS" onClick="filterByAllParameters()"></label>
-            <label class="container" for="size_S">S<input type="checkbox" id="size_S" name="size_S" value="S" onClick="filterByAllParameters()"></label>
-            <label class="container" for="size_M">M<input type="checkbox" id="size_M" name="size_M" value="M" onClick="filterByAllParameters()"></label>
-            <label class="container" for="size_L">L<input type="checkbox" id="size_L" name="size_L" value="L" onClick="filterByAllParameters()"></label>
-            <label class="container" for="size_XL">XL<input type="checkbox" id="size_XL" name="size_XL" value="XL" onClick="filterByAllParameters()"></label>
-        </article>
+        <section id="body-search" class="body">
+            <label>Name<input type="text" id="name" onkeyup="filterByAllParameters()" placeholder="Pet's name" title="Pet name"></label>
+            <label>Location<input type="text" id="location" onkeyup="filterByAllParameters()" placeholder="Pet's location" title="Pet location"></label>
+            <label>Species<input type="text" id="species" onkeyup="filterByAllParameters()" placeholder="Pet's species" title="Pet species"></label>
+            <label>Age<input type="number" id="age" onkeyup="filterByAllParameters()" placeholder="Pet's age" title="Pet age"></label>
+            <label>Color<input type="text" id="color" onkeyup="filterByAllParameters()" placeholder="Pet's color" title="Pet color"></label>
+            
+            <article id="size-area">
+                <h3 id="size">Size</h3>
+                <section id="body-size-area" class="body">
+                    <label class="container"><input type="checkbox" id="size_XS" name="size_XS" value="XS" onClick="filterByAllParameters()">XS</label>
+                    <label class="container"><input type="checkbox" id="size_S"  name="size_S"  value="S"  onClick="filterByAllParameters()">S </label>
+                    <label class="container"><input type="checkbox" id="size_M"  name="size_M"  value="M"  onClick="filterByAllParameters()">M </label>
+                    <label class="container"><input type="checkbox" id="size_L"  name="size_L"  value="L"  onClick="filterByAllParameters()">L </label>
+                    <label class="container"><input type="checkbox" id="size_XL" name="size_XL" value="XL" onClick="filterByAllParameters()">XL</label>
+                </section>
+            </article>
 
-        <p id="sex">Sex</p>
-        <article id="sex-area">
-            <label class="container" for="male">Male<input type="checkbox" id="male" name="male" value="M" onClick="filterByAllParameters()"></label> 
-            <label class="container" for="female">Female<input type="checkbox" id="female" name="female" value="F" onClick="filterByAllParameters()"></label>
-        </article>
+            <article id="sex-area">
+                <h3 id="sex">Sex</h3>
+                <section id="body-sex-area" class="body">
+                    <label class="container"><input type="checkbox" id="male"   name="male"   value="M" onClick="filterByAllParameters()">Male  </label> 
+                    <label class="container"><input type="checkbox" id="female" name="female" value="F" onClick="filterByAllParameters()">Female</label>
+                </section>
+            </article>
         </section>
     </article>
         
