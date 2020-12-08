@@ -19,9 +19,9 @@
                 if(checkUserBelongsToShelter($user['username'])) { 
                     $shelterName = getUserShelter($user['username']); ?>
                     <li><a href="profile_shelter.php?username=<?=$shelterName?>">➕ View Shelter</a></li>
-                <?php } else { ?>
+            <?php } else { ?>
                     <li><a href="view_shelter_invitations.php">➕ View Shelter Invitations</a></li>
-                <?php } ?>
+            <?php } ?>
         </ul>
     </section>
 </section>

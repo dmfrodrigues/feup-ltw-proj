@@ -40,7 +40,7 @@ class Comment {
         let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = this.postedOn;
         let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = this.text;
         if (el_text.innerHTML === '') el_text.style.display = "none";
-        let el_img = commentElement.querySelector("#comment-picture"); el_img.src = this.commentPictureUrl;
+        let el_img = commentElement.querySelector("#comment-picture"); el_img.src = (this.commentPictureUrl !== null ? this.commentPictureUrl : '');
 
         let el_deleteId = commentElement.querySelector("#action-delete-id"); el_deleteId.value = `${this.id}`;
 

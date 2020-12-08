@@ -18,7 +18,7 @@ for($i = 0; $i < $N; ++$i){
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet['postedBy']){
-        header("Location: " . CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
         die();
     }
 
@@ -36,6 +36,6 @@ if (isset($_SESSION['username'])){
     );
 }
 
-header("Location: " . CLIENT_URL . "/pet.php?id={$_GET['id']}");
+header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
 
 die();

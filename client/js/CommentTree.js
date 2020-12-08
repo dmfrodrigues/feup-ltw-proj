@@ -48,13 +48,45 @@ class CommentTree {
 }
 
 document.addEventListener("DOMContentLoaded", function(_event) {
-    var tree = new CommentTree(comments);
-    let commentsSection = document.getElementById("comments");
-    if (typeof user !== 'undefined') {
+    updateCommentsSection();
+});
+
+api = new RestApi(API_URL);
+
+/**
+ * Update comments section
+ */
+function updateCommentsSection(){
+    // let _comments = comments;
+
+    let _comments = {};
+    api.get(`pet/${pet.id}/comments`)
+    .then(response => response.json())
+    .then(function(_comments){
+        var tree = new CommentTree(_comments);
+    
+        let commentsSection = document.querySelector("#comments div");
+        commentsSection.innerHTML = '';
+        if (typeof user !== 'undefined'){
+            commentsSection.appendChild(tree.root.createAnswerElement(user));
+        }
+        tree.addToElement(commentsSection);
+    }).catch(function(error){
+        console.error(error);
+    });
+
+    /*
+    let _comments = comments;
+    var tree = new CommentTree(_comments);
+    
+    let commentsSection = document.querySelector("#comments div");
+    commentsSection.innerHTML = '';
+    if (typeof user !== 'undefined'){
         commentsSection.appendChild(tree.root.createAnswerElement(user));
     }
     tree.addToElement(commentsSection);
-});
+    */
+}
 
 function clickedCommentReply(comment_el) {
     let id_string = comment_el.id;

@@ -16,4 +16,4 @@ if($_GET['outcome'] === 'accepted') {
     refuseOtherProposals($_GET['requestId'], $_GET['petId']);
 }
     
-header("Location: " . CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);
+header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);

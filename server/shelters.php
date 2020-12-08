@@ -77,26 +77,6 @@ function addShelter(string $username, string $name, string $location, string $de
 }
 
 /**
- * Check if user-password pair is valid (Shelters).
- *
- * @param string $username  Username
- * @param string $password  Password
- * @return boolean          True if the user-password pair is correct for Shelter table, false otherwise
- */
-function shelterPasswordExists(string $username, string $password) : bool {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('SELECT username
-    FROM Shelter
-    WHERE username=:username AND password=:password');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
-    $shelters = $stmt->fetchAll();
-    return (count($shelters) > 0);
-}
-
-/**
  * Get Shelter pets for adoption
  *
  * @param string $shelter  Username (Shelter)
@@ -221,6 +201,32 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     return $stmt->rowCount() > 0;
+}
+
+/**
+ * Get a shelter invitation
+ *
+ * @param string $username     Username (User)
+ * @param string $shelter      Username (Shelter)
+ * @return string              Invitation's outcome, or null is there is none
+ */
+function getShelterInvitation(string $username, string $shelter) : ?string {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+            outcome
+        FROM ShelterInvite INNER JOIN User on User.username = ShelterInvite.user
+        INNER JOIN Shelter on Shelter.username = ShelterInvite.shelter
+        WHERE ShelterInvite.user=:username AND ShelterInvite.shelter=:shelter
+    ');
+    
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    $invitation = $stmt->fetch();
+    
+    if (!$invitation) return null;
+    return $invitation['outcome'];
 }
 
 /**

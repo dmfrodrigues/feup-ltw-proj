@@ -287,7 +287,7 @@ function getPetMainPhoto(int $id) : string {
     foreach($lst as $filename){
         $filepath = "$dir/$filename";
         if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = serverpathToUrl($filepath);
+            $url = path2url($filepath);
             return $url;
         }
     }
@@ -310,7 +310,7 @@ function getPetPhotos(int $id) : array {
     foreach($lst as $filename){
         $filepath = "$dir/$filename";
         if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = serverpathToUrl($filepath);
+            $url = path2url($filepath);
             array_push($photos, $url);
         }
     }
@@ -466,12 +466,12 @@ function deletePetComment(int $id){
  * Get photos associated to comments about a pet.
  *
  * @param integer $id    ID of the comment
- * @return string        URL of comment photo
+ * @return string        URL of comment photo, or null if there is none
  */
-function getCommentPicture(int $id) : string {
-    $url = "../server/resources/img/comments/$id.jpg";
-    if(!file_exists($url)) $url = '';
-    return $url;
+function getCommentPicture(int $id) : ?string {
+    $url = SERVER_DIR . "/resources/img/comments/$id.jpg";
+    if(!file_exists($url)) return null;
+    return path2url($url);
 }
 
 /**

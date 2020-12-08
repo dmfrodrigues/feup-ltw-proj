@@ -8,8 +8,8 @@
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         deleteUser($_SESSION['username']);
         session_destroy();
-        header('Location: ' . CLIENT_URL . '/index.php');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
         die();
     }
     else 
-        header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');

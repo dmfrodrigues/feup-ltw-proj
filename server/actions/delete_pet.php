@@ -8,7 +8,7 @@ $pet = getPet($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet['postedBy']){
-        header("Location: " . CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
         die();
     }
 
@@ -17,6 +17,6 @@ if (isset($_SESSION['username'])){
     removePet($_GET['id']);
 }
 
-header("Location: " . CLIENT_URL . "/pets.php");
+header("Location: " . PROTOCOL_CLIENT_URL . "/pets.php");
 
 die();
