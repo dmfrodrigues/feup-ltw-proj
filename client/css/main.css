@@ -33,8 +33,10 @@ body > header > h1 > a {
 }
 
 main {
+	width: 100%;
 	max-width: 1690px;
 	margin: 0 auto;
+	float: none;
 }
 
 body > footer {

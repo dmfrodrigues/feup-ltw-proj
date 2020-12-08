@@ -1,6 +1,6 @@
 <section id="owned">
     <h2>Pets owned</h2>
-    <div class="pets-owned-grid">
+    <div class="pet-card-grid">
         <?php
         include_once 'view_pet_in_profile.php';
         if(empty($added_pets)) echo '<p>No pets</p>';
@@ -12,7 +12,7 @@
 </section>
 <section id="favorites">
     <h2>Favorites</h2>
-    <div class="favorite-pets-grid">
+    <div class="pet-card-grid">
         <?php
         if(empty($favorite_pets)) echo '<p>No favorite pets</p>';
         else

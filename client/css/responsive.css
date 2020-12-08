@@ -1,23 +1,10 @@
 @media (max-width: 110em) {
-	.pets-owned-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	.favorite-pets-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
 	#pet-album section{
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
 @media (max-width: 90em) {
-	.pets-owned-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	.favorite-pets-grid {
-		grid-template-columns: repeat(1, 1fr);
-	}
-
 	#pets-page #pet-list {
 		min-width: 0em;
 		margin: 2em 2em 2em 2em;
@@ -30,9 +17,6 @@
 @media (max-width: 80em) {
 	.pet-card-grid {
 		grid-template-columns: repeat(2, 1fr);
-	}
-	.pets-owned-grid {
-		grid-template-columns: repeat(1, 1fr);
 	}
 
 	#pet-album section{
@@ -76,26 +60,10 @@
 	#edit-pet #description textarea {
 		width: 25em;
 	}
-
-	.pets-owned-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
-	.favorite-pets-grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
 }
 
 @media (max-width: 40em) {
 	.pet-card-grid {
-		grid-template-columns: repeat(1, 1fr);
-	}
-	.adopted-pets-profile-grid {
-		grid-template-columns: repeat(1, 1fr);
-	}
-	.pets-owned-grid {
-		grid-template-columns: repeat(1, 1fr);
-	}
-	.favorite-pets-grid {
 		grid-template-columns: repeat(1, 1fr);
 	}
 	#add-pet form {
