@@ -21,7 +21,7 @@ try {
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     $_SESSION['isShelter'] = 1;
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
     header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=-1');
 } catch(UserAlreadyExistsException $e) {
