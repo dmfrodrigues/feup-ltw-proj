@@ -22,20 +22,25 @@
 
     <?php 
 
+    function drawEmptyInvitations() { ?>
+        <h2 style="text-align: center">No Shelter Invitations found!</h2>
+    <?php } 
+
     function drawShelterInvitations($shelterInvitations) {
-        foreach($shelterInvitations as $invitation) 
-            drawInvitation(
-                $invitation['user'],
-                $invitation['shelter'],
-                $invitation['text'],
-                $invitation['requestDate']
-            );
+        if(count($shelterInvitations) > 0) { 
+            foreach($shelterInvitations as $invitation) 
+                drawInvitation(
+                    $invitation['user'],
+                    $invitation['shelter'],
+                    $invitation['text'],
+                    $invitation['requestDate']
+                );
+        } else { 
+            drawEmptyInvitations();
+        }
     }
 
-    function drawInvitationError() { 
-        $errorCode = urldecode($_GET['errorCode']); 
-        
-        if ($errorCode == 1) { ?>
-            <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$errorCode] ?></p>
-        <?php } 
-    } 
+    function drawInvitationError() { ?>
+            <h1><?= $errorsArray ?></h1>
+            <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$_GET['errorCode']] ?></p>
+    <?php } 

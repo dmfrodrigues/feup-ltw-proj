@@ -6,7 +6,8 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR . '/users.php';
 include_once SERVER_DIR . '/pets.php';
 
-$adoptedPets = getPetsAdoptedByUser($_SESSION['username']);
+if(isset($_SESSION['username'])) 
+    $adoptedPets = getPetsAdoptedByUser($_SESSION['username']);
 
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_adopted_pets_by_user.php';
