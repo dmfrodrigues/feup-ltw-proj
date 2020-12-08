@@ -57,7 +57,7 @@ function userAlreadyExists(string $username) : bool {
 function addUser(string $username, string $password, string $name){
     global $db;
 
-    if (userAlreadyExists($username) || shelterAlreadyExists($username))
+    if (userAlreadyExists($username))
         throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
 
     $password_sha1 = sha1($password);
@@ -128,7 +128,7 @@ function editUser(string $lastUsername, string $newUsername, string $name) {
     global $db;
 
     if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername) || shelterAlreadyExists($newUsername))
+        if (userAlreadyExists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
         
     $stmt = $db->prepare('UPDATE User SET

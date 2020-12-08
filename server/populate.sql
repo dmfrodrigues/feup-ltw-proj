@@ -4,9 +4,7 @@
 PRAGMA foreign_keys=ON;
 PRAGMA encoding="UTF-8";
 
--- Shelter
-INSERT INTO Shelter(username, password, name, location, description) VALUES
-('AAOrg', '806715632407A53335EA3DE53B4148580870E693', 'AnimalAdoption', 'Lisbon', 'We take care of animals.');
+
 
 -- User
 INSERT INTO User
@@ -18,7 +16,12 @@ INSERT INTO User
 ("Asdrubal007" , "65417b70a1a7bd08a6189f4d309d90979cbe7b56", "Asdrubal"       ),
 ("balves"      , "c00ab69a0a4826bb8f8fb5bdf68503f92183a9be", "Bernardo Alves" ),
 ("harold"      , "b131867c5de6fc08a4ce1fc50393cad671c82bd5", "Harold"         ),
-("Romanoff123" , "013564dc05c22e397a30d38805fae295ef8cb4cc", "Romanoff"       );
+("Romanoff123" , "013564dc05c22e397a30d38805fae295ef8cb4cc", "Romanoff"       ),
+('AAOrg'       , "806715632407A53335EA3DE53B4148580870E693", 'AnimalAdoption' );
+
+-- Shelter
+INSERT INTO Shelter(username, location, description) VALUES
+('AAOrg', 'Lisbon', 'We take care of animals.');
 
 -- Notification
 INSERT INTO Notification

@@ -6,6 +6,25 @@ include_once __DIR__.'/pets.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
 
+/**
+ * Checks if the username is from a shelter.
+ *
+ * @param string $username  Username (Shelter's or User's)
+ * @return bool             true if the $username is from a shelter; false otherwise.
+ */
+function isShelter(string $username) : bool {
+    global $db;
+
+    $stmt = $db->prepare('SELECT username
+        FROM Shelter
+        WHERE username=:username
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $shelter = $stmt->fetch();
+    
+    return (!$shelter) ? false : true;
+}
 
 /**
  * Get Shelter info.
@@ -17,62 +36,18 @@ function getShelter(string $shelter) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT 
-        name,
-        location,
-        description,
-        registeredOn
+        User.name,
+        Shelter.location,
+        Shelter.description
         FROM Shelter
-        WHERE username=:shelter
+        JOIN User ON User.username = Shelter.username 
+        WHERE User.username=:shelter
     ');
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterInfo = $stmt->fetch();
-    $shelterInfo['pictureUrl'] = getShelterPicture($shelter);
+    $shelterInfo['pictureUrl'] = getUserPicture($shelter);
     return $shelterInfo;
-}
-
-/**
- * Get user Shelter's picture URL.
- *
- * @param string $username  Username (Shelter)
- * @return ?string           URL of user Shelter's picture, or null if there is none
- */
-function getShelterPicture(string $shelter) : ?string {
-    $url = "../server/resources/img/shelters/$shelter.jpg";
-    if(!file_exists($url)) $url = null;
-    return $url;
-}
-
-/**
- * Save new shelter picture.
- *
- * @param string $username  Shelter's username
- * @param array $file       File (as obtained from $_FILES['file_field'])
- * @return void
- */
-function saveShelterPicture(string $shelter, array $file){
-    $ext = checkImageFile($file, 1000000);
-
-    $filepath = SHELTERS_IMAGES_DIR."/$shelter.jpg";
-    convertImage(
-        $file['tmp_name'],
-        $ext,
-        $filepath,
-        85
-    );
-}
-
-/**
- * Change the name of the shelter's picture when the username is changed
- *
- * @param string $oldUsername  Shelters's old username
- * @param string $newUsername  Shelters's new username
- * @return void
- */
-function changePictureShelter(string $oldUsername, string $newUsername) {
-    $oldFilepath = SHELTERS_IMAGES_DIR."/$oldUsername.jpg";
-    $newFilepath = SHELTERS_IMAGES_DIR."/$newUsername.jpg";
-    rename($oldFilepath, $newFilepath);
 }
 
 /**
@@ -88,19 +63,17 @@ function changePictureShelter(string $oldUsername, string $newUsername) {
 function addShelter(string $username, string $name, string $location, string $description, $password){
     global $db;
 
-    if (userAlreadyExists($username) || shelterAlreadyExists($username))
+    if (userAlreadyExists($username))
         throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
     
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('INSERT INTO Shelter(username, name, location, description, password) VALUES
-    (:username, :name, :location, :description, :password)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':name'    , $name);
-    $stmt->bindParam(':location',$location);
-    $stmt->bindParam(':description',$description);
-    $stmt->bindParam(':password', $password_sha1);
+    addUser($username, $password, $name);
     
-    $stmt->execute();
+    $stmt2 = $db->prepare('INSERT INTO Shelter(username, location, description) VALUES
+    (:username, :location, :description)');
+    $stmt2->bindParam(':username', $username);
+    $stmt2->bindParam(':location', $location);
+    $stmt2->bindParam(':description', $description);
+    $stmt2->execute();
 }
 
 /**
@@ -124,33 +97,15 @@ function shelterPasswordExists(string $username, string $password) : bool {
 }
 
 /**
- * Check if Shelter already exists.
- *
- * @param string $username  Username
- * @return boolean          True if the user exists, false otherwise
- */
-function shelterAlreadyExists(string $username) : bool {
-    global $db;
-    $stmt = $db->prepare('SELECT username
-    FROM Shelter
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $shelters = $stmt->fetchAll();
-    return (count($shelters) > 0);
-}
-
-/**
  * Get Shelter pets for adoption
  *
- * @param string $username  Username (Shelter)
+ * @param string $shelter  Username (Shelter)
  * @return array            Array containing all the info about the pets
  */
-function getShelterPetsForAdoption(string $username) : array {
+function getShelterPetsForAdoption(string $shelter) : array {
     global $db;
     
     $stmt = $db->prepare('SELECT 
-            Shelter.username AS shelter,
             User.username AS user,
             Pet.id,
             Pet.name,
@@ -161,13 +116,12 @@ function getShelterPetsForAdoption(string $username) : array {
             Pet.color,
             Pet.location,
             Pet.description
-        FROM Shelter
-        JOIN User ON Shelter.username = User.shelter
+        FROM User
         JOIN Pet ON User.username = Pet.postedBy
-        WHERE Shelter.username=:username AND Pet.status="forAdoption"
+        WHERE User.shelter=:shelter AND Pet.status="forAdoption"
     ');
 
-    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterPets = $stmt->fetchAll();
 
@@ -177,14 +131,13 @@ function getShelterPetsForAdoption(string $username) : array {
 /**
  * Get already adopted Shelter pets.
  *
- * @param string $username  Username (Shelter)
+ * @param string $shelter  Username (Shelter)
  * @return array            Array containing all the info about the pets
  */
-function getShelterAdoptedPets(string $username) : array {
+function getShelterAdoptedPets(string $shelter) : array {
     global $db;
     
     $stmt = $db->prepare('SELECT 
-            Shelter.username AS shelter,
             User.username AS user,
             Pet.id,
             Pet.name,
@@ -195,13 +148,12 @@ function getShelterAdoptedPets(string $username) : array {
             Pet.color,
             Pet.location,
             Pet.description
-        FROM Shelter
-        JOIN User ON Shelter.username = User.shelter
+        FROM User
         JOIN Pet ON User.username = Pet.postedBy
-        WHERE Shelter.username=:username AND Pet.status<>"forAdoption"
+        WHERE User.shelter=:shelter AND Pet.status<>"forAdoption"
     ');
 
-    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterPets = $stmt->fetchAll();
 
@@ -221,42 +173,31 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
     global $db;
 
     if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername) || shelterAlreadyExists($newUsername))
+        if (userAlreadyExists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
     
-    $stmt = $db->prepare('UPDATE Shelter
-        SET username=:newUsername name=:name, location=:location, description=:description 
+    $stmt1 = $db->prepare('UPDATE User
+        SET username=:newUsername, name=:name
         WHERE username=:lastUsername
     ');
+    $stmt1->bindParam(':newUsername', $newUsername);
+    $stmt1->bindParam(':lastUsername', $lastUsername);
+    $stmt1->bindParam(':name', $name);
+    $stmt1->execute();
+    changePictureUsername($lastUsername, $newUsername);
 
-    $stmt->bindParam(':newUsername', $newUsername);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':location', $location);
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':lastUsername', $lastUsername);
-    $stmt->execute();
-    changePictureShelter($lastUsername, $newUsername);
 
-    return $stmt->rowCount() > 0;
-}
+    $stmt2 = $db->prepare('UPDATE Shelter
+        SET location=:location, description=:description 
+        WHERE username=:newUsername
+    ');
 
-/**
+    $stmt2->bindParam(':newUsername', $newUsername);
+    $stmt2->bindParam(':location', $location);
+    $stmt2->bindParam(':description', $description);
+    $stmt2->execute();
 
- * Edit user password.
- *
- * @param string $username  User's username
- * @param string $password  User's password
- * @return void
- */
-function editShelterPassword(string $username, string $password) {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('UPDATE Shelter SET
-    password=:password
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
+    return ($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0);
 }
 
 /**
@@ -265,7 +206,7 @@ function editShelterPassword(string $username, string $password) {
  * @param string $text         Message Info
  * @param string $username     Username (User)
  * @param string $shelter      Username (Shelter)
- * @return array            Array containing all the info about the pets
+ * @return array               Array containing all the info about the pets
  */
 function addShelterInvitation(string $text, string $username, string $shelter) : bool {
     global $db;
@@ -292,19 +233,19 @@ function getShelterCollaborators(string $shelter) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT 
-            Shelter.username AS shelter,
-            User.username AS user,
-            User.name
-        FROM Shelter
-        JOIN User ON Shelter.username = User.shelter
-        WHERE User.shelter=:shelter
+            shelter,
+            username as user,
+            name
+        FROM User 
+        WHERE shelter=:shelter
     ');
+    
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterCollaborators = $stmt->fetchAll();
 
     $collaboratorsWithPhoto = [];
-    foreach($shelterCollaborators as $collaborator){
+    foreach($shelterCollaborators   as $collaborator){
         $collaborator['pictureUrl'] = getUserPicture($collaborator['user']);
         array_push($collaboratorsWithPhoto, $collaborator);
     }

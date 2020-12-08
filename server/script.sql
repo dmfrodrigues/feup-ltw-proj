@@ -22,13 +22,11 @@ PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
     username    VARCHAR NOT NULL CHECK(username <> ''),
-    name        VARCHAR NOT NULL CHECK(name         <> ''),
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
-    password    VARCHAR NOT NULL,
-    registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT Shelter_PK PRIMARY KEY(username)
+    CONSTRAINT Shelter_PK PRIMARY KEY(username),
+    CONSTRAINT Shelter_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ShelterInvite (
