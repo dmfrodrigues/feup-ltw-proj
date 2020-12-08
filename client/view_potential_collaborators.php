@@ -7,7 +7,7 @@ include_once SERVER_DIR . '/users.php';
 include_once SERVER_DIR . '/shelters.php';
 include_once 'errors/errors.php';
 
-$users = getUserShelterInvitation($_SESSION['username']);
+$users = getUsersAvailableForShelter($_SESSION['username']);
 
 include_once 'templates/common/header.php';
 

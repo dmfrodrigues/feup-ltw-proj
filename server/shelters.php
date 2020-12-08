@@ -263,7 +263,7 @@ function getUsersAvailableForShelter(string $shelter) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT
-        username, 
+        username as user, 
         name,
         registeredOn
         FROM User
@@ -273,8 +273,11 @@ function getUsersAvailableForShelter(string $shelter) : array {
     $totalUsers = $stmt->fetchAll();
     $returnUsers = [];
     foreach($totalUsers as $user) {
-        if(!checkUserBelongsToShelter($user['username']))
+        if(!checkUserBelongsToShelter($user['user'])) {
+            $user['pictureUrl'] = getUserPicture($user['user']);
             array_push($returnUsers, $user);
+        }
+            
     }
 
     return $returnUsers;
