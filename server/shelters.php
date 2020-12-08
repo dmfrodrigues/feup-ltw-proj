@@ -256,24 +256,25 @@ function getShelterCollaborators(string $shelter) : array {
 /**
  * Get Users that can join the shelter.
  *
- * @param string $shelter  Username (Shelter)
  * @return array            Array containing all the info about the users.
  */
-function getUsersAvailableForShelter(string $shelter) : array {
+function getUsersAvailableForShelter() : array {
     global $db;
 
     $stmt = $db->prepare('SELECT
         username as user, 
         name,
-        registeredOn
+        registeredOn,
+        shelter
         FROM User
+        WHERE shelter is NULL
     ');
 
     $stmt->execute();
     $totalUsers = $stmt->fetchAll();
     $returnUsers = [];
     foreach($totalUsers as $user) {
-        if(!checkUserBelongsToShelter($user['user'])) {
+        if(!isShelter($user['user']) && !checkUserBelongsToShelter($user['user'])) {
             $user['pictureUrl'] = getUserPicture($user['user']);
             array_push($returnUsers, $user);
         }   
