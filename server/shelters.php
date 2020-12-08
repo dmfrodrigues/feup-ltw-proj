@@ -204,6 +204,32 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
 }
 
 /**
+ * Get a shelter invitation
+ *
+ * @param string $username     Username (User)
+ * @param string $shelter      Username (Shelter)
+ * @return string              Invitation's outcome, or null is there is none
+ */
+function getShelterInvitation(string $username, string $shelter) : ?string {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+            outcome
+        FROM ShelterInvite INNER JOIN User on User.username = ShelterInvite.user
+        INNER JOIN Shelter on Shelter.username = ShelterInvite.shelter
+        WHERE ShelterInvite.user=:username AND ShelterInvite.shelter=:shelter
+    ');
+    
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    $invitation = $stmt->fetch();
+    
+    if (!$invitation) return null;
+    return $invitation['outcome'];
+}
+
+/**
  * Get Shelter Collaborators.
  *
  * @param string $username  Username (Shelter)
