@@ -34,9 +34,8 @@
 
     function drawInvitationError() { 
         $errorCode = urldecode($_GET['errorCode']); 
+        
         if ($errorCode == 1) { ?>
-            <p style="text-align: center" id='simple-fail-msg'>Proposal can\'t be accepted because you already belong to a Shelter!</p>
-        <?php } else { ?>
-            <p style="text-align: center" id='simple-fail-msg'>An unexpected error occurred while accepting the invitation!</p>
-        <?php }
-    }
+            <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$errorCode] ?></p>
+        <?php } 
+    } 

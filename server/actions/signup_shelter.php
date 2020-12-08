@@ -24,11 +24,13 @@ try {
     $_SESSION['isShelter'] = 1;
     header('Location: ' . CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
-    $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
+    // $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=-1');
+} catch(UserAlreadyExistsException $e) {
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=2');
 } catch(Exception $e) {
-    $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
+    // $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=');
 }
 
 die();

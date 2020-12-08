@@ -16,14 +16,16 @@ try {
             header('Location: ' . CLIENT_URL . '/index.php');
         }
     }
-    else 
-        header('Location: ' . CLIENT_URL . '/login.php?failed=1');
+    else {
+        // $errorMessage = urlencode('Wrong Password!');
+        header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorCode=3');
+    }
 } catch(PDOException $e) {
-    $errorMessage = urlencode('Something Went Wrong');
-    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
+    // $errorMessage = urlencode('Something Went Wrong');
+    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorCode=-1');
 } catch(Exception $e) {
-    $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorMessage=' . $errorMessage);
+    // $errorMessage = urlencode($e->getMessage());
+    header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorCode=-1');
 }
 
 die();
