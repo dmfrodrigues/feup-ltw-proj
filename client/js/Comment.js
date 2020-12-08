@@ -81,13 +81,13 @@ class Comment {
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
         el_userPic.href = `profile.php?username=${this.user}`;
-        el_userPic.children[0].src = this.userPictureUrl;
+        el_userPic.children[0].src = (this.userPictureUrl !== null ? this.userPictureUrl : 'resources/img/no-image.svg');
 
         let el_text = editElement.querySelector("#comment-text");
         el_text.value = this.text;
 
         let el_img = editElement.querySelector("#comment-picture");
-        el_img.src = this.commentPictureUrl;
+        el_img.src = (this.commentPictureUrl !== null ? this.commentPictureUrl : '');
 
         return editElement;
     }
