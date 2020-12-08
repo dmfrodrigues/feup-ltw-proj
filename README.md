@@ -23,7 +23,14 @@ to
 </Directory>
 ```
 
-After changing the apache2 configuration, restart it by running `sudo service apache2 restart`.
+You also need to enable some modules with the following commands:
+
+```txt
+sudo a2enmod rewrite
+sudo a2enmod expires
+```
+
+After changing the apache2 configuration and enabling the modules, restart apache2 by running `sudo service apache2 restart`.
 
 ### Server constants
 Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server/server_constants_<environment>.php`.
