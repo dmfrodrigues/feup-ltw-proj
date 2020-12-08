@@ -13,6 +13,7 @@ curl -L "https://avatars3.githubusercontent.com/u/50210213?s=400&u=037938f750516
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output resources/img/profiles/Asdrubal007.jpg
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output resources/img/profiles/balves.jpg
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output resources/img/profiles/Romanoff123.jpg
+curl -L "https://dailynewshungary.com/wp-content/uploads/2018/01/18622628_146041712604173_5023056421634447578_n.jpg" --output resources/img/profiles/harold.jpg
 
 mkdir -p resources/img/pets
 mkdir -p resources/img/pets/1

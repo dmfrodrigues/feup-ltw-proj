@@ -74,18 +74,6 @@ function updateCommentsSection(){
     }).catch(function(error){
         console.error(error);
     });
-
-    /*
-    let _comments = comments;
-    var tree = new CommentTree(_comments);
-    
-    let commentsSection = document.querySelector("#comments div");
-    commentsSection.innerHTML = '';
-    if (typeof user !== 'undefined'){
-        commentsSection.appendChild(tree.root.createAnswerElement(user));
-    }
-    tree.addToElement(commentsSection);
-    */
 }
 
 function clickedCommentReply(comment_el) {
