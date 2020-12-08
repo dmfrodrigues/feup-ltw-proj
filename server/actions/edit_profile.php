@@ -8,14 +8,14 @@ $user = getUser($_GET['username']);
 
 if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username can only contain letters and numbers!');
-    header("Location: " . CLIENT_URL . "/edit_profile.php?username={$_GET['username']}&failed=1");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/edit_profile.php?username={$_GET['username']}&failed=1");
     die();
 }
 
 if (isset($_SESSION['username'])){
 
     if($_SESSION['username'] != $user['username']){
-        header("Location: " . CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
+        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
         die();
     }
 
@@ -27,7 +27,7 @@ if (isset($_SESSION['username'])){
 
     $_SESSION['username'] = $_POST['username'];
 
-    header("Location: " . CLIENT_URL . "/profile.php?username={$_POST['username']}");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_POST['username']}");
 }
 
 die();

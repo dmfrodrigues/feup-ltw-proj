@@ -7,8 +7,7 @@ include_once SERVER_DIR.'/shelters.php';
 
 if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username can only contain letters and numbers!');
-    $errorMessage = urlencode($_SESSION['messages']['content']);
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1');
     die();
 }
 
@@ -22,15 +21,13 @@ try {
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     $_SESSION['isShelter'] = 1;
-    header('Location: ' . CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
-    // $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=-1');
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=-1');
 } catch(UserAlreadyExistsException $e) {
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=2');
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=2');
 } catch(Exception $e) {
-    // $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . CLIENT_URL . '/signup.php?failed=1&errorCode=');
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=');
 }
 
 die();

@@ -2,7 +2,7 @@
 $photos = getPetPhotos($pet['id']);
 ?>
 <article id="edit-pet">
-    <form action="<?= SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post" enctype="multipart/form-data">
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required>
             <div id="data">
@@ -71,6 +71,6 @@ $photos = getPetPhotos($pet['id']);
         <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
-        <a href="<?= SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+        <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

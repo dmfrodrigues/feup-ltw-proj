@@ -13,8 +13,8 @@
                     <textarea readonly><?=$text?></textarea>
                 </div>  
         
-                <button onclick="location.href='<?= SERVER_URL ?>/actions/accept_shelter_invitation.php?shelter=<?=$shelter?>'" id="acceptRequest">Accept Request</button>
-                <button onclick="location.href='<?= SERVER_URL ?>/actions/refuse_shelter_invitation.php?shelter=<?=$shelter?>'" id="refuseRequest">Refuse Request</button>
+                <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?shelter=<?=$shelter?>'" id="acceptRequest">Accept Request</button>
+                <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?shelter=<?=$shelter?>'" id="refuseRequest">Refuse Request</button>
 
             </div>
         </div>

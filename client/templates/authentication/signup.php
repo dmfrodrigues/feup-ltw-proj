@@ -5,7 +5,7 @@
       <button id="signup-shelter-button" onclick="switchSignUpForms('shelter')">Shelters</button> 
     </header>
 
-    <form method="post" onsubmit="return signup_check()" action="<?= SERVER_URL ?>/actions/signup.php">
+    <form method="post" onsubmit="return signup_check()" action="<?= PROTOCOL_SERVER_URL ?>/actions/signup.php">
       <label> Name:
       <input type="text" id="name" name="name" placeholder="Name" required></label>
       <label> Username:
@@ -18,9 +18,7 @@
             if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
             <p id="simple-fail-msg">Signup Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
       <?php } ?>
-    
+          
       <input type="submit" value="Sign up" id="submit-signup">
     </form>
 </section>
-
-

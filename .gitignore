@@ -2,6 +2,7 @@
 server/resources/img/profiles
 server/resources/img/pets
 server/resources/img/comments
+server/server_constants.php
 
 # Created by https://www.gitignore.io/api/intellij
 

@@ -1,4 +1,4 @@
-<form id="edit-comment" class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" action="<?= SERVER_URL ?>/actions/edit_comment.php" method="post">
+<form id="edit-comment" class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_comment.php" method="post">
     <input id="commentId" name="commentId" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input id="comment-deleteFile" name="deleteFile" type="hidden" value="0">

@@ -6,19 +6,17 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/users.php';
 
 try {
-    if(userPasswordExists($_POST['username'], $_POST['password'])) {
+    if (userPasswordExists($_POST['username'], $_POST['password'])) {
         if (!isShelter($_POST['username'])){
             $_SESSION['username'] = $_POST['username'];
-            header('Location: ' . CLIENT_URL . '/index.php');
+            header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
         } else {
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['isShelter'] = 1;
-            header('Location: ' . CLIENT_URL . '/index.php');
+            header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
         }
-    }
-    else {
-        // $errorMessage = urlencode('Wrong Password!');
-        header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorCode=3');
+    } else {
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorCode=3');
     }
 } catch(PDOException $e) {
     // $errorMessage = urlencode('Something Went Wrong');

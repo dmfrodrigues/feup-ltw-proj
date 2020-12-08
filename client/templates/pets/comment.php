@@ -13,7 +13,7 @@
         </div>
         <div id="comment-actions" class="actions" style="display: none;">
             <img id="action-edit"  class="icon" src="resources/img/edit.svg" onclick="clickedCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;" title="Edit comment">
-            <form id="action-delete" action="<?= SERVER_URL ?>/actions/delete_comment.php" method="post" style="display: none;" title="Delete comment">
+            <form id="action-delete" action="<?= PROTOCOL_SERVER_URL ?>/actions/delete_comment.php" method="post" style="display: none;" title="Delete comment">
                 <input id="action-delete-id" name="id" type="hidden">
                 <input id="action-delete-submit" type="submit" style="display: none">
                 <img class="icon" src="resources/img/trash.svg" onclick="this.parentNode.querySelector('#action-delete-submit').click()">
