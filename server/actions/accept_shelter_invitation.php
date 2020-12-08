@@ -6,6 +6,7 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/shelters.php';
+include_once CLIENT_URL.'errors/errors.php';
 
 $shelter = $_GET['shelter'];
 

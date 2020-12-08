@@ -5,7 +5,6 @@ include_once __DIR__.'/../server/server.php';
 include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR . '/users.php';
 include_once SERVER_DIR . '/shelters.php';
-include_once 'errors/errors.php';
 
 include_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
@@ -14,8 +13,8 @@ if(isset($_SESSION['username'])) {
     if(!isset($_GET['failed']) && !isset($_GET['errorCode']))
         drawShelterInvitations($shelterInvitations);
     else { // Defensive programming
-        print_r($errorsArray); 
         drawInvitationError();
+        die();
     }
 }
 include_once 'templates/common/footer.php';

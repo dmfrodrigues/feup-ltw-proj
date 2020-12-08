@@ -276,9 +276,25 @@ function getUsersAvailableForShelter(string $shelter) : array {
         if(!checkUserBelongsToShelter($user['user'])) {
             $user['pictureUrl'] = getUserPicture($user['user']);
             array_push($returnUsers, $user);
-        }
-            
+        }   
     }
 
     return $returnUsers;
+}
+
+/**
+ * Removes a user from the shelter.
+ *
+ * @param string $username  Username
+ */
+function removeShelterCollaborator(string $username) {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE
+        User SET shelter = NULL
+        WHERE username=:username 
+    ');
+    
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
 }
