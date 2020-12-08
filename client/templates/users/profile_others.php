@@ -19,10 +19,11 @@
                     <a href="remove_collaboration_proposal.php?username=<?=$user['username']?>"><h2>Remove collaboration proposal</h2></a>
                 <?php }
                 else if ($outcome === 'rejected') { ?> 
-                    <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>The collaboration proposal was rejected! Try the send another proposal!</h2></a>
+                    <h2>The collaboration proposal was rejected! Try the send another proposal!</h2>
+                    <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>Propose to collaborate</h2></a>
                 <?php }
                 else if ($outcome === 'accepted') { ?> 
-                    <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>The collaboration proposal was accepted! <?=$user['username']?> is now in your team!</h2></a>
+                    <h2>The collaboration proposal was accepted! <?=$user['username']?> is now in your team!</h2>
                 <?php }        
             ?>            
         <?php } else if ($user['shelter'] === $_SESSION['username']) { ?>

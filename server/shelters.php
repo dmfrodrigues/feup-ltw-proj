@@ -230,6 +230,24 @@ function getShelterInvitation(string $username, string $shelter) : ?string {
 }
 
 /**
+ * Delete a shelter invitation
+ *
+ * @param string $username     Username (User)
+ * @param string $shelter      Username (Shelter)
+ * @return void
+ */
+function deleteShelterInvitation(string $username, string $shelter) {
+    global $db;
+
+    global $db;
+    $stmt = $db->prepare('DELETE FROM ShelterInvite
+    WHERE user=:user AND shelter=:shelter');
+    $stmt->bindParam(':user', $username);
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+}
+
+/**
  * Get Shelter Collaborators.
  *
  * @param string $username  Username (Shelter)
