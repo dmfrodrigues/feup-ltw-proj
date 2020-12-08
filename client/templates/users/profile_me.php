@@ -15,6 +15,13 @@
             <li><a href="view_proposals.php">➕ Proposals Made To My Pets</a></li>
             <li><a href="my_proposals.php">➕ My Proposals</a></li>
             <li><a href="view_adopted_pets_by_user.php">➕ View adopted pets</a></li>
+            <?php 
+                if(checkUserBelongsToShelter($user['username'])) { 
+                    $shelterName = getUserShelter($user['username']); ?>
+                    <li><a href="profile_shelter.php?username=<?=$shelterName?>">➕ View Shelter</a></li>
+            <?php } else { ?>
+                    <li><a href="view_shelter_invitations.php">➕ View Shelter Invitations</a></li>
+            <?php } ?>
         </ul>
     </section>
 </section>

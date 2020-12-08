@@ -20,13 +20,14 @@ try {
         htmlspecialchars($_POST['pwd'])
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?sheltername='. $_SESSION['username']);
+    $_SESSION['isShelter'] = 1;
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile_shelter.php?username='. $_SESSION['username']);
 } catch(PDOException $e) {
-    $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=-1');
+} catch(UserAlreadyExistsException $e) {
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=2');
 } catch(Exception $e) {
-    $errorMessage = urlencode($e->getMessage());
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorMessage=' . $errorMessage);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=');
 }
 
 die();

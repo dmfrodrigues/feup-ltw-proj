@@ -16,9 +16,10 @@
             <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
             <div id=pet-photos-row>
                 <img class="selected" src="<?= $photoSelected ?>" alt="photo 0 of <?= $pet['name'] ?>" onclick="selectPhoto()" />
-                <?php for ($i = 1; $i < count($photos); $i++) { ?>
+                <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
                     <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" onclick="selectPhoto()" />
                 <?php } ?>
+                <a href="pet_album.php?id=<?= $pet['id'] ?>">All Photos</a>
             </div>
         </div>
         <div id="data">
@@ -27,7 +28,7 @@
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
         <div id="actions">
-            <?php if(isset($_SESSION['username'])) {
+            <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
                     <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>

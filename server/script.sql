@@ -21,23 +21,31 @@ DROP TRIGGER IF EXISTS Comment_answerTime;
 PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
-    id INTEGER, 
     username    VARCHAR NOT NULL CHECK(username <> ''),
-    name        VARCHAR NOT NULL CHECK(name         <> ''),
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
-    password    VARCHAR NOT NULL,
-    registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT Shelter_PK PRIMARY KEY(id)
+    CONSTRAINT Shelter_PK PRIMARY KEY(username),
+    CONSTRAINT Shelter_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ShelterInvite (
+    text    VARCHAR NOT NULL CHECK(text <> ''),
+    user    VARCHAR NOT NULL, -- Response User
+    shelter VARCHAR NOT NULL CHECK(shelter <> ''),
+    requestDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT AdoptionRequest_PK PRIMARY KEY(user, shelter),
+    CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT AdoptionRequest_FK2 FOREIGN KEY(shelter) REFERENCES Shelter ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE User (
-    username    VARCHAR NOT NULL CHECK(username <> ''),
-    password    VARCHAR NOT NULL,
-    name        VARCHAR NOT NULL CHECK(name     <> ''),
+    username     VARCHAR NOT NULL CHECK(username <> ''),
+    password     VARCHAR NOT NULL,
+    name         VARCHAR NOT NULL CHECK(name     <> ''),
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    shelter INTEGER,
+    shelter      VARCHAR,
 
     CONSTRAINT User_PK PRIMARY KEY(username),
     CONSTRAINT User_FK FOREIGN KEY (shelter) REFERENCES Shelter ON DELETE SET NULL ON UPDATE CASCADE
