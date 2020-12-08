@@ -77,26 +77,6 @@ function addShelter(string $username, string $name, string $location, string $de
 }
 
 /**
- * Check if user-password pair is valid (Shelters).
- *
- * @param string $username  Username
- * @param string $password  Password
- * @return boolean          True if the user-password pair is correct for Shelter table, false otherwise
- */
-function shelterPasswordExists(string $username, string $password) : bool {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('SELECT username
-    FROM Shelter
-    WHERE username=:username AND password=:password');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
-    $shelters = $stmt->fetchAll();
-    return (count($shelters) > 0);
-}
-
-/**
  * Get Shelter pets for adoption
  *
  * @param string $shelter  Username (Shelter)
