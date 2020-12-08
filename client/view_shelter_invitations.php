@@ -11,7 +11,7 @@ $shelterInvitations = getUserShelterInvitation($_SESSION['username']);
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_shelter_invitations.php';
 
-if(!isset($_GET['failed']) && !isset($_GET['errorMessage']))
+if(!isset($_GET['failed']) && !isset($_GET['errorCode']))
     drawShelterInvitations($shelterInvitations);
 else
     drawInvitationError();
