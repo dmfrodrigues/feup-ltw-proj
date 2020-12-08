@@ -2,7 +2,7 @@
     function drawInvitation($user, $shelter, $text, $requestDate) { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
-                    <a href="profile_shelter.php?username=<?=$shelter?>"> 
+                    <a href="profile.php?username=<?=$shelter?>"> 
                         <img id="proposal-pic" src="../server/resources/img/shelters/<?=$shelter?>.jpg">
                     </a>
                 </div>

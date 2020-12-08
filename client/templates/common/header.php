@@ -38,12 +38,9 @@
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>
-            <?php } else { 
-                if (!isset($_SESSION['isShelter'])) { ?>
+            <?php } else { ?>
                     <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
-                <?php } else { ?>
-                    <span><a href="profile_shelter.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
-                <?php } ?>
+                
                 <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
             </div>

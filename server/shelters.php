@@ -30,7 +30,7 @@ function isShelter(string $username) : bool {
  * Get Shelter info.
  *
  * @param string $shelter  Username (Shelter)
- * @return array           Array containg the shelter's info.
+ * @return array           Array containing the shelter's info.
  */
 function getShelter(string $shelter) : array {
     global $db;
@@ -208,43 +208,39 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
  *
  * @param string $username     Username (User)
  * @param string $shelter      Username (Shelter)
- * @return string              Invitation's outcome, or null is there is none
+ * @return bool                True if the invitation is pending; false otherwise
  */
-function getShelterInvitation(string $username, string $shelter) : ?string {
+function shelterInvitationIsPending(string $username, string $shelter) : bool {
     global $db;
 
-    $stmt = $db->prepare('SELECT 
-            outcome
-        FROM ShelterInvite INNER JOIN User on User.username = ShelterInvite.user
-        INNER JOIN Shelter on Shelter.username = ShelterInvite.shelter
-        WHERE ShelterInvite.user=:username AND ShelterInvite.shelter=:shelter
+    $stmt1 = $db->prepare('SELECT 
+        * FROM ShelterInvite
+        WHERE user=:username AND shelter=:shelter
     ');
-    
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':shelter', $shelter);
-    $stmt->execute();
-    $invitation = $stmt->fetch();
-    
-    if (!$invitation) return null;
-    return $invitation['outcome'];
-}
+    $stmt1->bindParam(':username', $username);
+    $stmt1->bindParam(':shelter', $shelter);
+    $stmt1->execute();
+    $isPending = $stmt1->fetch();
+    if(!$isPending) 
+        return false;
+    return true;
+        
 
-/**
- * Delete a shelter invitation
- *
- * @param string $username     Username (User)
- * @param string $shelter      Username (Shelter)
- * @return void
- */
-function deleteShelterInvitation(string $username, string $shelter) {
-    global $db;
-
-    global $db;
-    $stmt = $db->prepare('DELETE FROM ShelterInvite
-    WHERE user=:user AND shelter=:shelter');
-    $stmt->bindParam(':user', $username);
-    $stmt->bindParam(':shelter', $shelter);
-    $stmt->execute();
+    // $stmt = $db->prepare('SELECT 
+    
+    //     FROM ShelterInvite INNER JOIN User on User.username = ShelterInvite.user
+    //     INNER JOIN Shelter on Shelter.username = ShelterInvite.shelter
+    //     WHERE ShelterInvite.user=:username AND ShelterInvite.shelter=:shelter
+    // ');
+    
+    // $stmt->bindParam(':username', $username);
+    // $stmt->bindParam(':shelter', $shelter);
+    // $stmt->execute();
+    // $invitation = $stmt->fetch();
+    
+    // if (!$invitation) return null;
+    
+    // return $invitation['outcome'];
 }
 
 /**
@@ -322,4 +318,115 @@ function removeShelterCollaborator(string $username) {
     
     $stmt->bindParam(':username', $username);
     $stmt->execute();
+}
+
+/**
+ * Check if a user's already member of a Shelter
+ *
+ * @param string $username  Username 
+ * @return array            True if it is, false otherwise.
+ */
+function checkUserBelongsToShelter(string $username) : bool {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+        * FROM User
+        WHERE username=:username AND shelter IS NOT NULL 
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    return (bool) $stmt->fetchColumn() > 0;
+}
+
+/**
+ * Accept a Shelter Invitation
+ *
+ * @param string $username  Username (User)
+ * @param string $shelter   Username (Shelter)
+ * @return array            True if successful, false otherwise.
+ */
+function acceptShelterInvite(string $username, string $shelter) : bool {
+    global $db;
+
+
+    if(!checkUserBelongsToShelter($username)) {
+        $stmt = $db->prepare('UPDATE User
+            SET shelter=:shelter WHERE username=:username
+        ');
+        $stmt->bindParam(':shelter', $shelter);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        deleteShelterInvitation($username, $shelter);
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Delete Shelter Invitation
+ *
+ * @param string $user     Username (User)
+ * @param string $shelter  Username (Shelter)
+ * @return array           True if successful. False otherwise.
+ */
+function deleteShelterInvitation(string $user, string $shelter) : bool {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM ShelterInvite
+        WHERE user=:username AND shelter=:shelter
+    ');
+    $stmt->bindParam(':username', $user);
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    return $stmt->rowCount() > 0;
+}
+
+/**
+ * Leave a shelter.
+ *
+ * @param string $username  Username 
+ */
+function leaveShelter(string $username) {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE User
+        SET shelter = NULL WHERE username=:username
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+}
+
+/**
+ * Get shelter invitations of a specific user.
+ *
+ * @param string $username  Username 
+ * @return array            Array containing all the Shelter Invitations of the user.
+ */
+function getUserShelterInvitation(string $username) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT 
+        * FROM ShelterInvite
+        WHERE user=:username
+    ');
+
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $shelterInvitations = $stmt->fetchAll();
+    return $shelterInvitations;
+}
+
+function getUserShelter(string $username) : ?string {
+    global $db;
+
+    $stmt = $db->prepare('SELECT shelter
+        FROM User
+        WHERE username=:username
+    ');
+    $stmt->bindParam(':username', $username);
+    $stmt->execute();
+    $shelter = $stmt->fetch();
+    return $shelter['shelter'];
 }
