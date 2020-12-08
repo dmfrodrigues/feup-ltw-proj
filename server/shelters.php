@@ -30,7 +30,7 @@ function isShelter(string $username) : bool {
  * Get Shelter info.
  *
  * @param string $shelter  Username (Shelter)
- * @return array          Array containg the shelter's info.
+ * @return array           Array containg the shelter's info.
  */
 function getShelter(string $shelter) : array {
     global $db;
