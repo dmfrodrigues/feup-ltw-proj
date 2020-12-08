@@ -12,9 +12,9 @@ $shelter = $_GET['shelter'];
 
 if (isset($_SESSION['username'])) {
     if(acceptShelterInvite($_SESSION['username'], $shelter))
-        header("Location: " . CLIENT_URL . "/profile_shelter.php?username=" . $_SESSION['username']);
+        header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']);
     else
-        header("Location: " . CLIENT_URL . "/view_shelter_invitations.php?failed=1&errorCode=1");
+        header("Location: " . "../../client/view_shelter_invitations.php?failed=1&errorCode=1");
 }
 
 die();

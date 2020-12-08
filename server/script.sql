@@ -34,15 +34,10 @@ CREATE TABLE ShelterInvite (
     user    VARCHAR NOT NULL, -- Response User
     shelter VARCHAR NOT NULL CHECK(shelter <> ''),
     requestDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    outcome VARCHAR NOT NULL DEFAULT 'pending',
 
     CONSTRAINT AdoptionRequest_PK PRIMARY KEY(user, shelter),
     CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT AdoptionRequest_FK2 FOREIGN KEY(shelter) REFERENCES Shelter ON DELETE CASCADE ON UPDATE CASCADE,
-
-    CONSTRAINT outcomeRule CHECK (outcome LIKE 'pending' OR
-                                  outcome LIKE 'accepted' OR
-                                  outcome LIKE 'rejected')
+    CONSTRAINT AdoptionRequest_FK2 FOREIGN KEY(shelter) REFERENCES Shelter ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE User (
