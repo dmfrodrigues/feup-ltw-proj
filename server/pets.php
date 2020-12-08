@@ -466,11 +466,11 @@ function deletePetComment(int $id){
  * Get photos associated to comments about a pet.
  *
  * @param integer $id    ID of the comment
- * @return string        URL of comment photo
+ * @return string        URL of comment photo, or null if there is none
  */
-function getCommentPicture(int $id) : string {
+function getCommentPicture(int $id) : ?string {
     $url = SERVER_DIR . "/resources/img/comments/$id.jpg";
-    if(!file_exists($url)) $url = null;
+    if(!file_exists($url)) return null;
     return path2url($url);
 }
 
