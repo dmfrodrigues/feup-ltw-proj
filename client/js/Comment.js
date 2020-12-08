@@ -35,7 +35,7 @@ class Comment {
 
         let el_pic = commentElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `profile.php?username=${this.user}`;
-        el_pic.children[0].src = this.userPictureUrl;
+        el_pic.children[0].src = (this.userPictureUrl !== null ? this.userPictureUrl : 'resources/img/no-image.svg');
 
         let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = this.postedOn;
         let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = this.text;
@@ -64,7 +64,7 @@ class Comment {
 
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `profile.php?username=${user.username}`;
-        el_pic.children[0].src = user.pictureUrl;
+        el_pic.children[0].src = (user.pictureUrl !== null ? user.pictureUrl : 'resources/img/no-image.svg');
 
         return answerElement;
     }
@@ -81,13 +81,13 @@ class Comment {
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
         el_userPic.href = `profile.php?username=${this.user}`;
-        el_userPic.children[0].src = this.userPictureUrl;
+        el_userPic.children[0].src = (this.userPictureUrl !== null ? this.userPictureUrl : 'resources/img/no-image.svg');
 
         let el_text = editElement.querySelector("#comment-text");
         el_text.value = this.text;
 
         let el_img = editElement.querySelector("#comment-picture");
-        el_img.src = this.commentPictureUrl;
+        el_img.src = (this.commentPictureUrl !== null ? this.commentPictureUrl : '');
 
         return editElement;
     }

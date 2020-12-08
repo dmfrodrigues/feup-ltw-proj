@@ -178,7 +178,7 @@ function editPetPictures(int $petId, array $pictures){
     $swappic = [];
     $newpic  = [];
     foreach($pictures as $key => $picture){
-        if($picture['new'] !== null){ // new picture
+        if($picture['new']['tmp_name'] !== ''){ // new picture
             $newpic[$key] = $picture;
         } else if($picture['old'] !== ''){ //swap picture
             $swappic[$key] = $picture['old'];

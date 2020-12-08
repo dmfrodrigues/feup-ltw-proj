@@ -224,23 +224,6 @@ function shelterInvitationIsPending(string $username, string $shelter) : bool {
     if(!$isPending) 
         return false;
     return true;
-        
-
-    // $stmt = $db->prepare('SELECT 
-    
-    //     FROM ShelterInvite INNER JOIN User on User.username = ShelterInvite.user
-    //     INNER JOIN Shelter on Shelter.username = ShelterInvite.shelter
-    //     WHERE ShelterInvite.user=:username AND ShelterInvite.shelter=:shelter
-    // ');
-    
-    // $stmt->bindParam(':username', $username);
-    // $stmt->bindParam(':shelter', $shelter);
-    // $stmt->execute();
-    // $invitation = $stmt->fetch();
-    
-    // if (!$invitation) return null;
-    
-    // return $invitation['outcome'];
 }
 
 /**
@@ -350,15 +333,17 @@ function acceptShelterInvite(string $username, string $shelter) : bool {
 
 
     if(!checkUserBelongsToShelter($username)) {
-        $stmt = $db->prepare('UPDATE User
+        if(shelterInvitationIsPending($username, $shelter)) { 
+            $stmt = $db->prepare('UPDATE User
             SET shelter=:shelter WHERE username=:username
-        ');
-        $stmt->bindParam(':shelter', $shelter);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
+            ');
+            $stmt->bindParam(':shelter', $shelter);
+            $stmt->bindParam(':username', $username);
+            $stmt->execute();
 
-        deleteShelterInvitation($username, $shelter);
-        return true;
+            deleteShelterInvitation($username, $shelter);
+            return true;
+        }
     }
 
     return false;
@@ -429,4 +414,21 @@ function getUserShelter(string $username) : ?string {
     $stmt->execute();
     $shelter = $stmt->fetch();
     return $shelter['shelter'];
+}
+
+function getShelterPendingInvitations(string $shelter) : array {
+    global $db;
+
+    $stmt = $db->prepare('SELECT
+        text,
+        user,
+        shelter,
+        requestDate
+        FROM ShelterInvite
+        WHERE shelter=:shelter
+    ');
+    $stmt->bindParam(':shelter', $shelter);
+    $stmt->execute();
+    $pendingInvitations = $stmt->fetchAll();
+    return $pendingInvitations;
 }

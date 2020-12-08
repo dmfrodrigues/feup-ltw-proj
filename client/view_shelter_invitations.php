@@ -9,9 +9,9 @@ include_once SERVER_DIR . '/shelters.php';
 include_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $shelterInvitations = getUserShelterInvitation($_SESSION['username']);
-    include_once 'templates/shelters/view_shelter_invitations.php';
+    include_once 'templates/users/view_shelter_invitations.php';
     if(!isset($_GET['failed']) && !isset($_GET['errorCode']))
-        drawShelterInvitations($shelterInvitations);
+        drawShelterInvitations($shelterInvitations, false);
     else { // Defensive programming
         drawInvitationError();
         die();

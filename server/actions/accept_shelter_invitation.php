@@ -6,11 +6,11 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/shelters.php';
-include_once CLIENT_URL.'errors/errors.php';
+include_once CLIENT_URL.'/errors/errors.php';
 
 $shelter = $_GET['shelter'];
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['username']) && isShelter($shelter)) {
     if(acceptShelterInvite($_SESSION['username'], $shelter))
         header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']);
     else

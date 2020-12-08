@@ -7,10 +7,10 @@ include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/shelters.php';
 
-$shelter = $_GET['shelter'];
+$user = $_GET['username'];
 
-if (isset($_SESSION['username']) && isShelter($shelter)) {
-    deleteShelterInvitation($_SESSION['username'], $shelter);
+if (isset($_SESSION['isShelter']) && isset($_SESSION['username']) ) {
+    leaveShelter($user);
     header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']);
 }
 
