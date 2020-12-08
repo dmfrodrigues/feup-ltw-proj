@@ -28,7 +28,7 @@
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
         </div>
         <div id="actions">
-            <?php if(isset($_SESSION['username'])) {
+            <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
                     <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
