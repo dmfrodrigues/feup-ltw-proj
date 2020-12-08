@@ -23,12 +23,11 @@
                 <?php }
                 else if ($outcome === 'accepted') { ?> 
                     <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>The collaboration proposal was accepted! <?=$user['username']?> is now in your team!</h2></a>
-                <?php        
+                <?php }        
             ?>            
-        <?php } else if ($user['shelter'] == $_SESSION['username']) { ?>
+        <?php } else if ($user['shelter'] === $_SESSION['username']) { ?>
             <a href="remove_collaborator.php?username=<?=$user['username']?>"><h2>Remove this collaborator</h2></a>
             <?php } ?>
         </div>
-    <?php } 
-    }?>
+    <?php } ?>
 </section>
