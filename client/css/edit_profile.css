@@ -59,6 +59,8 @@
 
 #edit-profile #edit-profile-body #password label,
 #edit-profile #edit-profile-body #name label,
+#edit-profile #edit-profile-body #description label,
+#edit-profile #edit-profile-body #location label,
 #edit-profile #edit-profile-body #username label {
 	display: block;
 	text-align: center;

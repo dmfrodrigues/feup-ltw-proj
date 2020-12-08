@@ -1,4 +1,8 @@
-<article id="edit-profile">
+<?php
+function editProfile($isShelter) { 
+    global $user;
+    global $shelter; ?>
+    <article id="edit-profile">
     <header>
         <h1>Edit Profile</h1>
     </header>
@@ -44,6 +48,14 @@
             <section id="name">
                 <label for="name">Name<input type="text" name="name" placeholder="user's name" value="<?=$user['name']?>" required></label>
             </section>
+            <?php if ($isShelter) { ?>
+                <section id="description">
+                    <label for="name">Description<input type="text" name="name" placeholder="user's description" value="<?=$shelter['description']?>" required></label>
+                </section>
+                <section id="location">
+                    <label for="name">Location<input type="text" name="name" placeholder="user's location" value="<?=$shelter['location']?>" required></label>
+                </section>
+            <?php } ?>
             <section id="password">
                 <label for="password">Password<a href="change_password.php?username=<?= $user['username']?>"><img src="resources/img/edit.svg"></a></label>
             </section>
@@ -54,3 +66,4 @@
         </section>
     </section>
 </article>
+<?php }
