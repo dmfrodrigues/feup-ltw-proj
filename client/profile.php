@@ -7,8 +7,6 @@ include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/shelters.php';
 
-
-
 include_once 'templates/common/header.php';
 if(isShelter($_GET['username'])) {
     $shelter = getShelter($_GET['username']);

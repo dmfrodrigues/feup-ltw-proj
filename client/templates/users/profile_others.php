@@ -16,11 +16,11 @@
                     <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>Propose to collaborate</h2></a>
                 <?php }
                 else { ?>
-                    <a href="remove_collaboration_proposal.php?username=<?=$user['username']?>"><h2>Remove collaboration proposal</h2></a>
+                    <a href="../server/actions/remove_collaboration_proposal.php?username=<?=$user['username']?>"><h2>Remove collaboration proposal</h2></a>
                 <?php }
             ?>            
         <?php } else if ($user['shelter'] === $_SESSION['username']) { ?>
-            <a href="remove_collaborator.php?username=<?=$user['username']?>"><h2>Remove this collaborator</h2></a>
+            <a href="../server/actions/remove_collaborator.php?username=<?=$user['username']?>"><h2>Remove this collaborator</h2></a>
             <?php } else { ?> 
                         <h2>This user is already associated with another shelter!</h2>
             <?php } ?>
