@@ -6,5 +6,10 @@
     </header>
     <?php
     include_once 'templates/pets/view_pets_in_profile.php';
+
+    if (isShelter($_SESSION['username'])) {
+        
+    }
+
     ?>
 </section>
