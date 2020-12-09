@@ -114,4 +114,9 @@
 			"submit"
 			"delete-user";
 	}
+
+	div#proposal-message textarea,
+	div#proposal-message-submit textarea{
+		width: 35em;
+	}
 }
