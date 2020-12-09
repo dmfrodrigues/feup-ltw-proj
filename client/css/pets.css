@@ -73,7 +73,7 @@
 	margin: 3px;
 }
 
-#pet #pet-photos #pet-photos-row > 	:hover,
+#pet #pet-photos #pet-photos-row > img:hover,
 #pet #pet-photos #pet-photos-row > a:hover {
 	border: solid grey 1px;
 	margin: 2px;
