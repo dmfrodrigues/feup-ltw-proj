@@ -31,11 +31,11 @@
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
-                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
-                <div id="ask"><a href="#comments"><img src="resources/img/question-mark.png" height="42px">Ask question</a></div>
+                <button id="ask" onclick="location.href = '#comments'"><img src="resources/img/question-mark.png" height="42px">Ask question</button>
                 <div id="adoption-request-button">
                     <?php include_once 'templates/pets/adoption_request_buttons.php'; ?>
                 </div>
