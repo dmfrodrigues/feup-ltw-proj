@@ -1,5 +1,5 @@
 <template id="newComment">
-    <form class="answer" enctype="multipart/form-data" onsubmit="return newComment_checkTextOrImage(this)" action="<?= PROTOCOL_SERVER_URL ?>/actions/add_comment.php" method="post">
+    <form class="answer" enctype="multipart/form-data" method="put">
         <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
         <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
         <input id="comment-answerTo" name="answerTo" type="hidden">
@@ -20,6 +20,62 @@
     </form>
 </template>
 <script>
+
+    function newComment_submitForm(newCommentForm){
+        let files = newCommentForm.querySelector('#comment-picture-input').files;
+        let picture = (files.length <= 0 ? null : files[0]);
+
+        if(picture !== null){
+            api.put(
+                'comment/photo',
+                picture
+            )
+            .then((response) => response.json())
+            .then((tmpPhotoId) =>
+                api.put(
+                    'comment',
+                    {
+                        petId   : newCommentForm.querySelector('#comment-petId'        ).value,
+                        username: newCommentForm.querySelector('#comment-username'     ).value,
+                        answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
+                        text    : newCommentForm.querySelector('#comment-text'         ).value,
+                        picture : tmpPhotoId
+                    }
+                )
+            )
+            .then((response) => response.json())
+            .then(function (newId){
+                updateCommentsSection();
+            });
+        } else {
+            api.put(
+                'comment',
+                {
+                    petId   : newCommentForm.querySelector('#comment-petId'        ).value,
+                    username: newCommentForm.querySelector('#comment-username'     ).value,
+                    answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
+                    text    : newCommentForm.querySelector('#comment-text'         ).value,
+                    picture : null
+                }
+            )
+            .then((response) => response.json())
+            .then(function (newId){
+                updateCommentsSection();
+            });
+        }
+        
+    }
+
+    function newComment_onSubmit(e){
+        e.preventDefault();
+
+        newCommentForm = e.target;
+
+        newComment_checkTextOrImage(newCommentForm);
+        newComment_submitForm(newCommentForm);
+        return false;
+    }
+
     if(typeof Template === 'undefined') Template = {};
     Template.newComment = function (comment, user) {
         if(typeof Template.newComment.template === 'undefined')

@@ -72,6 +72,33 @@ class RestApi {
             }
         );
     }
+
+    /*
+    _makeRequest(method, url, data) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onload = function () {
+                if (this.status >= 200 && this.status < 300) {
+                    resolve(xhr.response);
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                }
+            };
+            xhr.onerror = function () {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            };
+            
+            xhr.send(data);
+        });
+    }
+    */
     
     /**
      * Create resource.
@@ -80,6 +107,14 @@ class RestApi {
      * @param {Object} params New resource parameters
      */
     put(uri, params){
+        let data;
+        if(!(params instanceof File)){
+            console.log("Sending JSON data");
+            data = JSON.stringify(params);
+        } else {
+            console.log("Sending file");
+            data = params;
+        }
         return fetch(
             this._url_from_uri(uri),
             {
@@ -87,7 +122,7 @@ class RestApi {
                 headers: {
                     'Accept': 'application/json'
                 },
-                body: params
+                body: data
             }
         );
     }

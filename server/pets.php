@@ -5,6 +5,7 @@ include_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
+define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
 /**
  * Get array of all pets.
@@ -361,17 +362,17 @@ function getPetComment(int $commentId) : array {
  * @param string $username  User's username
  * @param ?int $answerTo    ID of comment it is replying to, or null if not a reply
  * @param string $text      Text of the comment
- * @param array $file       File (as obtained from $_FILES['file_field'])
+ * @param array $file       Is file coming or not?
  * @return integer          ID of the new comment
  */
-function addPetComment(int $id, string $username, ?int $answerTo, string $text, array $file) : int {
-    $noFileSent = false;
-    try{
-        $ext = checkImageFile($file, 1000000);
-    } catch(NoFileSentException $e){
-        $noFileSent = true;
+function addPetComment(int $id, string $username, ?int $answerTo, string $text, string $tmpFileId) : int {
+    if($tmpFileId == null && $text == '')
+        throw new RuntimeException('Comment must have a text or an image');
+
+    if($tmpFileId != null){
+        $tmpFilePath = sys_get_temp_dir().'/'.$tmpFileId;
+        checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
     }
-    if($text === '' && $noFileSent) throw new RuntimeException('Comment must have a text or an image');
 
     global $db;
     
@@ -386,17 +387,22 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     $stmt->execute();
     $commentId = $db->lastInsertId();
 
-    if(!$noFileSent){
-        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-        convertImage(
-            $file['tmp_name'],
-            $ext,
-            $filepath,
-            85
-        );
+    if($tmpFileId != null){
+        setCommentPhoto($commentId, $tmpFilePath);
     }
 
     return $commentId;
+}
+
+function setCommentPhoto(int $commentId, string $tmpFilePath){
+    $ext = checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
+    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+    convertImage(
+        $tmpFilePath,
+        $ext,
+        $filepath,
+        85
+    );
 }
 
 /**
