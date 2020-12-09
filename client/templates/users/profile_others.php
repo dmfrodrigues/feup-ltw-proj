@@ -8,7 +8,13 @@
     include_once 'templates/pets/view_pets_in_profile.php';
     
     $user = getUser($_GET['username']);
-    if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) { ?>
+    if (!isset($_SESSION['isShelter'])) {
+        $shelter = getUserShelter($user['username']);
+        if (!is_null($shelter)) { ?>
+            <h2>Associated with shelter <a href="profile.php?username=<?=$shelter?>"><?=$shelter?></a></h2>
+        <?php }
+    }
+    else if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) { ?>
         <div id="add-collaborator-proposal">
         <?php if (!checkUserBelongsToShelter($user['username'])) { 
                 $outcome = shelterInvitationIsPending($user['username'], $_SESSION['username']);
@@ -22,7 +28,7 @@
         <?php } else if ($user['shelter'] === $_SESSION['username']) { ?>
             <a href="../server/actions/remove_collaborator.php?username=<?=$user['username']?>"><h2>Remove this collaborator</h2></a>
             <?php } else { ?> 
-                        <h2>This user is already associated with another shelter!</h2>
+                        <h2>This user is already associated with shelter <a href="profile.php?username=<?=$user['shelter']?>"><?=$user['shelter']?></a></h2>
             <?php } ?>
         </div>
     <?php } ?>
