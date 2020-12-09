@@ -11,7 +11,7 @@
             if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
                 <p id="simple-fail-msg">Sign In Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
           <?php } ?>
-        <input type="submit" value="Login" id="submit-login">
+        <input type="submit" class="dark" value="Login" id="submit-login">
     </form>
     <a href="">Forgot Password?</a>
     <footer>

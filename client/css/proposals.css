@@ -79,7 +79,7 @@ a#proposal-pet {
 	text-decoration: none;
 }
 
-button {
+#proposal button {
 	margin: 1em 1em;
 	width: 13em;
 	height: 2.5em;
@@ -119,14 +119,8 @@ button#answerRequest:hover {
 }
 
 button#submitAnswer {
-	background-color: var(--main-color);
 	width: 7em;
 	vertical-align: top;
-}
-
-button#submitAnswer:hover {
-	background-color: orange;
-	color: white;
 }
 
 #adoption-request {
