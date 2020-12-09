@@ -15,7 +15,7 @@ if(isShelter($_GET['username'])) {
         $user = getUser($_SESSION['username']);
 
 
-        if (isset($_SESSION['isShelter']) && $_SESSION['username'] == $_GET['username']) {
+        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
             include_once('templates/users/edit_profile.php');
             editProfile(true); // true -> is shelter
         }
@@ -30,7 +30,7 @@ if(isShelter($_GET['username'])) {
         
 }
 
-else if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
+else if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
     $user = getUser($_GET['username']);
     include_once('templates/users/edit_profile.php');
     editProfile(false); // false -> is not shelter

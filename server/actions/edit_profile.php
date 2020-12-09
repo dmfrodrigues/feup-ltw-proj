@@ -14,7 +14,7 @@ if(isShelter($_GET['username'])) {
 
         $shelter = getShelter($_GET['username']);
 
-        if (isset($_SESSION['isShelter']) && $_SESSION['username'] == $_GET['username']) {
+        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
             updateShelterInfo(
                 $shelter['username'],
                 $_POST['username'],
@@ -47,7 +47,7 @@ else {
 
     $user = getUser($_GET['username']);
 
-    if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
+    if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
         
         editUser(
             $user['username'],
