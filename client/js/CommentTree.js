@@ -58,9 +58,6 @@ api = new RestApi(API_URL);
  * Update comments section
  */
 function updateCommentsSection(){
-    // let _comments = comments;
-
-    let _comments = {};
     api.get(`pet/${pet.id}/comments`)
     .then(function(_comments){
         var tree = new CommentTree(_comments);
@@ -74,4 +71,15 @@ function updateCommentsSection(){
     }).catch(function(error){
         console.error(error);
     });
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function onClickedUpdateComments(el){
+    el.classList.add("rotating");
+    await sleep(1400);
+    updateCommentsSection();
+    el.classList.remove("rotating");
 }

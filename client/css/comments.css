@@ -1,3 +1,10 @@
+#comments #update {
+	width : 2.0em;
+	height: 2.0em;
+	position: relative;
+	top: +0.4em;
+}
+
 #comments article.comment {
 	display: grid;
 	grid-template-columns: auto 1fr auto auto;
