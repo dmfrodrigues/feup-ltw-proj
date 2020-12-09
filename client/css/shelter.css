@@ -18,21 +18,25 @@
 }
 
 .collaborator-card {
-    position: relative;
     cursor: pointer;
+    max-width: 250px;
     transition: transform 0.3s;
 }
 
 .collaborator-card:hover {
     transform: scale(1.1);
-	transition: 0.3s;
+    transition: 0.3s;
+}
+
+#collaborator-card-content{
+    position: relative;
 }
 
 .collaborator-card img {
-	padding: 1em;
 	height: 250px;
     width: 250px;
     border-radius: 10%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .collaborator-card h2 {

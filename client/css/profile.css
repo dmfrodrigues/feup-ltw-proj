@@ -107,3 +107,12 @@ img.profile-pic,
 	align-self: center;
 	text-align: center;
 }
+
+#add-collaborator-proposal a {
+	color: var(--main-color);
+}
+
+#add-collaborator-proposal a:hover {
+	color: rgb(255, 198, 124);
+	transform: scale(1.1);
+}
