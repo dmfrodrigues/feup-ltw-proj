@@ -50,10 +50,10 @@ function editProfile($isShelter) {
             </section>
             <?php if ($isShelter) { ?>
                 <section id="description">
-                    <label for="name">Description<input type="text" name="name" placeholder="user's description" value="<?=$shelter['description']?>" required></label>
+                    <label for="description">Description<textarea name="description" placeholder="user's description"><?=$shelter['description']?></textarea></label>
                 </section>
                 <section id="location">
-                    <label for="name">Location<input type="text" name="name" placeholder="user's location" value="<?=$shelter['location']?>" required></label>
+                    <label for="location">Location<input type="text" name="location" placeholder="user's location" value="<?=$shelter['location']?>" required></label>
                 </section>
             <?php } ?>
             <section id="password">

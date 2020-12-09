@@ -93,6 +93,20 @@
 	transform: scale(1.1);
 }
 
+#edit-profile #edit-profile-body textarea {
+	border: 2px solid;
+	padding: 1em;
+	margin-bottom: 2.5em;
+	margin-top: 0.5em;
+	width: 20em;
+	border-radius: 12px;
+}
+
+#edit-profile #edit-profile-body textarea:hover {
+	transition: transform 0.3s;
+	transform: scale(1.1);
+}
+
 #edit-profile #edit-profile-body form #password a img {
 	color: var(--main-color);
 	width: 2.5em;

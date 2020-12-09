@@ -4,31 +4,46 @@ session_start();
 include_once __DIR__ . '/../server.php';
 include_once SERVER_DIR . '/connection.php';
 include_once SERVER_DIR . '/users.php';
-$user = getUser($_GET['username']);
+include_once SERVER_DIR . '/shelters.php';
 
-if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
-    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username can only contain letters and numbers!');
-    header("Location: " . PROTOCOL_CLIENT_URL . "/edit_profile.php?username={$_GET['username']}&failed=1");
-    die();
-}
+$failed = true;
 
-if (isset($_SESSION['username'])){
+if(isShelter($_GET['username'])) {
 
-    if($_SESSION['username'] != $user['username']){
-        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
-        die();
+    $shelter = getShelter($_GET['username']);
+
+    if(isset($_SESSION['username']) && isset($_SESSION['isShelter']) && $_SESSION['username'] == $_GET['username']) {
+        
+        updateShelterInfo(
+            $shelter['username'],
+            $_POST['username'],
+            $_POST['name'],
+            $_POST['location'],
+            $_POST['description']
+        );
+        $_SESSION['username'] = $_POST['username'];
+        $failed = false;
     }
-
-    editUser(
-        $user['username'],
-        $_POST['username'],
-        $_POST['name']
-    );
-
-    $_SESSION['username'] = $_POST['username'];
-
-    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_POST['username']}");
 }
+else {
+
+    $user = getUser($_GET['username']);
+
+    if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
+        
+        editUser(
+            $user['username'],
+            $_POST['username'],
+            $_POST['name']
+        );
+        $_SESSION['username'] = $_POST['username'];
+        $failed = false;
+    }
+}
+
+if (!$failed)
+    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_POST['username']}");
+else
+    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
 
 die();
-
