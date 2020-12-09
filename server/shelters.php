@@ -188,7 +188,7 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
  * @param string $text         Message Info
  * @param string $username     Username (User)
  * @param string $shelter      Username (Shelter)
- * @return array               Array containing all the info about the pets
+ * @return bool                True if success; false otherwise.
  */
 function addShelterInvitation(string $text, string $username, string $shelter) : bool {
     global $db;
@@ -405,6 +405,12 @@ function getUserShelterInvitation(string $username) : array {
     return $shelterInvitations;
 }
 
+/**
+ * Get the shelter the user is associated, or null if there is none.
+ *
+ * @param string $username  Username (User)
+ * @return string           Shelter the user is associated, or null if there is none.
+ */
 function getUserShelter(string $username) : ?string {
     global $db;
 
@@ -418,6 +424,27 @@ function getUserShelter(string $username) : ?string {
     return $shelter['shelter'];
 }
 
+/**
+ * Get the shelter the pet is associated, or null if there is none.
+ *
+ * @param string $petId       Pet's ID
+ * @return string             Shelter the user is associated, or null if there is none.
+ */
+function getPetShelter(string $petId) : ?string {
+    global $db;
+
+    $pet = getPet($petId);
+    $owner = getUser($pet['postedBy']);
+
+    return getUserShelter($owner['username']);
+}
+
+/**
+ * Get the shelter invitation that were not answered yet.
+ *
+ * @param string $shelter   Username (Shelter)
+ * @return string           Array containing all the shelter pending invitations.
+ */
 function getShelterPendingInvitations(string $shelter) : array {
     global $db;
 
