@@ -470,15 +470,19 @@ function getShelterPendingInvitations(string $shelter) : array {
  */
 function userCanEditPet($username, $petId) : bool {
 
-    $pet = getPet($petId);
-    $postedByUsername = $pet['postedBy'];
+    $pet = getPet((int) $petId);
 
-    if ($postedByUsername === $username) return true;
-
-    $shelter1 = getUserShelter($username);
-    $shelter2 = getUserShelter($postedByUsername);
-
-    if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
+    if (isShelter($username)) {
+        $pets = getShelterPetsForAdoption($username);
+        if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
+    }
+    else {
+        $postedByUsername = $pet['postedBy'];
+        if ($postedByUsername === $username) return true;
+        $shelter1 = getUserShelter($username);
+        $shelter2 = getUserShelter($postedByUsername);
+        if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
+    }
 
     return false;
 }
