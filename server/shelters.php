@@ -35,7 +35,8 @@ function isShelter(string $username) : bool {
 function getShelter(string $shelter) : array {
     global $db;
 
-    $stmt = $db->prepare('SELECT 
+    $stmt = $db->prepare('SELECT
+        User.username,
         User.name,
         Shelter.location,
         Shelter.description
@@ -143,11 +144,12 @@ function getShelterAdoptedPets(string $shelter) : array {
 /**
  * Update Shelter Info
  *
- * @param string $shelter       Username (Shelter)
- * @param string $name          Shelter Name
- * @param string $location      Location
- * @param string $description   Description
- * @return boolean              True if the successful, false otherwise
+ * @param string $lastUsername    Last username (Shelter)
+ * @param string $newUsername     New username (Shelter)
+ * @param string $name            Name
+ * @param string $location        Location
+ * @param string $description     Description
+ * @return boolean                True if the successful, false otherwise
  */
 function updateShelterInfo(string $lastUsername, string $newUsername, string $name, string $location, string $description) : bool {
     global $db;

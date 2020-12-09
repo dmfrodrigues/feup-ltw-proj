@@ -3,7 +3,7 @@
         <img class="profile-shelter-pic" id="profile_img" src="<?php echo (is_null($shelter['pictureUrl']) ? "resources/img/no-image.svg": $shelter['pictureUrl']) ?>">
         <span id="name"><?=$shelter['name']?></span>
         <span id="username"><?=$_SESSION['username']?></span>
-        <a href="edit_profile_shelter.php?username=<?=$_SESSION['username']?>">Edit Shelter Profile</a>
+        <a href="edit_profile.php?username=<?=$_SESSION['username']?>">Edit Shelter Profile</a>
     </header>
     <?php
     include_once 'templates/pets/view_pets_in_shelter_profile.php';

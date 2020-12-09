@@ -7,8 +7,11 @@
                     </a>
                 </div>
             <div id="proposal-info">
-                <p><?=$shelter?> on <?=$requestDate?></p>
-                
+                <?php if (!$isShelter) { ?>
+                    <p><?=$shelter?> on <?=$requestDate?></p>
+                <?php } else { ?>
+                    <p>To <a href="profile.php?username=<?=$user?>"><?=$user?></a> on <?=$requestDate?></p>
+                <?php } ?>
                 <div id="proposal-message">
                     <textarea readonly><?=$text?></textarea>
                 </div>  
