@@ -365,7 +365,7 @@ function getPetComment(int $commentId) : array {
  * @param array $file       Is file coming or not?
  * @return integer          ID of the new comment
  */
-function addPetComment(int $id, string $username, ?int $answerTo, string $text, string $tmpFileId) : int {
+function addPetComment(int $id, string $username, ?int $answerTo, string $text, ?string $tmpFileId) : int {
     if($tmpFileId == null && $text == '')
         throw new RuntimeException('Comment must have a text or an image');
 
