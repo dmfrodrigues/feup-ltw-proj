@@ -41,3 +41,24 @@
     bottom: 0.5em;
     left: 10%;
 }
+
+#collaboration-proposal {
+    max-width: 1200px;
+	margin: 2em auto;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+}
+
+#collaboration-proposal-body {
+    display: body;
+}
+
+#collaboration-proposal-body textarea{
+    padding: 0.5em;
+    width: 100%;
+    border: none;
+	outline: none;
+    resize: none;
+}
