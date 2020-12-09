@@ -9,10 +9,13 @@ class NoFileSentException extends RuntimeException{}
  * @param integer $size     Maximum file size, in bytes
  * @return string           File extension
  */
-function checkImageFile(string $filePath, int $maxFileSize) : string {
+function checkImageFile(?string $filePath, int $maxFileSize) : string {
     // Undefined | Multiple Files | $_FILES Corruption Attack
     // If this request falls under any of them, treat it invalid.
     
+    if($filePath == null)
+        throw new NoFileSentException("No file sent.");
+
     // Check file size
     $fileSize = filesize($filePath);
     if ($fileSize > $maxFileSize) {

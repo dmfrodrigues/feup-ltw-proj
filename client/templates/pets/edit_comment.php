@@ -1,5 +1,5 @@
 <template id="editComment">
-<form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_comment.php" method="post">
+<form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" method="put">
     <input id="commentId" name="commentId" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input id="comment-deleteFile" name="deleteFile" type="hidden" value="0">
@@ -20,6 +20,56 @@
 </form>
 </template>
 <script>
+    function editComment_checkTextOrImage(comment){
+        let text = comment.querySelector('#comment-text');
+        let file = comment.querySelector('#comment-picture-input');
+        let deleteFile = comment.querySelector('#comment-deleteFile');
+        let good = (text.value != '' || file.value != '' || deleteFile.value === '0');
+        if(!good) alert("Edited comment must have at least text or an image.");
+        return good;
+    }
+
+    function editComment_removePicture(comment){
+        let deleteFile = comment.querySelector('#comment-deleteFile');
+        deleteFile.value = "1";
+        let img = comment.querySelector('#comment-picture');
+        img.src = "";
+    }
+
+    function editComment_submitForm(editCommentForm){
+        let id_split = editCommentForm.id.split('-');
+        let id = id_split[id_split.length-1];
+
+        let files = editCommentForm.querySelector('#comment-picture-input').files;
+        let picture = (files.length <= 0 ? null : files[0]);
+        let deleteFile = (
+            editCommentForm.querySelector('#comment-deleteFile').value === "1" &&
+            picture === null
+        );
+
+        api.put(
+            `comment/${id}`,
+            {
+                text: editCommentForm.querySelector('#comment-text').value,
+            }
+        )
+        .then(function (response){
+            if     (deleteFile      ) return api.delete(`comment/${id}/photo`);
+            else if(picture !== null) return api.put   (`comment/${id}/photo`, picture);
+        })
+        .then(function(response){ updateCommentsSection(); });
+    }
+
+    function editComment_onSubmit(e){
+        e.preventDefault();
+
+        editCommentForm = e.target;
+
+        newComment_checkTextOrImage(editCommentForm);
+        editComment_submitForm(editCommentForm);
+        return false;
+    }
+
     if(typeof Template === 'undefined') Template = {};
     Template.editComment = function (comment) {
         if(typeof Template.editComment.template === 'undefined')
@@ -45,6 +95,8 @@
 
         let el_img = editElement.querySelector("#comment-picture");
         el_img.src = (comment.commentPictureUrl !== null ? comment.commentPictureUrl : '');
+
+        editElement.addEventListener('submit', (e) => { editComment_onSubmit(e); })
 
         return editElement;
     }

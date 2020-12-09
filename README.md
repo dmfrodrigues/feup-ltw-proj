@@ -72,16 +72,11 @@ AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)
 
 ## REST
 
-| Request              | GET                | POST | PUT                | DELETE |
-|----------------------|--------------------|------|--------------------|--------|
-| `pet`                | TBD                | :x:  | TBD                | :x:    |
-| `pet/<id>`           | TBD                | TBD  | TBD                | TBD    |
-| `pet/<id>/comments`  | :heavy_check_mark: | :x:  | :x:                | :x:    |
-| `comment/photo`      | :x:                | :x:  | :heavy_check_mark: | :x:    |
-| `comment/<id>`       | TBD                | TBD  | :heavy_check_mark: | :x:    |
-| `comment/<id>/photo` | TBD                | TBD  | TBD                | TBD    |
-
-
-
-
-
+| Request              | GET                | POST               | PUT                | DELETE             |
+|----------------------|--------------------|--------------------|--------------------|--------------------|
+| `pet`                | :soon:             | :x:                | :soon:             | :x:                |
+| `pet/<id>`           | :soon:             | :soon:             | :soon:             | :soon:             |
+| `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                | :x:                |
+| `comment/photo`      | :x:                | :x:                | :heavy_check_mark: | :x:                |
+| `comment/<id>`       | :soon:             | :soon:             | :heavy_check_mark: | :x:                |
+| `comment/<id>/photo` | :soon:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |

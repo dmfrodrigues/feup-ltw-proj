@@ -344,12 +344,13 @@ function getPetComments(int $id) : array {
  * @param integer $commentId    ID of comment
  * @return array                Comment
  */
-function getPetComment(int $commentId) : array {
+function getPetComment(int $commentId) {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
     $stmt->bindParam(':id', $commentId);
     $stmt->execute();
     $comment = $stmt->fetch();
+    if(!$comment) return $comment;
     $comment['userPictureUrl'   ] = getUserPicture   ($comment['user']);
     $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
     return $comment;
@@ -413,7 +414,7 @@ function setCommentPhoto(int $commentId, string $tmpFilePath){
  * @param array     $file           Picture file (as obtained from $_FILES['file_field'])
  * @return void
  */
-function editPetComment(int $commentId, string $text, bool $deleteFile, array $file){
+function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $file){
     $oldComment = getPetComment($commentId);
 
     $noFileSent = false;
