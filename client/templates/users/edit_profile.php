@@ -45,7 +45,7 @@ function editProfile($isShelter) {
             </div>
         </section>
         <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile.php?username=<?=$editUser['username']?>" method="post">
-            <?php if (isset($_SESSION['isShelter']) && isset($_SESSION['username']) && $_SESSION['username'] === $editUser['username']) { ?>
+            <?php if ((isset($_SESSION['isShelter']) && isset($_SESSION['username']) && $_SESSION['username'] === $editUser['username']) || ($_SESSION['username'] === $editUser['username'])) { ?>
                 <section id="username">
                     <label for="username">Username<input type="text" name="username" placeholder="user's username" value="<?=$editUser['username']?>" required pattern="^[a-zA-Z0-9]+$"></label>
                 </section>
@@ -61,7 +61,7 @@ function editProfile($isShelter) {
                     <label for="location">Location<input type="text" name="location" placeholder="user's location" value="<?=$editUser['location']?>" required></label>
                 </section>
             <?php } ?>
-            <?php if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $editUser['username']) { ?>
+            <?php if ((isset($_SESSION['isShelter']) && $_SESSION['username'] === $editUser['username']) || ($_SESSION['username'] === $editUser['username'])) { ?>
                 <section id="password">
                     <label for="password">Password<a href="change_password.php?username=<?= $editUser['username']?>"><img src="resources/img/edit.svg"></a></label>
                 </section>
