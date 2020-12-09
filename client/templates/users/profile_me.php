@@ -11,16 +11,16 @@
     <section id="actions">
         <h2>Actions</h2>
         <ul>
-            <li><a href="add_pet.php">Add pet</a></li>
-            <li><a href="view_proposals.php">Proposals to my pets</a></li>
-            <li><a href="my_proposals.php">My proposals</a></li>
-            <li><a href="view_adopted_pets_by_user.php">View adopted pets</a></li>
+            <li><button onclick="location.href = 'add_pet.php'">Add pet</button></li>
+            <li><button onclick="location.href = 'view_proposals.php'">Proposals to my pets</button></li>
+            <li><button onclick="location.href = 'my_proposals.php'">My proposals</button></li>
+            <li><button onclick="location.href = 'view_adopted_pets_by_user.php'">View adopted pets</button></li>
             <?php 
                 if(checkUserBelongsToShelter($user['username'])) { 
                     $shelterName = getUserShelter($user['username']); ?>
-                    <li><a href="profile.php?username=<?=$shelterName?>">View shelter</a></li>
+                    <li><button onclick="location.href = 'profile.php?username=<?=$shelterName?>'">View shelter</button></li>
             <?php } else { ?>
-                    <li><a href="view_shelter_invitations.php">View shelter invitations</a></li>
+                    <li><button onclick="location.href = 'view_shelter_invitations.php'">View shelter invitations</button></li>
             <?php } ?>
         </ul>
     </section>
