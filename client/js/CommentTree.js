@@ -49,6 +49,7 @@ class CommentTree {
 
 document.addEventListener("DOMContentLoaded", function(_event) {
     updateCommentsSection();
+    window.setInterval(updateCommentsSection, 10000);
 });
 
 api = new RestApi(API_URL);

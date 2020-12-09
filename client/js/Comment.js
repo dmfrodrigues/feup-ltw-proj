@@ -26,7 +26,9 @@ class Comment {
         else return 0;
     }
     createElement() {
-        let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
+        let template = document.querySelector("template#comment");
+        let commentElement = template.content.firstElementChild.cloneNode(true);
+        
         commentElement.id = `comment-${this.id}`;
 
         let el_user = commentElement.querySelector("#comment-user");
@@ -52,7 +54,9 @@ class Comment {
      * @param {User} user User that is answering
      */
     createAnswerElement(user) {
-        let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
+        let template = document.querySelector("template#new-comment");
+        let answerElement = template.content.firstElementChild.cloneNode(true);
+        
         answerElement.id = `new-comment-${this.id}`;
 
         let el_answerTo = answerElement.querySelector('#comment-answerTo');
@@ -69,7 +73,9 @@ class Comment {
         return answerElement;
     }
     createEditElement() {
-        let editElement = cloneNodeRecursive(document.querySelector("#templates>#edit-comment"));
+        let template = document.querySelector("template#edit-comment");
+        let editElement = template.content.firstElementChild.cloneNode(true);
+
         editElement.id = `edit-comment-${this.id}`;
 
         let el_commentId = editElement.querySelector('#commentId');

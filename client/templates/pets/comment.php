@@ -1,4 +1,5 @@
-<div id="comment" class="comment">
+<template id="comment">
+<div class="comment">
     <article class="comment">
         <span id="comment-user" class="user">
             <a href="profile.php?username="></a>
@@ -25,3 +26,4 @@
         <summary></summary>
     </details>
 </div>
+</template>

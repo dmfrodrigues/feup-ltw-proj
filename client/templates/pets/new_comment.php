@@ -1,4 +1,5 @@
-<form id="new-comment" class="answer" enctype="multipart/form-data" onsubmit="return newComment_checkTextOrImage(this)" action="<?= PROTOCOL_SERVER_URL ?>/actions/add_comment.php" method="post">
+<template id="new-comment">
+<form class="answer" enctype="multipart/form-data" onsubmit="return newComment_checkTextOrImage(this)" action="<?= PROTOCOL_SERVER_URL ?>/actions/add_comment.php" method="post">
     <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
     <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
     <input id="comment-answerTo" name="answerTo" type="hidden">
@@ -17,3 +18,4 @@
         </div>
     </article>
 </form>
+</template>
