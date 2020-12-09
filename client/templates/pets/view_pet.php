@@ -31,17 +31,23 @@
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = getFavoritePets($_SESSION['username']);
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</a></div>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
-                    <div id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><a><img src="resources/img/heart.svg" height="30px">Add to favorites</a></div>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
-                <div id="ask"><a href="#comments"><img src="resources/img/question-mark.png" height="42px">Ask question</a></div>
+                <button id="ask" onclick="location.href = '#comments'"><img src="resources/img/question-mark.png" height="42px">Ask question</button>
                 <div id="adoption-request-button">
                     <?php include_once 'templates/pets/adoption_request_buttons.php'; ?>
                 </div>
             <?php } ?>
         </div>
     </header>
+    <?php  $shelter = getPetShelter($_GET['id']);
+    if (!is_null($shelter)) { ?>
+        <section id="shelter">
+            <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+        </section>
+    <?php } ?>
     <section id="description">
         <h2>Description</h2>
         <?php foreach (explode(PHP_EOL, $pet['description']) as $paragraph) { ?>
@@ -63,11 +69,13 @@
     </section>
     <?php 
     $userWhoAdoptedPet = getUserWhoAdoptedPet($pet['id']);
-    $testAdopted = false;
+    $petAdopted = false;
     if (!empty($userWhoAdoptedPet))
-        $testAdopted = true;
+        $petAdopted = true;
+
+    $shelter = getPetShelter($_GET['id']);
         
-    if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || ($testAdopted && $_SESSION['username'] == $userWhoAdoptedPet['username']))){ ?>
+    if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || ($petAdopted && $_SESSION['username'] == $userWhoAdoptedPet['username']) || (isset($_SESSION['isShelter']) && $_SESSION['username'] == $shelter))){ ?>
         <section id="actions">
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>

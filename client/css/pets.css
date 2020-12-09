@@ -48,13 +48,12 @@
 }
 
 #pet #pet-photos  #pet-photos-row {
+	margin: 0.4em 0;
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 }
 
 #pet #pet-photos  #pet-photos-row > a{
-	height: 50px;
-	width: 50px;
 	text-align: center;
 	font-weight: bold;
 	font-size: small;
@@ -64,26 +63,29 @@
 	background-color: var(--bg-color);
 }
 
-#pet #pet-photos > #pet-photos-row img {
+#pet #pet-photos #pet-photos-row > * {
 	width: 50px;
 	height: 50px;
 	object-fit: cover;
 	object-position: center;
 	cursor: pointer;
 	border-radius: 5px;
+	margin: 3px;
 }
 
-#pet #pet-photos  #pet-photos-row > a:hover,
-#pet #pet-photos > #pet-photos-row img:hover {
-	border: solid grey thin;
+#pet #pet-photos #pet-photos-row > 	:hover,
+#pet #pet-photos #pet-photos-row > a:hover {
+	border: solid grey 1px;
+	margin: 2px;
 }
 
-#pet #pet-photos > #pet-photos-row .selected {
+#pet #pet-photos > #pet-photos-row img.selected {
 	border: solid var(--main-color);
+	margin: 0;
 }
 
 #pet #pet-photos > #pet-photos-row .selected:hover {
-	border: solid var(--main-color);
+	border: solid var(--main-color) 3px;
 }
 
 #pet header #actions,
@@ -153,9 +155,9 @@
 	margin-bottom: auto;
 }
 
-#pet header * div {
-	max-width: 13em;
-	height: 2em;
+#pet header * button {
+	max-width: 14em;
+	height: 3.5em;
 	line-height: 2em;
 	padding: 0.5em;
 	margin: 0 1em 1em 0;
@@ -164,34 +166,13 @@
 }
 
 #pet header #actions #favorite {
-	background-color: white;
 	grid-area: favorite;
 	min-width: 13em;
-	margin-top: 0;
-}
-
-#pet header #actions #favorite:hover {
-	background-color: var(--main-color);
-	--text-button-color-1: white;
-}
-
-#pet header #actions #favorite a {
-	color: var(--text-button-color-1);
 }
 
 #pet header #actions #ask {
-	background-color: white;
 	grid-area: ask;
 	min-width: 13em;
-}
-
-#pet header #actions #ask:hover {
-	background-color: var(--main-color);
-	--text-button-color-2: white;
-}
-
-#pet header #actions #ask a {
-	color: var(--text-button-color-2);
 }
 
 #pet header #actions #adoption-request-button {

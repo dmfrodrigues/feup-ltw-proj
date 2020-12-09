@@ -59,6 +59,8 @@
 
 #edit-profile #edit-profile-body #password label,
 #edit-profile #edit-profile-body #name label,
+#edit-profile #edit-profile-body #description label,
+#edit-profile #edit-profile-body #location label,
 #edit-profile #edit-profile-body #username label {
 	display: block;
 	text-align: center;
@@ -78,6 +80,7 @@
 	justify-self: center;
 }
 
+#edit-profile #edit-profile-body textarea,
 #edit-profile #edit-profile-body input {
 	padding: 1em;
 	margin-bottom: 2.5em;
@@ -86,9 +89,14 @@
 	border-radius: 12px;
 }
 
-#edit-profile #edit-profile-body input:hover {
+#edit-profile #edit-profile-body textarea {
+	border: 2px solid;
+}
+
+#edit-profile #edit-profile-body input:hover,
+#edit-profile #edit-profile-body textarea:hover {
 	transition: transform 0.3s;
-	transform: scale(1.1);
+	transform: scale(1.05);
 }
 
 #edit-profile #edit-profile-body form #password a img {
@@ -112,7 +120,6 @@
 	font-size: 1.2em;
 	width: 10em;
 	background-color: var(--main-color);
-	padding: 1em 2.5em 1em 2.5em;
 	margin-top: 2em;
 	margin-left: 3em;
 	grid-area: submit;
