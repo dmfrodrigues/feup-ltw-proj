@@ -119,14 +119,8 @@ button#answerRequest:hover {
 }
 
 button#submitAnswer {
-	background-color: var(--main-color);
 	width: 7em;
 	vertical-align: top;
-}
-
-button#submitAnswer:hover {
-	background-color: orange;
-	color: white;
 }
 
 #adoption-request {

@@ -94,7 +94,7 @@
                 
                 <div id="proposal-message-submit">
                     <textarea></textarea>
-                    <button onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
+                    <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
                 </div>  
             </div>
         </div>
