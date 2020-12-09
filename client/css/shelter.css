@@ -1,0 +1,43 @@
+#potential-collaborators {
+    max-width: 1200px;
+	margin: 2em auto;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	display: block;
+}
+
+.potential-collaborators-grid {
+    margin-top: 2em;
+	display: grid;
+	column-gap: 2em;
+	row-gap: 4em;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.collaborator-card {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.collaborator-card:hover {
+    transform: scale(1.1);
+	transition: 0.3s;
+}
+
+.collaborator-card img {
+	padding: 1em;
+	height: 250px;
+    width: 250px;
+    border-radius: 10%;
+}
+
+.collaborator-card h2 {
+    position: absolute;
+    color: var(--main-color);
+    bottom: 0.5em;
+    left: 10%;
+}
