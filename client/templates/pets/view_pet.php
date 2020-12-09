@@ -42,6 +42,12 @@
             <?php } ?>
         </div>
     </header>
+    <?php  $shelter = getPetShelter($_GET['id']);
+    if (!is_null($shelter)) { ?>
+        <section id="shelter">
+        <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+        </section>
+    <?php } ?>
     <section id="description">
         <h2>Description</h2>
         <?php foreach (explode(PHP_EOL, $pet['description']) as $paragraph) { ?>
