@@ -7,6 +7,7 @@
             $userShelter = getUserShelter($_SESSION['username']);
             if ($userShelter === $shelter['username']) { ?>
                 <a href="edit_profile.php?username=<?=$userShelter?>">Edit Shelter Profile</a>
+                <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/leave_shelter.php?shelter=<?=$shelter['username']?>'" id="leaveShelter">Leave Shelter</button>
             <?php }
         } ?> 
     </header>
