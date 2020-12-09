@@ -21,6 +21,7 @@
     cursor: pointer;
     max-width: 250px;
     transition: transform 0.3s;
+    margin: 1em;
 }
 
 .collaborator-card:hover {
