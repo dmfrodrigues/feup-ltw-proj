@@ -43,7 +43,7 @@ class Comment {
                 delete_el.style.display = "";
             }
 
-            let editElement = Template.editElement(this);
+            let editElement = Template.editComment(this);
             editElement.style.display = "none";
             commentElement.insertBefore(
                 editElement,

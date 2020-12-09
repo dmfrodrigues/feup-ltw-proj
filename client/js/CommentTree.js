@@ -69,7 +69,7 @@ function updateCommentsSection(){
         let commentsSection = document.querySelector("#comments div");
         commentsSection.innerHTML = '';
         if (typeof user !== 'undefined'){
-            commentsSection.appendChild(tree.root.createAnswerElement(user));
+            commentsSection.appendChild(Template.newComment(tree.root, user));
         }
         tree.addToElement(commentsSection);
     }).catch(function(error){
