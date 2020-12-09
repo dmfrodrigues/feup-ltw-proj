@@ -2,7 +2,7 @@
 session_start();
 
 include_once __DIR__.'/../server/server.php';
-include_once 'errors/errors.php';
+include_once SERVER_DIR.'/errors/errors.php';
 
 $javascript_files = ['js/signup.js'];
 include_once 'templates/common/header.php';

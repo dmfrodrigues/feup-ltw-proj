@@ -489,7 +489,7 @@ function getCommentPicture(int $id) : ?string {
  */
 function deletePetCommentPhoto(int $commentId){
     $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    if(!unlink($filepath))
+    if(!@unlink($filepath))
         throw new CouldNotDeleteFileException("Could not delete '$filepath'");
 }
 
