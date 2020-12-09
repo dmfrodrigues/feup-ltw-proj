@@ -474,7 +474,14 @@ function userCanEditPet($username, $petId) : bool {
 
     if (isShelter($username)) {
         $pets = getShelterPetsForAdoption($username);
-        if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
+
+        foreach($pets as $p) {
+            if ($p['id'] == $pet['id']) return true;
+        }
+
+        return false;
+
+        //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
     }
     else {
         $postedByUsername = $pet['postedBy'];
