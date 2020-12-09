@@ -3,7 +3,7 @@ async function handleFavorites(target, username, petId) {
     let data = { username: username, petId: petId };
     let params = Object.keys(data).map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])).join('&');
     
-    let addToFavorites = checkAddToFavorites(target.querySelector('a').innerHTML);
+    let addToFavorites = checkAddToFavorites(target.innerHTML);
 
     let response = await ajaxAddOrRemoveFavorites(addToFavorites, params);
     if(!response.ok) {
@@ -25,9 +25,9 @@ async function handleFavorites(target, username, petId) {
 
 function switchFavoriteButton(target, removeFromFavorites) {
     if(removeFromFavorites) 
-        target.querySelector('a').innerHTML = '<img src="resources/img/anti-heart.svg" height="30px">Remove from favorites';
+        target.innerHTML = '<img src="resources/img/anti-heart.svg" height="30px">Remove from favorites';
     else
-        target.querySelector('a').innerHTML = '<img src="resources/img/heart.svg" height="30px">Add to favorites';
+        target.innerHTML = '<img src="resources/img/heart.svg" height="30px">Add to favorites';
 }
 
 function ajaxAddOrRemoveFavorites(addToFavorites, bodyParams) {
