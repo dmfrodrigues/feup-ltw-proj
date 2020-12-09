@@ -17,14 +17,14 @@ for($i = 0; $i < $N; ++$i){
     $pictures[] = $picture;
 }
 
-$canEdit = true;
+$canEdit = false;
 
 if (isset($_SESSION['username'])){
 
-    if(!isset($_SESSION['isShelter']) && $_SESSION['username'] != $pet['postedBy']) $canEdit = false;
+    if(!isset($_SESSION['isShelter']) && ($_SESSION['username'] === $pet['postedBy'])) $canEdit = true;
     else if (isset($_SESSION['isShelter'])) {
-        $shelter = getShelter($_SESSION['isShelter']);
-        if (getPetShelter($_GET['id']) !== $shelter['username']) $canEdit = false;
+        $shelter = getShelter($_SESSION['username']);
+        if (getPetShelter($_GET['id']) === $shelter['username']) $canEdit = true;
     }
 
     if ($canEdit) {
