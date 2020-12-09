@@ -1,8 +1,8 @@
 <section id="signup">  
     <header>
       <h2>Sign Up</h2>
-      <button id="signup-user-button" onclick="switchSignUpForms('user')">User</button>
-      <button id="signup-shelter-button" onclick="switchSignUpForms('shelter')">Shelters</button> 
+      <button id="signup-user-button" class="dark" onclick="switchSignUpForms('user')">User</button>
+      <button id="signup-shelter-button" class="dark" onclick="switchSignUpForms('shelter')">Shelters</button> 
     </header>
 
     <form method="post" onsubmit="return signup_check()" action="<?= PROTOCOL_SERVER_URL ?>/actions/signup.php">
@@ -19,6 +19,6 @@
             <p id="simple-fail-msg">Signup Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
       <?php } ?>
           
-      <input type="submit" value="Sign up" id="submit-signup">
+      <input type="submit" class="dark" value="Sign up" id="submit-signup">
     </form>
 </section>

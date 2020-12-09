@@ -96,7 +96,7 @@
 #edit-profile #edit-profile-body input:hover,
 #edit-profile #edit-profile-body textarea:hover {
 	transition: transform 0.3s;
-	transform: scale(1.1);
+	transform: scale(1.05);
 }
 
 #edit-profile #edit-profile-body form #password a img {
@@ -120,7 +120,6 @@
 	font-size: 1.2em;
 	width: 10em;
 	background-color: var(--main-color);
-	padding: 1em 2.5em 1em 2.5em;
 	margin-top: 2em;
 	margin-left: 3em;
 	grid-area: submit;
