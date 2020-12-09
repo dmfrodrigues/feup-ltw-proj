@@ -70,3 +70,18 @@ CommentPhoto(<ins>id</ins>, commentId→Comment, url)
 AdoptionRequest(<ins>id</ins>, user→User, pet→Pet, text, outcome)  
 AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)  
 
+## REST
+
+| Request              | GET                | POST | PUT                | DELETE |
+|----------------------|--------------------|------|--------------------|--------|
+| `pet`                | TBD                | :x:  | TBD                | :x:    |
+| `pet/<id>`           | TBD                | TBD  | TBD                | TBD    |
+| `pet/<id>/comments`  | :heavy_check_mark: | :x:  | :x:                | :x:    |
+| `comment/photo`      | :x:                | :x:  | :heavy_check_mark: | :x:    |
+| `comment/<id>`       | TBD                | TBD  | :heavy_check_mark: | :x:    |
+| `comment/<id>/photo` | TBD                | TBD  | TBD                | TBD    |
+
+
+
+
+
