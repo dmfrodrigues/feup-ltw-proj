@@ -79,6 +79,7 @@
 }
 
 #edit-profile #edit-profile-body input {
+	padding: 0.5em;
 	margin-bottom: 2.5em;
 	margin-top: 0.5em;
 	width: 20em;
@@ -87,7 +88,7 @@
 
 #edit-profile #edit-profile-body input:hover {
 	transition: transform 0.3s;
-	transform: scale(1.1);
+	transform: scale(1.05);
 }
 
 #edit-profile #edit-profile-body form #password a img {
