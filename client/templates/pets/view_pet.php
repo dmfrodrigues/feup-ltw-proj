@@ -42,12 +42,6 @@
             <?php } ?>
         </div>
     </header>
-    <?php  $shelter = getPetShelter($_GET['id']);
-    if (!is_null($shelter)) { ?>
-        <section id="shelter">
-            <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
-        </section>
-    <?php } ?>
     <section id="description">
         <h2>Description</h2>
         <?php foreach (explode(PHP_EOL, $pet['description']) as $paragraph) { ?>
@@ -76,7 +70,13 @@
     $shelter = getPetShelter($_GET['id']);
         
     if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || ($petAdopted && $_SESSION['username'] == $userWhoAdoptedPet['username']) || (isset($_SESSION['isShelter']) && $_SESSION['username'] == $shelter))){ ?>
-        <section id="actions">
+        <section id="action-edit-pet">
+            <?php  $shelter = getPetShelter($_GET['id']);
+                if (!is_null($shelter)) { ?>
+                <section id="shelter">
+                    <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+                </section>
+            <?php } ?>
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
             </ul>
