@@ -74,6 +74,7 @@ img.profile-pic,
 	grid-area: 2 / 1 / span 1 / span 1;
 	color: black;
 	text-decoration: none;
+	width: 20em;
 }
 
 #profile #actions ul,
@@ -88,14 +89,9 @@ img.profile-pic,
 	padding: 0.2em;
 }
 
-#profile #actions ul li button {
+#profile #actions ul li button,
+#shelter-profile #actions ul li button {
 	width: 100%;
-}
-
-#shelter-profile #actions ul li a {
-	width: 100%;
-	color: var(--main-color);
-	text-align: center;
 }
 
 #adopted-pets-profile {
