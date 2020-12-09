@@ -20,6 +20,13 @@
     </form>
 </template>
 <script>
+    function newComment_checkTextOrImage(newCommentForm){
+        let text = newCommentForm.querySelector('#comment-text');
+        let file = newCommentForm.querySelector('#comment-picture-input');
+        let good = (text.value != '' || file.value != '');
+        if(!good) alert("New comment must have at least text or an image.");
+        return good;
+    }
 
     function newComment_submitForm(newCommentForm){
         let files = newCommentForm.querySelector('#comment-picture-input').files;
@@ -95,6 +102,8 @@
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `profile.php?username=${user.username}`;
         el_pic.children[0].src = (user.pictureUrl !== null ? user.pictureUrl : 'resources/img/no-image.svg');
+
+        answerElement.addEventListener('submit', (e) => { newComment_onSubmit(e); });
 
         return answerElement;
     }

@@ -5,14 +5,6 @@ function onChangeCommentPictureInput(input){
     updateImgFromFile(img, file);
 }
 
-function newComment_checkTextOrImage(comment){
-    let text = comment.querySelector('#comment-text');
-    let file = comment.querySelector('#comment-picture-input');
-    let good = (text.value != '' || file.value != '');
-    if(!good) alert("New comment must have at least text or an image.");
-    return good;
-}
-
 function editComment_checkTextOrImage(comment){
     let text = comment.querySelector('#comment-text');
     let file = comment.querySelector('#comment-picture-input');
