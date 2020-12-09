@@ -26,6 +26,12 @@
             <h1><?= $pet['name'] ?></h1>
             <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet['location'] ?></span></span>
             <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
+            <?php  $shelter = getPetShelter($_GET['id']);
+                if (!is_null($shelter)) { ?>
+                <section id="shelter">
+                    <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+                </section>
+            <?php } ?>
         </div>
         <div id="actions">
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
@@ -71,12 +77,6 @@
         
     if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || ($petAdopted && $_SESSION['username'] == $userWhoAdoptedPet['username']) || (isset($_SESSION['isShelter']) && $_SESSION['username'] == $shelter))){ ?>
         <section id="action-edit-pet">
-            <?php  $shelter = getPetShelter($_GET['id']);
-                if (!is_null($shelter)) { ?>
-                <section id="shelter">
-                    <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
-                </section>
-            <?php } ?>
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
             </ul>
