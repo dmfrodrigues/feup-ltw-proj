@@ -70,6 +70,11 @@ img.profile-pic,
 	text-decoration: none;
 }
 
+#profile #owned p,
+#profile #favorites p {
+	margin: auto;
+}
+
 #profile #actions,
 #shelter-profile #actions {
 	grid-area: 2 / 1 / span 1 / span 1;

@@ -36,6 +36,9 @@
 	#shelter-profile {
 		display: block;
 	}
+	#profile #owned{
+		margin: auto;
+	}
 	#pet header {
 		display: block;
 	}
