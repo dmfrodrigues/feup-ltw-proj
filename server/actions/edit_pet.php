@@ -17,17 +17,9 @@ for($i = 0; $i < $N; ++$i){
     $pictures[] = $picture;
 }
 
-$canEdit = false;
-
 if (isset($_SESSION['username'])){
 
-    if(!isset($_SESSION['isShelter']) && ($_SESSION['username'] === $pet['postedBy'])) $canEdit = true;
-    else if (isset($_SESSION['isShelter'])) {
-        $shelter = getShelter($_SESSION['username']);
-        if (getPetShelter($_GET['id']) === $shelter['username']) $canEdit = true;
-    }
-
-    if ($canEdit) {
+    if (userCanEditPet($_SESSION['username'], $_GET['id'])) {
         editPet(
             $_GET['id'],
             $_POST['name'],
@@ -40,14 +32,11 @@ if (isset($_SESSION['username'])){
             $_POST['description'],
             $pictures
         );
+        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
+        die();
     }
 
-    
 }
 
-if ($canEdit)
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
-else
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
-
+header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
 die();

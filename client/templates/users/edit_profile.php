@@ -68,9 +68,11 @@ function editProfile($isShelter) {
             <?php } ?> 
             <input type="submit" value="Submit" id="edit-profile-submit">
         </form>
-        <section id='delete-user'>
-            <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?username=<?= $editUser['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
-        </section>
+        <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $editUser['username']) { ?>
+            <section id='delete-user'>
+                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?username=<?= $editUser['username'] ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+            </section>
+        <?php } ?> 
     </section>
 </article>
 <?php }

@@ -15,7 +15,8 @@
 }
 
 @media (max-width: 80em) {
-	.pet-card-grid {
+	.pet-card-grid,
+	.potential-collaborators-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
@@ -31,7 +32,8 @@
 }
 
 @media (max-width: 60em) {
-	#profile {
+	#profile,
+	#shelter-profile {
 		display: block;
 	}
 	#pet header {
@@ -53,7 +55,7 @@
 		margin: 0;
 	}
 
-	#edit-pet #pet-photos-row{
+	#edit-pet #pet-photos-row {
 		grid-template-columns: repeat(2, 1fr);
 	}
 
@@ -63,7 +65,8 @@
 }
 
 @media (max-width: 40em) {
-	.pet-card-grid {
+	.pet-card-grid,
+	.potential-collaborators-grid {
 		grid-template-columns: repeat(1, 1fr);
 	}
 	#add-pet form {
@@ -110,5 +113,10 @@
 			"password"
 			"submit"
 			"delete-user";
+	}
+
+	div#proposal-message textarea,
+	div#proposal-message-submit textarea{
+		width: 35em;
 	}
 }
