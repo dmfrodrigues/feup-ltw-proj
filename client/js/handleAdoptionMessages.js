@@ -12,7 +12,7 @@ proposals.forEach((proposal) => {
 })
 
 window.onload = function(event) {
-    window.location='#proposal-message-submit';
+    window.location='#proposal-messages-refresh';
 }
 
 async function addNewAdoptionRequestMsg() {
@@ -42,7 +42,7 @@ async function addNewAdoptionRequestMsg() {
     
     submitMsg.querySelector('textarea').value = "";
     mainObject.appendChild(submitMsg);
-    window.location='#proposal-message-submit';
+    window.location='#proposal-messages-refresh';
 }
 
 async function ajaxAddAdoptionRequest(bodyParams) {
@@ -107,4 +107,11 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     
     mainObject.appendChild(proposal);
 
+}
+
+async function onClickedUpdateComments(el){
+    el.classList.add("rotating");
+    await sleep(1400);
+    // updateCommentsSection();
+    el.classList.remove("rotating");
 }
