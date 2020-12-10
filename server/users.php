@@ -228,9 +228,9 @@ function deleteUser(string $username) {
  *
  * @param string $username  User's username
  * @param array $file       File (as obtained from $_FILES['file_field'])
- * @return void
+ * @return string
  */
-function setUserPhoto(string $username, string $tmpFilePath){
+function setUserPhoto(string $username, string $tmpFilePath): string{
     $ext = checkImageFile($tmpFilePath, 1000000);
 
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
@@ -446,8 +446,9 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
 /**
  * Change adoption request outcome
  *
- * @param string $reqId    Adoption Request Id
+ * @param int $reqId
  * @param string $outcome  Adoption Request outcome
+ *
  * @return bool            True if successful, false otherwise.
  */
 function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
@@ -501,9 +502,10 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
  * @param string $username  Username of user that created request
  * @param integer $id       ID of pet the adoption request refers to
  * @param string $text      Text of the adoption request
- * @return integer          ID of the adoption request
+ *
+ * @return string ID of the adoption request
  */
-function addAdoptionRequest(string $username, int $id, string $text) : int {
+function addAdoptionRequest(string $username, int $id, string $text) : string {
     global $db;
     $stmt = $db->prepare('INSERT INTO AdoptionRequest
     (user, pet, text)

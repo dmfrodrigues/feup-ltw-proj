@@ -59,6 +59,9 @@ class Pet implements JsonSerializable {
     public function getDescription () :  string { return $this->description ; }
     public function getStatus      () :  string { return $this->status      ; }
     public function getAdoptionDate() : ?string { return $this->adoptionDate; }
+    /**
+     * @return User|string
+     */
     public function getPostedBy    (bool $raw = false) { 
         if($raw) return $this->postedBy;
         else     return User::fromDatabase($this->postedBy);
@@ -86,7 +89,7 @@ class Pet implements JsonSerializable {
 		return get_object_vars($this);
     }
     
-    public function addToDatabase(){
+    public function addToDatabase(): void{
         global $db;
         $stmt = $db->prepare('INSERT INTO Pet
         (name, species, age, sex, size, color, location, description, postedBy)
@@ -335,7 +338,7 @@ class AdoptionRequestMessage {
  * @param string $location      Location
  * @param string $description   Description
  * @param string $postedBy      User that posted the pet
- * @return integer              ID of the new pet
+ * @return int                  ID of the new pet
  */
 function addPet(
     string $name,
@@ -814,7 +817,7 @@ function getAdoptedPets() : array {
 /**
  * Get the user who adopted the given pet.
  *
- * @param string $id        Pet's ID
+ * @param int $id           Pet's ID
  * @return array            User who adopted the pet
  */
 function getUserWhoAdoptedPet(int $id): array {

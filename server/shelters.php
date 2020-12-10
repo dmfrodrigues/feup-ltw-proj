@@ -292,8 +292,9 @@ function getUsersAvailableForShelter() : array {
  * Removes a user from the shelter.
  *
  * @param string $username  Username
+ * @return void
  */
-function removeShelterCollaborator(string $username) {
+function removeShelterCollaborator(string $username): void {
     global $db;
 
     $stmt = $db->prepare('UPDATE
@@ -309,7 +310,7 @@ function removeShelterCollaborator(string $username) {
  * Check if a user's already member of a Shelter
  *
  * @param string $username  Username 
- * @return array            True if it is, false otherwise.
+ * @return bool             True if it is, false otherwise.
  */
 function checkUserBelongsToShelter(string $username) : bool {
     global $db;
@@ -328,7 +329,7 @@ function checkUserBelongsToShelter(string $username) : bool {
  *
  * @param string $username  Username (User)
  * @param string $shelter   Username (Shelter)
- * @return array            True if successful, false otherwise.
+ * @return bool True if successful, false otherwise.
  */
 function acceptShelterInvite(string $username, string $shelter) : bool {
     global $db;
@@ -356,7 +357,7 @@ function acceptShelterInvite(string $username, string $shelter) : bool {
  *
  * @param string $user     Username (User)
  * @param string $shelter  Username (Shelter)
- * @return array           True if successful. False otherwise.
+ * @return bool True if successful. False otherwise.
  */
 function deleteShelterInvitation(string $user, string $shelter) : bool {
     global $db;
@@ -374,8 +375,9 @@ function deleteShelterInvitation(string $user, string $shelter) : bool {
  * Leave a shelter.
  *
  * @param string $username  Username 
+ * @return void
  */
-function leaveShelter(string $username) {
+function leaveShelter(string $username): void {
     global $db;
 
     $stmt = $db->prepare('UPDATE User
@@ -442,7 +444,7 @@ function getPetShelter(int $petId) : ?string {
  * Get the shelter invitation that were not answered yet.
  *
  * @param string $shelter   Username (Shelter)
- * @return string           Array containing all the shelter pending invitations.
+ * @return array
  */
 function getShelterPendingInvitations(string $shelter) : array {
     global $db;
@@ -464,13 +466,13 @@ function getShelterPendingInvitations(string $shelter) : array {
 /**
  * Checks if the user can edit the pet.
  *
- * @param string $username     Username (User)
- * @param string $shelter  Username (Shelter)
- * @return array           True if successful. False otherwise.
+ * @param string $username  Username (User)
+ * @param string $petId     Username (Shelter)
+ * @return bool True if successful. False otherwise.
  */
-function userCanEditPet($username, $petId) : bool {
+function userCanEditPet(string $username, string $petId) : bool {
 
-    $pet = getPet((int) $petId);
+    $pet = Pet::fromDatabase((int) $petId);
 
     if (isShelter($username)) {
         $pets = getShelterPetsForAdoption($username);

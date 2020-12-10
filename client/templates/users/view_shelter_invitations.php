@@ -1,5 +1,5 @@
 <?php
-    function drawInvitation($user, $shelter, $text, $requestDate, $isShelter) { ?>
+    function drawInvitation($user, $shelter, $text, $requestDate, $isShelter): void { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$shelter?>"> 
@@ -31,11 +31,11 @@
 
     <?php 
 
-    function drawEmptyInvitations() { ?>
+    function drawEmptyInvitations(): void { ?>
         <h2 style="text-align: center">No Shelter Invitations found!</h2>
     <?php } 
 
-    function drawShelterInvitations($shelterInvitations, $isShelter) {
+    function drawShelterInvitations($shelterInvitations, $isShelter): void {
         if(count($shelterInvitations) > 0) { 
             foreach($shelterInvitations as $invitation) 
                 drawInvitation(
@@ -50,7 +50,7 @@
         }
     }
 
-    function drawInvitationError() { 
+    function drawInvitationError(): void { 
         global $errorsArray; ?>
             <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$_GET['errorCode']] ?></p>
     <?php } 

@@ -4,8 +4,9 @@
  * Print result in specified format.
  *
  * @param mixed $result Result of request.
+ * @return void
  */
-function print_result($result) {
+function print_result($result): void {
     switch($_SERVER['HTTP_ACCEPT']){
         case 'application/json':
             header('Content-Type: application/json');

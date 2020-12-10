@@ -1,5 +1,5 @@
 <?php
-function editProfile($isShelter) { 
+function editProfile($isShelter): void { 
     global $user;
     global $shelter;
     $editUser = null;

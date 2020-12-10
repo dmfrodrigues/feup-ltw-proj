@@ -17,7 +17,7 @@ namespace Authorization {
     }
 
     $rules = [];
-    function add_rule(int $resourceType, int $method, callable $rule){ $rules[$resourceType][$method] = $rule; }
+    function add_rule(int $resourceType, int $method, callable $rule): void{ $rules[$resourceType][$method] = $rule; }
 
     add_rule(Resource::PROFILE                 , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
     add_rule(Resource::NOTIFICATION            , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
@@ -72,7 +72,7 @@ namespace Authorization {
     add_rule(Resource::COMMENT, Method::READ , function(\User $user, \FavoritePet $favorite){ return true                         ; }); // Everyone can see
     add_rule(Resource::COMMENT, Method::WRITE, function(\User $user, \FavoritePet $favorite){ return $user == $favorite->getUser(); }); // \User can write
 
-    function check(int $resourceType, int $method, \User $user, $resource){
+    function check(int $resourceType, int $method, \User $user, $resource): bool{
         if(isset($rules[$resourceType])){
             if(isset($rules[$resourceType][$method])){
                 $current_rules = $rules[$resourceType][$method];

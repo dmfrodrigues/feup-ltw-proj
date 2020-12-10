@@ -1,7 +1,7 @@
 <?php
 include_once SERVER_DIR . '/users.php';
 
-$user_id_photo_GET = function($args){
+$user_id_photo_GET = function($args): void{
     $username = $args[1];
     $ret = getUserPicture($username);
     if($ret == null){
@@ -13,7 +13,7 @@ $user_id_photo_GET = function($args){
     }
 };
 
-$user_id_photo_PUT = function($args){
+$user_id_photo_PUT = function($args): void{
     $username = $args[1];
     
     $file = fopen('php://input', 'r');
@@ -27,7 +27,7 @@ $user_id_photo_PUT = function($args){
     print_result($ret);
 };
 
-$user_id_photo_DELETE = function($args){
+$user_id_photo_DELETE = function($args): void{
     $id = $args[1];
 
     try{

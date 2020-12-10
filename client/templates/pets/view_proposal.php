@@ -1,5 +1,5 @@
 <?php
-    function drawPetProposal($reqId, $name, $adoptionMessage, $petId, $user, $outcome, $reqDate, $isMyPetProposal) { 
+    function drawPetProposal($reqId, $name, $adoptionMessage, $petId, $user, $outcome, $reqDate, $isMyPetProposal): void { 
         if($outcome == 'pending') { ?>
             <div id="proposal"> 
                 <?php if($isMyPetProposal) { ?>
@@ -36,7 +36,7 @@
 
     <?php 
 
-    function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+    function drawAdoptionRequestInitialMessage($adoptionRequest): void { ?>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
@@ -56,7 +56,7 @@
     
     <?php 
 
-    function drawAllOtherMessages($adoptionRequestMessages) { 
+    function drawAllOtherMessages($adoptionRequestMessages): void { 
         foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
@@ -78,7 +78,7 @@
 
     <?php 
 
-    function drawAnswerAdoptionRequest() { ?>
+    function drawAnswerAdoptionRequest(): void { ?>
         <div id="proposal-msg"> 
             <input type="hidden" value="1">
             <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
@@ -101,7 +101,7 @@
 
     <?php
 
-    function drawProposals($adoptionRequests) {
+    function drawProposals($adoptionRequests): void {
         foreach($adoptionRequests as $adoptionReq) {
             if ($adoptionReq['outcome'] !== 'accepted')
                 drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
@@ -109,7 +109,7 @@
             }    
     }
 
-    function drawMyProposals($adoptionRequests) {
+    function drawMyProposals($adoptionRequests): void {
         foreach($adoptionRequests as $adoptionReq) 
             drawPetProposal($adoptionReq['requestId'], $adoptionReq['name'], $adoptionReq['text'], $adoptionReq['id'],
                 $adoptionReq['user'], $adoptionReq['outcome'], $adoptionReq['requestDate'], false);
