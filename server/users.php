@@ -54,6 +54,38 @@ class User {
         $user = $stmt->fetch();
         return $user;
     }
+
+    public function updateDatabase() : void {
+        global $db;
+        $stmt = $db->prepare('UPDATE User SET
+        password=:password,
+        name=:name,
+        registeredOn=:registeredOn,
+        shelter=:shelter
+        WHERE username=:username');
+        $stmt->bindParam(':username'    , $username    );
+        $stmt->bindParam(':password'    , $password    );
+        $stmt->bindParam(':name'        , $name        );
+        $stmt->bindParam(':registeredOn', $registeredOn);
+        $stmt->bindParam(':shelter'     , $shelter     );
+        $stmt->execute();
+    }
+
+    static public function changeUsernameInDatabase(string $oldUsername, string $newUsername){
+        global $db;
+
+        if($oldUsername != $newUsername)
+            if (userAlreadyExists($newUsername))
+                throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+            
+        $stmt = $db->prepare('UPDATE User SET
+        username=:newUsername,
+        WHERE username=:oldUsername');
+        $stmt->bindParam(':newUsername', $newUsername);
+        $stmt->bindParam(':oldUsername', $oldUsername);
+        $stmt->execute();
+        changePictureUsername($oldUsername, $newUsername);
+    }
 }
 
 /**
@@ -167,27 +199,17 @@ function isAdmin(string $username) : bool {
 /**
  * Edit user name.
  *
- * @param string $lastUsername  User's last username
+ * @param string $oldUsername   User's last username
  * @param string $newUsername   User's new username
  * @param string $name          User's name
  * @return void
  */
-function editUser(string $lastUsername, string $newUsername, string $name) {
-    global $db;
+function editUser(string $oldUsername, string $newUsername, string $name) {
+    $user = User::fromDatabase($oldUsername);
+    $user->setName($name);
+    $user->updateDatabase();
 
-    if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername))
-            throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
-        
-    $stmt = $db->prepare('UPDATE User SET
-    username=:newUsername,
-    name=:name
-    WHERE username=:lastUsername');
-    $stmt->bindParam(':newUsername', $newUsername);
-    $stmt->bindParam(':lastUsername', $lastUsername);
-    $stmt->bindParam(':name'    , $name);
-    $stmt->execute();
-    changePictureUsername($lastUsername, $newUsername);
+    User::changeUsernameInDatabase($oldUsername, $newUsername);
 }
 
 
