@@ -79,6 +79,7 @@ div#proposal-message textarea, div#proposal-message-submit textarea {
     border: 0px;
 	resize: none;
 	padding: 1em;
+	margin-right: 0em;
 }
 
 div#proposal-message textarea:focus,
@@ -92,7 +93,7 @@ a#proposal-pet {
 }
 
 #proposal button {
-	margin: 1em 1em;
+	margin: 3em 1em;
 	width: 13em;
 	height: 2.5em;
 	border-radius: 1em;
@@ -165,7 +166,7 @@ button#submitAnswer {
 	transform: rotate(360deg);
 }
 
-#abc {
+#refresh-div {
 	position: absolute;
 	right: 2em;
 	top: 2em;

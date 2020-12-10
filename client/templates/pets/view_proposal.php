@@ -94,7 +94,7 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="abc"><button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button></div>
+                    <div id="refresh-div"><button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button></div>
 
                 </div>  
             </div>
