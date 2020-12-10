@@ -86,26 +86,26 @@ class User {
         $stmt->execute();
         changePictureUsername($oldUsername, $newUsername);
     }
-}
 
-/**
- * Check if user-password pair is valid.
- *
- * @param string $username  Username
- * @param string $password  Password
- * @return boolean          True if the user-password pair is correct, false otherwise
- */
-function userPasswordExists(string $username, string $password) : bool {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('SELECT username
-    FROM User
-    WHERE username=:username AND password=:password');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-    return (count($users) > 0);
+    /**
+     * Check if user-password pair is valid.
+     *
+     * @param string $username  Username
+     * @param string $password  Password
+     * @return boolean          True if the user-password pair is correct, false otherwise
+     */
+    static public function checkCredentials(string $username, string $password) : bool {
+        global $db;
+        $password_sha1 = sha1($password);
+        $stmt = $db->prepare('SELECT username
+        FROM User
+        WHERE username=:username AND password=:password');
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':password', $password_sha1);
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        return (count($users) > 0);
+    }
 }
 
 /**
