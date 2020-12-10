@@ -59,7 +59,7 @@
                 <ul>
                     <li><a href="pets.php">Pets Listed for Adoption</a></li>
                     <li><a href="adopted_pets.php">Adopted Pets</a></li>
-                    <li><a href="shelters.php">View Shelters</a></li>
+                    <li><a href="view_shelters.php">View Shelters</a></li>
                 </ul>
         </nav>
         <main>
