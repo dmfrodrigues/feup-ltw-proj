@@ -6,6 +6,7 @@ include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/shelters.php';
+include_once SERVER_DIR.'/notifications.php';
 include_once 'templates/common/header.php';
 
 if(isShelter($_GET['username'])) {

@@ -16,8 +16,7 @@
             <li><button onclick="location.href = 'my_proposals.php'">My proposals</button></li>
             <li><button onclick="location.href = 'view_adopted_pets_by_user.php'">View adopted pets</button></li>
             <li><button onclick="location.href = 'view_previously_owned_pets.php'">View previously owned pets</button></li>
-            <?php 
-                if(checkUserBelongsToShelter($user['username'])) { 
+            <?php if(checkUserBelongsToShelter($user['username'])) { 
                     $shelterName = getUserShelter($user['username']); ?>
                     <li><button onclick="location.href = 'profile.php?username=<?=$shelterName?>'">View shelter</button></li>
             <?php } else { ?>

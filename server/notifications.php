@@ -65,8 +65,8 @@ function readNotification(int $notificationId) {
     global $db;
 
     $stmt = $db->prepare('UPDATE Notification SET 
-    Notification.read = 1
-    WHERE Notification.id=:notificationId');
+    read=1
+    WHERE id=:notificationId');
 
     $stmt->bindParam(':notificationId', $notificationId);
     $stmt->execute();
@@ -89,16 +89,31 @@ function deleteNotification(int $notificationId) {
 }
 
 /**
+ * Deletes all user's notifications.
+ *
+ * @param string $username    User's username
+ * @return void
+ */
+function deleteAllNotifications(string $username) {
+    
+    $notifications = getNotifications($username);
+
+    foreach($notifications as $notification)
+        deleteNotification($notification['id']);
+}
+
+/**
  * Checks if the user has unread notifications.
  *
  * @param string $username    User's username
  * @return bool               True if the user has unread notifications; false otherwise.
  */
 function userHasUnreadNotifications(string $username) : bool {
+
     $notifications = getNotifications($username);
 
     foreach($notifications as $notification)
-        if ($notification['read'] === 0) return true;
-    
+        if ($notification['read'] == 0) return true;
+        
     return false;
 }

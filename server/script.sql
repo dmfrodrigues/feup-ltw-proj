@@ -59,10 +59,10 @@ CREATE TABLE Admin (
 );
 
 CREATE TABLE Notification (
-    id          INTEGER,
+    id          INTEGER NOT NULL,
     read        INTEGER NOT NULL DEFAULT 0,
     subject     VARCHAR NOT NULL,
-    text        VARCHAR,
+    text        VARCHAR NOT NULL CHECK (text <> ''),
     user        VARCHAR NOT NULL,
 
     CONSTRAINT Notification_PK PRIMARY KEY(id),
