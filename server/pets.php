@@ -311,16 +311,6 @@ function addPet(
 }
 
 /**
- * Get pet information.
- *
- * @param integer $id   ID of pet
- * @return array        Array of named indexes containing pet information
- */
-function getPet(int $id) : Pet {
-    return Pet::fromDatabase($id);
-}
-
-/**
  * Edit pet.
  *
  * @param integer $id           Pet ID

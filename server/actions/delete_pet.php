@@ -4,7 +4,7 @@ session_start();
 include_once __DIR__ . '/../server.php';
 include_once SERVER_DIR.'/connection.php';
 include_once SERVER_DIR.'/pets.php';
-$pet = getPet($_GET['id']);
+$pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet->getPostedBy(true)){
