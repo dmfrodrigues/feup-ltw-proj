@@ -12,23 +12,21 @@ if ($_GET['username'] != $_SESSION['username'])
 
 changeAdoptionRequestOutcome($_GET['requestId'], $_GET['outcome']);
 
-
+$pet = getPet($_GET['petId']);
 
 if($_GET['outcome'] === 'accepted') {    
     changePetStatus($_GET['petId'], 'adopted');
     refuseOtherProposals($_GET['requestId'], $_GET['petId']);
 
-    $adoptedPet = getPet($_GET['petId']);
     $userWhoAdopted = getUserWhoAdoptedPet($_GET['petId']);
-    $userWhoPostedPet = $adoptedPet['postedBy'];
+    $userWhoPostedPet = $pet['postedBy'];
 
-    addNotification($userWhoAdopted['username'], "adoptionProposalOutcome", "Your proposal for ". $adoptedPet['name'] . ", posted by " . $userWhoPostedPet . " was accepted.");
+    addNotification($userWhoAdopted['username'], "adoptionProposalOutcome", "Your proposal for ". $pet['name'] . ", posted by " . $userWhoPostedPet . " was accepted.");
 }
 
 if($_GET['outcome'] === 'rejected') {    
     
     $adoptionRequest = getAdoptionRequest($_GET['requestId']);
-    $pet = getPet($_GET['petId']);
     $userWhoProposed = $adoptionRequest['user'];
     $userWhoPostedPet = $adoptionRequest['postedBy'];
 
@@ -36,3 +34,5 @@ if($_GET['outcome'] === 'rejected') {
 }
     
 header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);
+
+die();
