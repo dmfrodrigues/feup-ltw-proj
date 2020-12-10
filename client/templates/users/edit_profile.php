@@ -3,7 +3,7 @@ function editProfile($isShelter) {
     global $user;
     global $shelter;
     $editUser = null;
-    ($isShelter) ? $editUser = $shelter : $editUser = $user;
+    $editUser = ($isShelter ? $shelter : $user);
     ?>
     <article id="edit-profile">
     <header>
@@ -21,7 +21,7 @@ function editProfile($isShelter) {
                     <div class="dropdown" id="edit-options">
                         <ul>
                             <li>
-                                <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile_picture.php?username=<?= $editUser['username'] ?>" enctype="multipart/form-data" method="POST">
+                                <form id="edit-user-photo" enctype="multipart/form-data" method="PUT">
                                     <script>
                                         function onFileChange(){
                                             if(document.getElementById('profile_picture').value != ''){
@@ -37,7 +37,7 @@ function editProfile($isShelter) {
                                 </form>
                             </li>
                             <li <?php if(is_null($editUser['pictureUrl'])) echo 'class="disabled"';?>>
-                                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/erase_profile_picture.php?username=<?= $editUser['username']?>">Erase picture</a>
+                                <a onclick="deleteUserPhoto_submitForm(this)">Erase picture</a>
                             </li>
                         </ul>
                     </div>
@@ -75,4 +75,38 @@ function editProfile($isShelter) {
         <?php } ?> 
     </section>
 </article>
-<?php }
+<script defer>
+    api = new RestApi(API_URL);
+
+    function editUserPhoto_submitForm(editUserPhotoForm){
+        let files = editUserPhotoForm.querySelector("#profile_picture").files;
+        let picture = (files.length <= 0 ? null : files[0]);
+
+        if(picture != null){
+            api.put("user/<?= $editUser['username'] ?>/photo", picture)
+            .then((response) => response.json())
+            .then(function(response){
+                window.location.reload(true);
+            });
+        }
+    }
+
+    function editUserPhoto_onSubmit(e){
+        e.preventDefault();
+        editUserPhotoForm = e.target;
+        editUserPhoto_submitForm(editUserPhotoForm);
+    }
+
+    document.querySelector('#edit-user-photo').addEventListener('submit', (e) => { editUserPhoto_onSubmit(e); })
+
+    function deleteUserPhoto_submitForm(deleteUserPhotoForm){
+        api.delete("user/<?= $editUser['username'] ?>/photo")
+        .then(function(){
+            window.location.reload(true);
+        })
+        .catch(function (error){
+            console.error(error);
+        });
+    }
+</script>
+<?php } ?>

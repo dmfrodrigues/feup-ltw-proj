@@ -34,7 +34,7 @@ class RestServer {
             $matched = false;
             foreach($tree as $regex => $subtree){
                 if($regex == '') continue;
-                if(preg_match("/({$regex})\/(.*)/", $uri, $matches)){
+                if(preg_match("/^({$regex})\/(.*)$/", $uri, $matches)){
                     $matched = true;
                     $args[] = $matches[1];
                     $uri = $matches[2];
