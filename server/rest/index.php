@@ -14,7 +14,7 @@ include_once API_DIR . '/comment/comment.php';
 $tree = [
     'user' => [null             => new ResourceHandlers(null                , null, null                 , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers(null                , null, null                 , null                    ),
-            'photo'             => new ResourceHandlers($user_id_photo_GET  , null, null                 , null                    )
+            'photo'             => new ResourceHandlers($user_id_photo_GET  , null, $user_id_photo_PUT   , $user_id_photo_DELETE   )
         ]
     ],
     'pet' => [null              => new ResourceHandlers(null                , null, null                 , null                    ),

@@ -12,7 +12,7 @@ if($_GET['username'] != $_SESSION['username']){
 $file = $_FILES['profile_picture'];
 
 try{
-    saveUserPicture($_GET['username'], $file);
+    setUserPhoto($_GET['username'], $file);
 
     header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
 } catch (RuntimeException $e) {

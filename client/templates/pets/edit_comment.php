@@ -56,6 +56,7 @@
         .then(function (response){
             if     (deleteFile      ) return api.delete(`comment/${id}/photo`);
             else if(picture !== null) return api.put   (`comment/${id}/photo`, picture);
+            else                      return Promise.resolve('');
         })
         .then(function(response){ updateCommentsSection(); });
     }
@@ -67,7 +68,6 @@
 
         newComment_checkTextOrImage(editCommentForm);
         editComment_submitForm(editCommentForm);
-        return false;
     }
 
     if(typeof Template === 'undefined') Template = {};
