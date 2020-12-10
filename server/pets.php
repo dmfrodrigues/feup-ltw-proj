@@ -7,7 +7,7 @@ define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
-class Pet {
+class Pet implements JsonSerializable {
     private  int    $id          ;
     private  string $name        ;
     private  string $species     ;
@@ -59,18 +59,64 @@ class Pet {
     public function getDescription () :  string { return $this->description ; }
     public function getStatus      () :  string { return $this->status      ; }
     public function getAdoptionDate() : ?string { return $this->adoptionDate; }
-    public function getPostedBy    () :  User   { return User::fromDatabase($this->postedBy); }
-    public function getAuthor      () :  User   { return $this->getPostedBy(); }
+    public function getPostedBy    (bool $raw = false) { 
+        if($raw) return $this->postedBy;
+        else     return User::fromDatabase($this->postedBy);
+    }
+    public function getAuthor      (bool $raw = false) {
+        if($raw) return $this->postedBy;
+        else     return $this->getPostedBy();
+    }
 
-    static public function fromDatabase(string $id) : Pet {
+    public function jsonSerialize() {
+		return get_object_vars($this);
+	}
+
+    static public function fromDatabase(int $id) : Pet {
         global $db;
         $stmt = $db->prepare('SELECT * FROM Pet WHERE id=:id');
         $stmt->bindParam(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
         $stmt->execute();
         $pet = $stmt->fetch();
+        if($pet == false) throw new RuntimeException("No such pet");
         return $pet;
     }
+
+    public function updateDatabase() : bool {
+        global $db;
+        $stmt = $db->prepare('UPDATE Pet SET
+        name=:name,
+        species=:species,
+        age=:age,
+        sex=:sex,
+        size=:size,
+        color=:color,
+        location=:location,
+        description=:description
+        WHERE id=:id');
+        $stmt->bindParam(':id'         , $this->id         );
+        $stmt->bindParam(':name'       , $this->name       );
+        $stmt->bindParam(':species'    , $this->species    );
+        $stmt->bindParam(':age'        , $this->age        );
+        $stmt->bindParam(':sex'        , $this->sex        );
+        $stmt->bindParam(':size'       , $this->size       );
+        $stmt->bindParam(':color'      , $this->color      );
+        $stmt->bindParam(':location'   , $this->location   );
+        $stmt->bindParam(':description', $this->description);
+        return $stmt->execute();
+    }
+
+    static public function deletefromDatabase(int $id) : bool {
+        rmdir_recursive(PETS_IMAGES_DIR."/$id");
+
+        global $db;
+        $stmt = $db->prepare('DELETE FROM Pet
+        WHERE id=:id');
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
 
     /**
      * Get array of all pets listed for adoption.
@@ -270,15 +316,8 @@ function addPet(
  * @param integer $id   ID of pet
  * @return array        Array of named indexes containing pet information
  */
-function getPet(int $id) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM Pet
-    WHERE id=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $pet = $stmt->fetch();
-    return $pet;
+function getPet(int $id) : Pet {
+    return Pet::fromDatabase($id);
 }
 
 /**
@@ -307,27 +346,22 @@ function editPet(
     string $description,
     array  $pictures
 ){
-    global $db;
-    $stmt = $db->prepare('UPDATE Pet SET
-    name=:name,
-    species=:species,
-    age=:age,
-    sex=:sex,
-    size=:size,
-    color=:color,
-    location=:location,
-    description=:description
-    WHERE id=:id');
-    $stmt->bindParam(':id'         , $id         );
-    $stmt->bindParam(':name'       , $name       );
-    $stmt->bindParam(':species'    , $species    );
-    $stmt->bindParam(':age'        , $age        );
-    $stmt->bindParam(':sex'        , $sex        );
-    $stmt->bindParam(':size'       , $size       );
-    $stmt->bindParam(':color'      , $color      );
-    $stmt->bindParam(':location'   , $location   );
-    $stmt->bindParam(':description', $description);
-    $stmt->execute();
+    $oldPet = Pet::fromDatabase($id);
+    $pet = new Pet(
+        $id,
+        $name,
+        $species,
+        $age,
+        $sex,
+        $size,
+        $color,
+        $location,
+        $description,
+        $oldPet->getStatus(),
+        $oldPet->getAdoptionDate(),
+        $oldPet->getPostedBy(true)
+    );
+    $pet->updateDatabase();
 
     editPetPictures($id, $pictures);
 }
@@ -414,13 +448,7 @@ function newPetPictures(int $petId, array $newpic){
  * @return void
  */
 function removePet(int $id){
-    rmdir_recursive(PETS_IMAGES_DIR."/$id");
-
-    global $db;
-    $stmt = $db->prepare('DELETE FROM Pet
-    WHERE id=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
+    Pet::deleteFromDatabase($id);
 }
 
 define('IMAGES_EXTENSIONS', ['jpg']);
@@ -808,8 +836,8 @@ function getAdoptedPetsPublishedByUser($username) : array {
     $adoptedPetsPublishedByUser = array();
 
     foreach($adoptedPets as $pet) {
-        $user = getUserWhoAdoptedPet($pet['id']);
-        if (!is_null($user) && $pet['postedBy'] === $username)
+        $user = getUserWhoAdoptedPet($pet->getId());
+        if (!is_null($user) && $pet->getPostedBy() === $username)
             array_push($adoptedPetsPublishedByUser, $pet);
     }
 

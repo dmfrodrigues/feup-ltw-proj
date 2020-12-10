@@ -7,7 +7,7 @@ include_once SERVER_DIR.'/pets.php';
 $pet = getPet($_GET['id']);
 
 if (isset($_SESSION['username'])){
-    if($_SESSION['username'] != $pet['postedBy']){
+    if($_SESSION['username'] != $pet->getPostedBy(true)){
         header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
         die();
     }

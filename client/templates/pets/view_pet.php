@@ -9,24 +9,24 @@
     <header>
         <div id="pet-photos">
             <?php
-            $photos = getPetPhotos($pet['id']);
+            $photos = getPetPhotos($pet->getId());
             if (empty($photos)) $photoSelected = "resources/img/no-image.svg";
             else $photoSelected = $photos[0];
             ?>
             <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
             <div id=pet-photos-row>
-                <img class="selected" src="<?= $photoSelected ?>" alt="photo 0 of <?= $pet['name'] ?>" onclick="selectPhoto()" />
+                <img class="selected" src="<?= $photoSelected ?>" alt="photo 0 of <?= $pet->getName() ?>" onclick="selectPhoto()" />
                 <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
-                    <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet['name'] ?>" onclick="selectPhoto()" />
+                    <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet->getName() ?>" onclick="selectPhoto()" />
                 <?php } ?>
-                <a href="pet_album.php?id=<?= $pet['id'] ?>">All Photos</a>
+                <a href="pet_album.php?id=<?= $pet->getId() ?>">All Photos</a>
             </div>
         </div>
         <div id="data">
-            <h1><?= $pet['name'] ?></h1>
-            <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet['location'] ?></span></span>
-            <span id="postedBy"><a href="profile.php?username=<?= $pet['postedBy'] ?>"><?= $pet['postedBy'] ?></a></span>
-            <?php  $shelter = getPetShelter($_GET['id']);
+            <h1><?= $pet->getName() ?></h1>
+            <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
+            <span id="postedBy"><a href="profile.php?username=<?= $pet->getPostedBy(true) ?>"><?= $pet->getPostedBy(true) ?></a></span>
+            <?php $shelter = getPetShelter($_GET['id']);
                 if (!is_null($shelter)) { ?>
                 <section id="shelter">
                     <h2>Associated with shelter <a href="profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
@@ -50,7 +50,7 @@
     </header>
     <section id="description">
         <h2>Description</h2>
-        <?php foreach (explode(PHP_EOL, $pet['description']) as $paragraph) { ?>
+        <?php foreach (explode(PHP_EOL, $pet->getDescription()) as $paragraph) { ?>
             <p><?= $paragraph ?></p>
         <?php } ?>
     </section>
@@ -58,27 +58,27 @@
         <h2>About</h2>
         <div id="age">
             <span class="name">Age</span><span class="value"><?php
-                if ($pet['age'] >= 1) echo "{$pet['age']} years";
-                else                  echo ($pet['age'] * 12) . ' months';
+                if ($pet->getAge() >= 1) echo "{$pet->getAge()} years";
+                else                  echo ($pet->getAge() * 12) . ' months';
                 ?></span>
         </div>
-        <div id="sex"><span class="name">Sex</span><span class="value"><?= $pet['sex'] ?></span></div>
-        <div id="species"><span class="name">Species</span><span class="value"><?= $pet['species'] ?></span></div>
-        <div id="size"><span class="name">Size</span><span class="value"><?= $pet['size'] ?></span></div>
-        <div id="color"><span class="name">Color</span><span class="value"><?= $pet['color'] ?></span></div>
+        <div id="sex"><span class="name">Sex</span><span class="value"><?= $pet->getSex() ?></span></div>
+        <div id="species"><span class="name">Species</span><span class="value"><?= $pet->getSpecies() ?></span></div>
+        <div id="size"><span class="name">Size</span><span class="value"><?= $pet->getSize() ?></span></div>
+        <div id="color"><span class="name">Color</span><span class="value"><?= $pet->getColor() ?></span></div>
     </section>
     <?php 
-    $userWhoAdoptedPet = getUserWhoAdoptedPet($pet['id']);
+    $userWhoAdoptedPet = getUserWhoAdoptedPet($pet->getId());
     $petAdopted = false;
     if (!empty($userWhoAdoptedPet))
         $petAdopted = true;
 
     $shelter = getPetShelter($_GET['id']);
         
-    if(isset($_SESSION['username']) && userCanEditPet($_SESSION['username'],$pet['id'])){ ?>
+    if(isset($_SESSION['username']) && userCanEditPet($_SESSION['username'],$pet->getId())){ ?>
         <section id="action-edit-pet">
             <ul>
-                <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
+                <li><a href="edit_pet.php?id=<?= $pet->getId() ?>"><img src="resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php } ?>

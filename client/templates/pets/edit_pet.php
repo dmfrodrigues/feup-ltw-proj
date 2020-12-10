@@ -1,12 +1,12 @@
 <?php
-$photos = getPetPhotos($pet['id']);
+$photos = getPetPhotos($pet->getId());
 ?>
 <article id="edit-pet">
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet['id'] ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet->getId() ?>" method="post" enctype="multipart/form-data">
         <header>
-            <input type="text" name="name" placeholder="Pet name" value="<?=$pet['name']?>" required>
+            <input type="text" name="name" placeholder="Pet name" value="<?=$pet->getName()?>" required>
             <div id="data">
-                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet['location']?>" required></span>
+                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet->getLocation()?>" required></span>
             </div>
             <div id="pet-photos">
                 <a id="add-photo" onclick="addPetPhoto(this.parentNode)"> ➕ Add photo</a>
@@ -30,18 +30,18 @@ $photos = getPetPhotos($pet['id']);
         </header>
         <section id="description">
             <h2>Description</h2>
-            <textarea name="description"><?=$pet['description']?></textarea>
+            <textarea name="description"><?=$pet->getDescription()?></textarea>
         </section>
         <section id="about">
             <h2>About</h2>
             <div id="age">
                 <span class="name">Age</span>
-                <span class="value"><input type="number" name="age" min="0" step="any" value="<?=$pet['age']?>" required></span>
+                <span class="value"><input type="number" name="age" min="0" step="any" value="<?=$pet->getAge()?>" required></span>
             </div>
             <div id="sex">
                 <span class="name">Sex </span>
                 <span class="value">
-                    <select name="sex" value="<?=$pet['sex']?>">
+                    <select name="sex" value="<?=$pet->getSex()?>">
                         <option value="M">M</option>
                         <option value="F">F</option>
                     </select>
@@ -49,12 +49,12 @@ $photos = getPetPhotos($pet['id']);
             </div>
             <div id="species">
                 <span class="name">Species</span>
-                <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." value="<?=$pet['species']?>" required></span>
+                <span class="value"><input type="text" name="species" placeholder="eg., cat, dog, ..." value="<?=$pet->getSpecies()?>" required></span>
             </div>
             <div id="size">
                 <span class="name">Size </span>
                 <span class="value">
-                    <select name="size" value="<?=$pet['size']?>">
+                    <select name="size" value="<?=$pet->getSize()?>">
                         <option value="XS">XS</option>
                         <option value="S">S</option>
                         <option value="M">M</option>
@@ -65,12 +65,12 @@ $photos = getPetPhotos($pet['id']);
             </div>
             <div id="color">
                 <span class="name">Color </span>
-                <span class="value"><input type="text" name="color" value="<?=$pet['color']?>" required></span>
+                <span class="value"><input type="text" name="color" value="<?=$pet->getColor()?>" required></span>
             </div>
         </section>
         <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
-        <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet['id'] ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+        <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

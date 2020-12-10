@@ -1,6 +1,6 @@
 <template id="newComment">
 <form class="answer" enctype="multipart/form-data" method="put">
-    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
+    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet->getId() ?>">
     <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
     <input id="comment-answerTo" name="answerTo" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">

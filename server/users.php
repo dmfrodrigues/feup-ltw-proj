@@ -212,7 +212,7 @@ function deleteUser(string $username) {
     global $db;
     $user_pets = getAddedPets($username);
     foreach($user_pets as $i => $pet){
-        $id = $pet['id'];
+        $id = $pet->getId();
         $dir = PETS_IMAGES_DIR."/$id";
         rmdir_recursive($dir);
     }
@@ -281,7 +281,7 @@ function addToFavorites(string $username, int $id){
     global $db;
     $favoritePets = getFavoritePets($username);
     foreach ($favoritePets as $pet)
-        if ($pet['id'] == $id)
+        if ($pet->getId() == $id)
             return;
     $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
             (:username, :id)');

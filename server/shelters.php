@@ -432,10 +432,10 @@ function getUserShelter(string $username) : ?string {
  */
 function getPetShelter(int $petId) : ?string {
 
-    $pet = getPet($petId);
-    $owner = getUser($pet['postedBy']);
+    $pet = Pet::fromDatabase($petId);
+    $owner = $pet->getPostedBy(true);
 
-    return getUserShelter($owner['username']);
+    return getUserShelter($owner);
 }
 
 /**
@@ -476,7 +476,7 @@ function userCanEditPet($username, $petId) : bool {
         $pets = getShelterPetsForAdoption($username);
 
         foreach($pets as $p) {
-            if ($p['id'] == $pet['id']) return true;
+            if ($p->getId() == $pet->getId()) return true;
         }
 
         return false;
@@ -484,10 +484,10 @@ function userCanEditPet($username, $petId) : bool {
         //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
     }
     else {
-        $postedByUsername = $pet['postedBy'];
+        $postedByUsername = $pet->getPostedBy();
         if ($postedByUsername === $username) return true;
         $shelter1 = getUserShelter($username);
-        $shelter2 = getUserShelter($postedByUsername);
+        $shelter2 = $postedByUsername->getShelter(true);
         if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
     }
 
