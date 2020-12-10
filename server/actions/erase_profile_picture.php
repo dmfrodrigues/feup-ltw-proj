@@ -10,7 +10,7 @@ if($_GET['username'] != $_SESSION['username']){
 }
 
 try{
-    eraseUserPicture($_GET['username']);
+    deleteUserPhoto($_GET['username']);
 
     header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
 } catch(CouldNotDeleteFileException $e){

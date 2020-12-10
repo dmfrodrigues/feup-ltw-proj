@@ -83,7 +83,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
-    $user['pictureUrl'] = getUserPicture($username);
+    $picture = getUserPicture($username);
+    $user['pictureUrl'] = ($picture == null ? $picture : PROTOCOL_SERVER_URL . "/rest/user/{$username}/photo");
     return $user;
 }
 
@@ -177,7 +178,7 @@ function deleteUser(string $username) {
         $dir = PETS_IMAGES_DIR."/$id";
         rmdir_recursive($dir);
     }
-    eraseUserPicture($username);
+    deleteUserPhoto($username);
     $stmt = $db->prepare('DELETE FROM User 
     WHERE username=:username');
     $stmt->bindParam(':username', $username);
@@ -191,16 +192,18 @@ function deleteUser(string $username) {
  * @param array $file       File (as obtained from $_FILES['file_field'])
  * @return void
  */
-function saveUserPicture(string $username, array $file){
-    $ext = checkImageFile($file, 1000000);
+function setUserPhoto(string $username, string $tmpFilePath){
+    $ext = checkImageFile($tmpFilePath, 1000000);
 
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     convertImage(
-        $file['tmp_name'],
+        $tmpFilePath,
         $ext,
         $filepath,
         85
     );
+
+    return $filepath;
 }
 
 /**
@@ -209,7 +212,7 @@ function saveUserPicture(string $username, array $file){
  * @param string $username  User's username
  * @return void
  */
-function eraseUserPicture(string $username){
+function deleteUserPhoto(string $username){
     $filepath = USERS_IMAGES_DIR."/$username.jpg";
     if(file_exists($filepath))
         if(!unlink($filepath))
