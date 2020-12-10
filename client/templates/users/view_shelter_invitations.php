@@ -48,6 +48,6 @@
     }
 
     function drawInvitationError() { 
-        include_once 'errors/errors.php'; ?>
+        global $errorsArray; ?>
             <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$_GET['errorCode']] ?></p>
     <?php } 
