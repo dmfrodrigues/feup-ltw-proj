@@ -630,3 +630,24 @@ function getUserWhoAdoptedPet(int $id): array {
     if (!$user) return [];
     return $user;
 }
+
+/**
+ * Get the pets that were published by the user but were adopted.
+ *
+ * @param string $username      User's username
+ * @return array                Array containing the pets.
+ */
+function getAdoptedPetsPublishedByUser($username) : array {
+    
+    $adoptedPets = getAdoptedPets();
+    $adoptedPetsPublishedByUser = array();
+
+    foreach($adoptedPets as $pet) {
+        $user = getUserWhoAdoptedPet($pet['id']);
+        if (!is_null($user) && $pet['postedBy'] === $username)
+            array_push($adoptedPetsPublishedByUser, $pet);
+    }
+
+    return $adoptedPetsPublishedByUser;
+}  
+
