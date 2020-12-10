@@ -427,11 +427,10 @@ function getUserShelter(string $username) : ?string {
 /**
  * Get the shelter the pet is associated, or null if there is none.
  *
- * @param string $petId       Pet's ID
+ * @param int $petId          Pet's ID
  * @return string             Shelter the user is associated, or null if there is none.
  */
-function getPetShelter(string $petId) : ?string {
-    global $db;
+function getPetShelter(int $petId) : ?string {
 
     $pet = getPet($petId);
     $owner = getUser($pet['postedBy']);
