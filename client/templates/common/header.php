@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/comments.css">
         <link rel="stylesheet" href="css/proposals.css">
         <link rel="stylesheet" href="css/shelter.css">
+        <link rel="stylesheet" href="css/nav_bar.css">
         <link rel="stylesheet" href="css/responsive.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -52,4 +53,13 @@
             <?php } ?>
             </div>
         </header>
+        <nav id="nav-bar">
+                <input type="checkbox" id="nav-hamburger"> 
+                <label class="hamburger" for="nav-hamburger"></label>
+                <ul>
+                    <li><a href="pets.php">Pets Listed for Adoption</a></li>
+                    <li><a href="adopted_pets.php">Adopted Pets</a></li>
+                    <li><a href="shelters.php">View Shelters</a></li>
+                </ul>
+        </nav>
         <main>
