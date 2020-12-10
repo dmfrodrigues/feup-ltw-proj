@@ -40,11 +40,11 @@ function getNotifications(string $username) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT
-    Notification.id,
-    Notification.read,
-    Notification.subject,
-    Notification.text,
-    Notification.user
+    id,
+    read,
+    subject,
+    text,
+    user
     FROM Notification INNER JOIN User ON Notification.user=User.username
     WHERE User.username=:username');
 

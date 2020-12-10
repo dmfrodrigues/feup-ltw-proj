@@ -42,9 +42,9 @@
                 <a href="login.php">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
-                        <a><img src="resources/img/new_notifications.svg" ></a>
+                        <a href="notifications.php?username=<?=$_SESSION['username']?>"><img src="resources/img/new_notifications.svg" ></a>
                     <?php } else { ?>
-                        <a><img src="resources/img/no_notifications.svg" ></a>
+                        <a href="notifications.php?username=<?=$_SESSION['username']?>"><img src="resources/img/no_notifications.svg" ></a>
                     <?php } ?> 
                     <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
