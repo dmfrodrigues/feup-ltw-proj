@@ -427,11 +427,10 @@ function getUserShelter(string $username) : ?string {
 /**
  * Get the shelter the pet is associated, or null if there is none.
  *
- * @param string $petId       Pet's ID
+ * @param int $petId          Pet's ID
  * @return string             Shelter the user is associated, or null if there is none.
  */
-function getPetShelter(string $petId) : ?string {
-    global $db;
+function getPetShelter(int $petId) : ?string {
 
     $pet = getPet($petId);
     $owner = getUser($pet['postedBy']);
@@ -460,4 +459,37 @@ function getShelterPendingInvitations(string $shelter) : array {
     $stmt->execute();
     $pendingInvitations = $stmt->fetchAll();
     return $pendingInvitations;
+}
+
+/**
+ * Checks if the user can edit the pet.
+ *
+ * @param string $username     Username (User)
+ * @param string $shelter  Username (Shelter)
+ * @return array           True if successful. False otherwise.
+ */
+function userCanEditPet($username, $petId) : bool {
+
+    $pet = getPet((int) $petId);
+
+    if (isShelter($username)) {
+        $pets = getShelterPetsForAdoption($username);
+
+        foreach($pets as $p) {
+            if ($p['id'] == $pet['id']) return true;
+        }
+
+        return false;
+
+        //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
+    }
+    else {
+        $postedByUsername = $pet['postedBy'];
+        if ($postedByUsername === $username) return true;
+        $shelter1 = getUserShelter($username);
+        $shelter2 = getUserShelter($postedByUsername);
+        if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
+    }
+
+    return false;
 }

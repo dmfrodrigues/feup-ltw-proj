@@ -25,75 +25,9 @@ class Comment {
         else if (lhs.text !== rhs.text) return (lhs.text < rhs.text ? -1 : 1);
         else return 0;
     }
-    createElement() {
-        let commentElement = cloneNodeRecursive(document.querySelector("#templates>#comment"));
-        commentElement.id = `comment-${this.id}`;
-
-        let el_user = commentElement.querySelector("#comment-user");
-        el_user.children[0].href = `profile.php?username=${this.user}`;
-        el_user.children[0].innerHTML = this.user;
-
-        let el_pic = commentElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `profile.php?username=${this.user}`;
-        el_pic.children[0].src = (this.userPictureUrl !== null ? this.userPictureUrl : 'resources/img/no-image.svg');
-
-        let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = this.postedOn;
-        let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = this.text;
-        if (el_text.innerHTML === '') el_text.style.display = "none";
-        let el_img = commentElement.querySelector("#comment-picture"); el_img.src = (this.commentPictureUrl !== null ? this.commentPictureUrl : '');
-
-        let el_deleteId = commentElement.querySelector("#action-delete-id"); el_deleteId.value = `${this.id}`;
-
-        return commentElement;
-    }
-    /**
-     * @brief Create answer element.
-     * 
-     * @param {User} user User that is answering
-     */
-    createAnswerElement(user) {
-        let answerElement = cloneNodeRecursive(document.querySelector("#templates>#new-comment"));
-        answerElement.id = `new-comment-${this.id}`;
-
-        let el_answerTo = answerElement.querySelector('#comment-answerTo');
-        el_answerTo.value = this.id;
-
-        let el_user = answerElement.querySelector("#comment-user");
-        el_user.children[0].href = `profile.php?username=${user.username}`;
-        el_user.children[0].innerHTML = user.username;
-
-        let el_pic = answerElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `profile.php?username=${user.username}`;
-        el_pic.children[0].src = (user.pictureUrl !== null ? user.pictureUrl : 'resources/img/no-image.svg');
-
-        return answerElement;
-    }
-    createEditElement() {
-        let editElement = cloneNodeRecursive(document.querySelector("#templates>#edit-comment"));
-        editElement.id = `edit-comment-${this.id}`;
-
-        let el_commentId = editElement.querySelector('#commentId');
-        el_commentId.value = this.id;
-
-        let el_user = editElement.querySelector("#comment-user");
-        el_user.children[0].href = `profile.php?username=${this.user}`;
-        el_user.children[0].innerHTML = this.user;
-
-        let el_userPic = editElement.querySelector("#comment-profile-pic-a");
-        el_userPic.href = `profile.php?username=${this.user}`;
-        el_userPic.children[0].src = (this.userPictureUrl !== null ? this.userPictureUrl : 'resources/img/no-image.svg');
-
-        let el_text = editElement.querySelector("#comment-text");
-        el_text.value = this.text;
-
-        let el_img = editElement.querySelector("#comment-picture");
-        el_img.src = (this.commentPictureUrl !== null ? this.commentPictureUrl : '');
-
-        return editElement;
-    }
 
     addToDocument(parent) {
-        let commentElement = this.createElement();
+        let commentElement = Template.comment(this);
         let detailsElement = commentElement.querySelector("details");
 
         if (typeof user !== 'undefined') {
@@ -109,14 +43,14 @@ class Comment {
                 delete_el.style.display = "";
             }
 
-            let editElement = this.createEditElement();
+            let editElement = Template.editComment(this);
             editElement.style.display = "none";
             commentElement.insertBefore(
                 editElement,
                 detailsElement
             );
 
-            let answerElement = this.createAnswerElement(user);
+            let answerElement = Template.newComment(this, user);
             answerElement.style.display = "none";
             commentElement.insertBefore(
                 answerElement,

@@ -49,6 +49,7 @@ class CommentTree {
 
 document.addEventListener("DOMContentLoaded", function(_event) {
     updateCommentsSection();
+    // window.setInterval(updateCommentsSection, 10000);
 });
 
 api = new RestApi(API_URL);
@@ -57,18 +58,14 @@ api = new RestApi(API_URL);
  * Update comments section
  */
 function updateCommentsSection(){
-    // let _comments = comments;
-
-    let _comments = {};
     api.get(`pet/${pet.id}/comments`)
-    .then(response => response.json())
     .then(function(_comments){
         var tree = new CommentTree(_comments);
     
         let commentsSection = document.querySelector("#comments div");
         commentsSection.innerHTML = '';
         if (typeof user !== 'undefined'){
-            commentsSection.appendChild(tree.root.createAnswerElement(user));
+            commentsSection.appendChild(Template.newComment(tree.root, user));
         }
         tree.addToElement(commentsSection);
     }).catch(function(error){
@@ -76,21 +73,13 @@ function updateCommentsSection(){
     });
 }
 
-function clickedCommentReply(comment_el) {
-    let id_string = comment_el.id;
-    let id = parseInt(id_string.split("-")[1]);
-
-    let new_comment_el = document.getElementById(`new-comment-${id}`);
-    new_comment_el.style.display = (new_comment_el.style.display === "none" ? "" : "none");
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function clickedCommentEdit(comment_el) {
-    let id_string = comment_el.id;
-    let id = parseInt(id_string.split("-")[1]);
-
-    let article_el = comment_el.querySelector(".comment");
-    article_el.style.display = "none";
-
-    let edit_comment_el = document.getElementById(`edit-comment-${id}`);
-    edit_comment_el.style.display = "";
+async function onClickedUpdateComments(el){
+    el.classList.add("rotating");
+    await sleep(1400);
+    updateCommentsSection();
+    el.classList.remove("rotating");
 }
