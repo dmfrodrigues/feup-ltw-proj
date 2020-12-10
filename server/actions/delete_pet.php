@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/pets.php';
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/pets.php';
 $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){

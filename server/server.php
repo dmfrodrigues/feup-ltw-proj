@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/server_constants.php';
+require_once __DIR__ . '/server_constants.php';
 
 /**
  * Get protocol.

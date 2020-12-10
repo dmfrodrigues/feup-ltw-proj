@@ -1,13 +1,13 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/notifications.php';
-include_once SERVER_DIR.'/pets.php';
+require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR.'/pets.php';
 
 $pet = Pet::fromDatabase($_GET['id']);
 
-include_once 'templates/common/header.php';
-include_once 'templates/pets/pet_album.php';
-include_once 'templates/common/footer.php';
+require_once 'templates/common/header.php';
+require_once 'templates/pets/pet_album.php';
+require_once 'templates/common/footer.php';

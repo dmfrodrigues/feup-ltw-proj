@@ -1,8 +1,8 @@
 <?php
 
-    include_once('../../server/server.php');
-    include_once('../../server/connection.php');
-    include_once('../../server/users.php');   
+    require_once('../../server/server.php');
+    require_once('../../server/connection.php');
+    require_once('../../server/users.php');   
 
     try {
         removeFromFavorites($_POST['username'], $_POST['petId']);

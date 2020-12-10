@@ -1,5 +1,5 @@
 <?php
-include_once SERVER_DIR . '/users.php';
+require_once SERVER_DIR . '/users.php';
 
 $user_id_photo_GET = function($args): void{
     $username = $args[1];

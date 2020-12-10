@@ -1,5 +1,5 @@
 <?php
-include_once SERVER_DIR . '/pets.php';
+require_once SERVER_DIR . '/pets.php';
 
 $comment_PUT = function($args): void{
             $string = file_get_contents("php://input");

@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/shelters.php';
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/shelters.php';
 
 if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
     $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username can only contain letters and numbers!');
