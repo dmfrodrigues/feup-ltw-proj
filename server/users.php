@@ -45,6 +45,21 @@ class User {
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
     
+    public function addToDatabase() : void {
+        global $db;
+
+        $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
+        (:username, :password, :name)');
+        $stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':name'    , $this->name);
+        if(!$stmt->execute()) throw new RuntimeException();
+
+        $newUser = User::fromDatabase($this->username);
+        $this->setRegisteredOn($newUser->getRegisteredOn());
+        $this->setShelter     ($newUser->getShelter     ());
+    }
+
     static public function fromDatabase(string $username) : User {
         global $db;
         $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
@@ -134,18 +149,8 @@ function userAlreadyExists(string $username) : bool {
  * @return void
  */
 function addUser(string $username, string $password, string $name){
-    global $db;
-
-    if (userAlreadyExists($username))
-        throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
-
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
-    (:username, :password, :name)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->bindParam(':name'    , $name);
-    $stmt->execute();
+    $user = new User($username, $password, $name);
+    $user->addToDatabase();
 }
 
 /**
