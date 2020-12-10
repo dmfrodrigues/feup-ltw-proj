@@ -40,8 +40,12 @@
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>
-            <?php } else { ?>
-                    <a><img src="resources/img/new_notifications.svg" ></a>
+            <?php } else { 
+                    if (userHasUnreadNotifications($_SESSION['username'])) { ?>
+                        <a><img src="resources/img/new_notifications.svg" ></a>
+                    <?php } else { ?>
+                        <a><img src="resources/img/no_notifications.svg" ></a>
+                    <?php } ?>
                     <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
                 <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
