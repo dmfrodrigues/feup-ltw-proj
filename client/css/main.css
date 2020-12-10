@@ -48,7 +48,7 @@ header #authenticate a {
 header #authenticate a img {
 	width: 2.5em;
 	margin: 0;
-	position: fixed;
+	position: absolute;
 	right: 14em;
 	top: 1.5em;
 }
