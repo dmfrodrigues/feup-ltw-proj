@@ -91,10 +91,10 @@
             </div>
             <div id="proposal-info">
                     <p>&nbsp;</p>
-                
+                    <button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button>
                 <div id="proposal-message-submit">
                     <textarea></textarea>
-                    <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
+                    <h2><button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button></h2>
                 </div>  
             </div>
         </div>
