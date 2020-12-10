@@ -19,14 +19,14 @@
         <?php if (!checkUserBelongsToShelter($user['username'])) { 
                 $outcome = shelterInvitationIsPending($user['username'], $_SESSION['username']);
                 if (!$outcome) { ?>
-                    <a href="propose_to_collaborate.php?username=<?=$user['username']?>"><h2>Propose to collaborate</h2></a>
+                    <button onclick="location.href = 'propose_to_collaborate.php?username=<?=$user['username']?>'">Propose to collaborate</button>
                 <?php }
                 else { ?>
-                    <a href="../server/actions/remove_collaboration_proposal.php?username=<?=$user['username']?>"><h2>Remove collaboration proposal</h2></a>
+                    <button onclick="location.href = '../server/actions/remove_collaboration_proposal.php?username=<?=$user['username']?>'">Remove collaboration proposal</button>
                 <?php }
             ?>            
         <?php } else if ($user['shelter'] === $_SESSION['username']) { ?>
-            <a href="../server/actions/remove_collaborator.php?username=<?=$user['username']?>"><h2>Remove this collaborator</h2></a>
+            <button onclick="location.href = '../server/actions/remove_collaborator.php?username=<?=$user['username']?>'">Remove this collaborator</button>
             <?php } else { ?> 
                         <h2>This user is already associated with shelter <a href="profile.php?username=<?=$user['shelter']?>"><?=$user['shelter']?></a></h2>
             <?php } ?>
