@@ -41,6 +41,7 @@
                 <a href="signup.php">Sign up</a>
                 <a href="login.php">Login</a>
             <?php } else { ?>
+                    <a><img src="resources/img/no_notifications.svg" ></a>
                     <span><a href="profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
                 <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
