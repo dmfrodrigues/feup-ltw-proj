@@ -6,7 +6,7 @@ proposals.forEach((proposal) => {
     let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
 
     if(myMessage) {
-        proposal.querySelector('div#proposal-header').style.right = '30em';
+        proposal.querySelector('div#proposal-header').style.right = '29em';
         proposal.querySelector('div#proposal-info').style.marginLeft = "15em";
     }
 })
@@ -78,7 +78,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     
     console.log(lastInsertedComment);
     if(lastInsertedComment.user == user) {
-        proposalHeader.style.right = "30em";
+        proposalHeader.style.right = "29em";
         proposalInfo.style.marginLeft = "15em";
     }
 
