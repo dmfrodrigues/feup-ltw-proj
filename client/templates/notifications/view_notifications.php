@@ -15,6 +15,11 @@
                     </div></li>
                 <?php } ?>
             <?php } ?>
+            <?php foreach($notifications as $notification) { 
+                if ($notification['read'] == 0) {
+                    readNotification($notification['id']);
+                }
+            } ?>
         </ul>
     </article>
 </section>
