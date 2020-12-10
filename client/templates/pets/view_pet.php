@@ -75,7 +75,7 @@
 
     $shelter = getPetShelter($_GET['id']);
         
-    if(isset($_SESSION['username']) && ($_SESSION['username'] == $pet['postedBy'] || ($petAdopted && $_SESSION['username'] == $userWhoAdoptedPet['username']) || (isset($_SESSION['isShelter']) && $_SESSION['username'] == $shelter))){ ?>
+    if(isset($_SESSION['username']) && userCanEditPet($_SESSION['username'],$pet['id'])){ ?>
         <section id="actions">
             <ul>
                 <li><a href="edit_pet.php?id=<?= $pet['id'] ?>"><img src="resources/img/edit.svg"></a></li>
