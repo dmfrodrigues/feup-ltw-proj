@@ -52,7 +52,7 @@ function getNotifications(string $username) : array {
     $stmt->execute();
     $userNotifications = $stmt->fetchAll();
 
-    return $userNotifications;
+    return array_reverse($userNotifications, TRUE);
 }
 
 /**

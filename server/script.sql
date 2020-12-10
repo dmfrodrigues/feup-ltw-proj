@@ -69,6 +69,7 @@ CREATE TABLE Notification (
     CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
 
     CONSTRAINT subjectRule CHECK (subject LIKE 'adoptionProposalOutcome' OR
+                                  subject LIKE 'newPetAdoptionProposal' OR
                                   subject LIKE 'newMessage' OR
                                   subject LIKE 'favoriteAdopted' OR
                                   subject LIKE 'proposedPetAdopted' OR

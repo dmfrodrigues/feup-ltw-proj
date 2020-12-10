@@ -14,5 +14,4 @@ if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
     include_once 'templates/notifications/view_notifications.php';
 }
     
-
 include_once 'templates/common/footer.php';
