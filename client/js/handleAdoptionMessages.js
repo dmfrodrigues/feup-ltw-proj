@@ -6,7 +6,7 @@ proposals.forEach((proposal) => {
     let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
 
     if(myMessage) {
-        proposal.querySelector('div#proposal-header').style.right = "35em";
+        proposal.querySelector('div#proposal-header').style.right = '29em';
         proposal.querySelector('div#proposal-info').style.marginLeft = "15em";
     }
 })
@@ -26,14 +26,14 @@ async function addNewAdoptionRequestMsg() {
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     
-    let response = await ajaxAddAdoptionRequest(params);
+    let response  = await ajaxAddAdoptionRequest(params);
     if(!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
     let jsonResponse = await response.json();
 
-    let mainObject = document.querySelector("header ~ div");
+    let mainObject = document.querySelector("header ~ main");
     mainObject.innerHTML = '';
 
     jsonResponse.comments.forEach((comment) => {
@@ -76,8 +76,9 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
     
+    console.log(lastInsertedComment);
     if(lastInsertedComment.user == user) {
-        proposalHeader.style.right = "35em";
+        proposalHeader.style.right = "29em";
         proposalInfo.style.marginLeft = "15em";
     }
 
@@ -103,7 +104,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     proposal.appendChild(proposalHeader);
     proposal.appendChild(proposalInfo);
 
-    let mainObject = document.querySelector("header ~ div");
+    let mainObject = document.querySelector("header ~ main");
     
     mainObject.appendChild(proposal);
 
