@@ -83,7 +83,8 @@ function getUser(string $username) : array {
     $stmt->bindParam(':username', $username);
     $stmt->execute();
     $user = $stmt->fetch();
-    $user['pictureUrl'] = getUserPicture($username);
+    $picture = getUserPicture($username);
+    $user['pictureUrl'] = ($picture == null ? $picture : PROTOCOL_SERVER_URL . "/rest/user/{$username}/photo");
     return $user;
 }
 
