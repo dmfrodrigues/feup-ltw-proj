@@ -15,6 +15,7 @@
 }
 
 @media (max-width: 80em) {
+	.shelters-grid,
 	.pet-card-grid,
 	.potential-collaborators-grid {
 		grid-template-columns: repeat(2, 1fr);
@@ -73,6 +74,7 @@
 }
 
 @media (max-width: 40em) {
+	.shelters-grid,
 	.pet-card-grid,
 	.potential-collaborators-grid {
 		grid-template-columns: repeat(1, 1fr);
