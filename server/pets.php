@@ -68,6 +68,20 @@ class Pet implements JsonSerializable {
         else     return $this->getPostedBy();
     }
 
+    public function setId          ( int    $id          ) { $this->id           = $id          ; }
+    public function setName        ( string $name        ) { $this->name         = $name        ; }
+    public function setSpecies     ( string $species     ) { $this->species      = $species     ; }
+    public function setAge         ( float  $age         ) { $this->age          = $age         ; }
+    public function setSex         ( string $sex         ) { $this->sex          = $sex         ; }
+    public function setSize        ( string $size        ) { $this->size         = $size        ; }
+    public function setColor       ( string $color       ) { $this->color        = $color       ; }
+    public function setLocation    ( string $location    ) { $this->location     = $location    ; }
+    public function setDescription ( string $description ) { $this->description  = $description ; }
+    public function setStatus      ( string $status      ) { $this->status       = $status      ; }
+    public function setAdoptionDate(?string $adoptionDate) { $this->adoptionDate = $adoptionDate; }
+    public function setPostedBy    ( string $postedBy    ) { $this->postedBy     = $postedBy    ; }
+    public function setAuthor      ( string $author      ) { $this->setPostedBy($author)        ; }
+
     public function jsonSerialize() {
 		return get_object_vars($this);
 	}
@@ -336,21 +350,15 @@ function editPet(
     string $description,
     array  $pictures
 ){
-    $oldPet = Pet::fromDatabase($id);
-    $pet = new Pet(
-        $id,
-        $name,
-        $species,
-        $age,
-        $sex,
-        $size,
-        $color,
-        $location,
-        $description,
-        $oldPet->getStatus(),
-        $oldPet->getAdoptionDate(),
-        $oldPet->getPostedBy(true)
-    );
+    $pet = Pet::fromDatabase($id);
+    $pet->setName       ($name       );
+    $pet->setSpecies    ($species    );
+    $pet->setAge        ($age        );
+    $pet->setSex        ($sex        );
+    $pet->setSize       ($size       );
+    $pet->setColor      ($color      );
+    $pet->setLocation   ($location   );
+    $pet->setDescription($description);
     $pet->updateDatabase();
 
     editPetPictures($id, $pictures);
