@@ -34,5 +34,3 @@ if($_GET['outcome'] === 'rejected') {
 }
     
 header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);
-
-die();
