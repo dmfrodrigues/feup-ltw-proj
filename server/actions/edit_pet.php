@@ -20,7 +20,7 @@ for($i = 0; $i < $N; ++$i){
 if (isset($_SESSION['username'])){
 
     if (userCanEditPet($_SESSION['username'], $_GET['id'])) {
-        editPet(
+        Pet::edit(
             $_GET['id'],
             $_POST['name'],
             $_POST['species'],

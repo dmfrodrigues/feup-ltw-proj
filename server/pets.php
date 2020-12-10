@@ -97,6 +97,46 @@ class Pet implements JsonSerializable {
         return $pet;
     }
 
+    /**
+     * Edit pet.
+     *
+     * @param integer $id           Pet ID
+     * @param string $name          Pet name
+     * @param string $species       Species
+     * @param float $age            Age
+     * @param string $sex           M/F
+     * @param string $size          XS, S, M, L, XL
+     * @param string $color         Color
+     * @param string $location      Location
+     * @param string $description   Description
+     * @return void
+     */
+    static public function edit(
+        int $id,
+        string $name,
+        string $species,
+        float  $age,
+        string $sex,
+        string $size,
+        string $color,
+        string $location,
+        string $description,
+        array  $pictures
+    ){
+        $pet = Pet::fromDatabase($id);
+        $pet->setName       ($name       );
+        $pet->setSpecies    ($species    );
+        $pet->setAge        ($age        );
+        $pet->setSex        ($sex        );
+        $pet->setSize       ($size       );
+        $pet->setColor      ($color      );
+        $pet->setLocation   ($location   );
+        $pet->setDescription($description);
+        $pet->updateDatabase();
+
+        editPetPictures($id, $pictures);
+    }
+
     public function updateDatabase() : bool {
         global $db;
         $stmt = $db->prepare('UPDATE Pet SET
@@ -322,46 +362,6 @@ function addPet(
     }
 
     return $petId;
-}
-
-/**
- * Edit pet.
- *
- * @param integer $id           Pet ID
- * @param string $name          Pet name
- * @param string $species       Species
- * @param float $age            Age
- * @param string $sex           M/F
- * @param string $size          XS, S, M, L, XL
- * @param string $color         Color
- * @param string $location      Location
- * @param string $description   Description
- * @return void
- */
-function editPet(
-    int $id,
-    string $name,
-    string $species,
-    float  $age,
-    string $sex,
-    string $size,
-    string $color,
-    string $location,
-    string $description,
-    array  $pictures
-){
-    $pet = Pet::fromDatabase($id);
-    $pet->setName       ($name       );
-    $pet->setSpecies    ($species    );
-    $pet->setAge        ($age        );
-    $pet->setSex        ($sex        );
-    $pet->setSize       ($size       );
-    $pet->setColor      ($color      );
-    $pet->setLocation   ($location   );
-    $pet->setDescription($description);
-    $pet->updateDatabase();
-
-    editPetPictures($id, $pictures);
 }
 
 /**
