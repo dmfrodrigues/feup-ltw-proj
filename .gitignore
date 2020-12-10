@@ -4,6 +4,11 @@ server/resources/img/pets
 server/resources/img/comments
 server/server_constants.php
 
+vendor
+psalm.xml
+composer.json
+composer.lock
+
 # Created by https://www.gitignore.io/api/intellij
 
 ### Intellij ###

@@ -8,7 +8,7 @@ define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
 class Pet implements JsonSerializable {
-    private  int    $id          ;
+    private ?int    $id          ;
     private  string $name        ;
     private  string $species     ;
     private  float  $age         ;
@@ -21,7 +21,7 @@ class Pet implements JsonSerializable {
     private ?string $adoptionDate;
     private  string $postedBy    ;
     public function __construct(
-         int    $id           = -1,
+        ?int    $id           = null,
          string $name         = '',
          string $species      = '',
          float  $age          = -1,
@@ -48,7 +48,7 @@ class Pet implements JsonSerializable {
         $this->postedBy     = $postedBy    ;
     }
 
-    public function getId          () :  int    { return $this->id          ; }
+    public function getId          () : ?int    { return $this->id          ; }
     public function getName        () :  string { return $this->name        ; }
     public function getSpecies     () :  string { return $this->species     ; }
     public function getAge         () :  float  { return $this->age         ; }
@@ -68,23 +68,46 @@ class Pet implements JsonSerializable {
         else     return $this->getPostedBy();
     }
 
-    public function setId          ( int    $id          ) { $this->id           = $id          ; }
-    public function setName        ( string $name        ) { $this->name         = $name        ; }
-    public function setSpecies     ( string $species     ) { $this->species      = $species     ; }
-    public function setAge         ( float  $age         ) { $this->age          = $age         ; }
-    public function setSex         ( string $sex         ) { $this->sex          = $sex         ; }
-    public function setSize        ( string $size        ) { $this->size         = $size        ; }
-    public function setColor       ( string $color       ) { $this->color        = $color       ; }
-    public function setLocation    ( string $location    ) { $this->location     = $location    ; }
-    public function setDescription ( string $description ) { $this->description  = $description ; }
-    public function setStatus      ( string $status      ) { $this->status       = $status      ; }
-    public function setAdoptionDate(?string $adoptionDate) { $this->adoptionDate = $adoptionDate; }
-    public function setPostedBy    ( string $postedBy    ) { $this->postedBy     = $postedBy    ; }
-    public function setAuthor      ( string $author      ) { $this->setPostedBy($author)        ; }
+    public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
+    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
+    public function setSpecies     ( string $species     ) : void { $this->species      = $species     ; }
+    public function setAge         ( float  $age         ) : void { $this->age          = $age         ; }
+    public function setSex         ( string $sex         ) : void { $this->sex          = $sex         ; }
+    public function setSize        ( string $size        ) : void { $this->size         = $size        ; }
+    public function setColor       ( string $color       ) : void { $this->color        = $color       ; }
+    public function setLocation    ( string $location    ) : void { $this->location     = $location    ; }
+    public function setDescription ( string $description ) : void { $this->description  = $description ; }
+    public function setStatus      ( string $status      ) : void { $this->status       = $status      ; }
+    public function setAdoptionDate(?string $adoptionDate) : void { $this->adoptionDate = $adoptionDate; }
+    public function setPostedBy    ( string $postedBy    ) : void { $this->postedBy     = $postedBy    ; }
+    public function setAuthor      ( string $author      ) : void { $this->setPostedBy($author)        ; }
 
     public function jsonSerialize() {
 		return get_object_vars($this);
-	}
+    }
+    
+    public function addToDatabase(){
+        global $db;
+        $stmt = $db->prepare('INSERT INTO Pet
+        (name, species, age, sex, size, color, location, description, postedBy)
+        VALUES
+        (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
+        $stmt->bindParam(':name'       , $this->name       );
+        $stmt->bindParam(':species'    , $this->species    );
+        $stmt->bindParam(':age'        , $this->age        );
+        $stmt->bindParam(':sex'        , $this->sex        );
+        $stmt->bindParam(':size'       , $this->size       );
+        $stmt->bindParam(':color'      , $this->color      );
+        $stmt->bindParam(':location'   , $this->location   );
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':postedBy'   , $this->postedBy   );
+        $stmt->execute();
+        $this->id = $db->lastInsertId();
+        
+        $newPet = Pet::fromDatabase($this->id);
+        $this->setStatus      ($newPet->getStatus      ());
+        $this->setAdoptionDate($newPet->getAdoptionDate());
+    }
 
     static public function fromDatabase(int $id) : Pet {
         global $db;
@@ -256,7 +279,7 @@ class AdoptionRequest {
     public function getAuthor() : User { return User::fromDatabase($this->user); }
     public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
 
-    static public function fromDatabase(string $username) : AdoptionRequest {
+    static public function fromDatabase(string $id) : AdoptionRequest {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
         $stmt->bindParam(':id', $id);
@@ -289,7 +312,7 @@ class AdoptionRequestMessage {
 
     public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
 
-    static public function fromDatabase(string $username) : AdoptionRequestMessage {
+    static public function fromDatabase(string $id) : AdoptionRequestMessage {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage WHERE id=:id');
         $stmt->bindParam(':id', $id);
@@ -329,25 +352,24 @@ function addPet(
     // Check if files are OK
     foreach($files as $id => $file) checkImageFile($file, 1000000);
 
-    global $db;
-    $stmt = $db->prepare('INSERT INTO Pet
-    (name, species, age, sex, size, color, location, description, postedBy)
-    VALUES
-    (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
-    $stmt->bindParam(':name'       , $name       );
-    $stmt->bindParam(':species'    , $species    );
-    $stmt->bindParam(':age'        , $age        );
-    $stmt->bindParam(':sex'        , $sex        );
-    $stmt->bindParam(':size'       , $size       );
-    $stmt->bindParam(':color'      , $color      );
-    $stmt->bindParam(':location'   , $location   );
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':postedBy'   , $postedBy   );
-    $stmt->execute();
-    $petId = $db->lastInsertId();
+    $pet = new Pet(
+        null        ,
+        $name       ,
+        $species    ,
+        $age        ,
+        $sex        ,
+        $size       ,
+        $color      ,
+        $location   ,
+        $description,
+        ''          ,
+        null        ,
+        $postedBy
+    );
+    $pet->addToDatabase();
 
     // Add images
-    $path = PETS_IMAGES_DIR."/$petId";
+    $path = PETS_IMAGES_DIR."/{$pet->getId()}";
     mkdir($path);
 
     foreach($files as $id => $file){
@@ -361,7 +383,7 @@ function addPet(
         );
     }
 
-    return $petId;
+    return $pet->getId();
 }
 
 /**
@@ -412,7 +434,7 @@ function swapPetPictures(int $petId, array $swappic){
     foreach($swappic as $newId => $oldId){
         $tmpFilepath   = $path.'/new-'.str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
         $finalFilepath = $path.'/'    .str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
-        if(!rename($tmpFilepath, $finalFilepath)) throw new RuntimeException("Failed to rename pet picture $oldFilepath to $newFilepath");
+        if(!rename($tmpFilepath, $finalFilepath)) throw new RuntimeException("Failed to rename pet picture $tmpFilepath to $finalFilepath");
     }
 }
 
@@ -567,7 +589,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     $stmt->bindParam(':answerTo'   , $answerTo   );
     $stmt->bindParam(':text'       , $text       );
     $stmt->execute();
-    $commentId = $db->lastInsertId();
+    $commentId = (int)$db->lastInsertId();
 
     if($tmpFileId != null){
         setCommentPhoto($commentId, $tmpFilePath);
@@ -576,7 +598,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     return $commentId;
 }
 
-function setCommentPhoto(int $commentId, string $tmpFilePath){
+function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
     $ext = checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
     $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
     convertImage(
@@ -592,7 +614,7 @@ function setCommentPhoto(int $commentId, string $tmpFilePath){
  *
  * @param integer   $commentId      ID of comment
  * @param string    $text           Text of comment
- * @param array     $file           Picture file (as obtained from $_FILES['file_field'])
+ * @param string    $file           Picture file (as obtained from $_FILES['file_field'])
  * @return void
  */
 function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $file){
@@ -629,8 +651,6 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
             85
         );
     }
-
-    return $commentId;
 }
 
 /**
