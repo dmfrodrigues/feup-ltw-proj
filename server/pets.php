@@ -66,6 +66,9 @@ class Pet implements JsonSerializable {
         if($raw) return $this->postedBy;
         else     return User::fromDatabase($this->postedBy);
     }
+    /**
+     * @return User|string
+     */
     public function getAuthor      (bool $raw = false) {
         if($raw) return $this->postedBy;
         else     return $this->getPostedBy();
