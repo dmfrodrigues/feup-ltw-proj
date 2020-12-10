@@ -32,10 +32,19 @@ class User {
         $this->admin = $admin;
     }
 
-    public function getUsername() :  string { return $this->username; }
-    public function getShelter () : ?string { return $this->shelter ; }
-    public function isAdmin    () :  bool   { return $this->admin   ; }
+    public function getUsername    () :  string { return $this->username    ; }
+    public function getPassword    () :  string { return $this->password    ; }
+    public function getName        () :  string { return $this->name        ; }
+    public function getRegisteredOn() :  string { return $this->registeredOn; }
+    public function getShelter     () : ?string { return $this->shelter     ; }
+    public function isAdmin        () :  bool   { return $this->admin       ; }
 
+    public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
+    public function setPassword    ( string $password    ) : void { $this->password     = $password    ; }
+    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
+    public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
+    public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
+    
     static public function fromDatabase(string $username) : User {
         global $db;
         $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
