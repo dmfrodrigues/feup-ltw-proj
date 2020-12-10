@@ -59,6 +59,7 @@ api = new RestApi(API_URL);
  */
 function updateCommentsSection(){
     api.get(`pet/${pet.id}/comments`)
+    .then((response) => response.json())
     .then(function(_comments){
         var tree = new CommentTree(_comments);
     
