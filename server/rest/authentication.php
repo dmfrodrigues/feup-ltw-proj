@@ -1,5 +1,5 @@
 <?php
 
-function checkAuthentication() : bool {
-    return isset($_SESSION['username']);
+function checkAuthentication(User $user) : bool {
+    return isset($_SESSION['username']) && $user->getUsername() == $_SESSION['username'];
 }

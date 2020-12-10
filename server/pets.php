@@ -7,32 +7,197 @@ define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
-/**
- * Get array of all pets.
- *
- * @return array    Array of all pets
- */
-function getPets() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM Pet');
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+class Pet {
+    private  int    $id          ;
+    private  string $name        ;
+    private  string $species     ;
+    private  float  $age         ;
+    private  string $sex         ;
+    private  string $size        ;
+    private  string $color       ;
+    private  string $location    ;
+    private  string $description ;
+    private  string $status      ;
+    private ?string $adoptionDate;
+    private  string $postedBy    ;
+    public function __construct(
+         int    $id           = -1,
+         string $name         = '',
+         string $species      = '',
+         float  $age          = -1,
+         string $sex          = '',
+         string $size         = '',
+         string $color        = '',
+         string $location     = '',
+         string $description  = '',
+         string $status       = '',
+        ?string $adoptionDate = null,
+         string $postedBy     = ''
+    ){
+        $this->id           = $id          ;
+        $this->name         = $name        ;
+        $this->species      = $species     ;
+        $this->age          = $age         ;
+        $this->sex          = $sex         ;
+        $this->size         = $size        ;
+        $this->color        = $color       ;
+        $this->location     = $location    ;
+        $this->description  = $description ;
+        $this->status       = $status      ;
+        $this->adoptionDate = $adoptionDate;
+        $this->postedBy     = $postedBy    ;
+    }
+
+    public function getId          () :  int    { return $this->id          ; }
+    public function getName        () :  string { return $this->name        ; }
+    public function getSpecies     () :  string { return $this->species     ; }
+    public function getAge         () :  float  { return $this->age         ; }
+    public function getSex         () :  string { return $this->sex         ; }
+    public function getSize        () :  string { return $this->size        ; }
+    public function getColor       () :  string { return $this->color       ; }
+    public function getLocation    () :  string { return $this->location    ; }
+    public function getDescription () :  string { return $this->description ; }
+    public function getStatus      () :  string { return $this->status      ; }
+    public function getAdoptionDate() : ?string { return $this->adoptionDate; }
+    public function getPostedBy    () :  User   { return User::fromDatabase($this->postedBy); }
+    public function getAuthor      () :  User   { return $this->getPostedBy(); }
+
+    static public function fromDatabase(string $id) : Pet {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE id=:id');
+        $stmt->bindParam(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pet = $stmt->fetch();
+        return $pet;
+    }
+
+    /**
+     * Get array of all pets listed for adoption.
+     *
+     * @return array    Array of all pets listed for adoption
+     */
+    static public function getListedForAdoption() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE status="forAdoption"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
-/**
- * Get array of all pets listed for adoption.
- *
- * @return array    Array of all pets listed for adoption
- */
-function getPetsListedForAdoption() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * 
-    FROM Pet WHERE status="forAdoption"');
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+class Comment {
+    private int    $id      ;
+    private string $postedOn;
+    private string $text    ;
+    private int    $pet     ;
+    private string $user    ;
+    private int    $answerTo;
+
+    public function __construct(
+        int    $id      ,
+        string $postedOn,
+        string $text    ,
+        int    $pet     ,
+        string $user    ,
+        int    $answerTo
+    ){
+        $this->id       = $id      ;
+        $this->postedOn = $postedOn;
+        $this->text     = $text    ;
+        $this->pet      = $pet     ;
+        $this->user     = $user    ;
+        $this->answerTo = $answerTo;
+    }
+
+    public function getAuthor() : User { return User::fromDatabase($this->user); }
+}
+
+class FavoritePet {
+    private string $username;
+    private int    $petId   ;
+
+    public function __construct(
+        string $username,
+        int    $petId   
+    ){
+        $this->username = $username;
+        $this->petId    = $petId   ;
+    }
+
+    public function getUser() : User { return User::fromDatabase($this->username); }
+}
+
+class AdoptionRequest {
+    private  int    $id         ;
+    private  string $text       ;
+    private  string $outcome    ;
+    private  int    $pet        ;
+    private  string $user       ;
+    private  string $requestDate;
+
+    public function __construct(
+        int    $id         ,
+        string $text       ,
+        string $outcome    ,
+        int    $pet        ,
+        string $user       ,
+        string $requestDate
+    ){
+        $this->id          = $id         ;
+        $this->text        = $text       ;
+        $this->outcome     = $outcome    ;
+        $this->pet         = $pet        ;
+        $this->user        = $user       ;
+        $this->requestDate = $requestDate;
+    }
+
+    public function getAuthor() : User { return User::fromDatabase($this->user); }
+    public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
+
+    static public function fromDatabase(string $username) : AdoptionRequest {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
+        $stmt->bindParam(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->execute();
+        $request = $stmt->fetch();
+        return $request;
+    }
+}
+
+class AdoptionRequestMessage {
+    private  int    $id         ;
+    private  string $text       ;
+    private  int    $request    ;
+    private  string $messageDate;
+    private  string $user       ;
+    public function __construct(
+        int    $id         ,
+        string $text       ,
+        int    $request    ,
+        string $messageDate,
+        string $user       
+    ){
+        $this->id          = $id         ;
+        $this->text        = $text       ;
+        $this->request     = $request    ;
+        $this->messageDate = $messageDate;
+        $this->user        = $user       ;
+    }
+
+    public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
+
+    static public function fromDatabase(string $username) : AdoptionRequestMessage {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage WHERE id=:id');
+        $stmt->bindParam(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequestMessage');
+        $stmt->execute();
+        $message = $stmt->fetch();
+        return $message;
+    }
 }
 
 /**

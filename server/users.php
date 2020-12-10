@@ -9,6 +9,44 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class UserAlreadyExistsException extends RuntimeException{}
 
+class User {
+    private  string $username;
+    private  string $password;
+    private  string $name;
+    private  string $registeredOn;
+    private ?string $shelter;
+    private  bool   $admin;
+    public function __construct(
+        string $username     = '',
+        string $password     = '',
+        string $name         = '',
+        string $registeredOn = '',
+       ?string $shelter      = null,
+        bool   $admin        = false
+    ){
+        $this->username     = $username;
+        $this->password     = $password;
+        $this->name         = $name;
+        $this->registeredOn = $registeredOn;
+        $this->shelter      = $shelter;
+        $this->admin = $admin;
+    }
+
+    public function getUsername() :  string { return $this->username; }
+    public function getShelter () : ?string { return $this->shelter ; }
+    public function isAdmin    () :  bool   { return $this->admin   ; }
+
+    static public function fromDatabase(string $username) : User {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
+        $stmt->bindParam(':username', $username);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->execute();
+        $user = $stmt->fetch();
+        return $user;
+    }
+}
+
 /**
  * Check if user-password pair is valid.
  *

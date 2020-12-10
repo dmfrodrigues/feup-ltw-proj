@@ -34,15 +34,15 @@
         <div class="pet-card-grid">
         <?php
         foreach ($pets as $pet) {
-            $intro = explode(PHP_EOL, $pet['description'])[0];
-            $photoUrl = getPetMainPhoto($pet['id']);
+            $intro = explode(PHP_EOL, $pet->getDescription())[0];
+            $photoUrl = getPetMainPhoto($pet->getId());
         ?>
-        <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet['id'] ?>';">
+        <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet->getId() ?>';">
             <div class="pet-card-inner">
                 <div class="pet-card-front">
                     <img src="<?= $photoUrl ?>">
                     <div class="pet-card-content-front">
-                        <h2><?= $pet['name'] ?></h2>
+                        <h2><?= $pet->getName() ?></h2>
                     </div>
                 </div>
                 <div class="pet-card-back">
@@ -51,12 +51,12 @@
                     </div>
                 </div>
             </div>
-            <p id="hidden_location" style="display: none"><?= $pet['location'] ?></p>
-            <p id="hidden_species" style="display: none"><?= $pet['species'] ?></p>
-            <p id="hidden_age" style="display: none"><?= $pet['age'] ?></p>
-            <p id="hidden_color" style="display: none"><?= $pet['color'] ?></p>
-            <p id="hidden_size" style="display: none"><?= $pet['size'] ?></p>
-            <p id="hidden_sex" style="display: none"><?= $pet['sex'] ?></p>
+            <p id="hidden_location" style="display: none"><?= $pet->getLocation() ?></p>
+            <p id="hidden_species" style="display: none"><?= $pet->getSpecies() ?></p>
+            <p id="hidden_age" style="display: none"><?= $pet->getAge() ?></p>
+            <p id="hidden_color" style="display: none"><?= $pet->getColor() ?></p>
+            <p id="hidden_size" style="display: none"><?= $pet->getSize() ?></p>
+            <p id="hidden_sex" style="display: none"><?= $pet->getSex() ?></p>
         </article>
         <?php
         }
