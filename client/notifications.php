@@ -9,7 +9,10 @@ include_once SERVER_DIR.'/shelters.php';
 include_once SERVER_DIR.'/notifications.php';
 include_once 'templates/common/header.php';
 
-if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username'])
+if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
+    $notifications = getNotifications($_SESSION['username']);
     include_once 'templates/notifications/view_notifications.php';
+}
+    
 
 include_once 'templates/common/footer.php';
