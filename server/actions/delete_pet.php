@@ -14,7 +14,7 @@ if (isset($_SESSION['username'])){
 
     deleteAllPetCommentPhotos($_GET['id']);
 
-    removePet($_GET['id']);
+    Pet::deleteFromDatabase($_GET['id']);
 }
 
 header("Location: " . PROTOCOL_CLIENT_URL . "/pets.php");

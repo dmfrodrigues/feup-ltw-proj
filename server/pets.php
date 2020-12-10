@@ -431,16 +431,6 @@ function newPetPictures(int $petId, array $newpic){
     }
 }
 
-/**
- * Remove pet.
- *
- * @param integer $id       ID of pet to be removed
- * @return void
- */
-function removePet(int $id){
-    Pet::deleteFromDatabase($id);
-}
-
 define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
