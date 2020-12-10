@@ -108,3 +108,10 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     mainObject.appendChild(proposal);
 
 }
+
+async function onClickedUpdateComments(el){
+    el.classList.add("rotating");
+    await sleep(1400);
+    // updateCommentsSection();
+    el.classList.remove("rotating");
+}
