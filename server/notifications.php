@@ -54,3 +54,21 @@ function getNotifications($username) : array {
 
     return $userNotifications;
 }
+
+/**
+ * Set a notification as read.
+ *
+ * @param integer $notificationId    Notification's ID
+ * @return void
+ */
+function readNotification($notificationId) {
+    global $db;
+
+    $stmt = $db->prepare('UPDATE Notification SET 
+    Notification.read = 1
+    WHERE Notification.id=:notificationId');
+
+    $stmt->bindParam(':notificationId', $notificationId);
+    $stmt->execute();
+}
+
