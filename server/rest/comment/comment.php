@@ -1,21 +1,7 @@
 <?php
 include_once SERVER_DIR . '/pets.php';
 
-function comment($url) {
-    switch($url){
-        case '': return comment_new();
-        case 'photo': return comment_newphoto();
-        default:
-            $parts = explode('/', $url, 2);
-            $id = intval($parts[0]);
-            $subpath = (count($parts) < 2 ? '' : $parts[1]);
-            return comment_id($id, $subpath);
-    }
-}
-
-function comment_new() : int {
-    switch($_SERVER['REQUEST_METHOD']){
-        case 'PUT':
+$comment_PUT = function($args){
             $string = file_get_contents("php://input");
             $_PUT = json_decode($string, true);
             $id = addPetComment(
@@ -25,48 +11,42 @@ function comment_new() : int {
                 $_PUT['text'],
                 $_PUT['picture']
             );
-            return $id;
-        default: http_response_code(405); die();
-    }
-}
+    print_result($id);
+};
 
-function comment_newphoto() : string {
-    switch($_SERVER['REQUEST_METHOD']){
-        case 'PUT':
+$comment_photo_PUT = function($args){
             $file = fopen('php://input', 'r');
             $tmpFilePath = tempnam(sys_get_temp_dir(), 'NEWCOMMENTPHOTO');
             $tmpFile = fopen($tmpFilePath, 'w');
             while($data = fread($file, 1024)){
                 fwrite($tmpFile, $data);
             }
-            return basename($tmpFilePath);
-        default: http_response_code(405); die();
-    }
-}
+    print_result(basename($tmpFilePath));
+};
 
-function comment_id(int $id, string $subpath) {
-    switch($subpath){
-        case 'photo': return comment_id_photo($id);
-        default:
-            switch($_SERVER['REQUEST_METHOD']){
-                case 'GET': return getPetComment($id);
-                case 'PUT':
+$comment_id_GET = function($args){
+    $id = $args[1];
+    $ret = getPetComment($id);
+    print_result($ret);
+};
+
+$comment_id_PUT = function($args){
+    $id = $args[1];
+
                     $string = file_get_contents("php://input");
                     $_PUT = json_decode($string, true);
-                    return editPetComment(
+                    $ret = editPetComment(
                         $id,
                         $_PUT['text'],
                         false,
                         null
                     );
-                default: http_response_code(405); die();
-            }
-    }
-}
+    print_result($ret);
+};
 
-function comment_id_photo(int $id) {
-    switch($_SERVER['REQUEST_METHOD']){
-        case 'PUT':
+$comment_id_photo_PUT = function($args){
+    $id = $args[1];
+
             // TODO: Replace this part by a PUT request to comment/photo
             $file = fopen('php://input', 'r');
             $tmpFilePath = tempnam(sys_get_temp_dir(), 'NEWCOMMENTPHOTO');
@@ -76,16 +56,17 @@ function comment_id_photo(int $id) {
             }
 
             setCommentPhoto($id, $tmpFilePath);
-            
-            return "comment/{$id}/photo";
-        case 'DELETE':
+    
+    print_result("comment/{$id}/photo");
+};
+
+$comment_id_photo_DELETE = function($args){
+    $id = $args[1];
+
             try{
                 deletePetCommentPhoto($id);
-                return "comment/{$id}/photo";
+                print_result("comment/{$id}/photo");
             } catch(CouldNotDeleteFileException $e){
                 http_response_code(404); die();
             }
-            break;
-        default: http_response_code(405); die();
-    }
-}
+};

@@ -4,7 +4,7 @@
 	padding: 3em 5em;
 	border-radius: 1em;
 	background-color: var(--light-color);
-	grid-area: 2 / 1 / span 1 / span 1;
+	grid-area: 2 / 2 / span 1 / span 1;
 	align-self: center;
 	display: grid;
 	grid-template-columns: auto;
@@ -73,7 +73,7 @@
 	margin: 3px;
 }
 
-#pet #pet-photos #pet-photos-row > 	:hover,
+#pet #pet-photos #pet-photos-row > img:hover,
 #pet #pet-photos #pet-photos-row > a:hover {
 	border: solid grey 1px;
 	margin: 2px;
@@ -211,24 +211,45 @@
 	margin-top: 1em;
 }
 
-#pet #actions ul {
+#pet #action-edit-pet {
+	display: block;
+	grid-area: 1 / 2 / span 1 / span 1;
+}
+
+#pet #shelter {
+	margin-top: 1em;
+	margin-left: 1em;
+}
+
+#pet #shelter *{
+	text-align: left;
+	font-size: 14px;
+}
+
+#pet #shelter a {
+	font-size: 16px;
+	text-decoration: none;
+	color: var(--main-color);
+}
+
+#pet #action-edit-pet ul {
 	list-style-type: none;
-	margin: 0;
+	margin-top: 1em;
 	padding: 0;
 	text-align: end;
 }
 
-#pet #actions ul li a {
+#pet #action-edit-pet ul li a {
 	text-decoration: none;
 	list-style-type: none;
 	color: var(--main-color);
 }
 
-#pet #actions ul li img:hover {
+#pet #action-edit-pet ul li img:hover {
 	transform: scale(1.5);
 }
 
-#pet #actions ul li img {
+#pet #action-edit-pet ul li img {
 	transition: 0.5s;
 	width: 3em;
 }
