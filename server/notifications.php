@@ -72,3 +72,19 @@ function readNotification($notificationId) {
     $stmt->execute();
 }
 
+/**
+ * Deletes a notification.
+ *
+ * @param integer $notificationId    Notification's ID
+ * @return void
+ */
+function deleteNotification($notificationId) {
+    global $db;
+
+    $stmt = $db->prepare('DELETE FROM Notification
+    WHERE id=:notificationId');
+
+    $stmt->bindParam(':notificationId', $notificationId);
+    $stmt->execute();
+}
+
