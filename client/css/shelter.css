@@ -9,6 +9,18 @@
 	display: block;
 }
 
+#shelter-collaborators {
+    margin: auto;
+}
+
+.shelter-collaborators-grid{
+    margin-top: 2em;
+	display: grid;
+	column-gap: 1em;
+	row-gap: 4em;
+	grid-template-columns: repeat(2, 1fr);
+}
+
 .potential-collaborators-grid {
     margin-top: 2em;
 	display: grid;
