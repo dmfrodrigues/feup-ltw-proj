@@ -23,10 +23,6 @@ INSERT INTO User
 INSERT INTO Shelter(username, location, description) VALUES
 ('AAOrg', 'Lisbon', 'We take care of animals.');
 
--- Notification
-INSERT INTO Notification
-    VALUES(NULL, 0, 'MyNotification', 'You received a notification.', 'Asdrubal007');
-
 -- Admin
 INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 

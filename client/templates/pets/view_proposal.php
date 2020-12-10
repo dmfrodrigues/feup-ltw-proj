@@ -23,7 +23,7 @@
                 <?php if($isMyPetProposal) { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$petId?>'" id="acceptRequest">Accept Request</button>
                     <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">Answer Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=rejected'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$reqId?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$petId?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?id=<?=$petId?>'"id="cancelRequest">Cancel Request</button>
                     <button onclick="location.href='adoptionMessages.php?id=<?=$reqId?>'"id="answerRequest">View Chat</button>
@@ -37,7 +37,6 @@
     <?php 
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
-            <script src="js/handleAdoptionMessages.js" defer></script>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
@@ -94,8 +93,7 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="refresh-div"><button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button></div>
-
+                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button></div>
                 </div>  
             </div>
         </div>

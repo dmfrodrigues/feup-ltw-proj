@@ -59,14 +59,26 @@ CREATE TABLE Admin (
 );
 
 CREATE TABLE Notification (
-    id          INTEGER,
+    id          INTEGER NOT NULL,
     read        INTEGER NOT NULL DEFAULT 0,
     subject     VARCHAR NOT NULL,
-    text        VARCHAR,
+    text        VARCHAR NOT NULL CHECK (text <> ''),
     user        VARCHAR NOT NULL,
 
     CONSTRAINT Notification_PK PRIMARY KEY(id),
-    CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT subjectRule CHECK (subject LIKE 'adoptionProposalOutcome' OR
+                                  subject LIKE 'newPetAdoptionProposal' OR
+                                  subject LIKE 'newMessage' OR
+                                  subject LIKE 'favoriteAdopted' OR
+                                  subject LIKE 'proposedPetAdopted' OR
+                                  subject LIKE 'shelterInvitation' OR
+                                  subject LIKE 'invitationOutcome' OR
+                                  subject LIKE 'associatedPetAdopted' OR
+                                  subject LIKE 'myPetFavoritesChanges' OR
+                                  subject LIKE 'newPetComment' OR
+                                  subject LIKE 'favoritePhoto')
 );
 
 CREATE TABLE Pet (

@@ -138,16 +138,32 @@ button#submitAnswer {
 	vertical-align: top;
 }
 
-#adoption-request {
-	align-self: center;
-	margin: 1em;
+#adoption-request,
+#collaboration-proposal {
+	max-width: 1200px;
+	margin: 2em auto;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
 }
 
-#proposal-request form * {
-	display: block;
-	text-align: left;
+#proposal-request,
+#collaboration-proposal-body {
+    display: body;
 }
 
+#proposal-request textarea,
+#collaboration-proposal-body textarea{
+    padding: 0.5em;
+    width: 100%;
+    border: none;
+	outline: none;
+	resize: none;
+	border-radius: 5px;
+}
+
+#collaboration-proposal-submit,
 #add-proposal-submit {
 	cursor: pointer;
 	border: 0;
@@ -156,19 +172,15 @@ button#submitAnswer {
 	padding: 0.5em 1em 0.5em 1em;
 }
 
-#update img {
-	margin-top: 1em;
-	
+#collaboration-proposal-submit:hover,
+#add-proposal-submit:hover {
+	color: var(--main-color);
+	background-color: white;
 }
 
-#update img:hover {
-	transition: transform 0.6s;
-	transform: rotate(360deg);
-}
-
-#refresh-div {
+#proposal-messages-refresh {
 	position: absolute;
 	right: 2em;
-	top: 2em;
+	top: 3em;
 	display: inline-block;
 }

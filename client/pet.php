@@ -3,6 +3,7 @@ session_start();
 
 include_once __DIR__.'/../server/server.php';
 include_once SERVER_DIR.'/connection.php';
+include_once SERVER_DIR.'/notifications.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 $pet = Pet::fromDatabase($_GET['id']);
@@ -25,7 +26,7 @@ if (isset($_SESSION['username'])) {
 <?php
 }
 
-$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js'];
+$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
 
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_pet.php';

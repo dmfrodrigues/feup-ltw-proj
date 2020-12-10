@@ -74,10 +74,6 @@ function updateCommentsSection(){
     });
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function onClickedUpdateComments(el){
     el.classList.add("rotating");
     await sleep(1400);

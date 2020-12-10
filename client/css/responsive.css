@@ -20,8 +20,13 @@
 		grid-template-columns: repeat(2, 1fr);
 	}
 
+	.shelter-collaborators-grid,
 	#pet-album section{
 		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.shelter-collaborators-grid .collaborator-card{
+		margin: auto;
 	}
 }
 
@@ -35,6 +40,9 @@
 	#profile,
 	#shelter-profile {
 		display: block;
+	}
+	#profile #owned{
+		margin: auto;
 	}
 	#pet header {
 		display: block;
@@ -102,6 +110,7 @@
 	}
 	#pets-page #searches {
 		justify-self: start;
+		margin: auto;
 	}
 
 	#edit-profile #edit-profile-body {

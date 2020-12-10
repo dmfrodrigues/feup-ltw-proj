@@ -3,7 +3,10 @@
             <div id="proposal"> 
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$shelter?>"> 
-                        <img id="proposal-pic" src="../server/resources/img/shelters/<?=$shelter?>.jpg">
+                        <img id="proposal-pic" src="<?php 
+                        $shelter_pic = getUserPicture($shelter);
+                        echo (is_null($shelter_pic) ? "resources/img/no-image.svg" : $shelter_pic) ?>
+                        ">
                     </a>
                 </div>
             <div id="proposal-info">

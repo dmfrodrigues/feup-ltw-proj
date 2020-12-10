@@ -5,3 +5,7 @@ function updateImgFromFile(img, file){
     }
     reader.readAsDataURL(file);
 }
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}

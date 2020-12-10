@@ -317,6 +317,7 @@
 	height: 250px;
 	width: 250px;
 	perspective: 1000px;
+	margin: auto;
 }
 
 .pet-card-inner {
