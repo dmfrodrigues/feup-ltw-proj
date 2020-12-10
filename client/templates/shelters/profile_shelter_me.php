@@ -12,8 +12,8 @@
     <section id="actions">
         <h2>Actions</h2>
         <ul>
-            <li><a href="view_potential_collaborators.php">➕ Propose a User to be a Collaborator</a></li>
-            <li><a href="view_my_shelter_invitations.php">➕ View Collaboration Invitations</a></li>
+            <li><button onclick="location.href = 'view_potential_collaborators.php'"> Propose a User to be a Collaborator</button></li>
+            <li><button onclick="location.href = 'view_my_shelter_invitations.php'"> View Collaboration Invitations</button></li>
         </ul>
     </section>
 </section>

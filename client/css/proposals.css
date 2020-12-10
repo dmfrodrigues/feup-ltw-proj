@@ -3,7 +3,8 @@ div#proposal {
     width: 100%;
     height: 15em;
     text-align: center;
-    position: relative;
+	position: relative;
+	margin-top: 1em;
 }
 
 div#proposal-msg {
@@ -46,6 +47,16 @@ div#proposal-info {
 	display: inline-block;
 	vertical-align: top;
 	height: 95%;
+}
+
+div#proposal-info a{
+	text-decoration: none;
+	font-weight: bold;
+	color: var(--main-color);
+}
+
+div#proposal-info a:hover{
+	color: white;
 }
 
 div#proposal-message,
