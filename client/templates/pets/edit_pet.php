@@ -1,5 +1,5 @@
 <?php
-$photos = getPetPhotos($pet->getId());
+$photos = $pet->getPictures();
 ?>
 <article id="edit-pet">
     <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet->getId() ?>" method="post" enctype="multipart/form-data">

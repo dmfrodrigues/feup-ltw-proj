@@ -7,7 +7,7 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/users.php';
 $pet = Pet::fromDatabase($_GET['id']);
-$comments = getPetComments($_GET['id']);
+$comments = $pet->getComments();
 
 ?>
 <script>

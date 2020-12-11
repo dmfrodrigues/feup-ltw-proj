@@ -1,5 +1,5 @@
 <?php
-$photos = getPetPhotos($pet->getId());
+$photos = $pet->getPictures();
 ?>
 <article id="pet-album">
     <header>

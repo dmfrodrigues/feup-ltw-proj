@@ -35,7 +35,7 @@
         <?php
         foreach ($pets as $pet) {
             $intro = explode(PHP_EOL, $pet->getDescription())[0];
-            $photoUrl = getPetMainPhoto($pet->getId());
+            $photoUrl = getPetMainPhoto($pet);
         ?>
         <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet->getId() ?>';">
             <div class="pet-card-inner">

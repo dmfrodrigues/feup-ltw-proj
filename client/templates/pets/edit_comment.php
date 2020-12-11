@@ -88,13 +88,20 @@
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
         el_userPic.href = `profile.php?username=${comment.user}`;
-        el_userPic.children[0].src = (comment.userPictureUrl !== null ? comment.userPictureUrl : 'resources/img/no-image.svg');
+        el_userPic.children[0].src = API_URL + `user/${comment.user}/photo`;
 
         let el_text = editElement.querySelector("#comment-text");
         el_text.value = comment.text;
 
         let el_img = editElement.querySelector("#comment-picture");
-        el_img.src = (comment.commentPictureUrl !== null ? comment.commentPictureUrl : '');
+        api.head(`comment/${comment.id}/photo`)
+        .then(function(response){
+            el_img.src = API_URL + `comment/${comment.id}/photo`;
+        })
+        .catch(function(error){
+            console.error(error);
+            el_img.src = '';
+        })
 
         editElement.addEventListener('submit', (e) => { editComment_onSubmit(e); })
 

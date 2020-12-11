@@ -47,6 +47,57 @@ class Pet implements JsonSerializable {
         else     return $this->getPostedBy();
     }
 
+    /**
+     * Get pet pictures
+     * 
+     * @return array       Pet photos
+     */
+    public function getPictures() : array {
+        $dir = PETS_IMAGES_DIR."/{$this->getId()}";
+        $photos = array();
+        if(!is_dir($dir)) return $photos;
+        
+        $lst = scandir($dir);
+        foreach($lst as $fileName){
+            $filePath = "$dir/$fileName";
+            if(in_array(pathinfo($filePath)['extension'], IMAGES_EXTENSIONS)){
+                $url = path2url($filePath);
+                array_push($photos, $url);
+            }
+        }
+
+        return $photos;
+    }
+
+    /**
+     * Get pet main picture
+     *
+     * @return ?string       URL of pet main photo
+     */
+    public function getMainPicture() : ?string {
+        $pictures = $this->getPictures();
+        return (count($pictures) < 1 ?
+            null :
+            $pictures[0]
+        );
+    }
+
+    /**
+     * Get comments about a pet.
+     *
+     * @param integer $id   ID of the pet
+     * @return array        Array of comments about that pet
+     */
+    public function getComments() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $comments = $stmt->fetchAll();
+        return $comments;
+    }
+
     public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
     public function setName        ( string $name        ) : void { $this->name         = $name        ; }
     public function setSpecies     ( string $species     ) : void { $this->species      = $species     ; }
@@ -209,7 +260,7 @@ class Comment implements JsonSerializable {
     private string $text    ;
     private int    $pet     ;
     private string $user    ;
-    private int    $answerTo;
+    private ?int   $answerTo;
 
     public function __construct(){}
 
@@ -429,67 +480,14 @@ function newPetPictures(int $petId, array $newpic){
 define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
- * Get pet main photo
+ * Get pet main picture
  *
- * @param integer $id   Pet ID
- * @return string       URL of pet main photo
+ * @param Pet $pet      Pet
+ * @return ?string      URL of pet main photo
  */
-function getPetMainPhoto(int $id) : string {
-    $dir = PETS_IMAGES_DIR."/$id";
-    if(!is_dir($dir)) return 'resources/img/no-image.svg';
-    
-    $lst = scandir($dir);
-    foreach($lst as $tmpFilePathname){
-        $tmpFilePathpath = "$dir/$tmpFilePathname";
-        if(in_array(pathinfo($tmpFilePathpath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($tmpFilePathpath);
-            return $url;
-        }
-    }
-
-    return 'resources/img/no-image.svg';
-}
-
-/**
- * Get pet photos
- *
- * @param integer $id   Pet ID
- * @return array       Pet photos
- */
-function getPetPhotos(int $id) : array {
-    $dir = PETS_IMAGES_DIR."/$id";
-    $photos = array();
-    if(!is_dir($dir)) return $photos;
-    
-    $lst = scandir($dir);
-    foreach($lst as $tmpFilePathname){
-        $tmpFilePathpath = "$dir/$tmpFilePathname";
-        if(in_array(pathinfo($tmpFilePathpath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($tmpFilePathpath);
-            array_push($photos, $url);
-        }
-    }
-
-    return $photos;
-}
-
-/**
- * Get comments about a pet.
- *
- * @param integer $id   ID of the pet
- * @return array        Array of comments about that pet
- */
-function getPetComments(int $id) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
-    $stmt->bindValue(':id', $id);
-    $stmt->execute();
-    $comments = $stmt->fetchAll();
-    for($i = 0; $i < count($comments); ++$i){
-        $comments[$i]['userPictureUrl'] = (new User($comments[$i]['user']))->getPictureUrl();
-        $comments[$i]['commentPictureUrl'] = getCommentPicture($comments[$i]['id']);
-    }
-    return $comments;
+function getPetMainPhoto(Pet $pet) : string {
+    $picture = $pet->getMainPicture();
+    return ($picture == null ? 'resources/img/no-image.svg' : $picture);
 }
 
 /**
@@ -654,10 +652,10 @@ function deletePetCommentPhoto(int $commentId){
  * @return void
  */
 function deleteAllPetCommentPhotos(int $id){
-    $comments = getPetComments($id);
+    $comments = Pet::fromDatabase($id)->getComments();
     foreach($comments as $comment)
-        if (getCommentPicture($comment['id']) !== '') // if the comment has a picture
-            deletePetCommentPhoto($comment['id']);
+        if (getCommentPicture($comment->getId()) !== '') // if the comment has a picture
+            deletePetCommentPhoto($comment->getId());
 }
 
 

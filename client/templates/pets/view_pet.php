@@ -11,7 +11,7 @@
     <header>
         <div id="pet-photos">
             <?php
-            $photos = getPetPhotos($pet->getId());
+            $photos = $pet->getPictures();
             if (empty($photos)) $photoSelected = "resources/img/no-image.svg";
             else $photoSelected = $photos[0];
             ?>

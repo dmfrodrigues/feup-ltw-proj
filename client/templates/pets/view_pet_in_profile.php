@@ -1,6 +1,6 @@
 <?php
 function viewPetInProfile(Pet $pet) : void {
-    $photoUrl = getPetMainPhoto($pet->getId());
+    $photoUrl = getPetMainPhoto($pet);
     $intro = explode(PHP_EOL, $pet->getDescription())[0];
     ?>
     <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet->getId() ?>';">

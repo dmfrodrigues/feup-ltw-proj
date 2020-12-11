@@ -5,14 +5,11 @@ require_once SERVER_DIR . '/users.php';
 $user_id_photo_GET = function($args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
+    if($user == null){ http_response_code(404); die(); }
     $ret = $user->getPictureUrl();
-    if($ret == null){
-        http_response_code(404);
-        die();
-    } else {
-        header("Location: {$ret}");
-        exit();
-    }
+    if($ret  == null){ http_response_code(404); die(); }
+    header("Location: {$ret}");
+    exit();
 };
 
 $user_id_photo_PUT = function($args): void{

@@ -51,7 +51,8 @@ class RestServer {
         $resourceHandlers = (gettype($tree) == 'array' ? $tree[''] : $tree);
 
         switch($_SERVER['REQUEST_METHOD']){
-            case 'GET'   : $handler = $resourceHandlers->get   (); break;
+            case 'GET'   :
+            case 'HEAD'  : $handler = $resourceHandlers->get   (); break;
             case 'POST'  : $handler = $resourceHandlers->post  (); break;
             case 'PUT'   : $handler = $resourceHandlers->put   (); break;
             case 'DELETE': $handler = $resourceHandlers->delete(); break;
