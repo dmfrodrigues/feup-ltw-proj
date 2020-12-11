@@ -102,6 +102,26 @@ class User implements JsonSerializable {
         $this->setShelter     ($newUser->getShelter     ());
     }
 
+    /**
+     * Delete user.
+     *
+     * @param string $username  User's username
+     * @return void
+     */
+    static public function deleteFromDatabase(string $username) : void {
+        global $db;
+        $user_pets = getAddedPets($username);
+        foreach($user_pets as $i => $pet){
+            $id = $pet->getId();
+            $dir = PETS_IMAGES_DIR."/$id";
+            rmdir_recursive($dir);
+        }
+        deleteUserPhoto($username);
+        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+    }
+
     static public function fromDatabase(string $username) : User {
         global $db;
         $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
@@ -242,26 +262,8 @@ function editUserPassword(string $username, string $password) {
     $user->updateDatabase();
 }
 
-/**
-
- * Delete user.
- *
- * @param string $username  User's username
- * @return void
- */
 function deleteUser(string $username) {
-    global $db;
-    $user_pets = getAddedPets($username);
-    foreach($user_pets as $i => $pet){
-        $id = $pet->getId();
-        $dir = PETS_IMAGES_DIR."/$id";
-        rmdir_recursive($dir);
-    }
-    deleteUserPhoto($username);
-    $stmt = $db->prepare('DELETE FROM User 
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
+    User::deleteFromDatabase($username);
 }
 
 /**

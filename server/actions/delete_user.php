@@ -6,7 +6,7 @@
     require_once SERVER_DIR . '/users.php';
 
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
-        deleteUser($_SESSION['username']);
+        User::deleteFromDatabase($_SESSION['username']);
         session_destroy();
         header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
         die();
