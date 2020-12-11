@@ -699,10 +699,10 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * @return void
  */
 function refuseOtherProposals(int $requestId, int $petId) {
-    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequestsToOthers();
+    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
     foreach ($adoption_requests as $request){
         if ($request->getId() != $requestId) {
-            $request->setOutcode("rejected");
+            $request->setOutcome("rejected");
         }
     }
     changePetStatus($petId, "adopted");
