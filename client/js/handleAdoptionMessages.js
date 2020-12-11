@@ -25,24 +25,14 @@ async function addNewAdoptionRequestMsg() {
     let data = { requestId: requestId, user: user, Msgtext: Msgtext};
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
-    
     let response  = await ajaxAddAdoptionRequest(params);
+
     if(!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-    let jsonResponse = await response.json();
 
-    let mainObject = document.querySelector("header ~ main");
-    mainObject.innerHTML = '';
-
-    jsonResponse.comments.forEach((comment) => {
-        addCommentToChat(comment, user, jsonResponse.petId.pet, jsonResponse.petName.name);
-    });
-    
-    submitMsg.querySelector('textarea').value = "";
-    mainObject.appendChild(submitMsg);
-    window.location='#proposal-messages-refresh';
+    updateAdoptionChat();
 }
 
 async function ajaxAddAdoptionRequest(bodyParams) {
@@ -83,7 +73,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messageDate} <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';
@@ -103,15 +93,40 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     proposal.appendChild(proposalHeader);
     proposal.appendChild(proposalInfo);
 
-    let mainObject = document.querySelector("header ~ main");
+    let mainObject = document.querySelector("section");
     
     mainObject.appendChild(proposal);
 
 }
 
-async function onClickedUpdateComments(el){
+api = new RestApi(API_URL);
+
+async function updateAdoptionChat() {
+    let requestId = document.querySelector('input[name=requestID]').value;
+    let response = await api.get(`adoptionMessage/${requestId}`);
+    let jsonResponse = await response.json();
+
+    let user = document.querySelector('input[name=username]').value;
+
+    let mainObject = document.querySelector("section");
+    let title =document.createElement('h1');
+    mainObject.innerHTML = '';
+    title.innerHTML = 'Proposal Chat';
+    title.id = 'proposal-title';
+    mainObject.appendChild(title);
+
+    jsonResponse.forEach((comment) => {
+        addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
+    });
+    
+    submitMsg.querySelector('textarea').value = "";
+    mainObject.appendChild(submitMsg);
+    window.location='#proposal-messages-refresh';
+}
+
+async function onClickedUpdateChat(el){
     el.classList.add("rotating");
     await sleep(1400);
-    // updateCommentsSection();
+    updateAdoptionChat();
     el.classList.remove("rotating");
 }

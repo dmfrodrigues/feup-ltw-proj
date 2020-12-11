@@ -37,6 +37,8 @@
     <?php 
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+        <section id="proposal-container">
+            <h1 id="proposal-title">Proposal chat</h1>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
@@ -45,7 +47,7 @@
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
@@ -93,10 +95,11 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateComments(this)"><img src="resources/img/update.svg"/></button></div>
+                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="resources/img/update.svg"/></button></div>
                 </div>  
             </div>
         </div>
+    </section>
     <?php } ?>      
 
     <?php
