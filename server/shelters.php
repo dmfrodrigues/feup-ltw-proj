@@ -27,31 +27,6 @@ function isShelter(string $username) : bool {
 }
 
 /**
- * Get Shelter info.
- *
- * @param string $shelter  Username (Shelter)
- * @return array           Array containing the shelter's info.
- */
-function getShelter(string $shelter) : array {
-    global $db;
-
-    $stmt = $db->prepare('SELECT
-        User.username,
-        User.name,
-        Shelter.location,
-        Shelter.description
-        FROM Shelter
-        JOIN User ON User.username = Shelter.username 
-        WHERE User.username=:shelter
-    ');
-    $stmt->bindValue(':shelter', $shelter);
-    $stmt->execute();
-    $shelterInfo = $stmt->fetch();
-    $shelterInfo['pictureUrl'] = Shelter::fromDatabase($shelter)->getPictureUrl();
-    return $shelterInfo;
-}
-
-/**
  * Add shelter to database.
  *
  * @param string $username     Shelter's username
@@ -224,7 +199,7 @@ function getShelterCollaborators(string $shelter) : array {
 
     $collaboratorsWithPhoto = [];
     foreach($shelterCollaborators as $collaborator){
-        $collaborator['pictureUrl'] = getUserPicture($collaborator['user']);
+        $collaborator['pictureUrl'] = User::fromDatabase($collaborator['user'])->getPictureUrl();
         array_push($collaboratorsWithPhoto, $collaborator);
     }
 

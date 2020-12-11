@@ -270,6 +270,8 @@ class User implements JsonSerializable {
     }
 }
 
+class NoSuchUserException extends RuntimeException{}
+
 class Shelter extends User {
     private string $description;
     private string $location;
@@ -326,7 +328,7 @@ class Shelter extends User {
             $obj['name'],
             $obj['registeredOn'],
             $obj['shelter'],
-            false,
+            // false,
             $obj['description'],
             $obj['location']
         );
@@ -397,6 +399,7 @@ function addUser(string $username, string $password, string $name){
  */
 function editUser(string $oldUsername, string $newUsername, string $name) {
     $user = User::fromDatabase($oldUsername);
+    if($user == null) throw new NoSuchUserException($oldUsername);
     $user->setName($name);
     $user->updateDatabase();
 
@@ -414,6 +417,7 @@ function editUser(string $oldUsername, string $newUsername, string $name) {
  */
 function editUserPassword(string $username, string $password) {
     $user = User::fromDatabase($username);
+    if($user == null) throw new NoSuchUserException($username);
     $user->setPassword($password, false);
     $user->updateDatabase();
 }
@@ -457,7 +461,9 @@ function changePictureUsername(string $oldUsername, string $newUsername) {
   */
 function addToFavorites(string $username, int $id){
     global $db;
-    $favoritePets = User::fromDatabase($username)->getFavoritePets();
+    $user = User::fromDatabase($username);
+    if($user == null) throw new NoSuchUserException($username);
+    $favoritePets = $user->getFavoritePets();
     foreach ($favoritePets as $pet)
         if ($pet->getId() == $id)
             return;
@@ -491,7 +497,9 @@ function removeFromFavorites(string $username, int $id){
  * @return array            Array of favorite pets of the user 
  */
 function getFavoritePets(string $username) : array {
-    return User::fromDatabase($username)->getFavoritePets();
+    $user = User::fromDatabase($username);
+    if($user == null) throw new NoSuchUserException($username);
+    return $user->getFavoritePets();
 }
 
 /**

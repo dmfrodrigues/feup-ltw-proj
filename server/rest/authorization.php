@@ -1,6 +1,8 @@
 <?php
-
 namespace Authorization {
+    require_once __DIR__.'/../server.php';
+    require_once SERVER_DIR.'/users.php';
+
     abstract class Method {
         const READ  = 0;
         const WRITE = 1;
@@ -19,38 +21,38 @@ namespace Authorization {
     $rules = [];
     function add_rule(int $resourceType, int $method, callable $rule): void{ $rules[$resourceType][$method] = $rule; }
 
-    add_rule(Resource::PROFILE                 , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::NOTIFICATION            , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::PET                     , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST        , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::COMMENT                 , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::FAVORITE_PET            , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PROFILE                 , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::NOTIFICATION            , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PET                     , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST        , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::COMMENT                 , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::FAVORITE_PET            , Method::READ , function(\User $user, $resource){ return $user->isAdmin(); });
     
-    add_rule(Resource::PROFILE                 , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::NOTIFICATION            , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::PET                     , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST        , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::COMMENT                 , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::FAVORITE_PET            , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PROFILE                 , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::NOTIFICATION            , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PET                     , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST        , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::COMMENT                 , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::FAVORITE_PET            , Method::WRITE, function(\User $user, $resource){ return $user->isAdmin(); });
 
-    add_rule(Resource::PROFILE                 , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::NOTIFICATION            , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::PET                     , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST        , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::COMMENT                 , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
-    add_rule(Resource::FAVORITE_PET            , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PROFILE                 , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::NOTIFICATION            , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::PET                     , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST        , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::COMMENT                 , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
+    // add_rule(Resource::FAVORITE_PET            , Method::EDIT , function(\User $user, $resource){ return $user->isAdmin(); });
     
     // ======================================================== PROFILE ========================================================
     add_rule(Resource::PROFILE, Method::READ , function(\User $user, \User $otherUser){ return true               ; }); // Everyone can see
     add_rule(Resource::PROFILE, Method::EDIT , function(\User $user, \User $otherUser){ return $user == $otherUser; }); // Edit itself
     
     // ======================================================== PET ========================================================
-    add_rule(Resource::PET, Method::READ , function(\User $user, \Pet $pet){ return true                                    ; }); // Everyone can see
-    add_rule(Resource::PET, Method::WRITE, function(\User $user, \Pet $pet){ return $pet->getAuthor() == $user              ; }); // Author can write
-    add_rule(Resource::PET, Method::EDIT , function(\User $user, \Pet $pet){ return $pet->getAuthor()->getShelter() == $user; }); // Author can edit
+    add_rule(Resource::PET, Method::READ , function(\User $user, \Pet $pet){ return true                      ; }); // Everyone can see
+    add_rule(Resource::PET, Method::WRITE, function(\User $user, \Pet $pet){ return $pet->getAuthor() == $user; }); // Author can write
+    add_rule(Resource::PET, Method::EDIT , function(\User $user, \Pet $pet){ return $pet->getAuthor() == $user; }); // Author can edit
     
     // ======================================================== ADOPTION REQUEST ========================================================
     add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(\User $user, \AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can see

@@ -12,7 +12,7 @@ $usernameChanged = false;
 if(isShelter($_GET['username'])) {
     if(isset($_SESSION['username'])) {
 
-        $shelter = getShelter($_GET['username']);
+        $shelter = Shelter::fromDatabase($_GET['username']);
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
             updateShelterInfo(

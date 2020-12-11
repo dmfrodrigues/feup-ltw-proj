@@ -11,7 +11,7 @@ require_once SERVER_DIR.'/pets.php';
  * @param string $user          User's username
  * @param string $subject       Notification's subject
  * @param string $text          Notification's subject
- * @return integer              ID of the new notification
+ * @return int ID of the new notification
  */
 function addNotification(string $user, string $subject, string $text) : int {
     global $db;
@@ -25,7 +25,7 @@ function addNotification(string $user, string $subject, string $text) : int {
     $stmt->bindValue(':text', $text);
     $stmt->bindValue(':user', $user);
     $stmt->execute();
-    $notificationId = $db->lastInsertId();
+    $notificationId = intval($db->lastInsertId());
 
     return $notificationId;
 }
