@@ -67,7 +67,7 @@ class Pet implements JsonSerializable {
         else     return User::fromDatabase($this->postedBy);
     }
     /**
-     * @return User|string
+     * @return User|null|string
      */
     public function getAuthor      (bool $raw = false) {
         if($raw) return $this->postedBy;
@@ -297,7 +297,7 @@ class AdoptionRequest implements JsonSerializable {
 		return get_object_vars($this);
     }
 
-    static public function fromDatabase(string $id) : AdoptionRequest {
+    static public function fromDatabase(int $id) : AdoptionRequest {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
         $stmt->bindParam(':id', $id);
@@ -494,7 +494,7 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  * @return void
  */
 function addPetPhoto(int $id, string $tmp_filepath, int $idx) {
-    $filepath = PETS_IMAGES_DIR."/$id/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
+    $filepath = PETS_IMAGES_DIR."/$id/".str_pad(strval($idx), 3, '0', STR_PAD_LEFT).".jpg";
     if(!move_uploaded_file($tmp_filepath, $filepath))
         throw new RuntimeException('Failed to move uploaded file.');
 }
@@ -576,7 +576,8 @@ function getPetComment(int $commentId) {
     $stmt->execute();
     $comment = $stmt->fetch();
     if(!$comment) return $comment;
-    $comment['userPictureUrl'   ] = User::fromDatabase($comment['user'])->getPictureUrl();
+    $author = User::fromDatabase($comment['user']);
+    $comment['userPictureUrl'   ] = ($author != null ? $author->getPictureUrl() : null);
     $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
     return $comment;
 }
