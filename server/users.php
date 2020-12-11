@@ -36,6 +36,9 @@ class User implements JsonSerializable {
     public function getPassword    () :  string { return $this->password    ; }
     public function getName        () :  string { return $this->name        ; }
     public function getRegisteredOn() :  string { return $this->registeredOn; }
+    /**
+     * @return Shelter|null|string
+     */
     public function getShelter(bool $raw = false) {
         return ($raw ?
             $this->shelter :
@@ -165,7 +168,7 @@ class User implements JsonSerializable {
         $stmt->execute();
     }
 
-    static public function changeUsernameInDatabase(string $oldUsername, string $newUsername){
+    static public function changeUsernameInDatabase(string $oldUsername, string $newUsername): void{
         global $db;
 
         if($oldUsername != $newUsername)
@@ -399,7 +402,7 @@ function editUserPassword(string $username, string $password) {
     $user->updateDatabase();
 }
 
-function deleteUser(string $username) {
+function deleteUser(string $username): void {
     User::deleteFromDatabase($username);
 }
 

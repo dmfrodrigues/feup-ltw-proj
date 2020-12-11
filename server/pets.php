@@ -60,7 +60,7 @@ class Pet implements JsonSerializable {
     public function getStatus      () :  string { return $this->status      ; }
     public function getAdoptionDate() : ?string { return $this->adoptionDate; }
     /**
-     * @return User|string
+     * @return User|null|string
      */
     public function getPostedBy    (bool $raw = false) { 
         if($raw) return $this->postedBy;
@@ -240,7 +240,7 @@ class Comment implements JsonSerializable {
         $this->answerTo = $answerTo;
     }
 
-    public function getAuthor() : User { return User::fromDatabase($this->user); }
+    public function getAuthor() : ?User { return User::fromDatabase($this->user); }
 
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -259,7 +259,7 @@ class FavoritePet implements JsonSerializable {
         $this->petId    = $petId   ;
     }
 
-    public function getUser() : User { return User::fromDatabase($this->username); }
+    public function getUser() : ?User { return User::fromDatabase($this->username); }
 
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -290,7 +290,7 @@ class AdoptionRequest implements JsonSerializable {
         $this->requestDate = $requestDate;
     }
 
-    public function getAuthor() : User { return User::fromDatabase($this->user); }
+    public function getAuthor() : ?User { return User::fromDatabase($this->user); }
     public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
 
     public function jsonSerialize() {
