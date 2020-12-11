@@ -538,7 +538,7 @@ function getAdoptionRequest(int $id): array {
         AdoptionRequest.outcome,
         AdoptionRequest.pet,
         AdoptionRequest.user,
-        AdoptionRequest.requestDate AS reqDate,
+        AdoptionRequest.requestDate AS messDate,
         Pet.postedBy,
         Pet.name AS petName
         FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet

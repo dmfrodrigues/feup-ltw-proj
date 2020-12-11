@@ -1,4 +1,5 @@
 rm -f *.db
+rm -rf resources
 
 sqlite3 database.db ".read script.sql"
 sqlite3 database.db ".read populate.sql"
