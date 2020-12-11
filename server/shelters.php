@@ -431,7 +431,7 @@ function userCanEditPet(string $username, int $petId) : bool {
         $postedBy = $pet->getPostedBy();
         if ($postedBy->getUsername() == $username) return true;
         $shelter1 = getUserShelter($username);
-        $shelter2 = $postedBy->getShelter(true);
+        $shelter2 = $postedBy->getShelterId();
         if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
     }
 
