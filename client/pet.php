@@ -9,7 +9,7 @@ require_once SERVER_DIR.'/users.php';
 $pet = Pet::fromDatabase($_GET['id']);
 $comments = $pet->getComments();
 
-$title = $pet['name'];
+$title = $pet->getName();
 
 ?>
 <script>

@@ -300,9 +300,17 @@ class AdoptionRequest implements JsonSerializable {
 
     public function __construct(){}
 
-    public function getAuthor() : ?User { return User::fromDatabase($this->user); }
-    public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
-
+    public function getId      () : int    { return $this->id                      ; }
+    public function getText    () : string { return $this->text                    ; }
+    public function getOutcome () : string { return $this->outcome                 ; }
+    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet ); }
+    public function getPetId   () : string { return $this->pet                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
+    public function getAuthor  () : ?User  { return $this->getUser()               ; }
+    public function getUserId  () : string { return $this->user                    ; }
+    public function getAuthorId() : string { return $this->getUserId()             ; }
+    public function getDate    () : string { return $this->requestDate             ; }
+    
     public function jsonSerialize() {
 		return get_object_vars($this);
     }
