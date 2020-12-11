@@ -33,7 +33,7 @@ if (isset($_SESSION['username'])){
             $pictures
         );
         header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
-        die();
+        exit();
     }
 
 }

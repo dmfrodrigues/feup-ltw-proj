@@ -485,11 +485,10 @@ function newPetPictures(int $petId, array $newpic){
     $path = PETS_IMAGES_DIR."/$petId";
 
     foreach($newpic as $id => $tmpFilePath){
-        if($newpic[$id]['new']['size'] == 0) continue;
-        $ext = checkEditImageFile($tmpFilePath, 1000000);
+        $ext = checkEditImageFile($tmpFilePath, PET_PICTURE_MAX_SIZE);
         $tmpFilePathpath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $tmpFilePath['new']['tmp_name'],
+            $tmpFilePath['new'],
             $ext,
             $tmpFilePathpath,
             85
