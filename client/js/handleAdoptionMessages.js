@@ -26,12 +26,12 @@ async function addNewAdoptionRequestMsg() {
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
-    console.log(response);
+
     if(!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-    
+
     updateAdoptionChat();
 }
 
@@ -109,8 +109,12 @@ async function updateAdoptionChat() {
     let user = document.querySelector('input[name=username]').value;
 
     let mainObject = document.querySelector("section");
+    let title =document.createElement('h1');
     mainObject.innerHTML = '';
-    console.log(jsonResponse);
+    title.innerHTML = 'Proposal Chat';
+    title.id = 'proposal-title';
+    mainObject.appendChild(title);
+
     jsonResponse.forEach((comment) => {
         addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
     });

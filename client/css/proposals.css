@@ -1,6 +1,6 @@
 div#proposal {
     background-color: var(--disable-color);
-    width: 100%;
+    width: 107em;
     height: 15em;
     text-align: center;
 	position: relative;
@@ -65,7 +65,7 @@ div#proposal-message-submit {
 }
 
 div#proposal-message-submit {
-	left: 43.5em;
+	left: 41.5em;
 	position: absolute;
 }
 
@@ -169,4 +169,9 @@ section#proposal-container {
 	border-radius: 1em;
 	background-color: var(--light-color);
 	text-align: center;
+}
+
+#proposal-title {
+	font-size: 2.5em;
+	padding-bottom: 1em;
 }

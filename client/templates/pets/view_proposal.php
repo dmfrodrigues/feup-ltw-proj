@@ -38,6 +38,7 @@
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
         <section id="proposal-container">
+            <h1 id="proposal-title">Proposal chat</h1>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
