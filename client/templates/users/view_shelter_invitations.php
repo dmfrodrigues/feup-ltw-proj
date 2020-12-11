@@ -37,7 +37,7 @@
 
     function drawShelterInvitations($shelterInvitations, $isShelter): void {
         if(count($shelterInvitations) > 0) { 
-            foreach($shelterInvitations as $invitation) 
+            foreach($shelterInvitations as $invitation){
                 $user    = User   ::fromDatabase($invitation['user'   ]);
                 $shelter = Shelter::fromDatabase($invitation['shelter']);
                 drawInvitation(
@@ -47,6 +47,7 @@
                     $invitation['requestDate'],
                     $isShelter
                 );
+            }
         } else { 
             drawEmptyInvitations();
         }
