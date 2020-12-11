@@ -429,20 +429,6 @@ function newPetPictures(int $petId, array $newpic){
 define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
- * Add pet photo
- *
- * @param integer $id           ID of pet
- * @param string $tmp_tmpFilePathpath  File path to temporary tmpFilePath
- * @param integer $idx          Index of image (1 is the first image); should be numbered sequentially
- * @return void
- */
-function addPetPhoto(int $id, string $tmp_tmpFilePathpath, int $idx) {
-    $tmpFilePathpath = PETS_IMAGES_DIR."/$id/".str_pad(strval($idx), 3, '0', STR_PAD_LEFT).".jpg";
-    if(!move_uploaded_tmpFilePath($tmp_tmpFilePathpath, $tmpFilePathpath))
-        throw new RuntimeException('Failed to move uploaded tmpFilePath.');
-}
-
-/**
  * Get pet main photo
  *
  * @param integer $id   Pet ID
