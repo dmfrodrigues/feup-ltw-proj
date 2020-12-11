@@ -713,9 +713,9 @@ function deletePetComment(int $id){
  * @return string        URL of comment photo, or null if there is none
  */
 function getCommentPicture(int $id) : ?string {
-    $url = SERVER_DIR . "/resources/img/comments/$id.jpg";
-    if(!tmpFilePath_exists($url)) return null;
-    return path2url($url);
+    $path = SERVER_DIR . "/resources/img/comments/$id.jpg";
+    if(!file_exists($path)) return null;
+    return path2url($path);
 }
 
 /**
@@ -726,7 +726,7 @@ function getCommentPicture(int $id) : ?string {
  */
 function deletePetCommentPhoto(int $commentId){
     $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    if(tmpFilePath_exists($tmpFilePathpath))
+    if(file_exists($tmpFilePathpath))
         if(!unlink($tmpFilePathpath))
             throw new CouldNotDeleteFileException("Could not delete '$tmpFilePathpath'");
 }
