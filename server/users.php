@@ -50,8 +50,12 @@ class User implements JsonSerializable {
     }
 
     public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
-    public function setPassword    ( string $password    ) : void { $this->password     = $password    ; }
-    public function setPasswordNotHashed(string $password) : void { $this->password   = sha1($password); }
+    public function setPassword    ( string $password, bool $hashed = true) : void {
+        $this->password = ($hashed?
+            $password :
+            (User::hashPassword($password))
+        );
+    }
     public function setName        ( string $name        ) : void { $this->name         = $name        ; }
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
@@ -60,6 +64,10 @@ class User implements JsonSerializable {
         $ret = get_object_vars($this);
         $ret['pictureUrl'] = $this->getPictureUrl();
         return $ret;
+    }
+
+    static public function hashPassword(string $password) : string {
+        return sha1($password);
     }
 
     /**
@@ -210,7 +218,7 @@ class User implements JsonSerializable {
  */
 function addUser(string $username, string $password, string $name){
     $user = new User($username, '', $name);
-    $user->setPasswordNotHashed($password);
+    $user->setPassword($password, false);
     $user->addToDatabase();
 }
 
@@ -258,7 +266,7 @@ function editUser(string $oldUsername, string $newUsername, string $name) {
  */
 function editUserPassword(string $username, string $password) {
     $user = User::fromDatabase($username);
-    $user->setPasswordNotHashed($password);
+    $user->setPassword($password, false);
     $user->updateDatabase();
 }
 
