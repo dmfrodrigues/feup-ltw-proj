@@ -21,7 +21,7 @@ class User implements JsonSerializable {
         string $password     = '',
         string $name         = '',
         string $registeredOn = '',
-       ?string $shelter      = null,
+       ?string $shelter      = null
         // bool   $admin        = false
     ){
         $this->username     = $username;
