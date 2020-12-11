@@ -10,6 +10,8 @@ include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR . '/users.php';
 $user = getUser($_GET['username']);
 
+$title = "Change password";
+
 include_once('templates/common/header.php');
 if (isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username'])
     include_once('templates/users/change_password.php');

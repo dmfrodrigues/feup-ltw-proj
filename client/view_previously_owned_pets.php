@@ -7,8 +7,10 @@ include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR . '/users.php';
 include_once SERVER_DIR . '/pets.php';
 
-if(isset($_SESSION['username'])) 
+if(isset($_SESSION['username'])){
     $previouslyOwnedPets = getAdoptedPetsPublishedByUser($_SESSION['username']);
+    $title = "previously owned by" . $_SESSION['username'];
+}
 
 include_once 'templates/common/header.php';
 include_once 'templates/pets/view_previously_owned_pets.php';

@@ -6,6 +6,8 @@ include_once SERVER_DIR.'/connection.php';
 include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR . '/users.php';
 
+$title = "Adoption messages";
+
 $javascript_files = ["js/handleAdoptionMessages.js", "js/utils_elements.js"];
 include_once 'templates/common/header.php';
 

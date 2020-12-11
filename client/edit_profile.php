@@ -7,6 +7,8 @@ include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR . '/users.php';
 include_once SERVER_DIR . '/shelters.php';
 
+$title = "Edit profile";
+
 include_once('templates/common/header.php');
 
 if(isShelter($_GET['username'])) {
