@@ -178,7 +178,7 @@ class User implements JsonSerializable {
                 throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
             
         $stmt = $db->prepare('UPDATE User SET
-        username=:newUsername,
+        username=:newUsername
         WHERE username=:oldUsername');
         $stmt->bindParam(':newUsername', $newUsername);
         $stmt->bindParam(':oldUsername', $oldUsername);
