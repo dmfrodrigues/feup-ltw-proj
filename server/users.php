@@ -157,11 +157,11 @@ class User implements JsonSerializable {
         registeredOn=:registeredOn,
         shelter=:shelter
         WHERE username=:username');
-        $stmt->bindParam(':username'    , $username    );
-        $stmt->bindParam(':password'    , $password    );
-        $stmt->bindParam(':name'        , $name        );
-        $stmt->bindParam(':registeredOn', $registeredOn);
-        $stmt->bindParam(':shelter'     , $shelter     );
+        $stmt->bindParam(':username'    , $this->username    );
+        $stmt->bindParam(':password'    , $this->password    );
+        $stmt->bindParam(':name'        , $this->name        );
+        $stmt->bindParam(':registeredOn', $this->registeredOn);
+        $stmt->bindParam(':shelter'     , $this->shelter     );
         $stmt->execute();
     }
 
@@ -393,7 +393,9 @@ function editUser(string $oldUsername, string $newUsername, string $name) {
  */
 function editUserPassword(string $username, string $password) {
     $user = User::fromDatabase($username);
+    var_dump($user);
     $user->setPassword($password, false);
+    var_dump($user);
     $user->updateDatabase();
 }
 
