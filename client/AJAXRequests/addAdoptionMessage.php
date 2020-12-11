@@ -10,7 +10,7 @@
     $stmt1->execute();
     $lastInsertedID = $db->lastInsertId();
 
-    $stmt2 = $db->prepare('SELECT text, request, messageDate, user FROM AdoptionRequestMessage WHERE request=:requestId');
+    $stmt2 = $db->prepare('SELECT text, request, messageDate AS messDate, user FROM AdoptionRequestMessage WHERE request=:requestId');
     $stmt2->bindParam(':requestId', $_POST['requestId']);
     $stmt2->execute();
     $insertedMsgs = $stmt2->fetchAll();

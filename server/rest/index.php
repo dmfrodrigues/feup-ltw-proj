@@ -10,6 +10,7 @@ include_once API_DIR . '/print.php';
 include_once API_DIR . '/user/user.php';
 include_once API_DIR . '/pet/pet.php';
 include_once API_DIR . '/comment/comment.php';
+include_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 
 $tree = [
     'user' => [null             => new ResourceHandlers(null                , null, null                 , null                    ),
@@ -27,6 +28,9 @@ $tree = [
         '[0-9]+' => [null       => new ResourceHandlers($comment_id_GET     , null, $comment_id_PUT      , null                    ),
             'photo'             => new ResourceHandlers(null                , null, $comment_id_photo_PUT, $comment_id_photo_DELETE)
         ]
+    ],
+    'adoptionMessage' => [null => new ResourceHandlers(null                , null, null                 , null                    ),
+        '[0-9]+'                => new ResourceHandlers($adoptionMsg_GET    , null, null                 , null                    )
     ]
 ];
 

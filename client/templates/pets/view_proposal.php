@@ -37,6 +37,7 @@
     <?php 
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+        <section id="proposal-container">
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
@@ -97,6 +98,7 @@
                 </div>  
             </div>
         </div>
+    </section>
     <?php } ?>      
 
     <?php

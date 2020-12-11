@@ -11,7 +11,7 @@ div#proposal-msg {
     background-color: var(--disable-color);
     width: 107em;
     height: 9em;
-    text-align: center;
+    text-align: center;	
 	position: relative;
 	margin-top: 1em;
 }
@@ -161,4 +161,13 @@ button#submitAnswer {
 	right: 2em;
 	top: 3em;
 	display: inline-block;
+}
+
+section#proposal-container {
+	z-index: 1;
+	margin: 2em 1em 2em 1em;
+	padding: 2em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	text-align: center;
 }
