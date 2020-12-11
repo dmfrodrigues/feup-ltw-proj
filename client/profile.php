@@ -14,7 +14,7 @@ require_once 'templates/common/header.php';
 if(isShelter($_GET['username'])) {
     $shelter = Shelter::fromDatabase($_GET['username']);
     $added_pets = $shelter->getPetsForAdoption();
-    $collaborators = getShelterCollaborators($_GET['username']);
+    $collaborators = $shelter->getCollaborators();
 
     if(isset($_SESSION['username']) && isset($_SESSION['isShelter']) && $_SESSION['username'] == $_GET['username'])
         require_once 'templates/shelters/profile_shelter_me.php';

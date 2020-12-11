@@ -307,30 +307,13 @@ class NoSuchUserException extends RuntimeException{}
 class Shelter extends User {
     private string $description;
     private string $location;
-    public function __construct(
-        string $username     = '',
-        string $password     = '',
-        string $name         = '',
-        string $registeredOn = '',
-       ?string $shelter      = null,
-        // bool   $admin        = false,
-        string $description  = '',
-        string $location     = ''
-    ){
-        parent::__construct(
-            $username,
-            $password,
-            $name,
-            $registeredOn,
-            $shelter,
-            // $admin
-        );
-        $this->description = $description;
-        $this->location = $location;
-    }
+    public function __construct(){}
 
     public function getDescription() : string { return $this->description; }
     public function getLocation   () : string { return $this->location   ; }
+
+    public function setDescription(string $description) : void { $this->description = $description; }
+    public function setLocation   (string $location   ) : void { $this->location    = $location   ; }
 
     public function jsonSerialize() {
         $ret = parent::jsonSerialize();
@@ -354,16 +337,14 @@ class Shelter extends User {
         $stmt->execute();
         $obj = $stmt->fetch();
         if($obj == false) return null;
-        $shelter = new Shelter(
-            $obj['username'],
-            $obj['password'],
-            $obj['name'],
-            $obj['registeredOn'],
-            $obj['shelter'],
-            // false,
-            $obj['description'],
-            $obj['location']
-        );
+        $shelter = new Shelter();
+        $shelter->setUsername    ($obj['username'    ]);
+        $shelter->setPassword    ($obj['password'    ]);
+        $shelter->setName        ($obj['name'        ]);
+        $shelter->setRegisteredOn($obj['registeredOn']);
+        $shelter->setShelter     ($obj['shelter'     ]);
+        $shelter->setDescription ($obj['description' ]);
+        $shelter->setLocation    ($obj['location'    ]);
         return $shelter;
     }
 
@@ -387,6 +368,23 @@ class Shelter extends User {
         $shelterPets = $stmt->fetchAll();
 
         return $shelterPets;
+    }
+
+    /**
+     * Get shelter collaborators.
+     *
+     * @return array            Array containing collaborators (Users)
+     */
+    public function getCollaborators() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM User 
+        WHERE shelter=:shelter');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $collaborators = $stmt->fetchAll();
+        return $collaborators;
     }
 }
 

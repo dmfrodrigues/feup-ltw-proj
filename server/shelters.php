@@ -177,36 +177,6 @@ function shelterInvitationIsPending(string $username, string $shelter) : bool {
 }
 
 /**
- * Get Shelter Collaborators.
- *
- * @param string $username  Username (Shelter)
- * @return array            Array containing all the info about the collaborators
- */
-function getShelterCollaborators(string $shelter) : array {
-    global $db;
-
-    $stmt = $db->prepare('SELECT 
-            shelter,
-            username as user,
-            name
-        FROM User 
-        WHERE shelter=:shelter
-    ');
-    
-    $stmt->bindValue(':shelter', $shelter);
-    $stmt->execute();
-    $shelterCollaborators = $stmt->fetchAll();
-
-    $collaboratorsWithPhoto = [];
-    foreach($shelterCollaborators as $collaborator){
-        $collaborator['pictureUrl'] = User::fromDatabase($collaborator['user'])->getPictureUrl();
-        array_push($collaboratorsWithPhoto, $collaborator);
-    }
-
-    return $collaboratorsWithPhoto;
-}
-
-/**
  * Removes a user from the shelter.
  *
  * @param string $username  Username

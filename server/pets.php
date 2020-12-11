@@ -252,6 +252,16 @@ class Pet implements JsonSerializable {
         $pets = $stmt->fetchAll();
         return $pets;
     }
+
+    public function getAdoptionRequests() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
 class Comment implements JsonSerializable {
