@@ -51,6 +51,7 @@ class User implements JsonSerializable {
 
     public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
     public function setPassword    ( string $password    ) : void { $this->password     = $password    ; }
+    public function setPasswordNotHashed(string $password) : void { $this->password   = sha1($password); }
     public function setName        ( string $name        ) : void { $this->name         = $name        ; }
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
@@ -190,7 +191,8 @@ function userAlreadyExists(string $username) : bool {
  * @return void
  */
 function addUser(string $username, string $password, string $name){
-    $user = new User($username, $password, $name);
+    $user = new User($username, '', $name);
+    $user->setPasswordNotHashed($password);
     $user->addToDatabase();
 }
 
@@ -237,14 +239,9 @@ function editUser(string $oldUsername, string $newUsername, string $name) {
  * @return void
  */
 function editUserPassword(string $username, string $password) {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('UPDATE User SET
-    password=:password
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
+    $user = User::fromDatabase($username);
+    $user->setPasswordNotHashed($password);
+    $user->updateDatabase();
 }
 
 /**
