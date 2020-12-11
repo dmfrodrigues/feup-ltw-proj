@@ -24,7 +24,7 @@ INSERT INTO Shelter(username, location, description) VALUES
 ('AAOrg', 'Lisbon', 'We take care of animals.');
 
 -- Admin
-INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
+-- INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 
 -- Pet
 INSERT INTO Pet
