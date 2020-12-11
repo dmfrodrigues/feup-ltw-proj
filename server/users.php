@@ -112,9 +112,9 @@ class User implements JsonSerializable {
 
         $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
         (:username, :password, :name)');
-        $stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':password', $this->password);
-        $stmt->bindParam(':name'    , $this->name);
+        $stmt->bindValue(':username', $this->username);
+        $stmt->bindValue(':password', $this->password);
+        $stmt->bindValue(':name'    , $this->name);
         if(!$stmt->execute()) throw new RuntimeException();
 
         $newUser = User::fromDatabase($this->username);
@@ -139,14 +139,14 @@ class User implements JsonSerializable {
         }
         deleteUserPhoto($username);
         $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
-        $stmt->bindParam(':username', $username);
+        $stmt->bindValue(':username', $username);
         $stmt->execute();
     }
 
     static public function fromDatabase(string $username) : ?User {
         global $db;
         $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
-        $stmt->bindParam(':username', $username);
+        $stmt->bindValue(':username', $username);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
         $stmt->execute();
         $user = $stmt->fetch();
@@ -162,11 +162,11 @@ class User implements JsonSerializable {
         registeredOn=:registeredOn,
         shelter=:shelter
         WHERE username=:username');
-        $stmt->bindParam(':username'    , $this->username    );
-        $stmt->bindParam(':password'    , $this->password    );
-        $stmt->bindParam(':name'        , $this->name        );
-        $stmt->bindParam(':registeredOn', $this->registeredOn);
-        $stmt->bindParam(':shelter'     , $this->shelter     );
+        $stmt->bindValue(':username'    , $this->username    );
+        $stmt->bindValue(':password'    , $this->password    );
+        $stmt->bindValue(':name'        , $this->name        );
+        $stmt->bindValue(':registeredOn', $this->registeredOn);
+        $stmt->bindValue(':shelter'     , $this->shelter     );
         $stmt->execute();
     }
 
@@ -180,8 +180,8 @@ class User implements JsonSerializable {
         $stmt = $db->prepare('UPDATE User SET
         username=:newUsername
         WHERE username=:oldUsername');
-        $stmt->bindParam(':newUsername', $newUsername);
-        $stmt->bindParam(':oldUsername', $oldUsername);
+        $stmt->bindValue(':newUsername', $newUsername);
+        $stmt->bindValue(':oldUsername', $oldUsername);
         $stmt->execute();
         changePictureUsername($oldUsername, $newUsername);
     }
@@ -195,7 +195,7 @@ class User implements JsonSerializable {
     static public function exists(string $username) : bool {
         global $db;
         $stmt = $db->prepare('SELECT username FROM User WHERE username=:username');
-        $stmt->bindParam(':username', $username);
+        $stmt->bindValue(':username', $username);
         $stmt->execute();
         $users = $stmt->fetchAll();
         return (count($users) > 0);
@@ -214,8 +214,8 @@ class User implements JsonSerializable {
         $stmt = $db->prepare('SELECT username
         FROM User
         WHERE username=:username AND password=:password');
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $password_sha1);
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $password_sha1);
         $stmt->execute();
         $users = $stmt->fetchAll();
         return (count($users) > 0);
@@ -229,7 +229,7 @@ class User implements JsonSerializable {
             WHERE username=:username
         )');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
-        $stmt->bindParam(':username', $this->username);
+        $stmt->bindValue(':username', $this->username);
         $stmt->execute();
         $pets = $stmt->fetchAll();
         return $pets;
@@ -247,7 +247,7 @@ class User implements JsonSerializable {
         WHERE postedBy=:username
         AND status="forAdoption"');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
-        $stmt->bindParam(':username', $this->username);
+        $stmt->bindValue(':username', $this->username);
         $stmt->execute();
         $pets = $stmt->fetchAll();
         return $pets;
@@ -300,7 +300,7 @@ class Shelter extends User {
         Shelter.location
         FROM User NATURAL JOIN Shelter
         WHERE User.username=:username');
-        $stmt->bindParam(':username', $username);
+        $stmt->bindValue(':username', $username);
         $stmt->execute();
         $obj = $stmt->fetch();
         if($obj == false) return null;
@@ -332,7 +332,7 @@ class Shelter extends User {
             ) AND Pet.status="forAdoption"
         ');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
-        $stmt->bindParam(':shelter', $this->getUsername());
+        $stmt->bindValue(':shelter', $this->getUsername());
         $stmt->execute();
         $shelterPets = $stmt->fetchAll();
 
@@ -365,7 +365,7 @@ function addUser(string $username, string $password, string $name){
 //     $stmt = $db->prepare('SELECT username
 //     FROM Admin
 //     WHERE username=:username');
-//     $stmt->bindParam(':username', $username);
+//     $stmt->bindValue(':username', $username);
 //     $stmt->execute();
 //     $admins = $stmt->fetchAll();
 //     return (count($admins) == 1);
@@ -468,8 +468,8 @@ function addToFavorites(string $username, int $id){
             return;
     $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
             (:username, :id)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':id'      , $id      );
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':id'      , $id      );
     $stmt->execute();
 }
 
@@ -484,8 +484,8 @@ function removeFromFavorites(string $username, int $id){
     global $db;
     $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
     username=:username AND petId=:id');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':id'      , $id      );
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':id'      , $id      );
     $stmt->execute();
 }
 
@@ -519,7 +519,7 @@ function getAdoptionRequest(int $id): array {
         Pet.name AS petName
         FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet
         WHERE AdoptionRequest.id=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
     $adoptionRequest = $stmt->fetch();
     return $adoptionRequest;
@@ -541,7 +541,7 @@ function getAdoptionRequestMessages(int $reqId) : array {
         INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
         INNER JOIN Pet ON AdoptionRequest.pet=Pet.id
         WHERE AdoptionRequestMessage.request=:reqId');
-    $stmt->bindParam(':reqId', $reqId);
+    $stmt->bindValue(':reqId', $reqId);
     $stmt->execute();
     $adoptionRequestMessages = $stmt->fetchAll();
     return $adoptionRequestMessages;
@@ -575,7 +575,7 @@ function getAdoptionRequests(string $username) : array {
     AdoptionRequest.requestDate
     FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
     WHERE AdoptionRequest.user=:username');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
@@ -601,7 +601,7 @@ function getAdoptionRequestsOfUserPets(string $username) : array {
     AdoptionRequest.requestDate
     FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
     WHERE AdoptionRequest.pet IN (SELECT id FROM Pet WHERE Pet.postedBy=:username)');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
@@ -620,8 +620,8 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
     
     $stmt = $db->prepare('UPDATE
     AdoptionRequest SET outcome=:outcome WHERE id=:reqId'); 
-    $stmt->bindParam(':outcome', $outcome);
-    $stmt->bindParam(':reqId', $reqId);
+    $stmt->bindValue(':outcome', $outcome);
+    $stmt->bindValue(':reqId', $reqId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -653,8 +653,8 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     global $db;
     $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
     WHERE user=:username AND pet=:petId ORDER BY requestDate DESC');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     $request = $stmt->fetchAll();
     return $request[0]['outcome'];
@@ -675,9 +675,9 @@ function addAdoptionRequest(string $username, int $id, string $text) : string {
     (user, pet, text)
     VALUES
     (:user, :pet, :text)');
-    $stmt->bindParam(':user'       , $username   );
-    $stmt->bindParam(':pet'        , $id         );
-    $stmt->bindParam(':text'       , $text       );
+    $stmt->bindValue(':user'       , $username   );
+    $stmt->bindValue(':pet'        , $id         );
+    $stmt->bindValue(':text'       , $text       );
     $stmt->execute();
     return $db->lastInsertId();
 }
@@ -694,8 +694,8 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
 
     $stmt = $db->prepare('DELETE FROM AdoptionRequest
                             WHERE user=:username AND pet=:petId');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -740,7 +740,7 @@ function getPetsAdoptedByUser(string $username) : array {
     FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
     WHERE AdoptionRequest.user=:username
     AND Pet.status="adopted" AND AdoptionRequest.outcome="accepted"');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;

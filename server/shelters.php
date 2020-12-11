@@ -19,7 +19,7 @@ function isShelter(string $username) : bool {
         FROM Shelter
         WHERE username=:username
     ');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $shelter = $stmt->fetch();
     
@@ -44,7 +44,7 @@ function getShelter(string $shelter) : array {
         JOIN User ON User.username = Shelter.username 
         WHERE User.username=:shelter
     ');
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     $shelterInfo = $stmt->fetch();
     $shelterInfo['pictureUrl'] = Shelter::fromDatabase($shelter)->getPictureUrl();
@@ -71,9 +71,9 @@ function addShelter(string $username, string $name, string $location, string $de
     
     $stmt2 = $db->prepare('INSERT INTO Shelter(username, location, description) VALUES
     (:username, :location, :description)');
-    $stmt2->bindParam(':username', $username);
-    $stmt2->bindParam(':location', $location);
-    $stmt2->bindParam(':description', $description);
+    $stmt2->bindValue(':username', $username);
+    $stmt2->bindValue(':location', $location);
+    $stmt2->bindValue(':description', $description);
     $stmt2->execute();
 }
 
@@ -107,7 +107,7 @@ function getShelterAdoptedPets(string $shelter) : array {
         WHERE User.shelter=:shelter AND Pet.status<>"forAdoption"
     ');
 
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     $shelterPets = $stmt->fetchAll();
 
@@ -135,9 +135,9 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
         SET username=:newUsername, name=:name
         WHERE username=:lastUsername
     ');
-    $stmt1->bindParam(':newUsername', $newUsername);
-    $stmt1->bindParam(':lastUsername', $lastUsername);
-    $stmt1->bindParam(':name', $name);
+    $stmt1->bindValue(':newUsername', $newUsername);
+    $stmt1->bindValue(':lastUsername', $lastUsername);
+    $stmt1->bindValue(':name', $name);
     $stmt1->execute();
     changePictureUsername($lastUsername, $newUsername);
 
@@ -147,9 +147,9 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
         WHERE username=:newUsername
     ');
 
-    $stmt2->bindParam(':newUsername', $newUsername);
-    $stmt2->bindParam(':location', $location);
-    $stmt2->bindParam(':description', $description);
+    $stmt2->bindValue(':newUsername', $newUsername);
+    $stmt2->bindValue(':location', $location);
+    $stmt2->bindValue(':description', $description);
     $stmt2->execute();
 
     return ($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0);
@@ -171,9 +171,9 @@ function addShelterInvitation(string $text, string $username, string $shelter) :
         VALUES (:text, :user, :shelter)
     ');
 
-    $stmt->bindParam(':text', $text);
-    $stmt->bindParam(':user', $username);
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':text', $text);
+    $stmt->bindValue(':user', $username);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -192,8 +192,8 @@ function shelterInvitationIsPending(string $username, string $shelter) : bool {
         * FROM ShelterInvite
         WHERE user=:username AND shelter=:shelter
     ');
-    $stmt1->bindParam(':username', $username);
-    $stmt1->bindParam(':shelter', $shelter);
+    $stmt1->bindValue(':username', $username);
+    $stmt1->bindValue(':shelter', $shelter);
     $stmt1->execute();
     $isPending = $stmt1->fetch();
     if(!$isPending) 
@@ -218,7 +218,7 @@ function getShelterCollaborators(string $shelter) : array {
         WHERE shelter=:shelter
     ');
     
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     $shelterCollaborators = $stmt->fetchAll();
 
@@ -245,7 +245,7 @@ function removeShelterCollaborator(string $username): void {
         WHERE username=:username 
     ');
     
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
 }
 
@@ -262,7 +262,7 @@ function checkUserBelongsToShelter(string $username) : bool {
         * FROM User
         WHERE username=:username AND shelter IS NOT NULL 
     ');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     return (bool) $stmt->fetchColumn() > 0;
 }
@@ -283,8 +283,8 @@ function acceptShelterInvite(string $username, string $shelter) : bool {
             $stmt = $db->prepare('UPDATE User
             SET shelter=:shelter WHERE username=:username
             ');
-            $stmt->bindParam(':shelter', $shelter);
-            $stmt->bindParam(':username', $username);
+            $stmt->bindValue(':shelter', $shelter);
+            $stmt->bindValue(':username', $username);
             $stmt->execute();
 
             deleteShelterInvitation($username, $shelter);
@@ -308,8 +308,8 @@ function deleteShelterInvitation(string $user, string $shelter) : bool {
     $stmt = $db->prepare('DELETE FROM ShelterInvite
         WHERE user=:username AND shelter=:shelter
     ');
-    $stmt->bindParam(':username', $user);
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':username', $user);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -326,7 +326,7 @@ function leaveShelter(string $username): void {
     $stmt = $db->prepare('UPDATE User
         SET shelter = NULL WHERE username=:username
     ');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
 }
 
@@ -344,7 +344,7 @@ function getUserShelterInvitation(string $username) : array {
         WHERE user=:username
     ');
 
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $shelterInvitations = $stmt->fetchAll();
     return $shelterInvitations;
@@ -381,7 +381,7 @@ function getShelterPendingInvitations(string $shelter) : array {
         FROM ShelterInvite
         WHERE shelter=:shelter
     ');
-    $stmt->bindParam(':shelter', $shelter);
+    $stmt->bindValue(':shelter', $shelter);
     $stmt->execute();
     $pendingInvitations = $stmt->fetchAll();
     return $pendingInvitations;

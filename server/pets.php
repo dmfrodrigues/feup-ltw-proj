@@ -98,15 +98,15 @@ class Pet implements JsonSerializable {
         (name, species, age, sex, size, color, location, description, postedBy)
         VALUES
         (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
-        $stmt->bindParam(':name'       , $this->name       );
-        $stmt->bindParam(':species'    , $this->species    );
-        $stmt->bindParam(':age'        , $this->age        );
-        $stmt->bindParam(':sex'        , $this->sex        );
-        $stmt->bindParam(':size'       , $this->size       );
-        $stmt->bindParam(':color'      , $this->color      );
-        $stmt->bindParam(':location'   , $this->location   );
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':postedBy'   , $this->postedBy   );
+        $stmt->bindValue(':name'       , $this->name       );
+        $stmt->bindValue(':species'    , $this->species    );
+        $stmt->bindValue(':age'        , $this->age        );
+        $stmt->bindValue(':sex'        , $this->sex        );
+        $stmt->bindValue(':size'       , $this->size       );
+        $stmt->bindValue(':color'      , $this->color      );
+        $stmt->bindValue(':location'   , $this->location   );
+        $stmt->bindValue(':description', $this->description);
+        $stmt->bindValue(':postedBy'   , $this->postedBy   );
         $stmt->execute();
         $this->id = $db->lastInsertId();
         
@@ -118,7 +118,7 @@ class Pet implements JsonSerializable {
     static public function fromDatabase(int $id) : Pet {
         global $db;
         $stmt = $db->prepare('SELECT * FROM Pet WHERE id=:id');
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
         $stmt->execute();
         $pet = $stmt->fetch();
@@ -178,15 +178,15 @@ class Pet implements JsonSerializable {
         location=:location,
         description=:description
         WHERE id=:id');
-        $stmt->bindParam(':id'         , $this->id         );
-        $stmt->bindParam(':name'       , $this->name       );
-        $stmt->bindParam(':species'    , $this->species    );
-        $stmt->bindParam(':age'        , $this->age        );
-        $stmt->bindParam(':sex'        , $this->sex        );
-        $stmt->bindParam(':size'       , $this->size       );
-        $stmt->bindParam(':color'      , $this->color      );
-        $stmt->bindParam(':location'   , $this->location   );
-        $stmt->bindParam(':description', $this->description);
+        $stmt->bindValue(':id'         , $this->id         );
+        $stmt->bindValue(':name'       , $this->name       );
+        $stmt->bindValue(':species'    , $this->species    );
+        $stmt->bindValue(':age'        , $this->age        );
+        $stmt->bindValue(':sex'        , $this->sex        );
+        $stmt->bindValue(':size'       , $this->size       );
+        $stmt->bindValue(':color'      , $this->color      );
+        $stmt->bindValue(':location'   , $this->location   );
+        $stmt->bindValue(':description', $this->description);
         return $stmt->execute();
     }
 
@@ -196,7 +196,7 @@ class Pet implements JsonSerializable {
         global $db;
         $stmt = $db->prepare('DELETE FROM Pet
         WHERE id=:id');
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
         return $stmt->execute();
     }
 
@@ -300,7 +300,7 @@ class AdoptionRequest implements JsonSerializable {
     static public function fromDatabase(int $id) : AdoptionRequest {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
         $stmt->execute();
         $request = $stmt->fetch();
@@ -337,7 +337,7 @@ class AdoptionRequestMessage implements JsonSerializable {
     static public function fromDatabase(string $id) : AdoptionRequestMessage {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage WHERE id=:id');
-        $stmt->bindParam(':id', $id);
+        $stmt->bindValue(':id', $id);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequestMessage');
         $stmt->execute();
         $message = $stmt->fetch();
@@ -553,7 +553,7 @@ function getPetPhotos(int $id) : array {
 function getPetComments(int $id) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
     $comments = $stmt->fetchAll();
     for($i = 0; $i < count($comments); ++$i){
@@ -572,7 +572,7 @@ function getPetComments(int $id) : array {
 function getPetComment(int $commentId) {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
-    $stmt->bindParam(':id', $commentId);
+    $stmt->bindValue(':id', $commentId);
     $stmt->execute();
     $comment = $stmt->fetch();
     if(!$comment) return $comment;
@@ -607,10 +607,10 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     (pet, user, answerTo, text)
     VALUES
     (:pet, :user, :answerTo, :text)');
-    $stmt->bindParam(':pet'        , $id         );
-    $stmt->bindParam(':user'       , $username   );
-    $stmt->bindParam(':answerTo'   , $answerTo   );
-    $stmt->bindParam(':text'       , $text       );
+    $stmt->bindValue(':pet'        , $id         );
+    $stmt->bindValue(':user'       , $username   );
+    $stmt->bindValue(':answerTo'   , $answerTo   );
+    $stmt->bindValue(':text'       , $text       );
     $stmt->execute();
     $commentId = (int)$db->lastInsertId();
 
@@ -657,8 +657,8 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     $stmt = $db->prepare('UPDATE Comment SET
     text=:text
     WHERE id=:id');
-    $stmt->bindParam(':text', $text     );
-    $stmt->bindParam(':id'  , $commentId);
+    $stmt->bindValue(':text', $text     );
+    $stmt->bindValue(':id'  , $commentId);
     $stmt->execute();
     
     if($deleteFile){
@@ -687,7 +687,7 @@ function deletePetComment(int $id){
     
     $stmt = $db->prepare('DELETE FROM Comment
     WHERE id=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
 
     deletePetCommentPhoto($id);
@@ -742,7 +742,7 @@ function getAddedPets(string $username) : array {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE postedBy=:username');
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $addedPets = $stmt->fetchAll();
     return $addedPets;
@@ -760,8 +760,8 @@ function changePetStatus(int $petId, string $status): bool {
 
     $stmt = $db->prepare('UPDATE Pet SET status=:status 
                             WHERE id=:petId');
-    $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':status', $status);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -776,7 +776,7 @@ function checkIfAdopted(int $petId) : bool {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE id=:petId AND status<>"forAdoption"');
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
@@ -797,7 +797,7 @@ function getPetAdoptionRequests(string $petId) : array {
     user
     FROM AdoptionRequest
     WHERE pet=:petId');
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
@@ -831,7 +831,7 @@ function getUserWhoAdoptedPet(int $id): array {
     User.shelter
     FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet INNER JOIN User ON User.username=AdoptionRequest.user
     WHERE AdoptionRequest.outcome="accepted" AND Pet.status="adopted" AND AdoptionRequest.pet=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
     $user = $stmt->fetch();
     if (!$user) return [];
