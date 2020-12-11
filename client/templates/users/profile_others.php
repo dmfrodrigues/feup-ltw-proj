@@ -25,10 +25,10 @@
                     <button onclick="location.href = '../server/actions/remove_collaboration_proposal.php?username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
                 <?php }
             ?>            
-        <?php } else if ($user->getShelter() === $_SESSION['username']) { ?>
+        <?php } else if ($user->getShelter(true) === $_SESSION['username']) { ?>
             <button onclick="location.href = '../server/actions/remove_collaborator.php?username=<?=$user->getUsername()?>'">Remove this collaborator</button>
             <?php } else { ?> 
-                        <h2>This user is already associated with shelter <a href="profile.php?username=<?=$user->getShelter()?>"><?=$user->getShelter()?></a></h2>
+                        <h2>This user is already associated with shelter <a href="profile.php?username=<?=$user->getShelter(true)?>"><?=$user->getShelter(true)?></a></h2>
             <?php } ?>
         </div>
     <?php } ?>

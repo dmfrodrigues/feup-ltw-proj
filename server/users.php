@@ -36,7 +36,12 @@ class User implements JsonSerializable {
     public function getPassword    () :  string { return $this->password    ; }
     public function getName        () :  string { return $this->name        ; }
     public function getRegisteredOn() :  string { return $this->registeredOn; }
-    public function getShelter     () : ?string { return $this->shelter     ; }
+    public function getShelter(bool $raw = false) {
+        return ($raw ?
+            $this->shelter :
+            (Shelter::fromDatabase($this->shelter))
+        );
+    }
     public function isAdmin        () :  bool   { return $this->admin       ; }
     public function isShelter() : bool {
         return (Shelter::fromDatabase($this->getUsername()) != null);
@@ -110,7 +115,7 @@ class User implements JsonSerializable {
 
         $newUser = User::fromDatabase($this->username);
         $this->setRegisteredOn($newUser->getRegisteredOn());
-        $this->setShelter     ($newUser->getShelter     ());
+        $this->setShelter     ($newUser->getShelter     (true));
     }
 
     /**

@@ -437,12 +437,12 @@ function getShelterPendingInvitations(string $shelter) : array {
  * Checks if the user can edit the pet.
  *
  * @param string $username  Username (User)
- * @param string $petId     Username (Shelter)
+ * @param int    $petId     Pet ID
  * @return bool True if successful. False otherwise.
  */
-function userCanEditPet(string $username, string $petId) : bool {
+function userCanEditPet(string $username, int $petId) : bool {
 
-    $pet = Pet::fromDatabase((int) $petId);
+    $pet = Pet::fromDatabase($petId);
 
     if (isShelter($username)) {
         $pets = getShelterPetsForAdoption($username);
@@ -454,12 +454,11 @@ function userCanEditPet(string $username, string $petId) : bool {
         return false;
 
         //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
-    }
-    else {
-        $postedByUsername = $pet->getPostedBy();
-        if ($postedByUsername === $username) return true;
+    } else {
+        $postedBy = $pet->getPostedBy();
+        if ($postedBy->getUsername() == $username) return true;
         $shelter1 = getUserShelter($username);
-        $shelter2 = $postedByUsername->getShelter(true);
+        $shelter2 = $postedBy->getShelter(true);
         if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
     }
 
