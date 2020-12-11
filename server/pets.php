@@ -557,7 +557,7 @@ function getPetComments(int $id) : array {
     $stmt->execute();
     $comments = $stmt->fetchAll();
     for($i = 0; $i < count($comments); ++$i){
-        $comments[$i]['userPictureUrl'] = getUserPicture($comments[$i]['user']);
+        $comments[$i]['userPictureUrl'] = (new User($comments[$i]['user']))->getPictureUrl();
         $comments[$i]['commentPictureUrl'] = getCommentPicture($comments[$i]['id']);
     }
     return $comments;
