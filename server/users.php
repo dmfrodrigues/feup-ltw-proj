@@ -132,7 +132,7 @@ class User implements JsonSerializable {
         global $db;
 
         if($oldUsername != $newUsername)
-            if (userAlreadyExists($newUsername))
+            if (User::exists($newUsername))
                 throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
             
         $stmt = $db->prepare('UPDATE User SET
@@ -142,6 +142,21 @@ class User implements JsonSerializable {
         $stmt->bindParam(':oldUsername', $oldUsername);
         $stmt->execute();
         changePictureUsername($oldUsername, $newUsername);
+    }
+
+    /**
+     * Check if user already exists in database.
+     *
+     * @param string $username  Username
+     * @return boolean          True if the user exists, false otherwise
+     */
+    static public function exists(string $username) : bool {
+        global $db;
+        $stmt = $db->prepare('SELECT username FROM User WHERE username=:username');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        return (count($users) > 0);
     }
 
     /**
@@ -163,23 +178,6 @@ class User implements JsonSerializable {
         $users = $stmt->fetchAll();
         return (count($users) > 0);
     }
-}
-
-/**
- * Check if user already exists.
- *
- * @param string $username  Username
- * @return boolean          True if the user exists, false otherwise
- */
-function userAlreadyExists(string $username) : bool {
-    global $db;
-    $stmt = $db->prepare('SELECT username
-    FROM User
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-    return (count($users) > 0);
 }
 
 /**

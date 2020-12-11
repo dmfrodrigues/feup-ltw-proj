@@ -64,7 +64,7 @@ function getShelter(string $shelter) : array {
 function addShelter(string $username, string $name, string $location, string $description, $password){
     global $db;
 
-    if (userAlreadyExists($username))
+    if (User::exists($username))
         throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
     
     addUser($username, $password, $name);
@@ -155,7 +155,7 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
     global $db;
 
     if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername))
+        if (User::exists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
     
     $stmt1 = $db->prepare('UPDATE User
