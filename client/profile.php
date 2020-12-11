@@ -8,6 +8,8 @@ require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/shelters.php';
 require_once SERVER_DIR.'/notifications.php';
 
+$title = $_GET['username'];
+
 require_once 'templates/common/header.php';
 if(isShelter($_GET['username'])) {
     $shelter = Shelter::fromDatabase($_GET['username']);

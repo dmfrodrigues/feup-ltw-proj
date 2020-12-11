@@ -9,7 +9,7 @@ require_once API_DIR . '/print.php';
 require_once API_DIR . '/user/user.php';
 require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
-include_once API_DIR . '/adoptionMessages/adoptionMessages.php';
+require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 
 $tree = [
     'user' => [null             => new ResourceHandlers(null                 , null, null                 , null                    ),

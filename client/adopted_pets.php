@@ -6,6 +6,7 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
 $pets = Pet::getAdopted();
+$title = "Adopted pets";
 
 $javascript_files = ['js/filterPets.js'];
 

@@ -7,6 +7,8 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/users.php';
 require_once SERVER_DIR . '/shelters.php';
 
+$title = "Shelter invitations";
+
 require_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $shelterInvitations = getUserShelterInvitation($_SESSION['username']);

@@ -6,6 +6,8 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
 
+$title = "Pet album";
+
 $pet = Pet::fromDatabase($_GET['id']);
 
 require_once 'templates/common/header.php';

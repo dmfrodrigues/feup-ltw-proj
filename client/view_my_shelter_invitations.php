@@ -9,6 +9,7 @@ require_once SERVER_DIR . '/shelters.php';
 require_once SERVER_DIR.'/errors/errors.php';
 
 $invitations = getShelterPendingInvitations($_SESSION['username']);
+$title = "Shelter invitations";
 
 require_once 'templates/common/header.php';
 

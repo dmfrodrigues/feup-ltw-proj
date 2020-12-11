@@ -6,6 +6,8 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/users.php';
 
+$title = "Adoption messages";
+
 $javascript_files = ["js/handleAdoptionMessages.js", "js/utils_elements.js"];
 require_once 'templates/common/header.php';
 

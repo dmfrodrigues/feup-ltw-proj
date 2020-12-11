@@ -9,6 +9,8 @@ require_once SERVER_DIR.'/users.php';
 $pet = Pet::fromDatabase($_GET['id']);
 $comments = $pet->getComments();
 
+$title = $pet['name'];
+
 ?>
 <script>
 let pet = <?= json_encode($pet) ?>;

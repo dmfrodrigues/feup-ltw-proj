@@ -9,6 +9,7 @@ require_once SERVER_DIR . '/shelters.php';
 require_once SERVER_DIR . '/errors/errors.php';
 
 $users = User::allWithoutShelter();
+$title = "Potential collaborators";
 
 require_once 'templates/common/header.php';
 

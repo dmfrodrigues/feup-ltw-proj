@@ -10,6 +10,8 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/users.php';
 $user = User::fromDatabase($_GET['username']);
 
+$title = "Change password";
+
 require_once('templates/common/header.php');
 if (isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username'])
     require_once('templates/users/change_password.php');

@@ -6,6 +6,8 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/users.php';
 
+$title = "My proposals";
+
 $adoptionRequests = getAdoptionRequests($_SESSION['username']);
 
 require_once 'templates/common/header.php';

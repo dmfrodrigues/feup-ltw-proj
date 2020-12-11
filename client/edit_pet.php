@@ -7,6 +7,8 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
 $pet = Pet::fromDatabase($_GET['id']);
 
+$title = "Edit pet";
+
 $javascript_files = ['js/utils_elements.js', 'js/editPetImage.js'];
 
 require_once 'templates/common/header.php';

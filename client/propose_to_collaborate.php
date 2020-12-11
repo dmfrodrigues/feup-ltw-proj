@@ -8,6 +8,7 @@ require_once SERVER_DIR.'/users.php';
 require_once SERVER_DIR.'/shelters.php';
 
 $user = User::fromDatabase($_GET['username']);
+$title = "Collaborate proposal";
 
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) {
     $shelter = Shelter::fromDatabase($_SESSION['username']);

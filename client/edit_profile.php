@@ -7,6 +7,8 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/users.php';
 require_once SERVER_DIR . '/shelters.php';
 
+$title = "Edit profile";
+
 require_once('templates/common/header.php');
 
 if ($_SESSION['username'] === $_GET['username']) {
