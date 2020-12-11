@@ -21,7 +21,7 @@ if(isShelter($_GET['username'])) {
             editProfile(true); // true -> is shelter
         }
             
-        $userShelter = getUserShelter($user['username']);
+        $userShelter = getUserShelter($user->getUsername());
         if ($userShelter === $shelter['username']) {
             require_once('templates/users/edit_profile.php');
             editProfile(true); // true -> is shelter

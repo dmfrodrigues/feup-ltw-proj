@@ -9,7 +9,7 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class UserAlreadyExistsException extends RuntimeException{}
 
-class User {
+class User implements JsonSerializable {
     private  string $username;
     private  string $password;
     private  string $name;
@@ -38,6 +38,16 @@ class User {
     public function getRegisteredOn() :  string { return $this->registeredOn; }
     public function getShelter     () : ?string { return $this->shelter     ; }
     public function isAdmin        () :  bool   { return $this->admin       ; }
+    /**
+     * Get user picture URL.
+     *
+     * @return ?string          URL of user profile picture, or null if there is none
+     */
+    function getPictureUrl() : ?string {
+        $path = SERVER_DIR . "/resources/img/profiles/$this->username.jpg";
+        if(!file_exists($path)) return null;
+        return path2url($path);
+    }
 
     public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
     public function setPassword    ( string $password    ) : void { $this->password     = $password    ; }
@@ -45,6 +55,37 @@ class User {
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
     
+    public function jsonSerialize() {
+        $ret = get_object_vars($this);
+        $ret['pictureUrl'] = $this->getPictureUrl();
+        return $ret;
+    }
+
+    /**
+     * Get users that can join a shelter.
+     *
+     * @return array            Array containing all the the users that can join a shelter.
+     */
+    static public function allWithoutShelter() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT
+            username, 
+            password,
+            name,
+            registeredOn,
+            shelter
+            FROM User
+            WHERE shelter is NULL
+            AND username NOT IN (SELECT username FROM SHELTER)
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        
+        return $users;
+    }
+
     public function addToDatabase() : void {
         global $db;
 
@@ -157,31 +198,10 @@ function addUser(string $username, string $password, string $name){
  * Get user data.
  *
  * @param string $username      User's username
- * @return array                Array of user data fields
+ * @return User                 User
  */
-function getUser(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM User
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch();
-    $picture = getUserPicture($username);
-    $user['pictureUrl'] = ($picture == null ? $picture : PROTOCOL_SERVER_URL . "/rest/user/{$username}/photo");
-    return $user;
-}
-
-/**
- * Get user profile picture URL.
- *
- * @param string $username  Username
- * @return ?string          URL of user profile picture, or null if there is none
- */
-function getUserPicture(string $username) : ?string {
-    $path = SERVER_DIR . "/resources/img/profiles/$username.jpg";
-    if(!file_exists($path)) return null;
-    return path2url($path);
+function getUser(string $username) : User {
+    return User::fromDatabase($username);
 }
 
 /**

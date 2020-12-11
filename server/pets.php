@@ -216,7 +216,7 @@ class Pet implements JsonSerializable {
     }
 }
 
-class Comment {
+class Comment implements JsonSerializable {
     private int    $id      ;
     private string $postedOn;
     private string $text    ;
@@ -241,9 +241,13 @@ class Comment {
     }
 
     public function getAuthor() : User { return User::fromDatabase($this->user); }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
 }
 
-class FavoritePet {
+class FavoritePet implements JsonSerializable {
     private string $username;
     private int    $petId   ;
 
@@ -256,9 +260,13 @@ class FavoritePet {
     }
 
     public function getUser() : User { return User::fromDatabase($this->username); }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
 }
 
-class AdoptionRequest {
+class AdoptionRequest implements JsonSerializable {
     private  int    $id         ;
     private  string $text       ;
     private  string $outcome    ;
@@ -285,6 +293,10 @@ class AdoptionRequest {
     public function getAuthor() : User { return User::fromDatabase($this->user); }
     public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
 
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
     static public function fromDatabase(string $id) : AdoptionRequest {
         global $db;
         $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
@@ -296,7 +308,7 @@ class AdoptionRequest {
     }
 }
 
-class AdoptionRequestMessage {
+class AdoptionRequestMessage implements JsonSerializable {
     private  int    $id         ;
     private  string $text       ;
     private  int    $request    ;
@@ -317,6 +329,10 @@ class AdoptionRequestMessage {
     }
 
     public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
 
     static public function fromDatabase(string $id) : AdoptionRequestMessage {
         global $db;
@@ -389,7 +405,7 @@ function addPet(
         );
     }
 
-    return $pet->getId();
+    return (int)$pet->getId();
 }
 
 /**

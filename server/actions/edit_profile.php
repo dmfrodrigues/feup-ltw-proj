@@ -29,7 +29,7 @@ if(isShelter($_GET['username'])) {
             
         $user = getUser($_SESSION['username']);
 
-        $userShelter = getUserShelter($user['username']);
+        $userShelter = getUserShelter($user->getUsername());
         if ($userShelter === $shelter['username']) { // if who is editing is not the shelter itself, the username cannot be changed
             updateShelterInfo(
                 $shelter['username'],
@@ -50,7 +50,7 @@ else {
     if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
         
         editUser(
-            $user['username'],
+            $user->getUsername(),
             $_POST['username'],
             $_POST['name']
         );

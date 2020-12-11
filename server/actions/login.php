@@ -6,7 +6,7 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/users.php';
 
 try {
-    if (checkCredentials($_POST['username'], $_POST['password'])) {
+    if (User::checkCredentials($_POST['username'], $_POST['password'])) {
         if (!isShelter($_POST['username'])){
             $_SESSION['username'] = $_POST['username'];
             header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
