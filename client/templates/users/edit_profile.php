@@ -81,7 +81,7 @@ function editProfile(User $user): void {
         let picture = (files.length <= 0 ? null : files[0]);
 
         if(picture != null){
-            api.put("user/<?= $editUser['username'] ?>/photo", picture)
+            api.put("user/<?= $user->getUsername() ?>/photo", picture)
             .then((response) => response.json())
             .then(function(response){
                 window.location.reload(true);
@@ -98,7 +98,7 @@ function editProfile(User $user): void {
     document.querySelector('#edit-user-photo').addEventListener('submit', (e) => { editUserPhoto_onSubmit(e); })
 
     function deleteUserPhoto_submitForm(deleteUserPhotoForm){
-        api.delete("user/<?= $editUser['username'] ?>/photo")
+        api.delete("user/<?= $user->getUsername() ?>/photo")
         .then(function(){
             window.location.reload(true);
         })
