@@ -223,7 +223,7 @@ function getShelterCollaborators(string $shelter) : array {
     $shelterCollaborators = $stmt->fetchAll();
 
     $collaboratorsWithPhoto = [];
-    foreach($shelterCollaborators   as $collaborator){
+    foreach($shelterCollaborators as $collaborator){
         $collaborator['pictureUrl'] = getUserPicture($collaborator['user']);
         array_push($collaboratorsWithPhoto, $collaborator);
     }

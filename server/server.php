@@ -18,6 +18,9 @@ define('PROTOCOL', get_protocol());
 define('PROTOCOL_SERVER_URL', PROTOCOL . SERVER_URL);
 define('PROTOCOL_CLIENT_URL', PROTOCOL . CLIENT_URL);
 
+define('COMMENT_PICTURE_MAX_SIZE', 1000000);
+define('USER_PICTURE_MAX_SIZE', 1000000);
+
 function path2url($file, $Protocol=PROTOCOL): string {
     return
         $Protocol .

@@ -1,9 +1,11 @@
 <?php
+require_once __DIR__ . '/../../server.php';
 require_once SERVER_DIR . '/users.php';
 
 $user_id_photo_GET = function($args): void{
     $username = $args[1];
-    $ret = getUserPicture($username);
+    $user = User::fromDatabase($username);
+    $ret = $user->getPictureUrl();
     if($ret == null){
         http_response_code(404);
         die();
@@ -23,8 +25,9 @@ $user_id_photo_PUT = function($args): void{
         fwrite($tmpFile, $data);
     }
 
-    $ret = setUserPhoto($username, $tmpFilePath);
-    print_result($ret);
+    $user = User::fromDatabase($username);
+    $user->setPicture($tmpFilePath);
+    print_result($user->getPictureUrl());
 };
 
 $user_id_photo_DELETE = function($args): void{

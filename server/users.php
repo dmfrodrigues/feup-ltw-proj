@@ -71,7 +71,23 @@ class User implements JsonSerializable {
     public function setName        ( string $name        ) : void { $this->name         = $name        ; }
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
-    
+    /**
+     * Save new user picture.
+     *
+     * @param string $tmpFilePath  Temporary file path (after uploading to user/photo
+     */
+    public function setPicture(string $tmpFilePath) : void {
+        $ext = checkImageFile($tmpFilePath, USER_PICTURE_MAX_SIZE);
+
+        $filepath = USERS_IMAGES_DIR."/{$this->username}.jpg";
+        convertImage(
+            $tmpFilePath,
+            $ext,
+            $filepath,
+            85
+        );
+    }
+
     public function jsonSerialize() {
         $ret = get_object_vars($this);
         $ret['pictureUrl'] = $this->getPictureUrl();
@@ -404,27 +420,6 @@ function editUserPassword(string $username, string $password) {
 
 function deleteUser(string $username): void {
     User::deleteFromDatabase($username);
-}
-
-/**
- * Save new user picture.
- *
- * @param string $username  User's username
- * @param array $file       File (as obtained from $_FILES['file_field'])
- * @return string
- */
-function setUserPhoto(string $username, string $tmpFilePath): string{
-    $ext = checkImageFile($tmpFilePath, 1000000);
-
-    $filepath = USERS_IMAGES_DIR."/$username.jpg";
-    convertImage(
-        $tmpFilePath,
-        $ext,
-        $filepath,
-        85
-    );
-
-    return $filepath;
 }
 
 /**

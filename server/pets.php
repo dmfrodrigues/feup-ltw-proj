@@ -5,7 +5,6 @@ require_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
-define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
 class Pet implements JsonSerializable {
     private ?int    $id          ;
@@ -598,7 +597,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 
     if($tmpFileId != null){
         $tmpFilePath = sys_get_temp_dir().'/'.$tmpFileId;
-        checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
+        checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
     }
 
     global $db;
@@ -622,7 +621,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 }
 
 function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
-    $ext = checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
+    $ext = checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
     $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
     convertImage(
         $tmpFilePath,
