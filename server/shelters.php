@@ -47,7 +47,7 @@ function getShelter(string $shelter) : array {
     $stmt->bindParam(':shelter', $shelter);
     $stmt->execute();
     $shelterInfo = $stmt->fetch();
-    $shelterInfo['pictureUrl'] = getUserPicture($shelter);
+    $shelterInfo['pictureUrl'] = Shelter::fromDatabase($shelter)->getPictureUrl();
     return $shelterInfo;
 }
 
@@ -351,25 +351,6 @@ function getUserShelterInvitation(string $username) : array {
 }
 
 /**
- * Get the shelter the user is associated, or null if there is none.
- *
- * @param string $username  Username (User)
- * @return string           Shelter the user is associated, or null if there is none.
- */
-function getUserShelter(string $username) : ?string {
-    global $db;
-
-    $stmt = $db->prepare('SELECT shelter
-        FROM User
-        WHERE username=:username
-    ');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $shelter = $stmt->fetch();
-    return $shelter['shelter'];
-}
-
-/**
  * Get the shelter the pet is associated, or null if there is none.
  *
  * @param int $petId          Pet's ID
@@ -380,7 +361,7 @@ function getPetShelter(int $petId) : ?string {
     $pet = Pet::fromDatabase($petId);
     $owner = $pet->getPostedBy(true);
 
-    return getUserShelter($owner);
+    return User::fromDatabase($owner)->getShelterId();
 }
 
 /**
@@ -430,7 +411,7 @@ function userCanEditPet(string $username, int $petId) : bool {
     } else {
         $postedBy = $pet->getPostedBy();
         if ($postedBy->getUsername() == $username) return true;
-        $shelter1 = getUserShelter($username);
+        $shelter1 = User::fromDatabase($username)->getShelterId();
         $shelter2 = $postedBy->getShelterId();
         if (!is_null($shelter1) && ($shelter1 === $shelter2)) return true;
     }

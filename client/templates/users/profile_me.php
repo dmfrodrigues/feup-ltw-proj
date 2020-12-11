@@ -18,7 +18,7 @@
             <li><button onclick="location.href = 'view_previously_owned_pets.php'">View previously owned pets</button></li>
             <?php 
                 if(checkUserBelongsToShelter($user->getUsername())) { 
-                    $shelterName = getUserShelter($user->getUsername()); ?>
+                    $shelterName = User::fromDatabase($user->getUsername())->getShelterId(); ?>
                     <li><button onclick="location.href = 'profile.php?username=<?=$shelterName?>'">View shelter</button></li>
             <?php } else { ?>
                     <li><button onclick="location.href = 'view_shelter_invitations.php'">View shelter invitations</button></li>

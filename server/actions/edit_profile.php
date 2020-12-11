@@ -16,7 +16,7 @@ if(isShelter($_GET['username'])) {
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
             updateShelterInfo(
-                $shelter['username'],
+                $shelter->getUsername(),
                 $_POST['username'],
                 $_POST['name'],
                 $_POST['location'],
@@ -29,11 +29,11 @@ if(isShelter($_GET['username'])) {
             
         $user = User::fromDatabase($_SESSION['username']);
 
-        $userShelter = getUserShelter($user->getUsername());
-        if ($userShelter === $shelter['username']) { // if who is editing is not the shelter itself, the username cannot be changed
+        $userShelter = User::fromDatabase($user->getUsername())->getShelterId();
+        if ($userShelter === $shelter->getUsername()) { // if who is editing is not the shelter itself, the username cannot be changed
             updateShelterInfo(
-                $shelter['username'],
-                $shelter['username'],
+                $shelter->getUsername(),
+                $shelter->getUsername(),
                 $_POST['name'],
                 $_POST['location'],
                 $_POST['description']

@@ -9,7 +9,7 @@
     
     $user = User::fromDatabase($_GET['username']);
     if (!isset($_SESSION['isShelter'])) {
-        $shelter = getUserShelter($user->getUsername());
+        $shelter = User::fromDatabase($user->getUsername())->getShelterId();
         if (!is_null($shelter)) { ?>
             <h2>Associated with shelter <a href="profile.php?username=<?=$shelter?>"><?=$shelter?></a></h2>
         <?php }

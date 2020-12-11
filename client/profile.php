@@ -10,7 +10,7 @@ require_once SERVER_DIR.'/notifications.php';
 
 require_once 'templates/common/header.php';
 if(isShelter($_GET['username'])) {
-    $shelter = getShelter($_GET['username']);
+    $shelter = Shelter::fromDatabase($_GET['username']);
     $added_pets = $shelter->getPetsForAdoption();
     $collaborators = getShelterCollaborators($_GET['username']);
 

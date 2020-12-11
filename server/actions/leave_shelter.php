@@ -10,7 +10,7 @@ require_once CLIENT_URL.'/errors/errors.php';
 $shelter = $_GET['shelter'];
 
 if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
-    $userShelter = getUserShelter($_SESSION['username']);
+    $userShelter = User::fromDatabase($_SESSION['username'])->getShelterId();
     if ($shelter === $userShelter) {
         leaveShelter($_SESSION['username']);
         header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']); 
