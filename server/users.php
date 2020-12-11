@@ -627,7 +627,6 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
 function userRequestedPet(string $username, int $petId) : bool {
     $user = User::fromDatabase($username);
     $adoption_requests = $user->getAdoptionRequestsToOthers();
-    var_dump($adoption_requests);
     foreach ($adoption_requests as $request) {
         if ($request->getPetId() == $petId) return true;
     }
