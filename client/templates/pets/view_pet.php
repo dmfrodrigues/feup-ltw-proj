@@ -35,7 +35,7 @@
         </div>
         <div id="actions">
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
-                $favorite_pets = getFavoritePets($_SESSION['username']);
+                $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets();
                 if (in_array($pet, $favorite_pets)) { ?>
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>

@@ -215,6 +215,20 @@ class User implements JsonSerializable {
         $users = $stmt->fetchAll();
         return (count($users) > 0);
     }
+
+    public function getFavoritePets() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM PET
+        WHERE id IN (
+            SELECT petId FROM FavoritePet
+            WHERE username=:username
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindParam(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
 class Shelter extends User {
@@ -403,7 +417,7 @@ function changePictureUsername(string $oldUsername, string $newUsername) {
   */
 function addToFavorites(string $username, int $id){
     global $db;
-    $favoritePets = getFavoritePets($username);
+    $favoritePets = User::fromDatabase($username)->getFavoritePets();
     foreach ($favoritePets as $pet)
         if ($pet->getId() == $id)
             return;
@@ -437,26 +451,7 @@ function removeFromFavorites(string $username, int $id){
  * @return array            Array of favorite pets of the user 
  */
 function getFavoritePets(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.adoptionDate,
-    Pet.postedBy
-    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
-    WHERE FavoritePet.username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+    return User::fromDatabase($username)->getFavoritePets();
 }
 
 /**

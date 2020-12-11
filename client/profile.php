@@ -22,7 +22,7 @@ if(isShelter($_GET['username'])) {
 else {
     $user = User::fromDatabase($_GET['username']);
     $added_pets = getAddedPetsNotAdopted($_GET['username']);
-    $favorite_pets = getFavoritePets($_GET['username']);
+    $favorite_pets = User::fromDatabase($_GET['username'])->getFavoritePets();
 
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         require_once 'templates/users/profile_me.php';
