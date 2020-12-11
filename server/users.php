@@ -396,9 +396,7 @@ function editUser(string $oldUsername, string $newUsername, string $name) {
  */
 function editUserPassword(string $username, string $password) {
     $user = User::fromDatabase($username);
-    var_dump($user);
     $user->setPassword($password, false);
-    var_dump($user);
     $user->updateDatabase();
 }
 

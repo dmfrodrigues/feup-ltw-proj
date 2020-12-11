@@ -16,7 +16,7 @@ if (isset($_SESSION['username'])){
         $user->getUsername(),
         $_POST['pwd']
     );
-    // header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username']);
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username']);
 }
 
 die();
