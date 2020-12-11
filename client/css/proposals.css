@@ -164,7 +164,6 @@ button#submitAnswer {
 }
 
 section#proposal-container {
-	z-index: 1;
 	margin: 2em 1em 2em 1em;
 	padding: 2em;
 	border-radius: 1em;
