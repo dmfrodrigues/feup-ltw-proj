@@ -7,7 +7,7 @@ define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 
 class Pet implements JsonSerializable {
-    private ?int    $id          ;
+    private  int    $id          ;
     private  string $name        ;
     private  string $species     ;
     private  float  $age         ;
@@ -19,33 +19,7 @@ class Pet implements JsonSerializable {
     private  string $status      ;
     private ?string $adoptionDate;
     private  string $postedBy    ;
-    public function __construct(
-        ?int    $id           = null,
-         string $name         = '',
-         string $species      = '',
-         float  $age          = -1,
-         string $sex          = '',
-         string $size         = '',
-         string $color        = '',
-         string $location     = '',
-         string $description  = '',
-         string $status       = '',
-        ?string $adoptionDate = null,
-         string $postedBy     = ''
-    ){
-        $this->id           = $id          ;
-        $this->name         = $name        ;
-        $this->species      = $species     ;
-        $this->age          = $age         ;
-        $this->sex          = $sex         ;
-        $this->size         = $size        ;
-        $this->color        = $color       ;
-        $this->location     = $location    ;
-        $this->description  = $description ;
-        $this->status       = $status      ;
-        $this->adoptionDate = $adoptionDate;
-        $this->postedBy     = $postedBy    ;
-    }
+    public function __construct(){}
 
     public function getId          () : ?int    { return $this->id          ; }
     public function getName        () :  string { return $this->name        ; }
@@ -237,21 +211,7 @@ class Comment implements JsonSerializable {
     private string $user    ;
     private int    $answerTo;
 
-    public function __construct(
-        int    $id      ,
-        string $postedOn,
-        string $text    ,
-        int    $pet     ,
-        string $user    ,
-        int    $answerTo
-    ){
-        $this->id       = $id      ;
-        $this->postedOn = $postedOn;
-        $this->text     = $text    ;
-        $this->pet      = $pet     ;
-        $this->user     = $user    ;
-        $this->answerTo = $answerTo;
-    }
+    public function __construct(){}
 
     public function getAuthor() : ?User { return User::fromDatabase($this->user); }
 
@@ -264,15 +224,15 @@ class FavoritePet implements JsonSerializable {
     private string $username;
     private int    $petId   ;
 
-    public function __construct(
-        string $username,
-        int    $petId   
-    ){
-        $this->username = $username;
-        $this->petId    = $petId   ;
-    }
+    public function __construct(){}
 
-    public function getUser() : ?User { return User::fromDatabase($this->username); }
+    public function getUser  () : ?User  { return User::fromDatabase($this->username); }
+    public function getUserId() : string { return $this->username                    ; }
+    public function getPet   () : ?Pet   { return Pet ::fromDatabase($this->petId   ); }
+    public function getPetId () : int    { return $this->petId                       ; }
+
+    public function setUserId(string $username) : void { $this->username = $username; }
+    public function setPetId (int    $petId   ) : void { $this->petId    = $petId   ; }
 
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -287,21 +247,7 @@ class AdoptionRequest implements JsonSerializable {
     private  string $user       ;
     private  string $requestDate;
 
-    public function __construct(
-        int    $id         ,
-        string $text       ,
-        string $outcome    ,
-        int    $pet        ,
-        string $user       ,
-        string $requestDate
-    ){
-        $this->id          = $id         ;
-        $this->text        = $text       ;
-        $this->outcome     = $outcome    ;
-        $this->pet         = $pet        ;
-        $this->user        = $user       ;
-        $this->requestDate = $requestDate;
-    }
+    public function __construct(){}
 
     public function getAuthor() : ?User { return User::fromDatabase($this->user); }
     public function getPet   () : Pet  { return Pet ::fromDatabase($this->pet ); }
@@ -327,19 +273,7 @@ class AdoptionRequestMessage implements JsonSerializable {
     private  int    $request    ;
     private  string $messageDate;
     private  string $user       ;
-    public function __construct(
-        int    $id         ,
-        string $text       ,
-        int    $request    ,
-        string $messageDate,
-        string $user       
-    ){
-        $this->id          = $id         ;
-        $this->text        = $text       ;
-        $this->request     = $request    ;
-        $this->messageDate = $messageDate;
-        $this->user        = $user       ;
-    }
+    public function __construct(){}
 
     public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
 
@@ -388,20 +322,16 @@ function addPet(
     foreach($tmpFilePaths as $id => $tmpFilePath)
         checkImageFile($tmpFilePath, 1000000);
 
-    $pet = new Pet(
-        null        ,
-        $name       ,
-        $species    ,
-        $age        ,
-        $sex        ,
-        $size       ,
-        $color      ,
-        $location   ,
-        $description,
-        ''          ,
-        null        ,
-        $postedBy
-    );
+    $pet = new Pet();
+    $pet->setName       ($name       );
+    $pet->setSpecies    ($species    );
+    $pet->setAge        ($age        );
+    $pet->setSex        ($sex        );
+    $pet->setSize       ($size       );
+    $pet->setColor      ($color      );
+    $pet->setLocation   ($location   );
+    $pet->setDescription($description);
+    $pet->setPostedBy   ($postedBy   );
     $pet->addToDatabase();
 
     // Add images

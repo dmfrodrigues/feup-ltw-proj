@@ -28,7 +28,7 @@ if (isset($_SESSION['username'])){
         $_SESSION['username'],
         $tmpFilePaths
     );
-    // header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
 }
 
-// die();
+die();
