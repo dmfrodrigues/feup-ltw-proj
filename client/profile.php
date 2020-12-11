@@ -20,7 +20,7 @@ if(isShelter($_GET['username'])) {
         require_once 'templates/shelters/profile_shelter_others.php';
 }
 else {
-    $user = getUser($_GET['username']);
+    $user = User::fromDatabase($_GET['username']);
     $added_pets = getAddedPetsNotAdopted($_GET['username']);
     $favorite_pets = getFavoritePets($_GET['username']);
 

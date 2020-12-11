@@ -17,7 +17,7 @@ let comments = <?= json_encode($comments) ?>;
 <?php
 
 if (isset($_SESSION['username'])) {
-    $user = getUser($_SESSION['username']);
+    $user = User::fromDatabase($_SESSION['username']);
 ?>
     <script>
         let user = <?= json_encode($user) ?>;

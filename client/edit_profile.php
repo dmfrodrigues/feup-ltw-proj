@@ -13,7 +13,7 @@ if(isShelter($_GET['username'])) {
     if(isset($_SESSION['username'])) {
 
         $shelter = getShelter($_GET['username']);
-        $user = getUser($_SESSION['username']);
+        $user = User::fromDatabase($_SESSION['username']);
 
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
@@ -32,7 +32,7 @@ if(isShelter($_GET['username'])) {
 }
 
 else if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
-    $user = getUser($_GET['username']);
+    $user = User::fromDatabase($_GET['username']);
     require_once('templates/users/edit_profile.php');
     editProfile(false); // false -> is not shelter
 }

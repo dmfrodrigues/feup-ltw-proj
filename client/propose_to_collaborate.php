@@ -6,7 +6,7 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/shelters.php';
 
-$user = getUser($_GET['username']);
+$user = User::fromDatabase($_GET['username']);
 
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) {
     $shelter = getShelter($_SESSION['username']);

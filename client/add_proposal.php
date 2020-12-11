@@ -9,7 +9,7 @@ require_once SERVER_DIR.'/users.php';
 $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])) {
-    $user = getUser($_SESSION['username']);
+    $user = User::fromDatabase($_SESSION['username']);
 }
 
 require_once 'templates/common/header.php';

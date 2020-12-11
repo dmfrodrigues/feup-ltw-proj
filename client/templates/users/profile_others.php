@@ -7,7 +7,7 @@
     <?php
     require_once 'templates/pets/view_pets_in_profile.php';
     
-    $user = getUser($_GET['username']);
+    $user = User::fromDatabase($_GET['username']);
     if (!isset($_SESSION['isShelter'])) {
         $shelter = getUserShelter($user->getUsername());
         if (!is_null($shelter)) { ?>

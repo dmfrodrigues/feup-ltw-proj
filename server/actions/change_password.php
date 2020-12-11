@@ -4,7 +4,7 @@ session_start();
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR . '/connection.php';
 require_once SERVER_DIR . '/users.php';
-$user = getUser($_GET['username']);
+$user = User::fromDatabase($_GET['username']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $user["username"]){

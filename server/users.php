@@ -195,16 +195,6 @@ function addUser(string $username, string $password, string $name){
 }
 
 /**
- * Get user data.
- *
- * @param string $username      User's username
- * @return User                 User
- */
-function getUser(string $username) : User {
-    return User::fromDatabase($username);
-}
-
-/**
  * Check if user is admin.
  *
  * @param string $username  User's username
