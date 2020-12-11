@@ -124,7 +124,7 @@ async function updateAdoptionChat() {
     window.location='#proposal-messages-refresh';
 }
 
-async function onClickedUpdateComments(el){
+async function onClickedUpdateChat(el){
     el.classList.add("rotating");
     await sleep(1400);
     updateAdoptionChat();
