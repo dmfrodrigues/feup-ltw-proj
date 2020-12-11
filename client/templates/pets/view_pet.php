@@ -1,8 +1,10 @@
 <div id="templates">
     <?php
     require_once 'templates/pets/comment.php';
-    require_once 'templates/pets/new_comment.php';
-    require_once 'templates/pets/edit_comment.php';
+    if(isset($user)){
+        require_once 'templates/pets/new_comment.php';
+        require_once 'templates/pets/edit_comment.php';
+    }
     ?>
 </div>
 <article id="pet">
