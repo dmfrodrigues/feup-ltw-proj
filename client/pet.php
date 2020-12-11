@@ -8,6 +8,7 @@ include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 $pet = getPet($_GET['id']);
 $comments = getPetComments($_GET['id']);
+$title = $pet['name'];
 
 ?>
 <script>

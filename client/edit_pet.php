@@ -6,7 +6,7 @@ include_once SERVER_DIR.'/connection.php';
 include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR.'/pets.php';
 $pet = getPet($_GET['id']);
-
+$title = "Edit pet";
 $javascript_files = ['js/utils_elements.js', 'js/editPetImage.js'];
 
 include_once 'templates/common/header.php';

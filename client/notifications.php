@@ -7,6 +7,9 @@ include_once SERVER_DIR.'/users.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/shelters.php';
 include_once SERVER_DIR.'/notifications.php';
+
+$title = "Notifications";
+
 include_once 'templates/common/header.php';
 
 if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {

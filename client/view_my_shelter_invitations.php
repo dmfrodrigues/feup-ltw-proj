@@ -9,7 +9,7 @@ include_once SERVER_DIR . '/shelters.php';
 include_once SERVER_DIR.'/errors/errors.php';
 
 $invitations = getShelterPendingInvitations($_SESSION['username']);
-
+$title = "Shelter invitations";
 include_once 'templates/common/header.php';
 
 if(isset($_SESSION['isShelter']) && isset($_SESSION['username'])) {

@@ -7,6 +7,7 @@ include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR.'/pets.php';
 include_once SERVER_DIR.'/users.php';
 $pet = getPet($_GET['id']);
+$title = "New proposal";
 
 if (isset($_SESSION['username'])) {
     $user = getUser($_SESSION['username']);
