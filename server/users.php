@@ -15,21 +15,21 @@ class User implements JsonSerializable {
     private  string $name;
     private  string $registeredOn;
     private ?string $shelter;
-    private  bool   $admin;
+    // private  bool   $admin;
     public function __construct(
         string $username     = '',
         string $password     = '',
         string $name         = '',
         string $registeredOn = '',
        ?string $shelter      = null,
-        bool   $admin        = false
+        // bool   $admin        = false
     ){
         $this->username     = $username;
         $this->password     = $password;
         $this->name         = $name;
         $this->registeredOn = $registeredOn;
         $this->shelter      = $shelter;
-        $this->admin = $admin;
+        // $this->admin = $admin;
     }
 
     public function getUsername    () :  string { return $this->username    ; }
@@ -42,7 +42,7 @@ class User implements JsonSerializable {
             (Shelter::fromDatabase($this->shelter))
         );
     }
-    public function isAdmin        () :  bool   { return $this->admin       ; }
+    // public function isAdmin        () :  bool   { return $this->admin       ; }
     public function isShelter() : bool {
         return (Shelter::fromDatabase($this->getUsername()) != null);
     }
@@ -258,7 +258,7 @@ class Shelter extends User {
         string $name         = '',
         string $registeredOn = '',
        ?string $shelter      = null,
-        bool   $admin        = false,
+        // bool   $admin        = false,
         string $description  = '',
         string $location     = ''
     ){
@@ -268,7 +268,7 @@ class Shelter extends User {
             $name,
             $registeredOn,
             $shelter,
-            $admin
+            // $admin
         );
         $this->description = $description;
         $this->location = $location;
@@ -355,16 +355,16 @@ function addUser(string $username, string $password, string $name){
  * @param string $username  User's username
  * @return boolean          True if user is admin, false otherwise
  */
-function isAdmin(string $username) : bool {
-    global $db;
-    $stmt = $db->prepare('SELECT username
-    FROM Admin
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $admins = $stmt->fetchAll();
-    return (count($admins) == 1);
-}
+// function isAdmin(string $username) : bool {
+//     global $db;
+//     $stmt = $db->prepare('SELECT username
+//     FROM Admin
+//     WHERE username=:username');
+//     $stmt->bindParam(':username', $username);
+//     $stmt->execute();
+//     $admins = $stmt->fetchAll();
+//     return (count($admins) == 1);
+// }
 
 /**
  * Edit user name.
