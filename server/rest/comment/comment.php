@@ -35,14 +35,14 @@ $comment_id_GET = function($args): void{
 $comment_id_PUT = function($args): void{
     $id = $args[1];
 
-                    $string = file_get_contents("php://input");
-                    $_PUT = json_decode($string, true);
-                    $ret = editPetComment(
-                        $id,
-                        $_PUT['text'],
-                        false,
-                        null
-                    );
+    $string = file_get_contents("php://input");
+    $_PUT = json_decode($string, true);
+    $ret = editPetComment(
+        $id,
+        $_PUT['text'],
+        false,
+        null
+    );
     print_result($ret);
 };
 

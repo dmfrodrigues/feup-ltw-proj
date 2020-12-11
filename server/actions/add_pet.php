@@ -13,6 +13,8 @@ foreach($_FILES as $key => $value){
 }
 ksort($files);
 
+$tmpFilePaths = array_map(function($file) : string { return $file['tmp_name']; }, $files);
+
 if (isset($_SESSION['username'])){
     $petId = addPet(
         $_POST['name'],
@@ -24,9 +26,9 @@ if (isset($_SESSION['username'])){
         $_POST['location'],
         $_POST['description'],
         $_SESSION['username'],
-        $files
+        $tmpFilePaths
     );
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    // header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
 }
 
-die();
+// die();

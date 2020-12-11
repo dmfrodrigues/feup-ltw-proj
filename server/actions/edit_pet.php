@@ -12,7 +12,7 @@ $pictures = [];
 for($i = 0; $i < $N; ++$i){
     $picture = [
         'old' => $_POST ["old-$i"],
-        'new' => (isset($_FILES["new-$i"]) ? $_FILES["new-$i"] : null)
+        'new' => (isset($_FILES["new-$i"]) ? $_FILES["new-$i"]['tmp_name'] : null)
     ];
     $pictures[] = $picture;
 }

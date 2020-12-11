@@ -382,10 +382,11 @@ function addPet(
     string $location,
     string $description,
     string $postedBy,
-    array  $files
+    array  $tmpFilePaths
 ) : int {
     // Check if files are OK
-    foreach($files as $id => $file) checkImageFile($file, 1000000);
+    foreach($tmpFilePaths as $id => $tmpFilePath)
+        checkImageFile($tmpFilePath, 1000000);
 
     $pet = new Pet(
         null        ,
@@ -407,11 +408,11 @@ function addPet(
     $path = PETS_IMAGES_DIR."/{$pet->getId()}";
     mkdir($path);
 
-    foreach($files as $id => $file){
-        $ext = checkImageFile($file, 1000000);
+    foreach($tmpFilePaths as $id => $tmpFilePath){
+        $ext = checkImageFile($tmpFilePath, 1000000);
         $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $file['tmp_name'],
+            $tmpFilePath,
             $ext,
             $filepath,
             85
@@ -433,7 +434,7 @@ function editPetPictures(int $petId, array $pictures){
     $swappic = [];
     $newpic  = [];
     foreach($pictures as $key => $picture){
-        if($picture['new']['tmp_name'] !== ''){ // new picture
+        if($picture['new'] !== ''){ // new picture
             $newpic[$key] = $picture;
         } else if($picture['old'] !== ''){ //swap picture
             $swappic[$key] = $picture['old'];
@@ -444,11 +445,11 @@ function editPetPictures(int $petId, array $pictures){
 
     $N = count($pictures);
     $images = scandir($path);
-    foreach($images as $i => $filename){
-        if($filename == '.' || $filename == '..') continue;
-        $id = intval(explode('.', $filename)[0]);
-        $filepath = "$path/$filename";
-        if($id >= $N) unlink($filepath);
+    foreach($images as $i => $tmpFilePathname){
+        if($tmpFilePathname == '.' || $tmpFilePathname == '..') continue;
+        $id = intval(explode('.', $tmpFilePathname)[0]);
+        $tmpFilePathpath = "$path/$tmpFilePathname";
+        if($id >= $N) unlink($tmpFilePathpath);
     }
 }
 
@@ -483,14 +484,14 @@ function swapPetPictures(int $petId, array $swappic){
 function newPetPictures(int $petId, array $newpic){
     $path = PETS_IMAGES_DIR."/$petId";
 
-    foreach($newpic as $id => $file){
+    foreach($newpic as $id => $tmpFilePath){
         if($newpic[$id]['new']['size'] == 0) continue;
-        $ext = checkEditImageFile($file, 1000000);
-        $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
+        $ext = checkEditImageFile($tmpFilePath, 1000000);
+        $tmpFilePathpath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $file['new']['tmp_name'],
+            $tmpFilePath['new']['tmp_name'],
             $ext,
-            $filepath,
+            $tmpFilePathpath,
             85
         );
     }
@@ -502,14 +503,14 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  * Add pet photo
  *
  * @param integer $id           ID of pet
- * @param string $tmp_filepath  File path to temporary file
+ * @param string $tmp_tmpFilePathpath  File path to temporary tmpFilePath
  * @param integer $idx          Index of image (1 is the first image); should be numbered sequentially
  * @return void
  */
-function addPetPhoto(int $id, string $tmp_filepath, int $idx) {
-    $filepath = PETS_IMAGES_DIR."/$id/".str_pad(strval($idx), 3, '0', STR_PAD_LEFT).".jpg";
-    if(!move_uploaded_file($tmp_filepath, $filepath))
-        throw new RuntimeException('Failed to move uploaded file.');
+function addPetPhoto(int $id, string $tmp_tmpFilePathpath, int $idx) {
+    $tmpFilePathpath = PETS_IMAGES_DIR."/$id/".str_pad(strval($idx), 3, '0', STR_PAD_LEFT).".jpg";
+    if(!move_uploaded_tmpFilePath($tmp_tmpFilePathpath, $tmpFilePathpath))
+        throw new RuntimeException('Failed to move uploaded tmpFilePath.');
 }
 
 /**
@@ -523,10 +524,10 @@ function getPetMainPhoto(int $id) : string {
     if(!is_dir($dir)) return 'resources/img/no-image.svg';
     
     $lst = scandir($dir);
-    foreach($lst as $filename){
-        $filepath = "$dir/$filename";
-        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($filepath);
+    foreach($lst as $tmpFilePathname){
+        $tmpFilePathpath = "$dir/$tmpFilePathname";
+        if(in_array(pathinfo($tmpFilePathpath)['extension'], IMAGES_EXTENSIONS)){
+            $url = path2url($tmpFilePathpath);
             return $url;
         }
     }
@@ -546,10 +547,10 @@ function getPetPhotos(int $id) : array {
     if(!is_dir($dir)) return $photos;
     
     $lst = scandir($dir);
-    foreach($lst as $filename){
-        $filepath = "$dir/$filename";
-        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($filepath);
+    foreach($lst as $tmpFilePathname){
+        $tmpFilePathpath = "$dir/$tmpFilePathname";
+        if(in_array(pathinfo($tmpFilePathpath)['extension'], IMAGES_EXTENSIONS)){
+            $url = path2url($tmpFilePathpath);
             array_push($photos, $url);
         }
     }
@@ -602,7 +603,7 @@ function getPetComment(int $commentId) {
  * @param string $username  User's username
  * @param ?int $answerTo    ID of comment it is replying to, or null if not a reply
  * @param string $text      Text of the comment
- * @param array $file       Is file coming or not?
+ * @param array $tmpFilePath       Is tmpFilePath coming or not?
  * @return integer          ID of the new comment
  */
 function addPetComment(int $id, string $username, ?int $answerTo, string $text, ?string $tmpFileId) : int {
@@ -636,11 +637,11 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 
 function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
     $ext = checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
-    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
     convertImage(
         $tmpFilePath,
         $ext,
-        $filepath,
+        $tmpFilePathpath,
         85
     );
 }
@@ -650,15 +651,15 @@ function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
  *
  * @param integer   $commentId      ID of comment
  * @param string    $text           Text of comment
- * @param string    $file           Picture file (as obtained from $_FILES['file_field'])
+ * @param string    $tmpFilePath           Picture tmpFilePath (as obtained from $_FILES['tmpFilePath_field'])
  * @return void
  */
-function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $file){
+function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $tmpFilePath){
     $oldComment = getPetComment($commentId);
 
     $noFileSent = false;
     try{
-        $ext = checkImageFile($file, 1000000);
+        $ext = checkImageFile($tmpFilePath, 1000000);
     } catch(NoFileSentException $e){
         $noFileSent = true;
     }
@@ -679,11 +680,11 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     }
 
     if(!$noFileSent){
-        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
         convertImage(
-            $file['tmp_name'],
+            $tmpFilePath['tmp_name'],
             $ext,
-            $filepath,
+            $tmpFilePathpath,
             85
         );
     }
@@ -714,7 +715,7 @@ function deletePetComment(int $id){
  */
 function getCommentPicture(int $id) : ?string {
     $url = SERVER_DIR . "/resources/img/comments/$id.jpg";
-    if(!file_exists($url)) return null;
+    if(!tmpFilePath_exists($url)) return null;
     return path2url($url);
 }
 
@@ -725,10 +726,10 @@ function getCommentPicture(int $id) : ?string {
  * @return void
  */
 function deletePetCommentPhoto(int $commentId){
-    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    if(file_exists($filepath))
-        if(!unlink($filepath))
-            throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+    if(tmpFilePath_exists($tmpFilePathpath))
+        if(!unlink($tmpFilePathpath))
+            throw new CouldNotDeleteFileException("Could not delete '$tmpFilePathpath'");
 }
 
 /**
