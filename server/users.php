@@ -229,6 +229,24 @@ class User implements JsonSerializable {
         $pets = $stmt->fetchAll();
         return $pets;
     }
+
+    /**
+     * Get pets added by a user that were not adopted yet.
+     *
+     * @param string $username  User's username
+     * @return array            Array of pets added by that user
+     */
+    public function getPetsNotAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username
+        AND status="forAdoption"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindParam(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
 class Shelter extends User {
@@ -292,6 +310,28 @@ class Shelter extends User {
             $obj['location']
         );
         return $shelter;
+    }
+
+    /**
+     * Get Shelter pets for adoption
+     *
+     * @return array            Array containing all the info about the pets
+     */
+    public function getPetsForAdoption() : array {
+        global $db;
+    
+        $stmt = $db->prepare('SELECT * FROM PET
+            WHERE postedBy IN (
+                SELECT username FROM User
+                WHERE shelter=:shelter
+            ) AND Pet.status="forAdoption"
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindParam(':shelter', $this->getUsername());
+        $stmt->execute();
+        $shelterPets = $stmt->fetchAll();
+
+        return $shelterPets;
     }
 }
 

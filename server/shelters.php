@@ -77,36 +77,9 @@ function addShelter(string $username, string $name, string $location, string $de
     $stmt2->execute();
 }
 
-/**
- * Get Shelter pets for adoption
- *
- * @param string $shelter  Username (Shelter)
- * @return array            Array containing all the info about the pets
- */
+
 function getShelterPetsForAdoption(string $shelter) : array {
-    global $db;
-    
-    $stmt = $db->prepare('SELECT 
-            User.username AS user,
-            Pet.id,
-            Pet.name,
-            Pet.species,
-            Pet.age,
-            Pet.sex,
-            Pet.size,
-            Pet.color,
-            Pet.location,
-            Pet.description
-        FROM User
-        JOIN Pet ON User.username = Pet.postedBy
-        WHERE User.shelter=:shelter AND Pet.status="forAdoption"
-    ');
-
-    $stmt->bindParam(':shelter', $shelter);
-    $stmt->execute();
-    $shelterPets = $stmt->fetchAll();
-
-    return $shelterPets;
+    return Shelter::fromDatabase($shelter)->getPetsForAdoption();
 }
 
 /**
@@ -445,7 +418,7 @@ function userCanEditPet(string $username, int $petId) : bool {
     $pet = Pet::fromDatabase($petId);
 
     if (isShelter($username)) {
-        $pets = getShelterPetsForAdoption($username);
+        $pets = Shelter::fromDatabase($username)->getPetsForAdoption();
 
         foreach($pets as $p) {
             if ($p->getId() == $pet->getId()) return true;

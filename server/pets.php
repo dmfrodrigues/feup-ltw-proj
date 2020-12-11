@@ -748,23 +748,6 @@ function getAddedPets(string $username) : array {
 }
 
 /**
- * Get pets added by a user that were not adopted yet.
- *
- * @param string $username  User's username
- * @return array            Array of pets added by that user
- */
-function getAddedPetsNotAdopted(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE postedBy=:username AND status="forAdoption"');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
-}
-
-
-/**
  * Change pet status.
  * 
  * @param int $petId      Pet's Id

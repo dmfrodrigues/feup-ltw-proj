@@ -11,18 +11,17 @@ require_once SERVER_DIR.'/notifications.php';
 require_once 'templates/common/header.php';
 if(isShelter($_GET['username'])) {
     $shelter = getShelter($_GET['username']);
-    $added_pets = getShelterPetsForAdoption($_GET['username']);
+    $added_pets = $shelter->getPetsForAdoption();
     $collaborators = getShelterCollaborators($_GET['username']);
 
     if(isset($_SESSION['username']) && isset($_SESSION['isShelter']) && $_SESSION['username'] == $_GET['username'])
         require_once 'templates/shelters/profile_shelter_me.php';
     else
         require_once 'templates/shelters/profile_shelter_others.php';
-}
-else {
+} else {
     $user = User::fromDatabase($_GET['username']);
-    $added_pets = getAddedPetsNotAdopted($_GET['username']);
-    $favorite_pets = User::fromDatabase($_GET['username'])->getFavoritePets();
+    $added_pets = $user->getPetsNotAdopted();
+    $favorite_pets = $user->getFavoritePets();
 
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         require_once 'templates/users/profile_me.php';
