@@ -38,6 +38,9 @@ class User implements JsonSerializable {
     public function getRegisteredOn() :  string { return $this->registeredOn; }
     public function getShelter     () : ?string { return $this->shelter     ; }
     public function isAdmin        () :  bool   { return $this->admin       ; }
+    public function isShelter() : bool {
+        return (Shelter::fromDatabase($this->getUsername()) != null);
+    }
     /**
      * Get user picture URL.
      *
@@ -130,13 +133,14 @@ class User implements JsonSerializable {
         $stmt->execute();
     }
 
-    static public function fromDatabase(string $username) : User {
+    static public function fromDatabase(string $username) : ?User {
         global $db;
         $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
         $stmt->bindParam(':username', $username);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
         $stmt->execute();
         $user = $stmt->fetch();
+        if($user == false) return null;
         return $user;
     }
 
@@ -205,6 +209,70 @@ class User implements JsonSerializable {
         $stmt->execute();
         $users = $stmt->fetchAll();
         return (count($users) > 0);
+    }
+}
+
+class Shelter extends User {
+    private string $description;
+    private string $location;
+    public function __construct(
+        string $username     = '',
+        string $password     = '',
+        string $name         = '',
+        string $registeredOn = '',
+       ?string $shelter      = null,
+        bool   $admin        = false,
+        string $description  = '',
+        string $location     = ''
+    ){
+        parent::__construct(
+            $username,
+            $password,
+            $name,
+            $registeredOn,
+            $shelter,
+            $admin
+        );
+        $this->description = $description;
+        $this->location = $location;
+    }
+
+    public function getDescription() : string { return $this->description; }
+    public function getLocation   () : string { return $this->location   ; }
+
+    public function jsonSerialize() {
+        $ret = parent::jsonSerialize();
+        $ret = $ret + get_object_vars($this);
+        return $ret;
+    }
+
+    static public function fromDatabase(string $username) : ?Shelter {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter,
+        Shelter.description,
+        Shelter.location
+        FROM User NATURAL JOIN Shelter
+        WHERE User.username=:username');
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $obj = $stmt->fetch();
+        if($obj == false) return null;
+        $shelter = new Shelter(
+            $obj['username'],
+            $obj['password'],
+            $obj['name'],
+            $obj['registeredOn'],
+            $obj['shelter'],
+            false,
+            $obj['description'],
+            $obj['location']
+        );
+        return $shelter;
     }
 }
 
