@@ -9,7 +9,7 @@ require_once SERVER_DIR . '/users.php';
 $title = "My proposals";
 
 $user = User::fromDatabase($_SESSION['username']);
-$adoptionRequests = $user->getAdoptionRequests();
+$adoptionRequests = $user->getAdoptionRequestsToOthers();
 
 require_once 'templates/common/header.php';
 require_once 'templates/pets/view_proposal.php';

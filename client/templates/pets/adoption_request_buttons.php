@@ -1,7 +1,7 @@
 <?php
     $user = User::fromDatabase($_SESSION['username']);
     $added_pets = $user->getAddedPets();
-    $adoption_requests = $user->getAdoptionRequests();
+    $adoption_requests = $user->getAdoptionRequestsToOthers();
     if (!checkIfAdopted($pet->getId())) {
         if (!in_array($pet, $added_pets)) { 
             if (!userRequestedPet($_SESSION['username'], $pet->getId())) { ?>

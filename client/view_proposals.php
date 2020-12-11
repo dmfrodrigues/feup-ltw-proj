@@ -9,7 +9,7 @@ $title = "Proposals";
 
 require_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
-    $adoptionRequests = User::fromDatabase($_SESSION['username'])->getAdoptionRequests();
+    $adoptionRequests = User::fromDatabase($_SESSION['username'])->getAdoptionRequestsToMe();
     require_once 'templates/pets/view_proposal.php';
     drawProposals($adoptionRequests);
 }

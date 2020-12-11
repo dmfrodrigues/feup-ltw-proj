@@ -281,23 +281,41 @@ class User implements JsonSerializable {
     }
 
     /**
-     * Get a user's adoption requests for his pets.
+     * Get adoption requests made by the user to other pets.
      *
-     * @param string $username  User's username
      * @return array            Array of adoption requests 
      */
-    public function getAdoptionRequests() : array {
+    public function getAdoptionRequestsToOthers() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest
+        WHERE user=:username');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $requests = $stmt->fetchAll();
+
+        return $requests;
+    }
+
+    /**
+     * Get adoption requests made to my pets.
+     *
+     * @return array            Array of adoption requests 
+     */
+    public function getAdoptionRequestsToMe() : array {
         global $db;
 
         $stmt = $db->prepare('SELECT * FROM AdoptionRequest
         WHERE pet IN (
             SELECT id FROM Pet
-            WHERE Pet.postedBy=:username
+            WHERE postedBy=:username
         )');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
         $stmt->bindValue(':username', $this->username);
         $stmt->execute();
         $requests = $stmt->fetchAll();
+
         return $requests;
     }
 }
@@ -608,11 +626,11 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
  */
 function userRequestedPet(string $username, int $petId) : bool {
     $user = User::fromDatabase($username);
-    $adoption_requests = $user->getAdoptionRequests();
+    $adoption_requests = $user->getAdoptionRequestsToOthers();
+    var_dump($adoption_requests);
     foreach ($adoption_requests as $request) {
-        if ($request['id'] == $petId) return true;
+        if ($request->getPetId() == $petId) return true;
     }
-    
     return false;
 }
 
@@ -682,7 +700,7 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * @return void
  */
 function refuseOtherProposals(int $requestId, int $petId) {
-    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
+    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequestsToOthers();
     foreach ($adoption_requests as $request){
         if ($request->getId() != $requestId) {
             $request->setOutcode("rejected");
