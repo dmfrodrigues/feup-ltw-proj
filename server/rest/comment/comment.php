@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../api_constants.php';
 require_once SERVER_DIR . '/pets.php';
-require_once 
 
 $comment_PUT = function($args): void{
     $string = file_get_contents("php://input");
