@@ -26,22 +26,13 @@ async function addNewAdoptionRequestMsg() {
 
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
+    console.log(response);
     if(!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
-
-    let jsonResponse = await response.json();
-
-    let mainObject = document.querySelector("section");
-    mainObject.innerHTML = '';
-    jsonResponse.comments.forEach((comment) => {
-        addCommentToChat(comment, user, jsonResponse.petId.pet, jsonResponse.petName.name);
-    });
     
-    submitMsg.querySelector('textarea').value = "";
-    mainObject.appendChild(submitMsg);
-    window.location='#proposal-messages-refresh';
+    updateAdoptionChat();
 }
 
 async function ajaxAddAdoptionRequest(bodyParams) {
@@ -119,7 +110,7 @@ async function updateAdoptionChat() {
 
     let mainObject = document.querySelector("section");
     mainObject.innerHTML = '';
-
+    console.log(jsonResponse);
     jsonResponse.forEach((comment) => {
         addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
     });

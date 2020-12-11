@@ -46,7 +46,7 @@
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['reqDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
