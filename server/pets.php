@@ -576,7 +576,7 @@ function getPetComment(int $commentId) {
     $stmt->execute();
     $comment = $stmt->fetch();
     if(!$comment) return $comment;
-    $comment['userPictureUrl'   ] = getUserPicture   ($comment['user']);
+    $comment['userPictureUrl'   ] = User::fromDatabase($comment['user'])->getPictureUrl();
     $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
     return $comment;
 }
