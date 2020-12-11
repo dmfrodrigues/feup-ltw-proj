@@ -1,15 +1,15 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
-include_once SERVER_DIR . '/connection.php';
-include_once __DIR__.'/../server/notifications.php';
-include_once SERVER_DIR . '/users.php';
-include_once SERVER_DIR . '/shelters.php';
+require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR . '/connection.php';
+require_once __DIR__.'/../server/notifications.php';
+require_once SERVER_DIR . '/users.php';
+require_once SERVER_DIR . '/shelters.php';
 
 $title = "Edit profile";
 
-include_once('templates/common/header.php');
+require_once('templates/common/header.php');
 
 if(isShelter($_GET['username'])) {
     if(isset($_SESSION['username'])) {
@@ -19,13 +19,13 @@ if(isShelter($_GET['username'])) {
 
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
-            include_once('templates/users/edit_profile.php');
+            require_once('templates/users/edit_profile.php');
             editProfile(true); // true -> is shelter
         }
             
         $userShelter = getUserShelter($user['username']);
         if ($userShelter === $shelter['username']) {
-            include_once('templates/users/edit_profile.php');
+            require_once('templates/users/edit_profile.php');
             editProfile(true); // true -> is shelter
         }
 
@@ -35,8 +35,8 @@ if(isShelter($_GET['username'])) {
 
 else if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
     $user = getUser($_GET['username']);
-    include_once('templates/users/edit_profile.php');
+    require_once('templates/users/edit_profile.php');
     editProfile(false); // false -> is not shelter
 }
     
-include_once('templates/common/footer.php');
+require_once('templates/common/footer.php');

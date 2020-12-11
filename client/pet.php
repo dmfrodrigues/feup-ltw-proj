@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once __DIR__.'/../server/notifications.php';
-include_once SERVER_DIR.'/pets.php';
-include_once SERVER_DIR.'/users.php';
+require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once __DIR__.'/../server/notifications.php';
+require_once SERVER_DIR.'/pets.php';
+require_once SERVER_DIR.'/users.php';
 $pet = getPet($_GET['id']);
 $comments = getPetComments($_GET['id']);
 $title = $pet['name'];
@@ -29,6 +29,6 @@ if (isset($_SESSION['username'])) {
 
 $javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
 
-include_once 'templates/common/header.php';
-include_once 'templates/pets/view_pet.php';
-include_once 'templates/common/footer.php';
+require_once 'templates/common/header.php';
+require_once 'templates/pets/view_pet.php';
+require_once 'templates/common/footer.php';

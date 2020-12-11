@@ -6,7 +6,7 @@
         <a href="edit_profile.php?username=<?=$_SESSION['username']?>">Edit Profile</a>
     </header>
     <?php
-    include_once 'templates/pets/view_pets_in_profile.php';
+    require_once 'templates/pets/view_pets_in_profile.php';
     ?>
     <section id="actions">
         <h2>Actions</h2>

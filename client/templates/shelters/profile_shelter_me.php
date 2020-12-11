@@ -6,8 +6,8 @@
         <a href="edit_profile.php?username=<?=$_SESSION['username']?>">Edit Shelter Profile</a>
     </header>
     <?php
-    include_once 'templates/pets/view_pets_in_shelter_profile.php';
-    include_once 'templates/users/view_collaborators_in_shelter_profile.php';
+    require_once 'templates/pets/view_pets_in_shelter_profile.php';
+    require_once 'templates/users/view_collaborators_in_shelter_profile.php';
     ?>
     <section id="actions">
         <h2>Actions</h2>

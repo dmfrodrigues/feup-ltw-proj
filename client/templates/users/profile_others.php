@@ -5,7 +5,7 @@
         <span id="username"><?=$user['username']?></span>
     </header>
     <?php
-    include_once 'templates/pets/view_pets_in_profile.php';
+    require_once 'templates/pets/view_pets_in_profile.php';
     
     $user = getUser($_GET['username']);
     if (!isset($_SESSION['isShelter'])) {

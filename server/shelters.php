@@ -1,8 +1,8 @@
 <?php
 
-include_once __DIR__.'/server.php';
-include_once SERVER_DIR.'/users.php';
-include_once __DIR__.'/pets.php';
+require_once __DIR__.'/server.php';
+require_once SERVER_DIR.'/users.php';
+require_once __DIR__.'/pets.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
 

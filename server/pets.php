@@ -1,7 +1,7 @@
 <?php
 
-include_once __DIR__.'/server.php';
-include_once SERVER_DIR.'/users.php';
+require_once __DIR__.'/server.php';
+require_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
