@@ -1,4 +1,4 @@
-<?php $added_pets = getAddedPets($_SESSION['username']);
+<?php $added_pets = User::fromDatabase($_SESSION['username'])->getAddedPets();
     $adoption_requests = getAdoptionRequests($_SESSION['username']);
     if (!checkIfAdopted($pet->getId())) {
         if (!in_array($pet, $added_pets)) { 

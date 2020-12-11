@@ -147,7 +147,7 @@ class User implements JsonSerializable {
      */
     static public function deleteFromDatabase(string $username) : void {
         global $db;
-        $user_pets = getAddedPets($username);
+        $user_pets = User::fromDatabase($username)->getAddedPets();
         foreach($user_pets as $i => $pet){
             $id = $pet->getId();
             $dir = PETS_IMAGES_DIR."/$id";
@@ -244,6 +244,17 @@ class User implements JsonSerializable {
             SELECT petId FROM FavoritePet
             WHERE username=:username
         )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    public function getAddedPets() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
         $stmt->bindValue(':username', $this->username);
         $stmt->execute();

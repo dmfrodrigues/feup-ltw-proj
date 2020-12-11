@@ -682,13 +682,7 @@ function deleteAllPetCommentPhotos(int $id){
  * @return array            Array of pets added by that user
  */
 function getAddedPets(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE postedBy=:username');
-    $stmt->bindValue(':username', $username);
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
+    return User::fromDatabase($username)->getAddedPets();
 }
 
 /**
