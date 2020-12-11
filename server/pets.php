@@ -205,9 +205,23 @@ class Pet implements JsonSerializable {
      *
      * @return array    Array of all pets listed for adoption
      */
-    static public function getListedForAdoption() : array {
+    static public function getForAdoption() : array {
         global $db;
         $stmt = $db->prepare('SELECT * FROM Pet WHERE status="forAdoption"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Get array of all pets adopted.
+     *
+     * @return array    Array of all pets adopted
+     */
+    static public function getAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE status="adopted"');
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
         $stmt->execute();
         $pets = $stmt->fetchAll();
@@ -803,20 +817,6 @@ function getPetAdoptionRequests(string $petId) : array {
 }
 
 /**
- * Get adopted pets.
- * 
- * @return array            Array of adopted pets
- */
-function getAdoptedPets() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE status="adopted"');
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
-}
-
-/**
  * Get the user who adopted the given pet.
  *
  * @param int $id           Pet's ID
@@ -845,7 +845,7 @@ function getUserWhoAdoptedPet(int $id): array {
  */
 function getAdoptedPetsPublishedByUser($username) : array {
     
-    $adoptedPets = getAdoptedPets();
+    $adoptedPets = Pet::getAdopted();
     $adoptedPetsPublishedByUser = array();
 
     foreach($adoptedPets as $pet) {

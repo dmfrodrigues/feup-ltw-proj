@@ -2,9 +2,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
-require_once __DIR__ . '/../server.php';
-require_once SERVER_DIR . '/connection.php';
-define('API_DIR', SERVER_DIR . '/rest');
+require_once __DIR__ . '/api_constants.php';
 require_once API_DIR . '/rest-lib/rest-lib.php';
 require_once API_DIR . '/print.php';
 require_once API_DIR . '/user/user.php';

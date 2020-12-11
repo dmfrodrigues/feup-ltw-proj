@@ -8,7 +8,7 @@ require_once SERVER_DIR . '/users.php';
 require_once SERVER_DIR . '/shelters.php';
 require_once SERVER_DIR . '/errors/errors.php';
 
-$users = getUsersAvailableForShelter();
+$users = User::allWithoutShelter();
 
 require_once 'templates/common/header.php';
 

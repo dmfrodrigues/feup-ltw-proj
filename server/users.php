@@ -268,6 +268,27 @@ class User implements JsonSerializable {
         $pets = $stmt->fetchAll();
         return $pets;
     }
+
+    /**
+     * Get a user's adoption requests for his pets.
+     *
+     * @param string $username  User's username
+     * @return array            Array of adoption requests 
+     */
+    public function getAdoptionRequests() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest
+        WHERE pet IN (
+            SELECT id FROM Pet
+            WHERE Pet.postedBy=:username
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $requests = $stmt->fetchAll();
+        return $requests;
+    }
 }
 
 class NoSuchUserException extends RuntimeException{}
@@ -585,32 +606,6 @@ function getAdoptionRequests(string $username) : array {
 }
 
 /**
- * Get a user's adoption requests for his pets.
- *
- * @param string $username  User's username
- * @return array            Array of adoption requests 
- */
-function getAdoptionRequestsOfUserPets(string $username) : array {
-    global $db;
-
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.status,
-    AdoptionRequest.id AS requestId,
-    AdoptionRequest.text,
-    AdoptionRequest.outcome,
-    AdoptionRequest.user,
-    AdoptionRequest.requestDate
-    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
-    WHERE AdoptionRequest.pet IN (SELECT id FROM Pet WHERE Pet.postedBy=:username)');
-    $stmt->bindValue(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
-}
-
-/**
  * Change adoption request outcome
  *
  * @param int $reqId
@@ -711,12 +706,13 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * @return void
  */
 function refuseOtherProposals(int $requestId, int $petId) {
-    $adoption_requests = getAdoptionRequestsOfUserPets($petId);
-    foreach ($adoption_requests as $request)
-        if ($request['requestId'] != $requestId) {
-            changeAdoptionRequestOutcome($requestId, "rejected");
-            changePetStatus($petId, "adopted");
+    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
+    foreach ($adoption_requests as $request){
+        if ($request->getId() != $requestId) {
+            $request->setOutcode("rejected");
         }
+    }
+    changePetStatus($petId, "adopted");
 }
 
 /**

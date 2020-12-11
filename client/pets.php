@@ -5,7 +5,7 @@ require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
-$pets = Pet::getListedForAdoption();
+$pets = Pet::getForAdoption();
 
 $javascript_files = ['js/filterPets.js'];
 

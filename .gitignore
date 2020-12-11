@@ -3,6 +3,7 @@ server/resources/img/profiles
 server/resources/img/pets
 server/resources/img/comments
 server/server_constants.php
+server/server_constants_localhost_dmfr.php
 
 vendor
 psalm.xml

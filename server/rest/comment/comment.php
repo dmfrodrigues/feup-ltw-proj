@@ -1,26 +1,28 @@
 <?php
+require_once __DIR__ . '/../api_constants.php';
 require_once SERVER_DIR . '/pets.php';
+require_once 
 
 $comment_PUT = function($args): void{
-            $string = file_get_contents("php://input");
-            $_PUT = json_decode($string, true);
-            $id = addPetComment(
-                $_PUT['petId'],
-                $_PUT['username'],
-                ($_PUT['answerTo'] === '' ? null : intval($_PUT['answerTo'])),
-                $_PUT['text'],
-                $_PUT['picture']
-            );
+    $string = file_get_contents("php://input");
+    $_PUT = json_decode($string, true);
+    $id = addPetComment(
+        $_PUT['petId'],
+        $_PUT['username'],
+        ($_PUT['answerTo'] === '' ? null : intval($_PUT['answerTo'])),
+        $_PUT['text'],
+        $_PUT['picture']
+    );
     print_result($id);
 };
 
 $comment_photo_PUT = function($args): void{
-            $file = fopen('php://input', 'r');
-            $tmpFilePath = tempnam(sys_get_temp_dir(), 'NEWCOMMENTPHOTO');
-            $tmpFile = fopen($tmpFilePath, 'w');
-            while($data = fread($file, 1024)){
-                fwrite($tmpFile, $data);
-            }
+    $file = fopen('php://input', 'r');
+    $tmpFilePath = tempnam(sys_get_temp_dir(), 'NEWCOMMENTPHOTO');
+    $tmpFile = fopen($tmpFilePath, 'w');
+    while($data = fread($file, 1024)){
+        fwrite($tmpFile, $data);
+    }
     print_result(basename($tmpFilePath));
 };
 

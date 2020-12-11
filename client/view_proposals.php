@@ -8,7 +8,7 @@ require_once SERVER_DIR . '/users.php';
 
 require_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
-    $adoptionRequests = getAdoptionRequestsOfUserPets($_SESSION['username']);
+    $adoptionRequests = User::fromDatabase($_SESSION['username'])->getAdoptionRequests();
     require_once 'templates/pets/view_proposal.php';
     drawProposals($adoptionRequests);
 }
