@@ -42,9 +42,11 @@
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
                 <button id="ask" onclick="location.href = '#comments'"><img src="resources/img/question-mark.png" height="42px">Ask question</button>
-                <div id="adoption-request-button">
-                    <?php require_once 'templates/pets/adoption_request_buttons.php'; ?>
-                </div>
+                <?php  if($_SESSION['username'] != $pet->getPostedBy(true) ) { ?>
+                    <div id="adoption-request-button">
+                        <?php require_once 'templates/pets/adoption_request_buttons.php'; ?>
+                    </div>
+                <?php } ?>
             <?php } ?>
         </div>
     </header>
