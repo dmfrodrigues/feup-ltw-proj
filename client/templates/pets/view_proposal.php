@@ -5,7 +5,8 @@
                 <?php if($isMyPetProposal) { ?>
                     <div id="proposal-header">
                         <a href="profile.php?username=<?=$request->getUserId()?>">
-                            <img id="proposal-pic" src="../server/resources/img/profiles/<?=$request->getUserId()?>.jpg">
+                            <?php $proposal_pic = User::fromDatabase($request->getUserId())->getPictureUrl();?>
+                            <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "resources/img/no-image.svg" : $proposal_pic)?>">
                         </a>
                     </div>
                 <?php } ?>
@@ -37,13 +38,14 @@
     <?php 
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
-        <section id="proposal-container">
+        <section class="messages-column-body">
             <h1 id="proposal-title">Proposal chat</h1>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$adoptionRequest['user']?>">
-                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
+                        <?php $proposal_pic = User::fromDatabase($adoptionRequest['user'])->getPictureUrl();?>
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
@@ -64,7 +66,8 @@
                 <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
                 <div id="proposal-header">
                     <a href="profile.php?username=<?=$reqMessage['user']?>">
-                        <img id="proposal-pic" src="../server/resources/img/profiles/<?=$reqMessage['user']?>.jpg">
+                        <?php $proposal_pic = User::fromDatabase($reqMessage['user'])->getPictureUrl();?>
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
@@ -87,7 +90,8 @@
             <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
             <div id="proposal-header">
                 <a href="profile.php?username=<?=$_SESSION['username']?>">
-                    <img id="proposal-pic" src="../server/resources/img/profiles/<?=$_SESSION['username']?>.jpg">
+                    <?php $proposal_pic = User::fromDatabase($_SESSION['username'])->getPictureUrl();?>
+                    <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "resources/img/no-image.svg" : $proposal_pic)?>">
                 </a>
             </div>
             <div id="proposal-info">
