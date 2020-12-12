@@ -22,6 +22,13 @@ if($_GET['outcome'] === 'accepted') {
     $userWhoPostedPet = $pet->getPostedBy();
 
     addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
+
+    $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['petId']);
+    
+    foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
+        if ($userWhoFavoritePet['username'] !== $userWhoAdopted->getUsername() && $userWhoFavoritePet['username'] !== $userWhoPostedPet->getUsername())
+            addNotification($userWhoFavoritePet['username'], "favoriteAdopted", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+    }
 }
 
 if($_GET['outcome'] === 'rejected') {    
