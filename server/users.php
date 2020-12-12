@@ -61,7 +61,12 @@ class User implements JsonSerializable {
         return path2url($path);
     }
 
-    public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
+    public function setUsername    ( string $username    ) : void {
+        if(!preg_match('/^[a-zA-Z0-9]+$/', $username)){
+            throw new InvalidArgumentException("username ('{$username}') should contain at least a character, and be made of numbers or letters only");
+        }
+        $this->username = $username;
+    }
     public function setPassword    ( string $password, bool $hashed = true) : void {
         $this->password = ($hashed?
             $password :
@@ -140,6 +145,20 @@ class User implements JsonSerializable {
         $this->setShelter     ($newUser->getShelterId());
     }
 
+    public function delete() : void {
+        global $db;
+        $user_pets = $this->getAddedPets();
+        foreach($user_pets as $i => $pet){
+            $id = $pet->getId();
+            $dir = PETS_IMAGES_DIR."/$id";
+            rmdir_recursive($dir);
+        }
+        deleteUserPhoto($this->username);
+        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+    }
+
     /**
      * Delete user.
      *
@@ -147,17 +166,7 @@ class User implements JsonSerializable {
      * @return void
      */
     static public function deleteFromDatabase(string $username) : void {
-        global $db;
-        $user_pets = User::fromDatabase($username)->getAddedPets();
-        foreach($user_pets as $i => $pet){
-            $id = $pet->getId();
-            $dir = PETS_IMAGES_DIR."/$id";
-            rmdir_recursive($dir);
-        }
-        deleteUserPhoto($username);
-        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
-        $stmt->bindValue(':username', $username);
-        $stmt->execute();
+        User::fromDatabase($username)->delete();
     }
 
     static public function fromDatabase(string $username) : ?User {

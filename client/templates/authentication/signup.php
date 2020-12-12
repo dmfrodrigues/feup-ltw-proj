@@ -5,7 +5,7 @@
       <button id="signup-shelter-button" class="dark" onclick="switchSignUpForms('shelter')">Shelters</button> 
     </header>
 
-    <form method="post" onsubmit="return signup_check()" action="<?= PROTOCOL_SERVER_URL ?>/actions/signup.php">
+    <form onsubmit="return onSubmit_signup(this)">
       <label> Name:
       <input type="text" id="name" name="name" placeholder="Name" required></label>
       <label> Username:
@@ -21,4 +21,27 @@
           
       <input type="submit" class="dark" value="Sign up" id="submit-signup">
     </form>
+    <script>
+      function onSubmit_signup(el){
+        if(!signup_check()) return false;
+        let username = el.querySelector('#username').value;
+        let password = el.querySelector('#pwd'     ).value;
+        let name     = el.querySelector('#name'    ).value;
+        api.put(
+          `user`,
+          {
+            username: username,
+            password: password,
+            name    : name
+          }
+        )
+        .then(function (response){
+          location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
+        })
+        .catch(function (error){
+          console.error(error);
+        });
+        return false;
+      }
+    </script>
 </section>

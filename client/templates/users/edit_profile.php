@@ -74,8 +74,6 @@ function editProfile(User $user): void {
     </section>
 </article>
 <script defer>
-    api = new RestApi(API_URL);
-
     function editUserPhoto_submitForm(editUserPhotoForm){
         let files = editUserPhotoForm.querySelector("#profile_picture").files;
         let picture = (files.length <= 0 ? null : files[0]);

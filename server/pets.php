@@ -209,14 +209,18 @@ class Pet implements JsonSerializable {
         return $stmt->execute();
     }
 
-    static public function deletefromDatabase(int $id) : bool {
-        rmdir_recursive(PETS_IMAGES_DIR."/$id");
+    public function delete() : void {
+        rmdir_recursive(PETS_IMAGES_DIR."/{$this->getId()}");
 
         global $db;
         $stmt = $db->prepare('DELETE FROM Pet
         WHERE id=:id');
-        $stmt->bindValue(':id', $id);
-        return $stmt->execute();
+        $stmt->bindValue(':id', $this->getId());
+        $stmt->execute();
+    }
+
+    static public function deletefromDatabase(int $id) : void {
+        Pet::fromDatabase($id)->delete();
     }
 
 
@@ -372,6 +376,13 @@ class Comment implements JsonSerializable {
         $stmt->execute();
         $comment = $stmt->fetch();
         return $comment;
+    }
+
+    public function delete() : void {
+        global $db;
+        $stmt = $db->prepare('DELETE FROM Comment WHERE id=:id');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
     }
 }
 

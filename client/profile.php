@@ -22,6 +22,7 @@ if(isShelter($_GET['username'])) {
         require_once 'templates/shelters/profile_shelter_others.php';
 } else {
     $user = User::fromDatabase($_GET['username']);
+    if($user == null){ http_response_code(404); die(); }
     $added_pets = $user->getPetsNotAdopted();
     $favorite_pets = $user->getFavoritePets();
 
