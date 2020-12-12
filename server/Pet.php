@@ -2,7 +2,6 @@
 
 require_once __DIR__.'/server.php';
 require_once SERVER_DIR.'/User.php';
-require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Comment.php';
 require_once SERVER_DIR.'/FavoritePet.php';
 require_once SERVER_DIR.'/AdoptionRequest.php';
