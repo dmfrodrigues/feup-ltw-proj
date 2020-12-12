@@ -1,10 +1,95 @@
 <?php
 
 require_once __DIR__.'/server.php';
-require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/User.php'
+require_once SERVER_DIR.'/Shelter.php';
 require_once __DIR__.'/Pet.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
+
+class Shelter extends User {
+    private string $description;
+    private string $location;
+    public function __construct(){}
+
+    public function getDescription() : string { return $this->description; }
+    public function getLocation   () : string { return $this->location   ; }
+
+    public function setDescription(string $description) : void { $this->description = $description; }
+    public function setLocation   (string $location   ) : void { $this->location    = $location   ; }
+
+    public function jsonSerialize() {
+        $ret = parent::jsonSerialize();
+        $ret = $ret + get_object_vars($this);
+        return $ret;
+    }
+
+    static public function fromDatabase(string $username) : ?Shelter {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter,
+        Shelter.description,
+        Shelter.location
+        FROM User NATURAL JOIN Shelter
+        WHERE User.username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+        $obj = $stmt->fetch();
+        if($obj == false) return null;
+        $shelter = new Shelter();
+        $shelter->setUsername    ($obj['username'    ]);
+        $shelter->setPassword    ($obj['password'    ]);
+        $shelter->setName        ($obj['name'        ]);
+        $shelter->setRegisteredOn($obj['registeredOn']);
+        $shelter->setShelter     ($obj['shelter'     ]);
+        $shelter->setDescription ($obj['description' ]);
+        $shelter->setLocation    ($obj['location'    ]);
+        return $shelter;
+    }
+
+    /**
+     * Get Shelter pets for adoption
+     *
+     * @return array            Array containing all the info about the pets
+     */
+    public function getPetsForAdoption() : array {
+        global $db;
+    
+        $stmt = $db->prepare('SELECT * FROM PET
+            WHERE postedBy IN (
+                SELECT username FROM User
+                WHERE shelter=:shelter
+            ) AND Pet.status="forAdoption"
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $shelterPets = $stmt->fetchAll();
+
+        return $shelterPets;
+    }
+
+    /**
+     * Get shelter collaborators.
+     *
+     * @return array            Array containing collaborators (Users)
+     */
+    public function getCollaborators() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM User 
+        WHERE shelter=:shelter');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $collaborators = $stmt->fetchAll();
+        return $collaborators;
+    }
+}
 
 /**
  * Checks if the username is from a shelter.

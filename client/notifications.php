@@ -3,7 +3,8 @@ session_start();
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/User.php'
+require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/notifications.php';

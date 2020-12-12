@@ -1,7 +1,8 @@
 <?php
 
 require_once __DIR__.'/server.php';
-require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/User.php'
+require_once SERVER_DIR.'/Shelter.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
