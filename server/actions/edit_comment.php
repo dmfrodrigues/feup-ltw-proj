@@ -1,14 +1,16 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/../server.php';include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR . '/connection.php';
-include_once SERVER_DIR . '/pets.php';
+require_once __DIR__ . '/../server.php';require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR . '/connection.php';
+require_once SERVER_DIR . '/pets.php';
 
-$oldComment = getPetComment($_POST['commentId']);
+$oldComment = Comment::fromDatabase(intval($_POST['commentId']));
 
-if ($oldComment['user'] != $_SESSION['username']) {
+if($oldComment == null){ http_response_code(400); die(); }
+if ($oldComment->getUserId() != $_SESSION['username']) {
     header("Location: " . $_SERVER['HTTP_REFERER']);
+    die();
 }
 
 $file = $_FILES['picture'];

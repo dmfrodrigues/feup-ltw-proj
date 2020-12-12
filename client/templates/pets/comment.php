@@ -62,13 +62,21 @@
 
         let el_pic = commentElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `profile.php?username=${comment.user}`;
-        el_pic.children[0].src = (comment.userPictureUrl !== null ? comment.userPictureUrl : 'resources/img/no-image.svg');
+        el_pic.children[0].src = API_URL + `user/${comment.user}/photo`;
 
         let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
         let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
         if (el_text.innerHTML === '') el_text.style.display = "none";
-        let el_img = commentElement.querySelector("#comment-picture"); el_img.src = (comment.commentPictureUrl !== null ? comment.commentPictureUrl : '');
-
+        let el_img = commentElement.querySelector("#comment-picture");
+        api.head(`comment/${comment.id}/photo`)
+        .then(function(response){
+            if(response.status == 200) el_img.src = API_URL + `comment/${comment.id}/photo`;
+            else                       el_img.src = '';
+        })
+        .catch(function(error){
+            console.error(error);
+        })
+        
         let el_deleteId = commentElement.querySelector("#action-delete-id"); el_deleteId.value = `${comment.id}`;
 
         return commentElement;

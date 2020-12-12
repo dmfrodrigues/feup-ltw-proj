@@ -1,6 +1,6 @@
 div#proposal {
     background-color: var(--disable-color);
-    width: 100%;
+    width: 107em;
     height: 15em;
     text-align: center;
 	position: relative;
@@ -11,7 +11,7 @@ div#proposal-msg {
     background-color: var(--disable-color);
     width: 107em;
     height: 9em;
-    text-align: center;
+    text-align: center;	
 	position: relative;
 	margin-top: 1em;
 }
@@ -65,7 +65,7 @@ div#proposal-message-submit {
 }
 
 div#proposal-message-submit {
-	left: 43.5em;
+	left: 41.5em;
 	position: absolute;
 }
 
@@ -183,4 +183,17 @@ button#submitAnswer {
 	right: 2em;
 	top: 3em;
 	display: inline-block;
+}
+
+section#proposal-container {
+	margin: 2em 1em 2em 1em;
+	padding: 2em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	text-align: center;
+}
+
+#proposal-title {
+	font-size: 2.5em;
+	padding-bottom: 1em;
 }

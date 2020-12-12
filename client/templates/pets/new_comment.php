@@ -1,7 +1,7 @@
 <template id="newComment">
 <form class="answer" enctype="multipart/form-data" method="put">
-    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet['id'] ?>">
-    <input id="comment-username" name="username" type="hidden" value="<?= $user['username'] ?>">
+    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet->getId() ?>">
+    <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
     <input id="comment-answerTo" name="answerTo" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <article class="comment">
@@ -101,7 +101,7 @@
 
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `profile.php?username=${user.username}`;
-        el_pic.children[0].src = (user.pictureUrl !== null ? user.pictureUrl : 'resources/img/no-image.svg');
+        el_pic.children[0].src = API_URL + `user/${user.username}/photo`;
 
         answerElement.addEventListener('submit', (e) => { newComment_onSubmit(e); });
 

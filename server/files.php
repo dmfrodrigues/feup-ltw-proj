@@ -52,35 +52,11 @@ function checkEditImageFile(array $file, int $size) : string {
     // Undefined | Multiple Files | $_FILES Corruption Attack
     // If this request falls under any of them, treat it invalid.
     
-    if (
-        !isset($file['new']['error']) ||
-        is_array($file['new']['error'])
-    ) {
-        throw new RuntimeException('Invalid parameters.');
-    }
-    // Check $file['error'] value.
-    switch ($file['new']['error']) {
-        case UPLOAD_ERR_OK:
-            break;
-        case UPLOAD_ERR_NO_FILE:
-            throw new NoFileSentException('No file sent.');
-        case UPLOAD_ERR_INI_SIZE:
-        case UPLOAD_ERR_FORM_SIZE:
-            throw new RuntimeException('Exceeded filesize limit.');
-        default:
-            throw new RuntimeException('Unknown errors.');
-    }
-
-    // You should also check filesize here.
-    if ($file['new']['size'] > $size) {
-        throw new RuntimeException('Exceeded filesize limit 1MB.');
-    }
-
     // DO NOT TRUST $file['mime'] VALUE !!
     // Check MIME Type by yourself.
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     if (false === $ext = array_search(
-        $finfo->file($file['new']['tmp_name']),
+        $finfo->file($file['new']),
         array(
             'jpg' => 'image/jpeg',
             'png' => 'image/png',

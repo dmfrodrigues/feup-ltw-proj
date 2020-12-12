@@ -51,12 +51,12 @@ CREATE TABLE User (
     CONSTRAINT User_FK FOREIGN KEY (shelter) REFERENCES Shelter ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE Admin (
-    username VARCHAR,
-
-    CONSTRAINT Admin_PK PRIMARY KEY(username),
-    CONSTRAINT Admin_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
-);
+-- CREATE TABLE Admin (
+--     username VARCHAR,
+-- 
+--     CONSTRAINT Admin_PK PRIMARY KEY(username),
+--     CONSTRAINT Admin_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
+-- );
 
 CREATE TABLE Notification (
     id          INTEGER NOT NULL,
@@ -69,6 +69,7 @@ CREATE TABLE Notification (
     CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
 
     CONSTRAINT subjectRule CHECK (subject LIKE 'adoptionProposalOutcome' OR
+                                  subject LIKE 'newPetAdoptionProposal' OR
                                   subject LIKE 'newMessage' OR
                                   subject LIKE 'favoriteAdopted' OR
                                   subject LIKE 'proposedPetAdopted' OR

@@ -1,18 +1,19 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once __DIR__.'/../server/notifications.php';
-include_once SERVER_DIR . '/users.php';
-include_once SERVER_DIR . '/shelters.php';
-include_once SERVER_DIR . '/errors/errors.php';
+require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR . '/users.php';
+require_once SERVER_DIR . '/shelters.php';
+require_once SERVER_DIR . '/errors/errors.php';
 
-$users = getUsersAvailableForShelter();
+$users = User::allWithoutShelter();
+$title = "Potential collaborators";
 
-include_once 'templates/common/header.php';
+require_once 'templates/common/header.php';
 
 if(isset($_SESSION['username']))
-    include_once 'templates/users/view_potential_collaborators.php';
+    require_once 'templates/users/view_potential_collaborators.php';
 
-include_once 'templates/common/footer.php';
+require_once 'templates/common/footer.php';

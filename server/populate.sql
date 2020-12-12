@@ -17,14 +17,14 @@ INSERT INTO User
 ("balves"      , "c00ab69a0a4826bb8f8fb5bdf68503f92183a9be", "Bernardo Alves" ),
 ("harold"      , "b131867c5de6fc08a4ce1fc50393cad671c82bd5", "Harold"         ),
 ("Romanoff123" , "013564dc05c22e397a30d38805fae295ef8cb4cc", "Romanoff"       ),
-('AAOrg'       , "806715632407A53335EA3DE53B4148580870E693", 'AnimalAdoption' );
+("AAOrg"       , "806715632407a53335ea3de53b4148580870e693", "AnimalAdoption" );
 
 -- Shelter
 INSERT INTO Shelter(username, location, description) VALUES
 ('AAOrg', 'Lisbon', 'We take care of animals.');
 
 -- Admin
-INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
+-- INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 
 -- Pet
 INSERT INTO Pet

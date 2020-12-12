@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__.'/server.php';
+require_once __DIR__.'/server.php';
 
 $db = new PDO('sqlite:'.SERVER_DIR.'/database.db');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

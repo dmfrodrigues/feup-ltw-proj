@@ -1,4 +1,5 @@
 rm -f *.db
+rm -rf resources
 
 sqlite3 database.db ".read script.sql"
 sqlite3 database.db ".read populate.sql"
@@ -17,9 +18,8 @@ curl -L "https://dailynewshungary.com/wp-content/uploads/2018/01/18622628_146041
 
 mkdir -p resources/img/pets
 mkdir -p resources/img/pets/1
-curl -L "https://news.rspca.org.uk/wp-content/uploads/black-cats-1024x705.jpg"                                          --output resources/img/pets/1/000.jpg
-curl -L "https://images.pexels.com/photos/7470/eyes-cats-cat-couch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"    --output resources/img/pets/1/001.jpg
-curl -L "https://images.pexels.com/photos/881142/pexels-photo-881142.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output resources/img/pets/1/002.jpg
+curl -L "https://images.pexels.com/photos/7470/eyes-cats-cat-couch.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"    --output resources/img/pets/1/000.jpg
+curl -L "https://images.pexels.com/photos/881142/pexels-photo-881142.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" --output resources/img/pets/1/001.jpg
 
 mkdir -p resources/img/pets/2
 

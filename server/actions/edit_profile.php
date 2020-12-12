@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR . '/connection.php';
-include_once SERVER_DIR . '/users.php';
-include_once SERVER_DIR . '/shelters.php';
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR . '/connection.php';
+require_once SERVER_DIR . '/users.php';
+require_once SERVER_DIR . '/shelters.php';
 
 $failed = true;
 $usernameChanged = false;
@@ -12,11 +12,11 @@ $usernameChanged = false;
 if(isShelter($_GET['username'])) {
     if(isset($_SESSION['username'])) {
 
-        $shelter = getShelter($_GET['username']);
+        $shelter = Shelter::fromDatabase($_GET['username']);
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
             updateShelterInfo(
-                $shelter['username'],
+                $shelter->getUsername(),
                 $_POST['username'],
                 $_POST['name'],
                 $_POST['location'],
@@ -27,13 +27,13 @@ if(isShelter($_GET['username'])) {
             $failed = false;
         }
             
-        $user = getUser($_SESSION['username']);
+        $user = User::fromDatabase($_SESSION['username']);
 
-        $userShelter = getUserShelter($user['username']);
-        if ($userShelter === $shelter['username']) { // if who is editing is not the shelter itself, the username cannot be changed
+        $userShelter = User::fromDatabase($user->getUsername())->getShelterId();
+        if ($userShelter === $shelter->getUsername()) { // if who is editing is not the shelter itself, the username cannot be changed
             updateShelterInfo(
-                $shelter['username'],
-                $shelter['username'],
+                $shelter->getUsername(),
+                $shelter->getUsername(),
                 $_POST['name'],
                 $_POST['location'],
                 $_POST['description']
@@ -45,12 +45,12 @@ if(isShelter($_GET['username'])) {
 }
 else {
 
-    $user = getUser($_GET['username']);
+    $user = User::fromDatabase($_GET['username']);
 
     if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
         
         editUser(
-            $user['username'],
+            $user->getUsername(),
             $_POST['username'],
             $_POST['name']
         );

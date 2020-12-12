@@ -3,6 +3,9 @@
         <h1>Notifications</h1>
     </header>
     <article id="notifications-body">
+        <div id="delete-all-notifications">
+            <button>Delete All Notifications</button>
+        </div>
         <ul>
             <?php foreach($notifications as $notification) { 
                 if ($notification['read'] == 0) { ?>
@@ -15,6 +18,11 @@
                     </div></li>
                 <?php } ?>
             <?php } ?>
+            <?php foreach($notifications as $notification) { 
+                if ($notification['read'] == 0) {
+                    readNotification($notification['id']);
+                }
+            } ?>
         </ul>
     </article>
 </section>

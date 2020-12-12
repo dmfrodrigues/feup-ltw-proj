@@ -38,6 +38,23 @@ class RestApi {
             }
         );
     }
+
+    /**
+     * Check if resource exists.
+     * 
+     * @param {String} uri URI
+     */
+    head(uri){
+        return fetch(
+            this._url_from_uri(uri),
+            {
+                method: 'HEAD',
+                headers: {
+                    'Accept': 'application/json'
+                },
+            }
+        );
+    }
     
     /**
      * Perform operation.

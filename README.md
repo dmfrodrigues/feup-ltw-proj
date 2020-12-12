@@ -82,4 +82,4 @@ AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)
 | `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                | :x:                |
 | `comment/photo`      | :x:                | :x:                | :heavy_check_mark: | :x:                |
 | `comment/<id>`       | :soon:             | :soon:             | :heavy_check_mark: | :x:                |
-| `comment/<id>/photo` | :soon:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| `comment/<id>/photo` | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |

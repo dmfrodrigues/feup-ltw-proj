@@ -1,13 +1,15 @@
 <?php
 session_start();
 
-include_once __DIR__.'/../server/server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once __DIR__.'/../server/notifications.php';
-include_once SERVER_DIR.'/pets.php';
-include_once SERVER_DIR.'/users.php';
-$pet = getPet($_GET['id']);
-$comments = getPetComments($_GET['id']);
+require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR.'/pets.php';
+require_once SERVER_DIR.'/users.php';
+$pet = Pet::fromDatabase($_GET['id']);
+$comments = $pet->getComments();
+
+$title = $pet->getName();
 
 ?>
 <script>
@@ -17,7 +19,7 @@ let comments = <?= json_encode($comments) ?>;
 <?php
 
 if (isset($_SESSION['username'])) {
-    $user = getUser($_SESSION['username']);
+    $user = User::fromDatabase($_SESSION['username']);
 ?>
     <script>
         let user = <?= json_encode($user) ?>;
@@ -28,6 +30,6 @@ if (isset($_SESSION['username'])) {
 
 $javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
 
-include_once 'templates/common/header.php';
-include_once 'templates/pets/view_pet.php';
-include_once 'templates/common/footer.php';
+require_once 'templates/common/header.php';
+require_once 'templates/pets/view_pet.php';
+require_once 'templates/common/footer.php';

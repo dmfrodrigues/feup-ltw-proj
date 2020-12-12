@@ -1,8 +1,8 @@
 <?php
 
-include_once __DIR__.'/server.php';
-include_once SERVER_DIR.'/users.php';
-include_once __DIR__.'/pets.php';
+require_once __DIR__.'/server.php';
+require_once SERVER_DIR.'/users.php';
+require_once SERVER_DIR.'/pets.php';
 
 
 /**
@@ -11,7 +11,7 @@ include_once __DIR__.'/pets.php';
  * @param string $user          User's username
  * @param string $subject       Notification's subject
  * @param string $text          Notification's subject
- * @return integer              ID of the new notification
+ * @return int ID of the new notification
  */
 function addNotification(string $user, string $subject, string $text) : int {
     global $db;
@@ -21,11 +21,11 @@ function addNotification(string $user, string $subject, string $text) : int {
     VALUES
     (:subject, :text, :user)');
 
-    $stmt->bindParam(':subject', $subject);
-    $stmt->bindParam(':text', $text);
-    $stmt->bindParam(':user', $user);
+    $stmt->bindValue(':subject', $subject);
+    $stmt->bindValue(':text', $text);
+    $stmt->bindValue(':user', $user);
     $stmt->execute();
-    $notificationId = $db->lastInsertId();
+    $notificationId = intval($db->lastInsertId());
 
     return $notificationId;
 }
@@ -48,11 +48,11 @@ function getNotifications(string $username) : array {
     FROM Notification INNER JOIN User ON Notification.user=User.username
     WHERE User.username=:username');
 
-    $stmt->bindParam(':username', $username);
+    $stmt->bindValue(':username', $username);
     $stmt->execute();
     $userNotifications = $stmt->fetchAll();
 
-    return $userNotifications;
+    return array_reverse($userNotifications, TRUE);
 }
 
 /**
@@ -68,7 +68,7 @@ function readNotification(int $notificationId) {
     read=1
     WHERE id=:notificationId');
 
-    $stmt->bindParam(':notificationId', $notificationId);
+    $stmt->bindValue(':notificationId', $notificationId);
     $stmt->execute();
 }
 
@@ -84,7 +84,7 @@ function deleteNotification(int $notificationId) {
     $stmt = $db->prepare('DELETE FROM Notification
     WHERE id=:notificationId');
 
-    $stmt->bindParam(':notificationId', $notificationId);
+    $stmt->bindValue(':notificationId', $notificationId);
     $stmt->execute();
 }
 

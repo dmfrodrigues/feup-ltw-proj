@@ -1,11 +1,14 @@
 <?php
 
-    include_once('../../server/server.php');
-    include_once('../../server/connection.php');
-    include_once('../../server/users.php');   
+    require_once('../../server/server.php');
+    require_once('../../server/connection.php');
+    require_once('../../server/users.php');   
 
     try {
-        removeFromFavorites($_POST['username'], $_POST['petId']);
+        $pet = Pet::fromDatabase(intval($_POST['petId']));
+        $user = User::fromDatabase($_POST['username']);
+        $pet->removeFromFavorites($user);
+
         $data = array('successful' => true);
         echo json_encode($data);
     }

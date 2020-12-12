@@ -1,49 +1,442 @@
 <?php
 
-include_once __DIR__.'/server.php';
-include_once SERVER_DIR.'/files.php';
-include_once __DIR__.'/pets.php';
-include_once __DIR__.'/shelters.php';
+require_once __DIR__.'/server.php';
+require_once SERVER_DIR.'/files.php';
+require_once __DIR__.'/pets.php';
+require_once __DIR__.'/shelters.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class UserAlreadyExistsException extends RuntimeException{}
 
-/**
- * Check if user-password pair is valid.
- *
- * @param string $username  Username
- * @param string $password  Password
- * @return boolean          True if the user-password pair is correct, false otherwise
- */
-function userPasswordExists(string $username, string $password) : bool {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('SELECT username
-    FROM User
-    WHERE username=:username AND password=:password');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-    return (count($users) > 0);
+class User implements JsonSerializable {
+    private  string $username;
+    private  string $password;
+    private  string $name;
+    private  string $registeredOn;
+    private ?string $shelter;
+    // private  bool   $admin;
+    public function __construct(
+        string $username     = '',
+        string $password     = '',
+        string $name         = '',
+        string $registeredOn = '',
+       ?string $shelter      = null
+        // bool   $admin        = false
+    ){
+        $this->username     = $username;
+        $this->password     = $password;
+        $this->name         = $name;
+        $this->registeredOn = $registeredOn;
+        $this->shelter      = $shelter;
+        // $this->admin = $admin;
+    }
+
+    public function getUsername    () :  string { return $this->username    ; }
+    public function getPassword    () :  string { return $this->password    ; }
+    public function getName        () :  string { return $this->name        ; }
+    public function getRegisteredOn() :  string { return $this->registeredOn; }
+    /**
+     * @return Shelter|null
+     */
+    public function getShelter() {
+        return ($this->shelter == null ?
+            null :
+            (Shelter::fromDatabase($this->shelter))
+        );
+    }
+    public function getShelterId() : ?string { return $this->shelter; }
+    // public function isAdmin        () :  bool   { return $this->admin       ; }
+    public function isShelter() : bool {
+        return (Shelter::fromDatabase($this->getUsername()) != null);
+    }
+    /**
+     * Get user picture URL.
+     *
+     * @return ?string          URL of user profile picture, or null if there is none
+     */
+    function getPictureUrl() : ?string {
+        $path = SERVER_DIR . "/resources/img/profiles/$this->username.jpg";
+        if(!file_exists($path)) return null;
+        return path2url($path);
+    }
+
+    public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
+    public function setPassword    ( string $password, bool $hashed = true) : void {
+        $this->password = ($hashed?
+            $password :
+            (User::hashPassword($password))
+        );
+    }
+    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
+    public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
+    public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
+    /**
+     * Save new user picture.
+     *
+     * @param string $tmpFilePath  Temporary file path (after uploading to user/photo
+     */
+    public function setPicture(string $tmpFilePath) : void {
+        $ext = checkImageFile($tmpFilePath, USER_PICTURE_MAX_SIZE);
+
+        $filepath = USERS_IMAGES_DIR."/{$this->username}.jpg";
+        convertImage(
+            $tmpFilePath,
+            $ext,
+            $filepath,
+            85
+        );
+    }
+
+    public function jsonSerialize() {
+        $ret = get_object_vars($this);
+        $ret['pictureUrl'] = $this->getPictureUrl();
+        return $ret;
+    }
+
+    static public function hashPassword(string $password) : string {
+        return sha1($password);
+    }
+
+    /**
+     * Get users that can join a shelter.
+     *
+     * @return array            Array containing all the the users that can join a shelter.
+     */
+    static public function allWithoutShelter() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT
+            username, 
+            password,
+            name,
+            registeredOn,
+            shelter
+            FROM User
+            WHERE shelter is NULL
+            AND username NOT IN (SELECT username FROM SHELTER)
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        
+        return $users;
+    }
+
+    public function addToDatabase() : void {
+        global $db;
+
+        $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
+        (:username, :password, :name)');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->bindValue(':password', $this->password);
+        $stmt->bindValue(':name'    , $this->name);
+        if(!$stmt->execute()) throw new RuntimeException();
+
+        $newUser = User::fromDatabase($this->username);
+        if($newUser == null) throw new RuntimeException();
+        $this->setRegisteredOn($newUser->getRegisteredOn());
+        $this->setShelter     ($newUser->getShelterId());
+    }
+
+    /**
+     * Delete user.
+     *
+     * @param string $username  User's username
+     * @return void
+     */
+    static public function deleteFromDatabase(string $username) : void {
+        global $db;
+        $user_pets = User::fromDatabase($username)->getAddedPets();
+        foreach($user_pets as $i => $pet){
+            $id = $pet->getId();
+            $dir = PETS_IMAGES_DIR."/$id";
+            rmdir_recursive($dir);
+        }
+        deleteUserPhoto($username);
+        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+    }
+
+    static public function fromDatabase(string $username) : ?User {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if($user == false) return null;
+        return $user;
+    }
+
+    public function updateDatabase() : void {
+        global $db;
+        $stmt = $db->prepare('UPDATE User SET
+        password=:password,
+        name=:name,
+        registeredOn=:registeredOn,
+        shelter=:shelter
+        WHERE username=:username');
+        $stmt->bindValue(':username'    , $this->username    );
+        $stmt->bindValue(':password'    , $this->password    );
+        $stmt->bindValue(':name'        , $this->name        );
+        $stmt->bindValue(':registeredOn', $this->registeredOn);
+        $stmt->bindValue(':shelter'     , $this->shelter     );
+        $stmt->execute();
+    }
+
+    static public function changeUsernameInDatabase(string $oldUsername, string $newUsername): void{
+        global $db;
+
+        if($oldUsername != $newUsername)
+            if (User::exists($newUsername))
+                throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+            
+        $stmt = $db->prepare('UPDATE User SET
+        username=:newUsername
+        WHERE username=:oldUsername');
+        $stmt->bindValue(':newUsername', $newUsername);
+        $stmt->bindValue(':oldUsername', $oldUsername);
+        $stmt->execute();
+        changePictureUsername($oldUsername, $newUsername);
+    }
+
+    /**
+     * Check if user already exists in database.
+     *
+     * @param string $username  Username
+     * @return boolean          True if the user exists, false otherwise
+     */
+    static public function exists(string $username) : bool {
+        global $db;
+        $stmt = $db->prepare('SELECT username FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        return (count($users) > 0);
+    }
+
+    /**
+     * Check if user-password pair is valid.
+     *
+     * @param string $username  Username
+     * @param string $password  Password
+     * @return boolean          True if the user-password pair is correct, false otherwise
+     */
+    static public function checkCredentials(string $username, string $password) : bool {
+        global $db;
+        $password_sha1 = sha1($password);
+        $stmt = $db->prepare('SELECT username
+        FROM User
+        WHERE username=:username AND password=:password');
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':password', $password_sha1);
+        $stmt->execute();
+        $users = $stmt->fetchAll();
+        return (count($users) > 0);
+    }
+
+    public function getFavoritePets() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM PET
+        WHERE id IN (
+            SELECT petId FROM FavoritePet
+            WHERE username=:username
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    public function getAddedPets() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Get pets added by a user that were not adopted yet.
+     *
+     * @param string $username  User's username
+     * @return array            Array of pets added by that user
+     */
+    public function getPetsNotAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username
+        AND status="forAdoption"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Get pets added by a user that were adopted.
+     *
+     * @return array            Array of adopted pets added by that user
+     */
+    public function getPetsAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username
+        AND status="adopted"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Get adoption requests made by the user to other pets.
+     *
+     * @return array            Array of adoption requests 
+     */
+    public function getAdoptionRequestsToOthers() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest
+        WHERE user=:username');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $requests = $stmt->fetchAll();
+
+        return $requests;
+    }
+
+    /**
+     * Get adoption requests made to my pets.
+     *
+     * @return array            Array of adoption requests 
+     */
+    public function getAdoptionRequestsToMe() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest
+        WHERE pet IN (
+            SELECT id FROM Pet
+            WHERE postedBy=:username
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $requests = $stmt->fetchAll();
+
+        return $requests;
+    }
+
+    public function getPetsIAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE status="adopted"
+        AND id IN (
+            SELECT pet FROM AdoptionRequest
+            WHERE user=:username
+            AND outcome="accepted"
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
-/**
- * Check if user already exists.
- *
- * @param string $username  Username
- * @return boolean          True if the user exists, false otherwise
- */
-function userAlreadyExists(string $username) : bool {
-    global $db;
-    $stmt = $db->prepare('SELECT username
-    FROM User
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $users = $stmt->fetchAll();
-    return (count($users) > 0);
+class NoSuchUserException extends RuntimeException{}
+
+class Shelter extends User {
+    private string $description;
+    private string $location;
+    public function __construct(){}
+
+    public function getDescription() : string { return $this->description; }
+    public function getLocation   () : string { return $this->location   ; }
+
+    public function setDescription(string $description) : void { $this->description = $description; }
+    public function setLocation   (string $location   ) : void { $this->location    = $location   ; }
+
+    public function jsonSerialize() {
+        $ret = parent::jsonSerialize();
+        $ret = $ret + get_object_vars($this);
+        return $ret;
+    }
+
+    static public function fromDatabase(string $username) : ?Shelter {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter,
+        Shelter.description,
+        Shelter.location
+        FROM User NATURAL JOIN Shelter
+        WHERE User.username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+        $obj = $stmt->fetch();
+        if($obj == false) return null;
+        $shelter = new Shelter();
+        $shelter->setUsername    ($obj['username'    ]);
+        $shelter->setPassword    ($obj['password'    ]);
+        $shelter->setName        ($obj['name'        ]);
+        $shelter->setRegisteredOn($obj['registeredOn']);
+        $shelter->setShelter     ($obj['shelter'     ]);
+        $shelter->setDescription ($obj['description' ]);
+        $shelter->setLocation    ($obj['location'    ]);
+        return $shelter;
+    }
+
+    /**
+     * Get Shelter pets for adoption
+     *
+     * @return array            Array containing all the info about the pets
+     */
+    public function getPetsForAdoption() : array {
+        global $db;
+    
+        $stmt = $db->prepare('SELECT * FROM PET
+            WHERE postedBy IN (
+                SELECT username FROM User
+                WHERE shelter=:shelter
+            ) AND Pet.status="forAdoption"
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $shelterPets = $stmt->fetchAll();
+
+        return $shelterPets;
+    }
+
+    /**
+     * Get shelter collaborators.
+     *
+     * @return array            Array containing collaborators (Users)
+     */
+    public function getCollaborators() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM User 
+        WHERE shelter=:shelter');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $collaborators = $stmt->fetchAll();
+        return $collaborators;
+    }
 }
 
 /**
@@ -55,49 +448,9 @@ function userAlreadyExists(string $username) : bool {
  * @return void
  */
 function addUser(string $username, string $password, string $name){
-    global $db;
-
-    if (userAlreadyExists($username))
-        throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
-
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
-    (:username, :password, :name)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->bindParam(':name'    , $name);
-    $stmt->execute();
-}
-
-/**
- * Get user data.
- *
- * @param string $username      User's username
- * @return array                Array of user data fields
- */
-function getUser(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM User
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $user = $stmt->fetch();
-    $picture = getUserPicture($username);
-    $user['pictureUrl'] = ($picture == null ? $picture : PROTOCOL_SERVER_URL . "/rest/user/{$username}/photo");
-    return $user;
-}
-
-/**
- * Get user profile picture URL.
- *
- * @param string $username  Username
- * @return ?string          URL of user profile picture, or null if there is none
- */
-function getUserPicture(string $username) : ?string {
-    $path = SERVER_DIR . "/resources/img/profiles/$username.jpg";
-    if(!file_exists($path)) return null;
-    return path2url($path);
+    $user = new User($username, '', $name);
+    $user->setPassword($password, false);
+    $user->addToDatabase();
 }
 
 /**
@@ -106,41 +459,32 @@ function getUserPicture(string $username) : ?string {
  * @param string $username  User's username
  * @return boolean          True if user is admin, false otherwise
  */
-function isAdmin(string $username) : bool {
-    global $db;
-    $stmt = $db->prepare('SELECT username
-    FROM Admin
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $admins = $stmt->fetchAll();
-    return (count($admins) == 1);
-}
+// function isAdmin(string $username) : bool {
+//     global $db;
+//     $stmt = $db->prepare('SELECT username
+//     FROM Admin
+//     WHERE username=:username');
+//     $stmt->bindValue(':username', $username);
+//     $stmt->execute();
+//     $admins = $stmt->fetchAll();
+//     return (count($admins) == 1);
+// }
 
 /**
  * Edit user name.
  *
- * @param string $lastUsername  User's last username
+ * @param string $oldUsername   User's last username
  * @param string $newUsername   User's new username
  * @param string $name          User's name
  * @return void
  */
-function editUser(string $lastUsername, string $newUsername, string $name) {
-    global $db;
+function editUser(string $oldUsername, string $newUsername, string $name) {
+    $user = User::fromDatabase($oldUsername);
+    if($user == null) throw new NoSuchUserException($oldUsername);
+    $user->setName($name);
+    $user->updateDatabase();
 
-    if($lastUsername != $newUsername)
-        if (userAlreadyExists($newUsername))
-            throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
-        
-    $stmt = $db->prepare('UPDATE User SET
-    username=:newUsername,
-    name=:name
-    WHERE username=:lastUsername');
-    $stmt->bindParam(':newUsername', $newUsername);
-    $stmt->bindParam(':lastUsername', $lastUsername);
-    $stmt->bindParam(':name'    , $name);
-    $stmt->execute();
-    changePictureUsername($lastUsername, $newUsername);
+    User::changeUsernameInDatabase($oldUsername, $newUsername);
 }
 
 
@@ -153,57 +497,10 @@ function editUser(string $lastUsername, string $newUsername, string $name) {
  * @return void
  */
 function editUserPassword(string $username, string $password) {
-    global $db;
-    $password_sha1 = sha1($password);
-    $stmt = $db->prepare('UPDATE User SET
-    password=:password
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password_sha1);
-    $stmt->execute();
-}
-
-/**
-
- * Delete user.
- *
- * @param string $username  User's username
- * @return void
- */
-function deleteUser(string $username) {
-    global $db;
-    $user_pets = getAddedPets($username);
-    foreach($user_pets as $i => $pet){
-        $id = $pet['id'];
-        $dir = PETS_IMAGES_DIR."/$id";
-        rmdir_recursive($dir);
-    }
-    deleteUserPhoto($username);
-    $stmt = $db->prepare('DELETE FROM User 
-    WHERE username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-}
-
-/**
- * Save new user picture.
- *
- * @param string $username  User's username
- * @param array $file       File (as obtained from $_FILES['file_field'])
- * @return void
- */
-function setUserPhoto(string $username, string $tmpFilePath){
-    $ext = checkImageFile($tmpFilePath, 1000000);
-
-    $filepath = USERS_IMAGES_DIR."/$username.jpg";
-    convertImage(
-        $tmpFilePath,
-        $ext,
-        $filepath,
-        85
-    );
-
-    return $filepath;
+    $user = User::fromDatabase($username);
+    if($user == null) throw new NoSuchUserException($username);
+    $user->setPassword($password, false);
+    $user->updateDatabase();
 }
 
 /**
@@ -232,42 +529,6 @@ function changePictureUsername(string $oldUsername, string $newUsername) {
     rename($oldFilepath, $newFilepath);
 }
 
- /**
-  * Add pet to user's favorites list.
-  *
-  * @param string $username User's username
-  * @param integer $id      ID of pet
-  * @return void
-  */
-function addToFavorites(string $username, int $id){
-    global $db;
-    $favoritePets = getFavoritePets($username);
-    foreach ($favoritePets as $pet)
-        if ($pet['id'] == $id)
-            return;
-    $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
-            (:username, :id)');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':id'      , $id      );
-    $stmt->execute();
-}
-
-/**
- * Remove pet from user's favorites list.
- *
- * @param string $username  User's username
- * @param integer $id       ID of pet
- * @return void
- */
-function removeFromFavorites(string $username, int $id){
-    global $db;
-    $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
-    username=:username AND petId=:id');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':id'      , $id      );
-    $stmt->execute();
-}
-
 /**
  * Get a user's favorite pets.
  *
@@ -275,26 +536,9 @@ function removeFromFavorites(string $username, int $id){
  * @return array            Array of favorite pets of the user 
  */
 function getFavoritePets(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.adoptionDate,
-    Pet.postedBy
-    FROM Pet INNER JOIN FavoritePet ON Pet.id=FavoritePet.petId
-    WHERE FavoritePet.username=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+    $user = User::fromDatabase($username);
+    if($user == null) throw new NoSuchUserException($username);
+    return $user->getFavoritePets();
 }
 
 /**
@@ -312,12 +556,12 @@ function getAdoptionRequest(int $id): array {
         AdoptionRequest.outcome,
         AdoptionRequest.pet,
         AdoptionRequest.user,
-        AdoptionRequest.requestDate AS reqDate,
+        AdoptionRequest.requestDate AS messDate,
         Pet.postedBy,
         Pet.name AS petName
         FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet
         WHERE AdoptionRequest.id=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
     $adoptionRequest = $stmt->fetch();
     return $adoptionRequest;
@@ -339,77 +583,18 @@ function getAdoptionRequestMessages(int $reqId) : array {
         INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
         INNER JOIN Pet ON AdoptionRequest.pet=Pet.id
         WHERE AdoptionRequestMessage.request=:reqId');
-    $stmt->bindParam(':reqId', $reqId);
+    $stmt->bindValue(':reqId', $reqId);
     $stmt->execute();
     $adoptionRequestMessages = $stmt->fetchAll();
     return $adoptionRequestMessages;
 } 
 
 /**
- * Get a user's adoption requests.
- *
- * @param string $username  User's username
- * @return array            Array of adoption requests 
- */
-function getAdoptionRequests(string $username) : array {
-    global $db;
-
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.postedBy,
-    AdoptionRequest.id AS requestId,
-    AdoptionRequest.text,
-    AdoptionRequest.outcome,
-    AdoptionRequest.user,
-    AdoptionRequest.requestDate
-    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
-    WHERE AdoptionRequest.user=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
-}
-
-/**
- * Get a user's adoption requests for his pets.
- *
- * @param string $username  User's username
- * @return array            Array of adoption requests 
- */
-function getAdoptionRequestsOfUserPets(string $username) : array {
-    global $db;
-
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.status,
-    AdoptionRequest.id AS requestId,
-    AdoptionRequest.text,
-    AdoptionRequest.outcome,
-    AdoptionRequest.user,
-    AdoptionRequest.requestDate
-    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
-    WHERE AdoptionRequest.pet IN (SELECT id FROM Pet WHERE Pet.postedBy=:username)');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
-}
-
-/**
  * Change adoption request outcome
  *
- * @param string $reqId    Adoption Request Id
+ * @param int $reqId
  * @param string $outcome  Adoption Request outcome
+ *
  * @return bool            True if successful, false otherwise.
  */
 function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
@@ -417,8 +602,8 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
     
     $stmt = $db->prepare('UPDATE
     AdoptionRequest SET outcome=:outcome WHERE id=:reqId'); 
-    $stmt->bindParam(':outcome', $outcome);
-    $stmt->bindParam(':reqId', $reqId);
+    $stmt->bindValue(':outcome', $outcome);
+    $stmt->bindValue(':reqId', $reqId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -431,11 +616,11 @@ function changeAdoptionRequestOutcome(int $reqId, string $outcome) : bool {
  * @return bool             Have the user requested the pet?
  */
 function userRequestedPet(string $username, int $petId) : bool {
-    $adoption_requests = getAdoptionRequests($username);
+    $user = User::fromDatabase($username);
+    $adoption_requests = $user->getAdoptionRequestsToOthers();
     foreach ($adoption_requests as $request) {
-        if ($request['id'] == $petId) return true;
+        if ($request->getPetId() == $petId) return true;
     }
-    
     return false;
 }
 
@@ -450,8 +635,8 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
     global $db;
     $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
     WHERE user=:username AND pet=:petId ORDER BY requestDate DESC');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     $request = $stmt->fetchAll();
     return $request[0]['outcome'];
@@ -463,17 +648,18 @@ function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
  * @param string $username  Username of user that created request
  * @param integer $id       ID of pet the adoption request refers to
  * @param string $text      Text of the adoption request
- * @return integer          ID of the adoption request
+ *
+ * @return string ID of the adoption request
  */
-function addAdoptionRequest(string $username, int $id, string $text) : int {
+function addAdoptionRequest(string $username, int $id, string $text) : string {
     global $db;
     $stmt = $db->prepare('INSERT INTO AdoptionRequest
     (user, pet, text)
     VALUES
     (:user, :pet, :text)');
-    $stmt->bindParam(':user'       , $username   );
-    $stmt->bindParam(':pet'        , $id         );
-    $stmt->bindParam(':text'       , $text       );
+    $stmt->bindValue(':user'       , $username   );
+    $stmt->bindValue(':pet'        , $id         );
+    $stmt->bindValue(':text'       , $text       );
     $stmt->execute();
     return $db->lastInsertId();
 }
@@ -490,8 +676,8 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
 
     $stmt = $db->prepare('DELETE FROM AdoptionRequest
                             WHERE user=:username AND pet=:petId');
-    $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':username', $username);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -504,40 +690,11 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * @return void
  */
 function refuseOtherProposals(int $requestId, int $petId) {
-    $adoption_requests = getAdoptionRequestsOfUserPets($petId);
-    foreach ($adoption_requests as $request)
-        if ($request['requestId'] != $requestId) {
-            changeAdoptionRequestOutcome($requestId, "rejected");
-            changePetStatus($petId, "adopted");
+    $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
+    foreach ($adoption_requests as $request){
+        if ($request->getId() != $requestId) {
+            $request->setOutcome("rejected");
         }
-}
-
-/**
- * Get the user's adopted pets.
- *
- * @param string $username  User's username
- * @return array            Array of adopted pets
- */
-function getPetsAdoptedByUser(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.adoptionDate,
-    Pet.postedBy
-    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
-    WHERE AdoptionRequest.user=:username
-    AND Pet.status="adopted" AND AdoptionRequest.outcome="accepted"');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+    }
+    changePetStatus($petId, "adopted");
 }
