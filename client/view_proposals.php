@@ -11,6 +11,8 @@ require_once 'templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $adoptionRequests = User::fromDatabase($_SESSION['username'])->getAdoptionRequestsToMe();
     require_once 'templates/pets/view_proposal.php';
+    echo '<section class="messages-column-body">';
     drawProposals($adoptionRequests);
+    echo '</section>';
 }
 require_once 'templates/common/footer.php';
