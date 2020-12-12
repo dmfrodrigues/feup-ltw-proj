@@ -78,7 +78,7 @@ AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)
 | `user/<id>`          | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 | `user/<id>/photo`    | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 | `pet`                | :soon:             | :x:                | :soon:             | :x:                |
-| `pet/<id>`           | :soon:             | :soon:             | :soon:             | :soon:             |
+| `pet/<id>`           | :heavy_check_mark: | :soon:             | :soon:             | :soon:             |
 | `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                | :x:                |
 | `comment/photo`      | :x:                | :x:                | :heavy_check_mark: | :x:                |
 | `comment/<id>`       | :soon:             | :soon:             | :heavy_check_mark: | :x:                |

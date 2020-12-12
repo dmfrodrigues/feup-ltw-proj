@@ -16,7 +16,7 @@ $tree = [
         ]
     ],
     'pet' => [null              => new ResourceHandlers(null                 , null, null                 , null                    ),
-        '[0-9]+' => [null       => new ResourceHandlers(null                 , null, null                 , null                    ),
+        '[0-9]+' => [null       => new ResourceHandlers($pet_id_GET          , null, null                 , null                    ),
             'comments'          => new ResourceHandlers($pet_id_comments_GET , null, null                 , null                    )
         ]
     ],

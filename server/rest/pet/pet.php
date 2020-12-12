@@ -6,6 +6,22 @@ require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/pets.php';
 
+$pet_id_GET = function(array $args): void{
+    $id = intval($args[1]);
+    $pet = Pet::fromDatabase($id);
+    if($pet == null){ http_response_code(404); die(); }
+    
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PET ,
+        Authorization\Method  ::READ,
+        $auth,
+        $pet
+    );
+
+    print_result($pet);
+};
+
 $pet_id_comments_GET = function(array $args): void{
     $id = intval($args[1]);
     $pet = Pet::fromDatabase($id);
