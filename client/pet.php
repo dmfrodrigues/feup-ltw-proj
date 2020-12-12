@@ -1,4 +1,8 @@
 <?php
+set_error_handler(function($errno, $errstr, $errfile, $errline ){
+    throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
+try {
 session_start();
 
 require_once __DIR__.'/../server/server.php';
@@ -33,3 +37,7 @@ $javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js
 require_once 'templates/common/header.php';
 require_once 'templates/pets/view_pet.php';
 require_once 'templates/common/footer.php';
+}
+catch (Exception $e) {
+    header( "Location: error.php" );die();
+}
