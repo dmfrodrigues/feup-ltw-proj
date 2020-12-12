@@ -18,7 +18,11 @@ define('PROTOCOL', get_protocol());
 define('PROTOCOL_SERVER_URL', PROTOCOL . SERVER_URL);
 define('PROTOCOL_CLIENT_URL', PROTOCOL . CLIENT_URL);
 
-function path2url($file, $Protocol=PROTOCOL) {
+define('USER_PICTURE_MAX_SIZE', 1000000);
+define('PET_PICTURE_MAX_SIZE', 1000000);
+define('COMMENT_PICTURE_MAX_SIZE', 1000000);
+
+function path2url($file, $Protocol=PROTOCOL): string {
     return
         $Protocol .
         str_replace(SERVER_DIR, SERVER_URL, $file);

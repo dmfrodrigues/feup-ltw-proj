@@ -5,7 +5,10 @@
     require_once('../../server/users.php');
 
     try {
-        addToFavorites($_POST['username'], $_POST['petId']);
+        $pet = Pet::fromDatabase($_POST['petId']);
+        $user = User::fromDatabase($_POST['username']);
+        $pet->addToFavorites($user);
+        
         $data = array('successful' => true);
         echo json_encode($data);
     }

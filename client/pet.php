@@ -3,12 +3,13 @@ session_start();
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once __DIR__.'/../server/notifications.php';
+require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/users.php';
-$pet = getPet($_GET['id']);
-$comments = getPetComments($_GET['id']);
-$title = $pet['name'];
+$pet = Pet::fromDatabase($_GET['id']);
+$comments = $pet->getComments();
+
+$title = $pet->getName();
 
 ?>
 <script>
@@ -18,7 +19,7 @@ let comments = <?= json_encode($comments) ?>;
 <?php
 
 if (isset($_SESSION['username'])) {
-    $user = getUser($_SESSION['username']);
+    $user = User::fromDatabase($_SESSION['username']);
 ?>
     <script>
         let user = <?= json_encode($user) ?>;

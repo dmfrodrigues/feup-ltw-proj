@@ -3,7 +3,7 @@ session_start();
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once __DIR__.'/../server/notifications.php';
+require_once SERVER_DIR.'/notifications.php';
 
 require_once('templates/common/header.php');
 ?> <h3><a href="pets.php">View Pets Listed For Adoption</a></h3> <?php

@@ -12,16 +12,16 @@ if ($_GET['username'] != $_SESSION['username'])
 
 changeAdoptionRequestOutcome($_GET['requestId'], $_GET['outcome']);
 
-$pet = getPet($_GET['petId']);
+$pet = Pet::fromDatabase($_GET['petId']);
 
 if($_GET['outcome'] === 'accepted') {    
     changePetStatus($_GET['petId'], 'adopted');
     refuseOtherProposals($_GET['requestId'], $_GET['petId']);
 
-    $userWhoAdopted = getUserWhoAdoptedPet($_GET['petId']);
-    $userWhoPostedPet = $pet['postedBy'];
+    $userWhoAdopted = Pet::fromDatabase($_GET['petId'])->getAdoptedBy();
+    $userWhoPostedPet = $pet->getPostedBy();
 
-    addNotification($userWhoAdopted['username'], "adoptionProposalOutcome", "Your proposal for ". $pet['name'] . ", posted by " . $userWhoPostedPet . " was accepted.");
+    addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
 }
 
 if($_GET['outcome'] === 'rejected') {    
@@ -30,7 +30,7 @@ if($_GET['outcome'] === 'rejected') {
     $userWhoProposed = $adoptionRequest['user'];
     $userWhoPostedPet = $adoptionRequest['postedBy'];
 
-    addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $pet['name'] . ", posted by " . $userWhoPostedPet . " was refused.");
+    addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet . " was refused.");
 }
     
 header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);

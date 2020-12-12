@@ -3,10 +3,11 @@ session_start();
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once __DIR__.'/../server/notifications.php';
+require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
-$pets = getPetsListedForAdoption();
+$pets = Pet::getForAdoption();
 $title = "Pets";
+
 $javascript_files = ['js/filterPets.js'];
 
 require_once 'templates/common/header.php';
