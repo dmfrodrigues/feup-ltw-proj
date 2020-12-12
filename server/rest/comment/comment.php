@@ -1,5 +1,9 @@
 <?php
 require_once __DIR__ . '/../api_main.php';
+require_once __DIR__ . '/../authentication.php';
+require_once __DIR__ . '/../authorization.php';
+require_once __DIR__ . '/../read.php';
+require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/pets.php';
 
 $comment_PUT = function(array $args): void{
@@ -11,8 +15,7 @@ $comment_PUT = function(array $args): void{
         null
     );
 
-    $string = file_get_contents("php://input");
-    $_PUT = json_decode($string, true);
+    $_PUT = getPUT();
     $id = addPetComment(
         $_PUT['petId'],
         $_PUT['username'],
@@ -20,7 +23,6 @@ $comment_PUT = function(array $args): void{
         $_PUT['text'],
         $_PUT['picture']
     );
-    print_result($id);
 };
 
 $comment_photo_PUT = function(array $args): void{
@@ -44,6 +46,7 @@ $comment_photo_PUT = function(array $args): void{
 $comment_id_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
+    if($comment == null){ http_response_code(404); die(); }
 
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -60,8 +63,7 @@ $comment_id_PUT = function(array $args): void{
     $id = $args[1];
     $comment = Comment::fromDatabase($id);
 
-    $string = file_get_contents("php://input");
-    $_PUT = json_decode($string, true);
+    $_PUT = getPUT();
     
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -77,6 +79,24 @@ $comment_id_PUT = function(array $args): void{
         false,
         null
     );
+};
+
+$comment_id_DELETE = function(array $args): void{
+    $id = intval($args[1]);
+    $comment = Comment::fromDatabase($id);
+    if($comment == null){ http_response_code(404); die(); }
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::WRITE  ,
+        $auth,
+        $comment
+    );
+
+    $comment->delete();
+
+    print_result("comment/{$comment->getId()}");
 };
 
 $comment_id_photo_GET = function(array $args): void{
@@ -117,8 +137,6 @@ $comment_id_photo_PUT = function(array $args): void{
     }
 
     setCommentPhoto($id, $tmpFilePath);
-    
-    print_result("comment/{$id}/photo");
 };
 
 $comment_id_photo_DELETE = function(array $args): void{

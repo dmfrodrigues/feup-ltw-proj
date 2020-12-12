@@ -352,7 +352,6 @@ function userCanEditPet(string $username, int $petId) : bool {
 
         return false;
 
-        //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
     } else {
         $postedBy = $pet->getPostedBy();
         if ($postedBy->getUsername() == $username) return true;

@@ -61,7 +61,12 @@ class User implements JsonSerializable {
         return path2url($path);
     }
 
-    public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
+    public function setUsername    ( string $username    ) : void {
+        if(!preg_match('/^[a-zA-Z0-9]+$/', $username)){
+            throw new InvalidArgumentException("username ('{$username}') should contain at least a character, and be made of numbers or letters only");
+        }
+        $this->username = $username;
+    }
     public function setPassword    ( string $password, bool $hashed = true) : void {
         $this->password = ($hashed?
             $password :
@@ -90,6 +95,7 @@ class User implements JsonSerializable {
 
     public function jsonSerialize() {
         $ret = get_object_vars($this);
+        unset($ret['password']);
         $ret['pictureUrl'] = $this->getPictureUrl();
         return $ret;
     }
@@ -139,6 +145,20 @@ class User implements JsonSerializable {
         $this->setShelter     ($newUser->getShelterId());
     }
 
+    public function delete() : void {
+        global $db;
+        $user_pets = $this->getAddedPets();
+        foreach($user_pets as $i => $pet){
+            $id = $pet->getId();
+            $dir = PETS_IMAGES_DIR."/$id";
+            rmdir_recursive($dir);
+        }
+        deleteUserPhoto($this->username);
+        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+    }
+
     /**
      * Delete user.
      *
@@ -146,17 +166,7 @@ class User implements JsonSerializable {
      * @return void
      */
     static public function deleteFromDatabase(string $username) : void {
-        global $db;
-        $user_pets = User::fromDatabase($username)->getAddedPets();
-        foreach($user_pets as $i => $pet){
-            $id = $pet->getId();
-            $dir = PETS_IMAGES_DIR."/$id";
-            rmdir_recursive($dir);
-        }
-        deleteUserPhoto($username);
-        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
-        $stmt->bindValue(':username', $username);
-        $stmt->execute();
+        User::fromDatabase($username)->delete();
     }
 
     static public function fromDatabase(string $username) : ?User {
@@ -542,6 +552,26 @@ function getFavoritePets(string $username) : array {
 }
 
 /**
+ * Get users who favorite the pet.
+ *
+ * @param int $petId        Pet's ID
+ * @return array            Array of users who favorite the pet
+ */
+function getUsersWhoFavoritePet(int $petId) : array {
+    global $db;
+    
+    $stmt = $db->prepare('SELECT 
+        User.username,
+        User.name
+        FROM User INNER JOIN FavoritePet ON User.username=FavoritePet.username
+        WHERE FavoritePet.petId=:petId');
+    $stmt->bindValue(':petId', $petId);
+    $stmt->execute();
+    $usersWhoFavoritePet = $stmt->fetchAll();
+    return $usersWhoFavoritePet;
+}
+
+/**
  * Get a specific adoption request given it's id.
  * 
  * @param int $id   Adoption Request id
@@ -687,14 +717,16 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * 
  * @param integer $requestId    Request Id
  * @param integer $petId        Pet's Id
- * @return void
+ * @return array                Array of users with rejected proposals
  */
 function refuseOtherProposals(int $requestId, int $petId) {
+    $refusedUsers = array();
     $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
     foreach ($adoption_requests as $request){
         if ($request->getId() != $requestId) {
             $request->setOutcome("rejected");
+            array_push($refusedUsers, $request->getUser());
         }
-    }
-    changePetStatus($petId, "adopted");
+    } 
+    return $refusedUsers;
 }
