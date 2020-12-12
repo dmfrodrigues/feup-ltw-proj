@@ -27,7 +27,8 @@ $user_PUT = function(array $args): void{
         die();
     }
 
-    print_result("user/{$_PUT['username']}");
+    $_SESSION['username'] = $user->getUsername();
+    print_result("user/{$user->getUsername()}");
 };
 
 $user_id_GET = function(array $args): void{
