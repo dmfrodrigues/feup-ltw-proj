@@ -2,15 +2,6 @@ let proposals = document.querySelectorAll('div#proposal-msg');
 let allMsgs = document.querySelectorAll('#proposal-msg');
 let submitMsg = allMsgs[allMsgs.length - 1];
 
-proposals.forEach((proposal) => {
-    let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
-    /*
-    if(myMessage) {
-        proposal.querySelector('div#proposal-header').style.right = '5%';
-        proposal.querySelector('div#proposal-info').style.marginLeft = "20%";
-    }
-    */
-})
 
 window.onload = function(event) {
     window.location='#proposal-messages-refresh';
