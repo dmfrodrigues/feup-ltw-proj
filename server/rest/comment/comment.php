@@ -4,7 +4,7 @@ require_once __DIR__ . '/../authentication.php';
 require_once __DIR__ . '/../authorization.php';
 require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
-require_once SERVER_DIR . '/pets.php';
+require_once SERVER_DIR . '/Pet.php';
 
 $comment_PUT = function(array $args): void{
     $auth = Authentication\check();
