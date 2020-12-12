@@ -377,6 +377,13 @@ class Comment implements JsonSerializable {
         $comment = $stmt->fetch();
         return $comment;
     }
+
+    public function delete() : void {
+        global $db;
+        $stmt = $db->prepare('DELETE FROM Comment WHERE id=:id');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+    }
 }
 
 class FavoritePet implements JsonSerializable {

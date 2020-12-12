@@ -47,6 +47,7 @@ $comment_photo_PUT = function(array $args): void{
 $comment_id_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
+    if($comment == null){ http_response_code(404); die(); }
 
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -79,6 +80,24 @@ $comment_id_PUT = function(array $args): void{
         false,
         null
     );
+};
+
+$comment_id_DELETE = function(array $args): void{
+    $id = intval($args[1]);
+    $comment = Comment::fromDatabase($id);
+    if($comment == null){ http_response_code(404); die(); }
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::WRITE  ,
+        $auth,
+        $comment
+    );
+
+    $comment->delete();
+
+    print_result("comment/{$comment->getId()}");
 };
 
 $comment_id_photo_GET = function(array $args): void{

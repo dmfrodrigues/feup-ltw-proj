@@ -22,7 +22,7 @@ $tree = [
     ],
     'comment' => [null          => new ResourceHandlers(null                 , null, $comment_PUT         , null                    ),
         'photo'                 => new ResourceHandlers(null                 , null, $comment_photo_PUT   , null                    ),
-        '[0-9]+' => [null       => new ResourceHandlers($comment_id_GET      , null, $comment_id_PUT      , null                    ),
+        '[0-9]+' => [null       => new ResourceHandlers($comment_id_GET      , null, $comment_id_PUT      , $comment_id_DELETE      ),
             'photo'             => new ResourceHandlers($comment_id_photo_GET, null, $comment_id_photo_PUT, $comment_id_photo_DELETE)
         ]
     ],

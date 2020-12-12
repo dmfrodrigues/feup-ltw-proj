@@ -81,7 +81,7 @@ AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)
 | `pet/<id>`           | :heavy_check_mark: | :soon:             | :soon:             | :heavy_check_mark: |
 | `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                | :x:                |
 | `comment/photo`      | :x:                | :x:                | :heavy_check_mark: | :x:                |
-| `comment/<id>`       | :soon:             | :soon:             | :heavy_check_mark: | :x:                |
+| `comment/<id>`       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 | `comment/<id>/photo` | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 
 | Request              | JSON               | HTML               | Redirect           |
