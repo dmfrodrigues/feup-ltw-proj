@@ -22,6 +22,24 @@ $pet_id_GET = function(array $args): void{
     print_result($pet);
 };
 
+$pet_id_DELETE = function(array $args): void {
+    $id = intval($args[1]);
+    $pet = Pet::fromDatabase($id);
+    if($pet == null){ http_response_code(404); die(); }
+    
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PET  ,
+        Authorization\Method  ::WRITE,
+        $auth,
+        $pet
+    );
+
+    $pet->delete();
+
+    print_result("pet/{$pet->getId()}");
+};
+
 $pet_id_comments_GET = function(array $args): void{
     $id = intval($args[1]);
     $pet = Pet::fromDatabase($id);
