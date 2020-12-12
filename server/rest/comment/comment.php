@@ -26,8 +26,8 @@ $comment_photo_PUT = function(array $args): void{
 };
 
 $comment_id_GET = function(array $args): void{
-    $id = $args[1];
-    $ret = getPetComment($id);
+    $id = intval($args[1]);
+    $ret = Comment::fromDatabase($id);
     print_result($ret);
 };
 

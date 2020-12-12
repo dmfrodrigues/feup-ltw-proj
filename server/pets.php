@@ -296,6 +296,34 @@ class Pet implements JsonSerializable {
         $stmt->bindValue(':id'      , $this->getId()      );
         $stmt->execute();
     }
+
+    /**
+     * Get the user who adopted the given pet.
+     *
+     * @param int $id           Pet's ID
+     * @return User            User who adopted the pet
+     */
+    public function getAdoptedBy() : User {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter
+        FROM
+            AdoptionRequest
+            INNER JOIN Pet  ON Pet.id=AdoptionRequest.pet
+            INNER JOIN User ON User.username=AdoptionRequest.user
+        WHERE AdoptionRequest.outcome="accepted"
+        AND Pet.status="adopted"
+        AND AdoptionRequest.pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $user = $stmt->fetch();
+        return $user;
+    }
 }
 
 class Comment implements JsonSerializable {
@@ -308,10 +336,46 @@ class Comment implements JsonSerializable {
 
     public function __construct(){}
 
-    public function getAuthor() : ?User { return User::fromDatabase($this->user); }
-
+    public function getId      () : int    { return $this->id                      ; }
+    public function getPostedOn() : string { return $this->postedOn                ; }
+    public function getText    () : string { return $this->text                    ; }
+    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)  ; }
+    public function getPetId   () : int    { return $this->pet                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
+    public function getAuthor  () : ?User  { return $this->getUser()               ; }
+    public function getUserId  () : string { return $this->user                    ; }
+    public function getAuthorId() : string { return $this->getUserId()             ; }
+    public function getAnswerTo() : ?int   { return $this->answerTo                ; }
+    public function getPictureUrl() : string {
+        return SERVER_DIR . "resources/img/comments/{$this->getId()}.jpg";
+    }
+    
+    public function setId      (int    $id      ) : void { $this->id       = $id      ; }
+    public function setPostedOn(string $postedOn) : void { $this->postedOn = $postedOn; }
+    public function setText    (string $text    ) : void { $this->text     = $text    ; }
+    public function setPetId   (int    $pet     ) : void { $this->pet      = $pet     ; }
+    public function setUserId  (string $user    ) : void { $this->user     = $user    ; }
+    public function setAuthorId(string $author  ) : void { $this->setUserId($author)  ; }
+    public function setAnswerTo(?int   $answerTo) : void { $this->answerTo = $answerTo; }
+    
     public function jsonSerialize() {
 		return get_object_vars($this);
+    }
+
+    /**
+     * Get comment about a pet.
+     *
+     * @param integer $commentId    ID of comment
+     * @return Comment              Comment
+     */
+    static public function fromDatabase(int $id) : ?Comment {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $comment = $stmt->fetch();
+        return $comment;
     }
 }
 
@@ -348,20 +412,20 @@ class AdoptionRequest implements JsonSerializable {
     public function getText    () : string { return $this->text                    ; }
     public function getOutcome () : string { return $this->outcome                 ; }
     public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet ); }
-    public function getPetId   () : string { return $this->pet                     ; }
+    public function getPetId   () : int    { return $this->pet                     ; }
     public function getUser    () : ?User  { return User::fromDatabase($this->user); }
     public function getAuthor  () : ?User  { return $this->getUser()               ; }
     public function getUserId  () : string { return $this->user                    ; }
     public function getAuthorId() : string { return $this->getUserId()             ; }
     public function getDate    () : string { return $this->requestDate             ; }
 
-    public function setId      (int    $id         ) : void { $this->id          = $id         ; }
-    public function setText    (string $text       ) : void { $this->text        = $text       ; }
-    public function setOutcome (string $outcome    ) : void { $this->outcome     = $outcome    ; }
-    public function setPet     (Pet    $pet        ) : void { $this->pet         = $pet        ; }
-    public function setUser    (?User  $user       ) : void { $this->user        = $user       ; }
-    public function setAuthor  (?User  $author     ) : void { $this->setUser($author)          ; }
-    public function setDate    (string $requestDate) : void { $this->requestDate = $requestDate; }
+    public function setId     (int    $id         ) : void { $this->id          = $id         ; }
+    public function setText   (string $text       ) : void { $this->text        = $text       ; }
+    public function setOutcome(string $outcome    ) : void { $this->outcome     = $outcome    ; }
+    public function setPet    (int    $pet        ) : void { $this->pet         = $pet        ; }
+    public function setUser   (string $user       ) : void { $this->user        = $user       ; }
+    public function setAuthor (string $author     ) : void { $this->setUser($author)          ; }
+    public function setDate   (string $requestDate) : void { $this->requestDate = $requestDate; }
     
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -543,30 +607,15 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  * Get pet main picture
  *
  * @param Pet $pet      Pet
- * @return ?string      URL of pet main photo
+ * @return string       URL of pet main photo
  */
 function getPetMainPhoto(Pet $pet) : string {
     $picture = $pet->getMainPicture();
     return ($picture == null ? 'resources/img/no-image.svg' : $picture);
 }
 
-/**
- * Get comment about a pet.
- *
- * @param integer $commentId    ID of comment
- * @return array                Comment
- */
-function getPetComment(int $commentId) {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
-    $stmt->bindValue(':id', $commentId);
-    $stmt->execute();
-    $comment = $stmt->fetch();
-    if(!$comment) return $comment;
-    $author = User::fromDatabase($comment['user']);
-    $comment['userPictureUrl'   ] = ($author != null ? $author->getPictureUrl() : null);
-    $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
-    return $comment;
+function getPetComment(int $commentId) : ?Comment {
+    return Comment::fromDatabase($commentId);
 }
 
 /**
@@ -624,11 +673,11 @@ function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
  *
  * @param integer   $commentId      ID of comment
  * @param string    $text           Text of comment
- * @param string    $tmpFilePath           Picture tmpFilePath (as obtained from $_FILES['tmpFilePath_field'])
+ * @param string    $tmpFilePath    Picture tmpFilePath (as obtained from $_FILES['tmpFilePath_field'])
  * @return void
  */
 function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $tmpFilePath){
-    $oldComment = getPetComment($commentId);
+    $oldComment = Comment::fromDatabase($commentId);
 
     $noFileSent = false;
     try{
@@ -636,7 +685,7 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     } catch(NoFileSentException $e){
         $noFileSent = true;
     }
-    if($text === '' && $noFileSent && ($deleteFile || $oldComment['commentPictureUrl'] === ''))
+    if($text === '' && $noFileSent && ($deleteFile || $oldComment == null || $oldComment->getPictureUrl() === ''))
         throw new RuntimeException('Comment must have a text or an image');
 
     global $db;
@@ -653,11 +702,11 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     }
 
     if(!$noFileSent){
-        $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        $filePath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
         convertImage(
-            $tmpFilePath['tmp_name'],
+            $tmpFilePath,
             $ext,
-            $tmpFilePathpath,
+            $filePath,
             85
         );
     }
@@ -718,17 +767,6 @@ function deleteAllPetCommentPhotos(int $id){
             deletePetCommentPhoto($comment->getId());
 }
 
-
-/**
- * Get pets added by a user.
- *
- * @param string $username  User's username
- * @return array            Array of pets added by that user
- */
-function getAddedPets(string $username) : array {
-    return User::fromDatabase($username)->getAddedPets();
-}
-
 /**
  * Change pet status.
  * 
@@ -785,27 +823,6 @@ function getPetAdoptionRequests(string $petId) : array {
 }
 
 /**
- * Get the user who adopted the given pet.
- *
- * @param int $id           Pet's ID
- * @return array            User who adopted the pet
- */
-function getUserWhoAdoptedPet(int $id): array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    User.username,
-    User.name,
-    User.shelter
-    FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet INNER JOIN User ON User.username=AdoptionRequest.user
-    WHERE AdoptionRequest.outcome="accepted" AND Pet.status="adopted" AND AdoptionRequest.pet=:id');
-    $stmt->bindValue(':id', $id);
-    $stmt->execute();
-    $user = $stmt->fetch();
-    if (!$user) return [];
-    return $user;
-}
-
-/**
  * Get the pets that were published by the user but were adopted.
  *
  * @param string $username      User's username
@@ -817,7 +834,7 @@ function getAdoptedPetsPublishedByUser($username) : array {
     $adoptedPetsPublishedByUser = array();
 
     foreach($adoptedPets as $pet) {
-        $user = getUserWhoAdoptedPet($pet->getId());
+        $user = Pet::fromDatabase($pet->getId())->getAdoptedBy();
         if (!is_null($user) && $pet->getPostedBy() === $username)
             array_push($adoptedPetsPublishedByUser, $pet);
     }

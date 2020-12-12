@@ -4,9 +4,10 @@ session_start();
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/pets.php';
-$comment = getPetComment($_POST['id']);
+$comment = Comment::fromDatabase(intval($_POST['id']));
 
-if (isset($_SESSION['username']) && $_SESSION['username'] === $comment['user']){
+if($comment == null){ http_response_code(400); die(); }
+if (isset($_SESSION['username']) && $_SESSION['username'] === $comment->getUserId()){
     try {
         deletePetComment($_POST['id']);
     }

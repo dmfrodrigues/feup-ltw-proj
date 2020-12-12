@@ -72,9 +72,9 @@
         <div id="color"><span class="name">Color</span><span class="value"><?= $pet->getColor() ?></span></div>
     </section>
     <?php 
-    $userWhoAdoptedPet = getUserWhoAdoptedPet($pet->getId());
+    $userWhoAdoptedPet = Pet::fromDatabase($pet->getId())->getAdoptedBy();
     $petAdopted = false;
-    if (!empty($userWhoAdoptedPet))
+    if ($userWhoAdoptedPet != null)
         $petAdopted = true;
 
     $shelter = getPetShelter($_GET['id']);

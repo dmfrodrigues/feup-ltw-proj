@@ -18,9 +18,9 @@
                 }
             }
     } else if ($_SESSION['username'] !== $pet->getPostedBy()) {
-        $userWhoAdoptedPet = getUserWhoAdoptedPet($pet->getId()); 
-        if ($userWhoAdoptedPet['username'] == $_SESSION['username']) { ?>
+        $userWhoAdoptedPet = Pet::fromDatabase($pet->getId())->getAdoptedBy();
+        if ($userWhoAdoptedPet->getUsername() == $_SESSION['username']) { ?>
                     <div id="rejected-proposal">The proposal was accepted! Have fun with your new pet! 😺</div>
         <?php } else { ?>
-        <div id="pet-already-adopted">The pet was already adopted by <a href="profile.php?username=<?=$userWhoAdoptedPet['username']?>"><?=$userWhoAdoptedPet['username']?></a> </div>
+        <div id="pet-already-adopted">The pet was already adopted by <a href="profile.php?username=<?=$userWhoAdoptedPet->getUsername()?>"><?=$userWhoAdoptedPet->getUsername()?></a> </div>
     <?php } }
