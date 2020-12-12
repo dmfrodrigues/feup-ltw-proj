@@ -5,7 +5,7 @@ require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/User.php';
-require_once SERVER_DIR . '/shelters.php';
+require_once SERVER_DIR . '/Shelter.php';
 require_once SERVER_DIR . '/errors/errors.php';
 
 $users = User::allWithoutShelter();

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/User.php';
-require_once SERVER_DIR.'/shelters.php';
+require_once SERVER_DIR.'/Shelter.php';
 
 $shelter = $_SESSION['username'];
 $user = $_GET['username'];
