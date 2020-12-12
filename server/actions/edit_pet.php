@@ -3,6 +3,8 @@ session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR.'/users.php';
 require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/shelters.php';
 $pet = Pet::fromDatabase($_GET['id']);
@@ -32,6 +34,18 @@ if (isset($_SESSION['username'])){
             $_POST['description'],
             $pictures
         );
+        $pet = Pet::fromDatabase($_GET['id']);
+        $userWhoPostedPet = $pet->getPostedBy();
+        $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['id']);
+        foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
+            if ($userWhoFavoritePet['username'] !== $_SESSION['username']->getUsername()) {
+                if ($_SESSION['username']->getUsername() === $userWhoPostedPet)
+                    addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by you, was edited by " . $_SESSION['username'] . ".");
+                else
+                    addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet . " was edited by " . $_SESSION['username'] . ".");
+            }
+        }
+
         header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
         exit();
     }

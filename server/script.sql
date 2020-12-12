@@ -79,7 +79,7 @@ CREATE TABLE Notification (
                                   subject LIKE 'associatedPetAdopted' OR
                                   subject LIKE 'myPetFavoritesChanges' OR
                                   subject LIKE 'newPetComment' OR
-                                  subject LIKE 'favoritePhoto')
+                                  subject LIKE 'favoriteEdited')
 );
 
 CREATE TABLE Pet (
