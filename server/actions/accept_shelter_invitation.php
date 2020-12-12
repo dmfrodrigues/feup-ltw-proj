@@ -12,6 +12,9 @@ $shelter = $_GET['shelter'];
 
 if (isset($_SESSION['username']) && isShelter($shelter)) {
     if(acceptShelterInvite($_SESSION['username'], $shelter)) {
+        
+        addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " accepted your invite to be a collaborator.");
+
         header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']); 
         die();
     }    
