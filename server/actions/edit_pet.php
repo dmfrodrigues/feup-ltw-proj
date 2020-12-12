@@ -34,15 +34,13 @@ if (isset($_SESSION['username'])){
             $_POST['description'],
             $pictures
         );
+
         $pet = Pet::fromDatabase($_GET['id']);
         $userWhoPostedPet = $pet->getPostedBy();
         $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['id']);
         foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
-            if ($userWhoFavoritePet['username'] !== $_SESSION['username']->getUsername()) {
-                if ($_SESSION['username']->getUsername() === $userWhoPostedPet)
-                    addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by you, was edited by " . $_SESSION['username'] . ".");
-                else
-                    addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet . " was edited by " . $_SESSION['username'] . ".");
+            if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
+                addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was edited by " . $_SESSION['username'] . ".");
             }
         }
 
