@@ -16,11 +16,16 @@ $user_PUT = function(array $args): void{
     );
 
     $_PUT = getPUT();
-    addUser(
-        $_PUT['username'],
-        $_PUT['password'],
-        $_PUT['name']
-    );
+    $user = new User();
+    $user->setUsername($_PUT['username']);
+    $user->setPassword($_PUT['password'], false);
+    $user->setName    ($_PUT['name'    ]);
+    try {
+        $user->addToDatabase();
+    } catch(UserAlreadyExistsException $e){
+        http_response_code(409);
+        die();
+    }
 
     print_result("user/{$_PUT['username']}");
 };
