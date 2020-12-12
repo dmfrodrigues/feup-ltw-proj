@@ -1,8 +1,12 @@
 <?php
 require_once __DIR__ . '/../api_main.php';
+require_once __DIR__ . '/../authentication.php';
+require_once __DIR__ . '/../authorization.php';
+require_once __DIR__ . '/../read.php';
+require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/users.php';
 
-$user_id_photo_GET = function($args): void{
+$user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
 
@@ -21,9 +25,10 @@ $user_id_photo_GET = function($args): void{
     exit();
 };
 
-$user_id_photo_PUT = function($args): void{
+$user_id_photo_PUT = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
+    if($user == null){ http_response_code(404); die(); }
 
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -44,8 +49,8 @@ $user_id_photo_PUT = function($args): void{
     print_result($user->getPictureUrl());
 };
 
-$user_id_photo_DELETE = function($args): void{
-    $id = $args[1];
+$user_id_photo_DELETE = function(array $args): void{
+    $username = $args[1];
     $user = User::fromDatabase($username);
 
     $auth = Authentication\check();
@@ -57,7 +62,7 @@ $user_id_photo_DELETE = function($args): void{
     );
 
     try{
-        deleteUserPhoto($id);
+        deleteUserPhoto($username);
         http_response_code(204);
     } catch(CouldNotDeleteFileException $e){
         http_response_code(404); die();
