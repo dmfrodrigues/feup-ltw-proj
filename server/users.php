@@ -139,7 +139,7 @@ class User implements JsonSerializable {
         $this->setShelter     ($newUser->getShelterId());
     }
 
-    public function deleteFromDatabase() : void {
+    public function delete() : void {
         global $db;
         $user_pets = $this->getAddedPets();
         foreach($user_pets as $i => $pet){
@@ -160,7 +160,7 @@ class User implements JsonSerializable {
      * @return void
      */
     static public function deleteFromDatabase(string $username) : void {
-        User::fromDatabase($username)->deleteFromDatabase();
+        User::fromDatabase($username)->delete();
     }
 
     static public function fromDatabase(string $username) : ?User {
