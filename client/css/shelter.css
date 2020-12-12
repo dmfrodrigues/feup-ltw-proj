@@ -1,3 +1,4 @@
+#shelters,
 #potential-collaborators {
     max-width: 1200px;
 	margin: 2em auto;
@@ -27,6 +28,7 @@
     grid-area: 1 / 1 / 1 / span 2;
 }
 
+.shelters-grid,
 .potential-collaborators-grid {
     margin-top: 2em;
 	display: grid;
@@ -35,6 +37,7 @@
 	grid-template-columns: repeat(3, 1fr);
 }
 
+.shelter-card,
 .collaborator-card {
     cursor: pointer;
     max-width: 250px;
@@ -42,15 +45,18 @@
     margin: 1em;
 }
 
+.shelter-card:hover,
 .collaborator-card:hover {
     transform: scale(1.1);
     transition: 0.3s;
 }
 
+#shelter-card-content,
 #collaborator-card-content{
     position: relative;
 }
 
+.shelter-card img,
 .collaborator-card img {
 	height: 250px;
     width: 250px;
@@ -58,6 +64,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
+.shelter-card h2,
 .collaborator-card h2 {
     position: absolute;
     color: var(--main-color);

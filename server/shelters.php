@@ -363,3 +363,18 @@ function userCanEditPet(string $username, int $petId) : bool {
 
     return false;
 }
+
+/**
+ * Returns array with all shelters
+ *
+ * @return array           Array of shelters
+ */
+function getAllShelters() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+        *
+        FROM Shelter
+    ');
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
