@@ -304,7 +304,7 @@ function getUserShelterInvitation(string $username) : array {
 function getPetShelter(int $petId) : ?string {
 
     $pet = Pet::fromDatabase($petId);
-    $owner = $pet->getPostedBy(true);
+    $owner = $pet->getPostedById();
 
     return User::fromDatabase($owner)->getShelterId();
 }

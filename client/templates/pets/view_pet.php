@@ -27,7 +27,7 @@
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
             <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
-            <span id="postedBy"><a href="profile.php?username=<?= $pet->getPostedBy(true) ?>"><?= $pet->getPostedBy(true) ?></a></span>
+            <span id="postedBy"><a href="profile.php?username=<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($_GET['id']);
                 if (!is_null($shelter)) { ?>
                 <section id="shelter">
@@ -44,7 +44,7 @@
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
                 <button id="ask" onclick="location.href = '#comments'"><img src="resources/img/question-mark.png" height="42px">Ask question</button>
-                <?php  if($_SESSION['username'] != $pet->getPostedBy(true) ) { ?>
+                <?php  if($_SESSION['username'] != $pet->getPostedById() ) { ?>
                     <div id="adoption-request-button">
                         <?php require_once 'templates/pets/adoption_request_buttons.php'; ?>
                     </div>

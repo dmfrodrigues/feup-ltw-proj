@@ -7,7 +7,7 @@ require_once SERVER_DIR.'/pets.php';
 $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){
-    if($_SESSION['username'] != $pet->getPostedBy(true)){
+    if($_SESSION['username'] != $pet->getPostedById()){
         header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
         die();
     }

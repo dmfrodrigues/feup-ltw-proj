@@ -19,7 +19,7 @@ if($_GET['outcome'] === 'accepted') {
     refuseOtherProposals($_GET['requestId'], $_GET['petId']);
 
     $userWhoAdopted = Pet::fromDatabase($_GET['petId'])->getAdoptedBy();
-    $userWhoPostedPet = $pet->getPostedBy(true);
+    $userWhoPostedPet = $pet->getPostedBy();
 
     addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
 }

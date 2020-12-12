@@ -13,7 +13,7 @@ if (isset($_SESSION['username'])){
     addAdoptionRequest($_SESSION['username'], $petId, $_POST['description']);
 
     $pet = Pet::fromDatabase($petId);
-    $petOwner = $pet->getPostedBy(true);
+    $petOwner = $pet->getPostedById();
 
     addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet->getName() . ", by " . $_SESSION['username'] . ".");
 
