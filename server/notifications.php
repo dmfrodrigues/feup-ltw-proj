@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/server.php';
 require_once SERVER_DIR.'/User.php';
-require_once SERVER_DIR.'/pets.php';
+require_once SERVER_DIR.'/Pet.php';
 
 
 /**
