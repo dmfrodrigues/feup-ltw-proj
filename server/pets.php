@@ -817,24 +817,3 @@ function getPetAdoptionRequests(string $petId) : array {
     $pets = $stmt->fetchAll();
     return $pets;
 }
-
-/**
- * Get the pets that were published by the user but were adopted.
- *
- * @param string $username      User's username
- * @return array                Array containing the pets.
- */
-function getAdoptedPetsPublishedByUser($username) : array {
-    
-    $adoptedPets = Pet::getAdopted();
-    $adoptedPetsPublishedByUser = array();
-
-    foreach($adoptedPets as $pet) {
-        $user = Pet::fromDatabase($pet->getId())->getAdoptedBy();
-        if (!is_null($user) && $pet->getPostedBy() === $username)
-            array_push($adoptedPetsPublishedByUser, $pet);
-    }
-
-    return $adoptedPetsPublishedByUser;
-}  
-

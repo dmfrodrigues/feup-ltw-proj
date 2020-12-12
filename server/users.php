@@ -281,6 +281,23 @@ class User implements JsonSerializable {
     }
 
     /**
+     * Get pets added by a user that were adopted.
+     *
+     * @return array            Array of adopted pets added by that user
+     */
+    public function getPetsAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE postedBy=:username
+        AND status="adopted"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
      * Get adoption requests made by the user to other pets.
      *
      * @return array            Array of adoption requests 
