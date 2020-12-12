@@ -41,6 +41,30 @@ $user_id_GET = function(array $args): void{
     print_result($user);
 };
 
+$user_id_PUT = function(array $args): void{
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    if($user == null){ http_response_code(404); die(); }
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PROFILE,
+        Authorization\Method  ::READ   ,
+        $auth,
+        $user
+    );
+
+    $_PUT = getPUT();
+    editUser(
+        $user->getUsername(),
+        $_PUT['username'],
+        $_PUT['name']
+    );
+    $_SESSION['username'] = $_PUT['username'];
+
+    print_result("user/{$_PUT['username']}");
+};
+
 $user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
