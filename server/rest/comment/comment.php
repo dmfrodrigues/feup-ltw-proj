@@ -11,8 +11,7 @@ $comment_PUT = function(array $args): void{
         null
     );
 
-    $string = file_get_contents("php://input");
-    $_PUT = json_decode($string, true);
+    $_PUT = getPUT();
     $id = addPetComment(
         $_PUT['petId'],
         $_PUT['username'],
@@ -60,8 +59,7 @@ $comment_id_PUT = function(array $args): void{
     $id = $args[1];
     $comment = Comment::fromDatabase($id);
 
-    $string = file_get_contents("php://input");
-    $_PUT = json_decode($string, true);
+    $_PUT = getPUT();
     
     $auth = Authentication\check();
     Authorization\checkAndRespond(
