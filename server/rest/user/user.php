@@ -25,6 +25,22 @@ $user_PUT = function(array $args): void{
     print_result("user/{$_PUT['username']}");
 };
 
+$user_id_GET = function(array $args): void{
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PROFILE,
+        Authorization\Method  ::READ   ,
+        $auth,
+        $user
+    );
+
+    if($user == null){ http_response_code(404); die(); }
+    print_result($user);
+};
+
 $user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
