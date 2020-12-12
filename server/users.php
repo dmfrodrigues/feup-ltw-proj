@@ -512,28 +512,6 @@ function changePictureUsername(string $oldUsername, string $newUsername) {
     rename($oldFilepath, $newFilepath);
 }
 
- /**
-  * Add pet to user's favorites list.
-  *
-  * @param string $username User's username
-  * @param integer $id      ID of pet
-  * @return void
-  */
-function addToFavorites(string $username, int $id){
-    global $db;
-    $user = User::fromDatabase($username);
-    if($user == null) throw new NoSuchUserException($username);
-    $favoritePets = $user->getFavoritePets();
-    foreach ($favoritePets as $pet)
-        if ($pet->getId() == $id)
-            return;
-    $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId) VALUES
-            (:username, :id)');
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':id'      , $id      );
-    $stmt->execute();
-}
-
 /**
  * Remove pet from user's favorites list.
  *

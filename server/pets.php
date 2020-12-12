@@ -262,6 +262,24 @@ class Pet implements JsonSerializable {
         $pets = $stmt->fetchAll();
         return $pets;
     }
+
+    /**
+     * Add pet to user's favorites list.
+     *
+     * @param User $username User's username
+     */
+    public function addToFavorites(User $user) : void {
+        global $db;
+        $favoritePets = $user->getFavoritePets();
+        foreach ($favoritePets as $pet)
+            if ($pet->getId() == $this->getId())
+                return;
+        $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId)
+        VALUES (:username, :id)');
+        $stmt->bindValue(':username', $user->getUsername());
+        $stmt->bindValue(':id'      , $this->getId()      );
+        $stmt->execute();
+    }
 }
 
 class Comment implements JsonSerializable {
