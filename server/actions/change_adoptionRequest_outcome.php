@@ -39,7 +39,8 @@ if($_GET['outcome'] === 'accepted') {
         addNotification($shelter, "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
         $collaborators = Shelter::fromDatabase($shelter)->getCollaborators();
         foreach($collaborators as $collaborator) {
-            addNotification($collaborator->getUsername(), "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+            if ($collaborator->getUsername() !== $userWhoAdopted->getUsername() && $collaborator->getUsername() !== $userWhoPostedPet->getUsername())
+                addNotification($collaborator->getUsername(), "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
         }
     }
 
