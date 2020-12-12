@@ -89,4 +89,9 @@ namespace Authorization {
         }
         return false;
     }
+
+    function checkAndRespond(int $resourceType, int $method, ?\User $user, $resource) : void {
+        $ret = check($resourceType, $method, $user, $resource);
+        if(!$ret){ http_response_code(403); die(); }
+    }
 }
