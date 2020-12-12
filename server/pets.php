@@ -320,6 +320,14 @@ class AdoptionRequest implements JsonSerializable {
     public function getUserId  () : string { return $this->user                    ; }
     public function getAuthorId() : string { return $this->getUserId()             ; }
     public function getDate    () : string { return $this->requestDate             ; }
+
+    public function setId      (int    $id         ) : void { $this->id          = $id         ; }
+    public function setText    (string $text       ) : void { $this->text        = $text       ; }
+    public function setOutcome (string $outcome    ) : void { $this->outcome     = $outcome    ; }
+    public function setPet     (Pet    $pet        ) : void { $this->pet         = $pet        ; }
+    public function setUser    (?User  $user       ) : void { $this->user        = $user       ; }
+    public function setAuthor  (?User  $author     ) : void { $this->setUser($author)          ; }
+    public function setDate    (string $requestDate) : void { $this->requestDate = $requestDate; }
     
     public function jsonSerialize() {
 		return get_object_vars($this);
