@@ -1,8 +1,19 @@
 <?php
 require_once __DIR__ . '/../api_constants.php';
+require_once API_DIR . '/authentication.php';
+require_once API_DIR . '/authorization.php';
+require_once API_DIR . '/print.php';
 require_once SERVER_DIR . '/pets.php';
 
 $comment_PUT = function(array $args): void{
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::WRITE  ,
+        $auth,
+        null
+    );
+
     $string = file_get_contents("php://input");
     $_PUT = json_decode($string, true);
     $id = addPetComment(
@@ -16,6 +27,14 @@ $comment_PUT = function(array $args): void{
 };
 
 $comment_photo_PUT = function(array $args): void{
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::WRITE  ,
+        $auth,
+        null
+    );
+
     $file = fopen('php://input', 'r');
     $tmpFilePath = tempnam(sys_get_temp_dir(), 'NEWCOMMENTPHOTO');
     $tmpFile = fopen($tmpFilePath, 'w');
@@ -29,6 +48,14 @@ $comment_id_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
 
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::READ   ,
+        $auth,
+        $comment
+    );
+
     print_result($comment);
 };
 
@@ -38,6 +65,14 @@ $comment_id_PUT = function(array $args): void{
 
     $string = file_get_contents("php://input");
     $_PUT = json_decode($string, true);
+    
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::EDIT   ,
+        $auth,
+        $comment
+    );
     
     editPetComment(
         $id,
@@ -51,6 +86,14 @@ $comment_id_photo_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
 
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::READ   ,
+        $auth,
+        $comment
+    );
+
     $url = PROTOCOL_SERVER_URL . "/resources/img/comments/{$id}.jpg";
     header("Location: {$url}");
     exit();
@@ -59,6 +102,14 @@ $comment_id_photo_GET = function(array $args): void{
 $comment_id_photo_PUT = function(array $args): void{
     $id = $args[1];
     $comment = Comment::fromDatabase($id);
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::EDIT   ,
+        $auth,
+        $comment
+    );
 
     // TODO: Replace this part by a PUT request to comment/photo
     $file = fopen('php://input', 'r');
@@ -76,6 +127,14 @@ $comment_id_photo_PUT = function(array $args): void{
 $comment_id_photo_DELETE = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::COMMENT,
+        Authorization\Method  ::READ   ,
+        $auth,
+        $comment
+    );
 
     try{
         deletePetCommentPhoto($id);
