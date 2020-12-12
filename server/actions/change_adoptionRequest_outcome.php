@@ -16,10 +16,16 @@ $pet = Pet::fromDatabase($_GET['petId']);
 
 if($_GET['outcome'] === 'accepted') {    
     changePetStatus($_GET['petId'], 'adopted');
-    refuseOtherProposals($_GET['requestId'], $_GET['petId']);
+    $refusedUsers = refuseOtherProposals($_GET['requestId'], $_GET['petId']);
 
     $userWhoAdopted = Pet::fromDatabase($_GET['petId'])->getAdoptedBy();
     $userWhoPostedPet = $pet->getPostedBy();
+
+    addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
+
+    foreach($refusedUsers as $refusedUser) {
+        addNotification($refusedUser['username'], "proposedPetAdopted", "The pet you proposed, " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+    }
 
     addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
 

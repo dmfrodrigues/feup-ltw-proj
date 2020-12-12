@@ -707,14 +707,16 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * 
  * @param integer $requestId    Request Id
  * @param integer $petId        Pet's Id
- * @return void
+ * @return array                Array of users with rejected proposals
  */
 function refuseOtherProposals(int $requestId, int $petId) {
+    $refusedUsers = array();
     $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
     foreach ($adoption_requests as $request){
         if ($request->getId() != $requestId) {
             $request->setOutcome("rejected");
+            array_push($refusedUsers, $request->getUser());
         }
-    }
-    changePetStatus($petId, "adopted");
+    } 
+    return $refusedUsers;
 }
