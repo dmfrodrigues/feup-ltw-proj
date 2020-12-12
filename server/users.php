@@ -90,6 +90,7 @@ class User implements JsonSerializable {
 
     public function jsonSerialize() {
         $ret = get_object_vars($this);
+        unset($ret['password']);
         $ret['pictureUrl'] = $this->getPictureUrl();
         return $ret;
     }
