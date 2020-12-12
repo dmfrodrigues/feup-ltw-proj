@@ -7,7 +7,7 @@ $user_id_photo_GET = function($args): void{
     $user = User::fromDatabase($username);
     if($user == null){ http_response_code(404); die(); }
     $ret = $user->getPictureUrl();
-    if($ret  == null) $ret = CLIENT_URL . '/resources/img/no-image.svg';
+    if($ret  == null) $ret = PROTOCOL_CLIENT_URL . '/resources/img/no-image.svg';
     header("Location: {$ret}");
     exit();
 };
