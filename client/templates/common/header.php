@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
-        <title>Forever Home<?php if(isset($title)) echo (' | ' . $title )?></title>    
+        <title><?php if(isset($title)) echo ($title . ' | ')?>Forever Home</title>    
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/main.css">
