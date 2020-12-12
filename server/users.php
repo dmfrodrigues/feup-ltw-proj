@@ -139,6 +139,20 @@ class User implements JsonSerializable {
         $this->setShelter     ($newUser->getShelterId());
     }
 
+    public function deleteFromDatabase() : void {
+        global $db;
+        $user_pets = $this->getAddedPets();
+        foreach($user_pets as $i => $pet){
+            $id = $pet->getId();
+            $dir = PETS_IMAGES_DIR."/$id";
+            rmdir_recursive($dir);
+        }
+        deleteUserPhoto($this->username);
+        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+    }
+
     /**
      * Delete user.
      *
@@ -146,17 +160,7 @@ class User implements JsonSerializable {
      * @return void
      */
     static public function deleteFromDatabase(string $username) : void {
-        global $db;
-        $user_pets = User::fromDatabase($username)->getAddedPets();
-        foreach($user_pets as $i => $pet){
-            $id = $pet->getId();
-            $dir = PETS_IMAGES_DIR."/$id";
-            rmdir_recursive($dir);
-        }
-        deleteUserPhoto($username);
-        $stmt = $db->prepare('DELETE FROM User WHERE username=:username');
-        $stmt->bindValue(':username', $username);
-        $stmt->execute();
+        User::fromDatabase($username)->deleteFromDatabase();
     }
 
     static public function fromDatabase(string $username) : ?User {
