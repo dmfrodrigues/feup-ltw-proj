@@ -65,6 +65,16 @@ $user_id_PUT = function(array $args): void{
     print_result("user/{$_PUT['username']}");
 };
 
+$user_id_DELETE = function(array $args): void{
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    if($user == null){ http_response_code(404); die(); }
+
+    $user->delete();
+
+    print_result("user/{$user->getUsername()}");
+};
+
 $user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
