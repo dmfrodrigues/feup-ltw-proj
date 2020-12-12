@@ -543,6 +543,26 @@ function getFavoritePets(string $username) : array {
 }
 
 /**
+ * Get users who favorite the pet.
+ *
+ * @param int $petId        Pet's ID
+ * @return array            Array of users who favorite the pet
+ */
+function getUsersWhoFavoritePet(int $petId) : array {
+    global $db;
+    
+    $stmt = $db->prepare('SELECT 
+        User.username,
+        User.name
+        FROM User INNER JOIN FavoritePet ON User.username=FavoritePet.username
+        WHERE FavoritePet.petId=:petId');
+    $stmt->bindValue(':petId', $petId);
+    $stmt->execute();
+    $usersWhoFavoritePet = $stmt->fetchAll();
+    return $usersWhoFavoritePet;
+}
+
+/**
  * Get a specific adoption request given it's id.
  * 
  * @param int $id   Adoption Request id
@@ -688,14 +708,16 @@ function withdrawAdoptionRequest(string $username, int $petId): bool {
  * 
  * @param integer $requestId    Request Id
  * @param integer $petId        Pet's Id
- * @return void
+ * @return array                Array of users with rejected proposals
  */
 function refuseOtherProposals(int $requestId, int $petId) {
+    $refusedUsers = array();
     $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
     foreach ($adoption_requests as $request){
         if ($request->getId() != $requestId) {
             $request->setOutcome("rejected");
+            array_push($refusedUsers, $request->getUser());
         }
-    }
-    changePetStatus($petId, "adopted");
+    } 
+    return $refusedUsers;
 }
