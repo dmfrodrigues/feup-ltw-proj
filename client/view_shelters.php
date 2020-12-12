@@ -10,5 +10,5 @@ $shelters = getAllShelters();
 $title = "Shelters";
 
 include_once 'templates/common/header.php';
-include_once 'templates/shelters/view_Shelter.php';
+include_once 'templates/shelters/view_shelters.php';
 include_once 'templates/common/footer.php';
