@@ -3,7 +3,7 @@ session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once SERVER_DIR.'/pets.php';
+require_once SERVER_DIR.'/Pet.php';
 $comment = Comment::fromDatabase(intval($_POST['id']));
 
 if($comment == null){ http_response_code(400); die(); }

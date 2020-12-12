@@ -2,7 +2,7 @@
 
     require_once('../../server/server.php');
     require_once('../../server/connection.php');
-    require_once('../../server/users.php');   
+    require_once('../../server/User.php');   
 
     try {
         $pet = Pet::fromDatabase(intval($_POST['petId']));
