@@ -74,7 +74,7 @@ AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)
 
 | Request              | GET                | POST               | PUT                | DELETE             |
 |----------------------|--------------------|--------------------|--------------------|--------------------|
-| `user`               | :x:                | :x:                | :soon:             | :x:                |
+| `user`               | :x:                | :x:                | :heavy_check_mark: | :x:                |
 | `user/<id>`          | :soon:             | :x:                | :soon:             | :soon:             |
 | `user/<id>/photo`    | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
 | `pet`                | :soon:             | :x:                | :soon:             | :x:                |

@@ -10,7 +10,7 @@ require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 
 $tree = [
-    'user' => [null             => new ResourceHandlers(null                 , null, null                 , null                    ),
+    'user' => [null             => new ResourceHandlers(null                 , null, $user_PUT            , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers(null                 , null, null                 , null                    ),
             'photo'             => new ResourceHandlers($user_id_photo_GET   , null, $user_id_photo_PUT   , $user_id_photo_DELETE   )
         ]

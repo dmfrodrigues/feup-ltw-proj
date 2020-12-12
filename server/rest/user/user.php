@@ -6,6 +6,25 @@ require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/users.php';
 
+$user_PUT = function(array $args): void{
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PROFILE,
+        Authorization\Method  ::READ   ,
+        $auth,
+        null
+    );
+
+    $_PUT = getPUT();
+    addUser(
+        $_PUT['username'],
+        $_PUT['password'],
+        $_PUT['name']
+    );
+
+    print_result("user/{$_PUT['username']}");
+};
+
 $user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
