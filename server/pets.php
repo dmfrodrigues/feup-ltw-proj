@@ -301,9 +301,9 @@ class Pet implements JsonSerializable {
      * Get the user who adopted the given pet.
      *
      * @param int $id           Pet's ID
-     * @return User            User who adopted the pet
+     * @return ?User            User who adopted the pet
      */
-    public function getAdoptedBy() : User {
+    public function getAdoptedBy() : ?User {
         global $db;
         $stmt = $db->prepare('SELECT
         User.username,
@@ -322,6 +322,7 @@ class Pet implements JsonSerializable {
         $stmt->bindValue(':id', $this->id);
         $stmt->execute();
         $user = $stmt->fetch();
+        if($user === false) return null;
         return $user;
     }
 }
