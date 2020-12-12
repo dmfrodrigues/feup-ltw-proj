@@ -1,7 +1,7 @@
 <?php
 namespace Authentication {
     require_once __DIR__ . '/api_main.php';
-    require_once SERVER_DIR . '/User.php'
+    require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 
     function check() : ?\User {
