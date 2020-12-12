@@ -723,13 +723,3 @@ function refuseOtherProposals(int $requestId, int $petId) {
     }
     changePetStatus($petId, "adopted");
 }
-
-/**
- * Get the user's adopted pets.
- *
- * @param string $username  User's username
- * @return array            Array of adopted pets
- */
-function getPetsAdoptedByUser(string $username) : array {
-    return User::fromDatabase($_SESSION['username'])->getPetsIAdopted();
-}
