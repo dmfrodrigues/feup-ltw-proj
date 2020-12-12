@@ -2,6 +2,7 @@ function signup_check() {
     let pwd     = document.getElementById('pwd'    ).value;
     let rpt_pwd = document.getElementById('rpt_pwd').value;
     if(pwd != rpt_pwd) {
+        document.querySelector('p').remove();
         let errorMsg = document.createElement('p');
         let errorString = 'Passwords don\'t match!';
         errorMsg.id = 'simple-fail-msg';

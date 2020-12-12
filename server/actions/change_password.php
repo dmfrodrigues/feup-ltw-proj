@@ -13,6 +13,11 @@ if (isset($_SESSION['username'])){
         die();
     }
 
+    if(!preg_match('/^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$/', $_POST['pwd'])) {
+        header('Location: ' . PROTOCOL_CLIENT_URL . '/change_password.php?username=' . $_GET['username'] .'&failed=1&errorCode=5');
+        die();
+    }
+
     editUserPassword(
         $user->getUsername(),
         $_POST['pwd']

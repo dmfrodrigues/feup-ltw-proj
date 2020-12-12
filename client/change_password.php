@@ -9,6 +9,8 @@ require_once SERVER_DIR . '/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
+require_once SERVER_DIR . '/errors/errors.php';
+
 $user = User::fromDatabase($_GET['username']);
 
 $title = "Change password";
