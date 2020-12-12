@@ -74,6 +74,7 @@ CREATE TABLE Notification (
                                   subject LIKE 'favoriteAdopted' OR
                                   subject LIKE 'proposedPetAdopted' OR
                                   subject LIKE 'shelterInvitation' OR
+                                  subject LIKE 'userLeftShelter' OR
                                   subject LIKE 'invitationOutcome' OR
                                   subject LIKE 'associatedPetAdopted' OR
                                   subject LIKE 'myPetFavoritesChanges' OR
