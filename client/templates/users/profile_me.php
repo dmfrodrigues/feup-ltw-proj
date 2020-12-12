@@ -19,7 +19,7 @@
             <?php 
                 if(checkUserBelongsToShelter($user->getUsername())) { 
                     $shelterName = User::fromDatabase($user->getUsername())->getShelterId(); ?>
-                    <li><button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$shelterName?>'">View shelter</button></li>
+                    <li><button onclick="location.href = '<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$shelterName?>'">View shelter</button></li>
             <?php } else { ?>
                     <li><button onclick="location.href = 'view_shelter_invitations.php'">View shelter invitations</button></li>
             <?php } ?>

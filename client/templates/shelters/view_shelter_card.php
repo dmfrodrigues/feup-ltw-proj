@@ -1,7 +1,7 @@
 <?php
 function viewShelterCard($shelter) {
     $shelter_pic = User::fromDatabase($shelter)->getPictureUrl(); ?>
-    <article class="shelter-card" onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?= $shelter ?>';">
+    <article class="shelter-card" onclick="location.href = '<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $shelter ?>';">
         <div id="shelter-card-content">
             <img src="<?php echo (is_null($shelter_pic) ? "resources/img/no-image.svg" : $shelter_pic)?>">
             <h2><?= $shelter?></h2>

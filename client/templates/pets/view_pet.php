@@ -27,11 +27,11 @@
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
             <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
-            <span id="postedBy"><a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
+            <span id="postedBy"><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($_GET['id']);
                 if (!is_null($shelter)) { ?>
                 <section id="shelter">
-                    <h2>Associated with shelter <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+                    <h2>Associated with shelter <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
                 </section>
             <?php } ?>
         </div>

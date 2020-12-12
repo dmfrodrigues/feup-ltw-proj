@@ -5,8 +5,8 @@
     <input id="comment-answerTo" name="answerTo" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <article class="comment">
-        <span id="comment-user" class="user"><a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=#">#</a></span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username?#"><img class="profile-pic" src="#"></a>
+        <span id="comment-user" class="user"><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=#">#</a></span>
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username?#"><img class="profile-pic" src="#"></a>
         <div id="comment-content">
             <textarea id="comment-text" class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
@@ -94,11 +94,11 @@
         el_answerTo.value = comment.id;
 
         let el_user = answerElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_SERVER_URL ?>/profile.php?username=${user.username}`;
+        el_user.children[0].href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${user.username}`;
         el_user.children[0].innerHTML = user.username;
 
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `<?= PROTOCOL_SERVER_URL ?>/profile.php?username=${user.username}`;
+        el_pic.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${user.username}`;
         el_pic.children[0].src = API_URL + `user/${user.username}/photo`;
 
         answerElement.addEventListener('submit', (e) => { newComment_onSubmit(e); });

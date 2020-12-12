@@ -23,6 +23,7 @@
         <script>
             const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
             const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
+            const PROTOCOL_CLIENT_URL = "<?= PROTOCOL_CLIENT_URL ?>";
         </script>
         <script src="<?= PROTOCOL_CLIENT_URL ?>/js/rest.js"></script>
         <script>
