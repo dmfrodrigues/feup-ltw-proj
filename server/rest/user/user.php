@@ -70,6 +70,14 @@ $user_id_DELETE = function(array $args): void{
     $user = User::fromDatabase($username);
     if($user == null){ http_response_code(404); die(); }
 
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::PROFILE,
+        Authorization\Method  ::EDIT   ,
+        $auth,
+        $user
+    );
+
     $user->delete();
 
     print_result("user/{$user->getUsername()}");
