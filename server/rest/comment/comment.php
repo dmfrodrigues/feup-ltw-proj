@@ -1,8 +1,5 @@
 <?php
-require_once __DIR__ . '/../api_constants.php';
-require_once API_DIR . '/authentication.php';
-require_once API_DIR . '/authorization.php';
-require_once API_DIR . '/print.php';
+require_once __DIR__ . '/../api_main.php';
 require_once SERVER_DIR . '/pets.php';
 
 $comment_PUT = function(array $args): void{

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../api_constants.php';
+require_once __DIR__ . '/../api_main.php';
 require_once SERVER_DIR . '/users.php';
 
 $user_id_photo_GET = function($args): void{
