@@ -5,7 +5,7 @@ require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/pets.php';
-require_once SERVER_DIR.'/users.php';
+require_once SERVER_DIR.'/User.php';
 $pet = Pet::fromDatabase($_GET['id']);
 $comments = $pet->getComments();
 
