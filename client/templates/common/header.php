@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="css/shelter.css">
         <link rel="stylesheet" href="css/nav_bar.css">
         <link rel="stylesheet" href="css/messages.css">
+        <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/responsive.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">

@@ -1,0 +1,8 @@
+#index-body{
+    margin: 2em 1em 2em 1em;
+	padding: 2em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	text-align: center;
+	display: block;
+}
