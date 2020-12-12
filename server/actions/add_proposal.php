@@ -12,10 +12,10 @@ $petId = $_GET['id'];
 if (isset($_SESSION['username'])){
     addAdoptionRequest($_SESSION['username'], $petId, $_POST['description']);
 
-    $pet = getPet($petId);
-    $petOwner = $pet['postedBy'];
+    $pet = Pet::fromDatabase($petId);
+    $petOwner = $pet->getPostedById();
 
-    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet['name'] . ", by " . $_SESSION['username'] . ".");
+    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet->getName() . ", by " . $_SESSION['username'] . ".");
 
     header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
 }

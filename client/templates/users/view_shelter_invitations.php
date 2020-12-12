@@ -1,29 +1,29 @@
 <?php
-    function drawInvitation($user, $shelter, $text, $requestDate, $isShelter) { ?>
+    function drawInvitation(User $user, Shelter $shelter, $text, $requestDate, $isShelter): void { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
-                    <a href="profile.php?username=<?=$shelter?>"> 
+                    <a href="profile.php?username=<?= $shelter->getUsername() ?>"> 
                         <img id="proposal-pic" src="<?php 
-                        $shelter_pic = getUserPicture($shelter);
+                        $shelter_pic = $shelter->getPictureUrl();
                         echo (is_null($shelter_pic) ? "resources/img/no-image.svg" : $shelter_pic) ?>
                         ">
                     </a>
                 </div>
             <div id="proposal-info">
                 <?php if (!$isShelter) { ?>
-                    <p><?=$shelter?> on <?=$requestDate?></p>
+                    <p><?= $shelter->getUsername() ?> on <?=$requestDate?></p>
                 <?php } else { ?>
-                    <p>To <a href="profile.php?username=<?=$user?>"><?=$user?></a> on <?=$requestDate?></p>
+                    <p>To <a href="profile.php?username=<?= $user->getUsername() ?>"><?= $user->getUsername() ?></a> on <?=$requestDate?></p>
                 <?php } ?>
                 <div id="proposal-message">
                     <textarea readonly><?=$text?></textarea>
                 </div>  
                 
                 <?php if(!$isShelter) { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?shelter=<?=$shelter?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?shelter=<?=$shelter?>'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?shelter=<?= $shelter->getUsername() ?>'" id="acceptRequest">Accept Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?shelter=<?= $shelter->getUsername() ?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/shelter_cancel_invitation.php?username=<?=$user?>'" id="refuseRequest">Remove Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/shelter_cancel_invitation.php?username=<?= $user->getUsername() ?>'" id="refuseRequest">Remove Request</button>
                 <?php } ?>
             </div>
         </div>
@@ -31,26 +31,29 @@
 
     <?php 
 
-    function drawEmptyInvitations() { ?>
+    function drawEmptyInvitations(): void { ?>
         <h2 style="text-align: center">No Shelter Invitations found!</h2>
     <?php } 
 
-    function drawShelterInvitations($shelterInvitations, $isShelter) {
+    function drawShelterInvitations($shelterInvitations, $isShelter): void {
         if(count($shelterInvitations) > 0) { 
-            foreach($shelterInvitations as $invitation) 
+            foreach($shelterInvitations as $invitation){
+                $user    = User   ::fromDatabase($invitation['user'   ]);
+                $shelter = Shelter::fromDatabase($invitation['shelter']);
                 drawInvitation(
-                    $invitation['user'],
-                    $invitation['shelter'],
+                    $user,
+                    $shelter,
                     $invitation['text'],
                     $invitation['requestDate'],
                     $isShelter
                 );
+            }
         } else { 
             drawEmptyInvitations();
         }
     }
 
-    function drawInvitationError() { 
+    function drawInvitationError(): void { 
         global $errorsArray; ?>
             <p style="text-align: center" id='simple-fail-msg'><?= $errorsArray[$_GET['errorCode']] ?></p>
     <?php } 

@@ -1,10 +1,10 @@
 <?php
-function viewCollaboratorInShelterProfile($collaborator) {
-    $photoUrl = $collaborator['pictureUrl']; ?>
-    <article class="collaborator-card" onclick="location.href = 'profile.php?username=<?= $collaborator['user'] ?>';">
+function viewCollaboratorInShelterProfile(User $collaborator): void {
+    $photoUrl = $collaborator->getPictureUrl(); ?>
+    <article class="collaborator-card" onclick="location.href = 'profile.php?username=<?= $collaborator->getUsername() ?>';">
         <div id="collaborator-card-content">
-            <img src="<?= $photoUrl?>">
-            <h2><?= $collaborator['name']?></h2>
+            <img src="<?= $photoUrl ?>">
+            <h2><?= $collaborator->getName() ?></h2>
         </div>
     </article>
 <?php } ?>

@@ -12,7 +12,6 @@ async function handleFavorites(target, username, petId) {
     }
 
     let jsonResponse = await response.json();
-    console.log(jsonResponse);
 
     if(jsonResponse.successful) 
         switchFavoriteButton(target, addToFavorites);

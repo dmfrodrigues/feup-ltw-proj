@@ -16,10 +16,10 @@ class ResourceHandlers {
         $this->_put    = $put   ;
         $this->_delete = $delete;
     }
-    public function get   (){ return $this->_get   ; }
-    public function post  (){ return $this->_post  ; }
-    public function put   (){ return $this->_put   ; }
-    public function delete(){ return $this->_delete; }
+    public function get   () : ?callable { return $this->_get   ; }
+    public function post  () : ?callable { return $this->_post  ; }
+    public function put   () : ?callable { return $this->_put   ; }
+    public function delete() : ?callable { return $this->_delete; }
 }
 
 class RestServer {
@@ -51,7 +51,8 @@ class RestServer {
         $resourceHandlers = (gettype($tree) == 'array' ? $tree[''] : $tree);
 
         switch($_SERVER['REQUEST_METHOD']){
-            case 'GET'   : $handler = $resourceHandlers->get   (); break;
+            case 'GET'   :
+            case 'HEAD'  : $handler = $resourceHandlers->get   (); break;
             case 'POST'  : $handler = $resourceHandlers->post  (); break;
             case 'PUT'   : $handler = $resourceHandlers->put   (); break;
             case 'DELETE': $handler = $resourceHandlers->delete(); break;

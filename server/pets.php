@@ -5,34 +5,462 @@ require_once SERVER_DIR.'/users.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
-define('COMMENT_PHOTO_MAX_SIZE', 1000000);
 
-/**
- * Get array of all pets.
- *
- * @return array    Array of all pets
- */
-function getPets() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM Pet');
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+class Pet implements JsonSerializable {
+    private  int    $id          ;
+    private  string $name        ;
+    private  string $species     ;
+    private  float  $age         ;
+    private  string $sex         ;
+    private  string $size        ;
+    private  string $color       ;
+    private  string $location    ;
+    private  string $description ;
+    private  string $status      ;
+    private ?string $adoptionDate;
+    private  string $postedBy    ;
+    public function __construct(){}
+
+    public function getId          () : ?int    { return $this->id          ; }
+    public function getName        () :  string { return $this->name        ; }
+    public function getSpecies     () :  string { return $this->species     ; }
+    public function getAge         () :  float  { return $this->age         ; }
+    public function getSex         () :  string { return $this->sex         ; }
+    public function getSize        () :  string { return $this->size        ; }
+    public function getColor       () :  string { return $this->color       ; }
+    public function getLocation    () :  string { return $this->location    ; }
+    public function getDescription () :  string { return $this->description ; }
+    public function getStatus      () :  string { return $this->status      ; }
+    public function getAdoptionDate() : ?string { return $this->adoptionDate; }
+    public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy); }
+    public function getPostedById  () : string  { return $this->postedBy    ; }
+    /**
+     * @return User|null|string
+     */
+    public function getAuthor      (bool $raw = false) {
+        if($raw) return $this->postedBy;
+        else     return $this->getPostedBy();
+    }
+
+    /**
+     * Get pet pictures
+     * 
+     * @return array       Pet photos
+     */
+    public function getPictures() : array {
+        $dir = PETS_IMAGES_DIR."/{$this->getId()}";
+        $photos = array();
+        if(!is_dir($dir)) return $photos;
+        
+        $lst = scandir($dir);
+        foreach($lst as $fileName){
+            $filePath = "$dir/$fileName";
+            if(in_array(pathinfo($filePath)['extension'], IMAGES_EXTENSIONS)){
+                $url = path2url($filePath);
+                array_push($photos, $url);
+            }
+        }
+
+        return $photos;
+    }
+
+    /**
+     * Get pet main picture
+     *
+     * @return ?string       URL of pet main photo
+     */
+    public function getMainPicture() : ?string {
+        $pictures = $this->getPictures();
+        return (count($pictures) < 1 ?
+            null :
+            $pictures[0]
+        );
+    }
+
+    /**
+     * Get comments about a pet.
+     *
+     * @param integer $id   ID of the pet
+     * @return array        Array of comments about that pet
+     */
+    public function getComments() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $comments = $stmt->fetchAll();
+        return $comments;
+    }
+
+    public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
+    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
+    public function setSpecies     ( string $species     ) : void { $this->species      = $species     ; }
+    public function setAge         ( float  $age         ) : void { $this->age          = $age         ; }
+    public function setSex         ( string $sex         ) : void { $this->sex          = $sex         ; }
+    public function setSize        ( string $size        ) : void { $this->size         = $size        ; }
+    public function setColor       ( string $color       ) : void { $this->color        = $color       ; }
+    public function setLocation    ( string $location    ) : void { $this->location     = $location    ; }
+    public function setDescription ( string $description ) : void { $this->description  = $description ; }
+    public function setStatus      ( string $status      ) : void { $this->status       = $status      ; }
+    public function setAdoptionDate(?string $adoptionDate) : void { $this->adoptionDate = $adoptionDate; }
+    public function setPostedBy    ( string $postedBy    ) : void { $this->postedBy     = $postedBy    ; }
+    public function setAuthor      ( string $author      ) : void { $this->setPostedBy($author)        ; }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+    
+    public function addToDatabase(): void{
+        global $db;
+        $stmt = $db->prepare('INSERT INTO Pet
+        (name, species, age, sex, size, color, location, description, postedBy)
+        VALUES
+        (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
+        $stmt->bindValue(':name'       , $this->name       );
+        $stmt->bindValue(':species'    , $this->species    );
+        $stmt->bindValue(':age'        , $this->age        );
+        $stmt->bindValue(':sex'        , $this->sex        );
+        $stmt->bindValue(':size'       , $this->size       );
+        $stmt->bindValue(':color'      , $this->color      );
+        $stmt->bindValue(':location'   , $this->location   );
+        $stmt->bindValue(':description', $this->description);
+        $stmt->bindValue(':postedBy'   , $this->postedBy   );
+        $stmt->execute();
+        $this->id = $db->lastInsertId();
+        
+        $newPet = Pet::fromDatabase($this->id);
+        $this->setStatus      ($newPet->getStatus      ());
+        $this->setAdoptionDate($newPet->getAdoptionDate());
+    }
+
+    static public function fromDatabase(int $id) : Pet {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE id=:id');
+        $stmt->bindValue(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pet = $stmt->fetch();
+        if($pet == false) throw new RuntimeException("No such pet");
+        return $pet;
+    }
+
+    /**
+     * Edit pet.
+     *
+     * @param integer $id           Pet ID
+     * @param string $name          Pet name
+     * @param string $species       Species
+     * @param float $age            Age
+     * @param string $sex           M/F
+     * @param string $size          XS, S, M, L, XL
+     * @param string $color         Color
+     * @param string $location      Location
+     * @param string $description   Description
+     * @return void
+     */
+    static public function edit(
+        int $id,
+        string $name,
+        string $species,
+        float  $age,
+        string $sex,
+        string $size,
+        string $color,
+        string $location,
+        string $description,
+        array  $pictures
+    ){
+        $pet = Pet::fromDatabase($id);
+        $pet->setName       ($name       );
+        $pet->setSpecies    ($species    );
+        $pet->setAge        ($age        );
+        $pet->setSex        ($sex        );
+        $pet->setSize       ($size       );
+        $pet->setColor      ($color      );
+        $pet->setLocation   ($location   );
+        $pet->setDescription($description);
+        $pet->updateDatabase();
+
+        editPetPictures($id, $pictures);
+    }
+
+    public function updateDatabase() : bool {
+        global $db;
+        $stmt = $db->prepare('UPDATE Pet SET
+        name=:name,
+        species=:species,
+        age=:age,
+        sex=:sex,
+        size=:size,
+        color=:color,
+        location=:location,
+        description=:description
+        WHERE id=:id');
+        $stmt->bindValue(':id'         , $this->id         );
+        $stmt->bindValue(':name'       , $this->name       );
+        $stmt->bindValue(':species'    , $this->species    );
+        $stmt->bindValue(':age'        , $this->age        );
+        $stmt->bindValue(':sex'        , $this->sex        );
+        $stmt->bindValue(':size'       , $this->size       );
+        $stmt->bindValue(':color'      , $this->color      );
+        $stmt->bindValue(':location'   , $this->location   );
+        $stmt->bindValue(':description', $this->description);
+        return $stmt->execute();
+    }
+
+    static public function deletefromDatabase(int $id) : bool {
+        rmdir_recursive(PETS_IMAGES_DIR."/$id");
+
+        global $db;
+        $stmt = $db->prepare('DELETE FROM Pet
+        WHERE id=:id');
+        $stmt->bindValue(':id', $id);
+        return $stmt->execute();
+    }
+
+
+    /**
+     * Get array of all pets listed for adoption.
+     *
+     * @return array    Array of all pets listed for adoption
+     */
+    static public function getForAdoption() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE status="forAdoption"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Get array of all pets adopted.
+     *
+     * @return array    Array of all pets adopted
+     */
+    static public function getAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet WHERE status="adopted"');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    public function getAdoptionRequests() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
+
+    /**
+     * Add pet to user's favorites list.
+     *
+     * @param User $username User's username
+     */
+    public function addToFavorites(User $user) : void {
+        global $db;
+        $favoritePets = $user->getFavoritePets();
+        foreach ($favoritePets as $pet)
+            if ($pet->getId() == $this->getId())
+                return;
+        $stmt = $db->prepare('INSERT INTO FavoritePet(username, petId)
+        VALUES (:username, :id)');
+        $stmt->bindValue(':username', $user->getUsername());
+        $stmt->bindValue(':id'      , $this->getId()      );
+        $stmt->execute();
+    }
+
+    /**
+     * Remove pet from user's favorites list.
+     *
+     * @param string $username  User's username
+     * @param integer $id       ID of pet
+     * @return void
+     */
+    public function removeFromFavorites(User $user) : void {
+        global $db;
+        $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
+        username=:username AND petId=:id');
+        $stmt->bindValue(':username', $user->getUsername());
+        $stmt->bindValue(':id'      , $this->getId()      );
+        $stmt->execute();
+    }
+
+    /**
+     * Get the user who adopted the given pet.
+     *
+     * @param int $id           Pet's ID
+     * @return ?User            User who adopted the pet
+     */
+    public function getAdoptedBy() : ?User {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter
+        FROM
+            AdoptionRequest
+            INNER JOIN Pet  ON Pet.id=AdoptionRequest.pet
+            INNER JOIN User ON User.username=AdoptionRequest.user
+        WHERE AdoptionRequest.outcome="accepted"
+        AND Pet.status="adopted"
+        AND AdoptionRequest.pet=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':id', $this->id);
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if($user === false) return null;
+        return $user;
+    }
 }
 
-/**
- * Get array of all pets listed for adoption.
- *
- * @return array    Array of all pets listed for adoption
- */
-function getPetsListedForAdoption() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * 
-    FROM Pet WHERE status="forAdoption"');
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+class Comment implements JsonSerializable {
+    private int    $id      ;
+    private string $postedOn;
+    private string $text    ;
+    private int    $pet     ;
+    private string $user    ;
+    private ?int   $answerTo;
+
+    public function __construct(){}
+
+    public function getId      () : int    { return $this->id                      ; }
+    public function getPostedOn() : string { return $this->postedOn                ; }
+    public function getText    () : string { return $this->text                    ; }
+    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)  ; }
+    public function getPetId   () : int    { return $this->pet                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
+    public function getAuthor  () : ?User  { return $this->getUser()               ; }
+    public function getUserId  () : string { return $this->user                    ; }
+    public function getAuthorId() : string { return $this->getUserId()             ; }
+    public function getAnswerTo() : ?int   { return $this->answerTo                ; }
+    public function getPictureUrl() : string {
+        return SERVER_DIR . "resources/img/comments/{$this->getId()}.jpg";
+    }
+    
+    public function setId      (int    $id      ) : void { $this->id       = $id      ; }
+    public function setPostedOn(string $postedOn) : void { $this->postedOn = $postedOn; }
+    public function setText    (string $text    ) : void { $this->text     = $text    ; }
+    public function setPetId   (int    $pet     ) : void { $this->pet      = $pet     ; }
+    public function setUserId  (string $user    ) : void { $this->user     = $user    ; }
+    public function setAuthorId(string $author  ) : void { $this->setUserId($author)  ; }
+    public function setAnswerTo(?int   $answerTo) : void { $this->answerTo = $answerTo; }
+    
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
+    /**
+     * Get comment about a pet.
+     *
+     * @param integer $commentId    ID of comment
+     * @return Comment              Comment
+     */
+    static public function fromDatabase(int $id) : ?Comment {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $comment = $stmt->fetch();
+        return $comment;
+    }
+}
+
+class FavoritePet implements JsonSerializable {
+    private string $username;
+    private int    $petId   ;
+
+    public function __construct(){}
+
+    public function getUser  () : ?User  { return User::fromDatabase($this->username); }
+    public function getUserId() : string { return $this->username                    ; }
+    public function getPet   () : ?Pet   { return Pet ::fromDatabase($this->petId   ); }
+    public function getPetId () : int    { return $this->petId                       ; }
+
+    public function setUserId(string $username) : void { $this->username = $username; }
+    public function setPetId (int    $petId   ) : void { $this->petId    = $petId   ; }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+}
+
+class AdoptionRequest implements JsonSerializable {
+    private  int    $id         ;
+    private  string $text       ;
+    private  string $outcome    ;
+    private  int    $pet        ;
+    private  string $user       ;
+    private  string $requestDate;
+
+    public function __construct(){}
+
+    public function getId      () : int    { return $this->id                      ; }
+    public function getText    () : string { return $this->text                    ; }
+    public function getOutcome () : string { return $this->outcome                 ; }
+    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet ); }
+    public function getPetId   () : int    { return $this->pet                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
+    public function getAuthor  () : ?User  { return $this->getUser()               ; }
+    public function getUserId  () : string { return $this->user                    ; }
+    public function getAuthorId() : string { return $this->getUserId()             ; }
+    public function getDate    () : string { return $this->requestDate             ; }
+
+    public function setId     (int    $id         ) : void { $this->id          = $id         ; }
+    public function setText   (string $text       ) : void { $this->text        = $text       ; }
+    public function setOutcome(string $outcome    ) : void { $this->outcome     = $outcome    ; }
+    public function setPet    (int    $pet        ) : void { $this->pet         = $pet        ; }
+    public function setUser   (string $user       ) : void { $this->user        = $user       ; }
+    public function setAuthor (string $author     ) : void { $this->setUser($author)          ; }
+    public function setDate   (string $requestDate) : void { $this->requestDate = $requestDate; }
+    
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
+    static public function fromDatabase(int $id) : AdoptionRequest {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
+        $stmt->bindValue(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
+        $stmt->execute();
+        $request = $stmt->fetch();
+        return $request;
+    }
+}
+
+class AdoptionRequestMessage implements JsonSerializable {
+    private  int    $id         ;
+    private  string $text       ;
+    private  int    $request    ;
+    private  string $messageDate;
+    private  string $user       ;
+    public function __construct(){}
+
+    public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
+    static public function fromDatabase(string $id) : AdoptionRequestMessage {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage WHERE id=:id');
+        $stmt->bindValue(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequestMessage');
+        $stmt->execute();
+        $message = $stmt->fetch();
+        return $message;
+    }
 }
 
 /**
@@ -47,7 +475,7 @@ function getPetsListedForAdoption() : array {
  * @param string $location      Location
  * @param string $description   Description
  * @param string $postedBy      User that posted the pet
- * @return integer              ID of the new pet
+ * @return int                  ID of the new pet
  */
 function addPet(
     string $name,
@@ -59,112 +487,40 @@ function addPet(
     string $location,
     string $description,
     string $postedBy,
-    array  $files
+    array  $tmpFilePaths
 ) : int {
     // Check if files are OK
-    foreach($files as $id => $file) checkImageFile($file, 1000000);
+    foreach($tmpFilePaths as $id => $tmpFilePath)
+        checkImageFile($tmpFilePath, 1000000);
 
-    global $db;
-    $stmt = $db->prepare('INSERT INTO Pet
-    (name, species, age, sex, size, color, location, description, postedBy)
-    VALUES
-    (:name, :species, :age, :sex, :size, :color, :location, :description, :postedBy)');
-    $stmt->bindParam(':name'       , $name       );
-    $stmt->bindParam(':species'    , $species    );
-    $stmt->bindParam(':age'        , $age        );
-    $stmt->bindParam(':sex'        , $sex        );
-    $stmt->bindParam(':size'       , $size       );
-    $stmt->bindParam(':color'      , $color      );
-    $stmt->bindParam(':location'   , $location   );
-    $stmt->bindParam(':description', $description);
-    $stmt->bindParam(':postedBy'   , $postedBy   );
-    $stmt->execute();
-    $petId = $db->lastInsertId();
+    $pet = new Pet();
+    $pet->setName       ($name       );
+    $pet->setSpecies    ($species    );
+    $pet->setAge        ($age        );
+    $pet->setSex        ($sex        );
+    $pet->setSize       ($size       );
+    $pet->setColor      ($color      );
+    $pet->setLocation   ($location   );
+    $pet->setDescription($description);
+    $pet->setPostedBy   ($postedBy   );
+    $pet->addToDatabase();
 
     // Add images
-    $path = PETS_IMAGES_DIR."/$petId";
+    $path = PETS_IMAGES_DIR."/{$pet->getId()}";
     mkdir($path);
 
-    foreach($files as $id => $file){
-        $ext = checkImageFile($file, 1000000);
+    foreach($tmpFilePaths as $id => $tmpFilePath){
+        $ext = checkImageFile($tmpFilePath, 1000000);
         $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $file['tmp_name'],
+            $tmpFilePath,
             $ext,
             $filepath,
             85
         );
     }
 
-    return $petId;
-}
-
-/**
- * Get pet information.
- *
- * @param integer $id   ID of pet
- * @return array        Array of named indexes containing pet information
- */
-function getPet(int $id) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT *
-    FROM Pet
-    WHERE id=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $pet = $stmt->fetch();
-    return $pet;
-}
-
-/**
- * Edit pet.
- *
- * @param integer $id           Pet ID
- * @param string $name          Pet name
- * @param string $species       Species
- * @param float $age            Age
- * @param string $sex           M/F
- * @param string $size          XS, S, M, L, XL
- * @param string $color         Color
- * @param string $location      Location
- * @param string $description   Description
- * @return void
- */
-function editPet(
-    int $id,
-    string $name,
-    string $species,
-    float  $age,
-    string $sex,
-    string $size,
-    string $color,
-    string $location,
-    string $description,
-    array  $pictures
-){
-    global $db;
-    $stmt = $db->prepare('UPDATE Pet SET
-    name=:name,
-    species=:species,
-    age=:age,
-    sex=:sex,
-    size=:size,
-    color=:color,
-    location=:location,
-    description=:description
-    WHERE id=:id');
-    $stmt->bindParam(':id'         , $id         );
-    $stmt->bindParam(':name'       , $name       );
-    $stmt->bindParam(':species'    , $species    );
-    $stmt->bindParam(':age'        , $age        );
-    $stmt->bindParam(':sex'        , $sex        );
-    $stmt->bindParam(':size'       , $size       );
-    $stmt->bindParam(':color'      , $color      );
-    $stmt->bindParam(':location'   , $location   );
-    $stmt->bindParam(':description', $description);
-    $stmt->execute();
-
-    editPetPictures($id, $pictures);
+    return (int)$pet->getId();
 }
 
 /**
@@ -179,7 +535,7 @@ function editPetPictures(int $petId, array $pictures){
     $swappic = [];
     $newpic  = [];
     foreach($pictures as $key => $picture){
-        if($picture['new']['tmp_name'] !== ''){ // new picture
+        if($picture['new'] !== ''){ // new picture
             $newpic[$key] = $picture;
         } else if($picture['old'] !== ''){ //swap picture
             $swappic[$key] = $picture['old'];
@@ -190,11 +546,11 @@ function editPetPictures(int $petId, array $pictures){
 
     $N = count($pictures);
     $images = scandir($path);
-    foreach($images as $i => $filename){
-        if($filename == '.' || $filename == '..') continue;
-        $id = intval(explode('.', $filename)[0]);
-        $filepath = "$path/$filename";
-        if($id >= $N) unlink($filepath);
+    foreach($images as $i => $tmpFilePathname){
+        if($tmpFilePathname == '.' || $tmpFilePathname == '..') continue;
+        $id = intval(explode('.', $tmpFilePathname)[0]);
+        $tmpFilePathpath = "$path/$tmpFilePathname";
+        if($id >= $N) unlink($tmpFilePathpath);
     }
 }
 
@@ -215,7 +571,7 @@ function swapPetPictures(int $petId, array $swappic){
     foreach($swappic as $newId => $oldId){
         $tmpFilepath   = $path.'/new-'.str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
         $finalFilepath = $path.'/'    .str_pad(strval($newId), 3, '0', STR_PAD_LEFT).'.jpg';
-        if(!rename($tmpFilepath, $finalFilepath)) throw new RuntimeException("Failed to rename pet picture $oldFilepath to $newFilepath");
+        if(!rename($tmpFilepath, $finalFilepath)) throw new RuntimeException("Failed to rename pet picture $tmpFilepath to $finalFilepath");
     }
 }
 
@@ -229,131 +585,33 @@ function swapPetPictures(int $petId, array $swappic){
 function newPetPictures(int $petId, array $newpic){
     $path = PETS_IMAGES_DIR."/$petId";
 
-    foreach($newpic as $id => $file){
-        if($newpic[$id]['new']['size'] == 0) continue;
-        $ext = checkEditImageFile($file, 1000000);
-        $filepath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
+    foreach($newpic as $id => $tmpFilePath){
+        $ext = checkEditImageFile($tmpFilePath, PET_PICTURE_MAX_SIZE);
+        $tmpFilePathpath = $path.'/'.str_pad($id, 3, '0', STR_PAD_LEFT).'.jpg';
         convertImage(
-            $file['new']['tmp_name'],
+            $tmpFilePath['new'],
             $ext,
-            $filepath,
+            $tmpFilePathpath,
             85
         );
     }
 }
 
-/**
- * Remove pet.
- *
- * @param integer $id       ID of pet to be removed
- * @return void
- */
-function removePet(int $id){
-    rmdir_recursive(PETS_IMAGES_DIR."/$id");
-
-    global $db;
-    $stmt = $db->prepare('DELETE FROM Pet
-    WHERE id=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-}
-
 define('IMAGES_EXTENSIONS', ['jpg']);
 
 /**
- * Add pet photo
+ * Get pet main picture
  *
- * @param integer $id           ID of pet
- * @param string $tmp_filepath  File path to temporary file
- * @param integer $idx          Index of image (1 is the first image); should be numbered sequentially
- * @return void
- */
-function addPetPhoto(int $id, string $tmp_filepath, int $idx) {
-    $filepath = PETS_IMAGES_DIR."/$id/".str_pad($idx, 3, '0', STR_PAD_LEFT).".jpg";
-    if(!move_uploaded_file($tmp_filepath, $filepath))
-        throw new RuntimeException('Failed to move uploaded file.');
-}
-
-/**
- * Get pet main photo
- *
- * @param integer $id   Pet ID
+ * @param Pet $pet      Pet
  * @return string       URL of pet main photo
  */
-function getPetMainPhoto(int $id) : string {
-    $dir = PETS_IMAGES_DIR."/$id";
-    if(!is_dir($dir)) return 'resources/img/no-image.svg';
-    
-    $lst = scandir($dir);
-    foreach($lst as $filename){
-        $filepath = "$dir/$filename";
-        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($filepath);
-            return $url;
-        }
-    }
-
-    return 'resources/img/no-image.svg';
+function getPetMainPhoto(Pet $pet) : string {
+    $picture = $pet->getMainPicture();
+    return ($picture == null ? 'resources/img/no-image.svg' : $picture);
 }
 
-/**
- * Get pet photos
- *
- * @param integer $id   Pet ID
- * @return array       Pet photos
- */
-function getPetPhotos(int $id) : array {
-    $dir = PETS_IMAGES_DIR."/$id";
-    $photos = array();
-    if(!is_dir($dir)) return $photos;
-    
-    $lst = scandir($dir);
-    foreach($lst as $filename){
-        $filepath = "$dir/$filename";
-        if(in_array(pathinfo($filepath)['extension'], IMAGES_EXTENSIONS)){
-            $url = path2url($filepath);
-            array_push($photos, $url);
-        }
-    }
-
-    return $photos;
-}
-
-/**
- * Get comments about a pet.
- *
- * @param integer $id   ID of the pet
- * @return array        Array of comments about that pet
- */
-function getPetComments(int $id) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Comment WHERE pet=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $comments = $stmt->fetchAll();
-    for($i = 0; $i < count($comments); ++$i){
-        $comments[$i]['userPictureUrl'] = getUserPicture($comments[$i]['user']);
-        $comments[$i]['commentPictureUrl'] = getCommentPicture($comments[$i]['id']);
-    }
-    return $comments;
-}
-
-/**
- * Get comment about a pet.
- *
- * @param integer $commentId    ID of comment
- * @return array                Comment
- */
-function getPetComment(int $commentId) {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
-    $stmt->bindParam(':id', $commentId);
-    $stmt->execute();
-    $comment = $stmt->fetch();
-    if(!$comment) return $comment;
-    $comment['userPictureUrl'   ] = getUserPicture   ($comment['user']);
-    $comment['commentPictureUrl'] = getCommentPicture($comment['id'  ]);
-    return $comment;
+function getPetComment(int $commentId) : ?Comment {
+    return Comment::fromDatabase($commentId);
 }
 
 /**
@@ -363,7 +621,7 @@ function getPetComment(int $commentId) {
  * @param string $username  User's username
  * @param ?int $answerTo    ID of comment it is replying to, or null if not a reply
  * @param string $text      Text of the comment
- * @param array $file       Is file coming or not?
+ * @param array $tmpFilePath       Is tmpFilePath coming or not?
  * @return integer          ID of the new comment
  */
 function addPetComment(int $id, string $username, ?int $answerTo, string $text, ?string $tmpFileId) : int {
@@ -372,7 +630,7 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
 
     if($tmpFileId != null){
         $tmpFilePath = sys_get_temp_dir().'/'.$tmpFileId;
-        checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
+        checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
     }
 
     global $db;
@@ -381,12 +639,12 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     (pet, user, answerTo, text)
     VALUES
     (:pet, :user, :answerTo, :text)');
-    $stmt->bindParam(':pet'        , $id         );
-    $stmt->bindParam(':user'       , $username   );
-    $stmt->bindParam(':answerTo'   , $answerTo   );
-    $stmt->bindParam(':text'       , $text       );
+    $stmt->bindValue(':pet'        , $id         );
+    $stmt->bindValue(':user'       , $username   );
+    $stmt->bindValue(':answerTo'   , $answerTo   );
+    $stmt->bindValue(':text'       , $text       );
     $stmt->execute();
-    $commentId = $db->lastInsertId();
+    $commentId = (int)$db->lastInsertId();
 
     if($tmpFileId != null){
         setCommentPhoto($commentId, $tmpFilePath);
@@ -395,13 +653,13 @@ function addPetComment(int $id, string $username, ?int $answerTo, string $text, 
     return $commentId;
 }
 
-function setCommentPhoto(int $commentId, string $tmpFilePath){
-    $ext = checkImageFile($tmpFilePath, COMMENT_PHOTO_MAX_SIZE);
-    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
+    $ext = checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
+    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
     convertImage(
         $tmpFilePath,
         $ext,
-        $filepath,
+        $tmpFilePathpath,
         85
     );
 }
@@ -411,19 +669,19 @@ function setCommentPhoto(int $commentId, string $tmpFilePath){
  *
  * @param integer   $commentId      ID of comment
  * @param string    $text           Text of comment
- * @param array     $file           Picture file (as obtained from $_FILES['file_field'])
+ * @param string    $tmpFilePath    Picture tmpFilePath (as obtained from $_FILES['tmpFilePath_field'])
  * @return void
  */
-function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $file){
-    $oldComment = getPetComment($commentId);
+function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $tmpFilePath){
+    $oldComment = Comment::fromDatabase($commentId);
 
     $noFileSent = false;
     try{
-        $ext = checkImageFile($file, 1000000);
+        $ext = checkImageFile($tmpFilePath, 1000000);
     } catch(NoFileSentException $e){
         $noFileSent = true;
     }
-    if($text === '' && $noFileSent && ($deleteFile || $oldComment['commentPictureUrl'] === ''))
+    if($text === '' && $noFileSent && ($deleteFile || $oldComment == null || $oldComment->getPictureUrl() === ''))
         throw new RuntimeException('Comment must have a text or an image');
 
     global $db;
@@ -431,8 +689,8 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     $stmt = $db->prepare('UPDATE Comment SET
     text=:text
     WHERE id=:id');
-    $stmt->bindParam(':text', $text     );
-    $stmt->bindParam(':id'  , $commentId);
+    $stmt->bindValue(':text', $text     );
+    $stmt->bindValue(':id'  , $commentId);
     $stmt->execute();
     
     if($deleteFile){
@@ -440,16 +698,14 @@ function editPetComment(int $commentId, string $text, bool $deleteFile, ?string 
     }
 
     if(!$noFileSent){
-        $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+        $filePath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
         convertImage(
-            $file['tmp_name'],
+            $tmpFilePath,
             $ext,
-            $filepath,
+            $filePath,
             85
         );
     }
-
-    return $commentId;
 }
 
 /**
@@ -463,7 +719,7 @@ function deletePetComment(int $id){
     
     $stmt = $db->prepare('DELETE FROM Comment
     WHERE id=:id');
-    $stmt->bindParam(':id', $id);
+    $stmt->bindValue(':id', $id);
     $stmt->execute();
 
     deletePetCommentPhoto($id);
@@ -476,9 +732,9 @@ function deletePetComment(int $id){
  * @return string        URL of comment photo, or null if there is none
  */
 function getCommentPicture(int $id) : ?string {
-    $url = SERVER_DIR . "/resources/img/comments/$id.jpg";
-    if(!file_exists($url)) return null;
-    return path2url($url);
+    $path = SERVER_DIR . "/resources/img/comments/$id.jpg";
+    if(!file_exists($path)) return null;
+    return path2url($path);
 }
 
 /**
@@ -488,10 +744,10 @@ function getCommentPicture(int $id) : ?string {
  * @return void
  */
 function deletePetCommentPhoto(int $commentId){
-    $filepath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    if(file_exists($filepath))
-        if(!unlink($filepath))
-            throw new CouldNotDeleteFileException("Could not delete '$filepath'");
+    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
+    if(file_exists($tmpFilePathpath))
+        if(!unlink($tmpFilePathpath))
+            throw new CouldNotDeleteFileException("Could not delete '$tmpFilePathpath'");
 }
 
 /**
@@ -501,45 +757,11 @@ function deletePetCommentPhoto(int $commentId){
  * @return void
  */
 function deleteAllPetCommentPhotos(int $id){
-    $comments = getPetComments($id);
+    $comments = Pet::fromDatabase($id)->getComments();
     foreach($comments as $comment)
-        if (getCommentPicture($comment['id']) !== '') // if the comment has a picture
-            deletePetCommentPhoto($comment['id']);
+        if (getCommentPicture($comment->getId()) !== '') // if the comment has a picture
+            deletePetCommentPhoto($comment->getId());
 }
-
-
-/**
- * Get pets added by a user.
- *
- * @param string $username  User's username
- * @return array            Array of pets added by that user
- */
-function getAddedPets(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE postedBy=:username');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
-}
-
-/**
- * Get pets added by a user that were not adopted yet.
- *
- * @param string $username  User's username
- * @return array            Array of pets added by that user
- */
-function getAddedPetsNotAdopted(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE postedBy=:username AND status="forAdoption"');
-    $stmt->bindParam(':username', $username);
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
-}
-
 
 /**
  * Change pet status.
@@ -553,8 +775,8 @@ function changePetStatus(int $petId, string $status): bool {
 
     $stmt = $db->prepare('UPDATE Pet SET status=:status 
                             WHERE id=:petId');
-    $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':status', $status);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->rowCount() > 0;
 }
@@ -569,7 +791,7 @@ function checkIfAdopted(int $petId) : bool {
     global $db;
     $stmt = $db->prepare('SELECT * FROM Pet 
     WHERE id=:petId AND status<>"forAdoption"');
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     return $stmt->fetchColumn() > 0;
 }
@@ -590,64 +812,8 @@ function getPetAdoptionRequests(string $petId) : array {
     user
     FROM AdoptionRequest
     WHERE pet=:petId');
-    $stmt->bindParam(':petId', $petId);
+    $stmt->bindValue(':petId', $petId);
     $stmt->execute();
     $pets = $stmt->fetchAll();
     return $pets;
 }
-
-/**
- * Get adopted pets.
- * 
- * @return array            Array of adopted pets
- */
-function getAdoptedPets() : array {
-    global $db;
-    $stmt = $db->prepare('SELECT * FROM Pet 
-    WHERE status="adopted"');
-    $stmt->execute();
-    $addedPets = $stmt->fetchAll();
-    return $addedPets;
-}
-
-/**
- * Get the user who adopted the given pet.
- *
- * @param string $id        Pet's ID
- * @return array            User who adopted the pet
- */
-function getUserWhoAdoptedPet(int $id): array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    User.username,
-    User.name,
-    User.shelter
-    FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet INNER JOIN User ON User.username=AdoptionRequest.user
-    WHERE AdoptionRequest.outcome="accepted" AND Pet.status="adopted" AND AdoptionRequest.pet=:id');
-    $stmt->bindParam(':id', $id);
-    $stmt->execute();
-    $user = $stmt->fetch();
-    if (!$user) return [];
-    return $user;
-}
-
-/**
- * Get the pets that were published by the user but were adopted.
- *
- * @param string $username      User's username
- * @return array                Array containing the pets.
- */
-function getAdoptedPetsPublishedByUser($username) : array {
-    
-    $adoptedPets = getAdoptedPets();
-    $adoptedPetsPublishedByUser = array();
-
-    foreach($adoptedPets as $pet) {
-        $user = getUserWhoAdoptedPet($pet['id']);
-        if (!is_null($user) && $pet['postedBy'] === $username)
-            array_push($adoptedPetsPublishedByUser, $pet);
-    }
-
-    return $adoptedPetsPublishedByUser;
-}  
-

@@ -12,7 +12,8 @@ if($_GET['username'] != $_SESSION['username']){
 $file = $_FILES['profile_picture'];
 
 try{
-    setUserPhoto($_GET['username'], $file);
+    $user = User::fromDatabase($_GET['username']);
+    $user->setPicture($file);
 
     header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
 } catch (RuntimeException $e) {

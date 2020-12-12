@@ -5,22 +5,22 @@ require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/pets.php';
 require_once SERVER_DIR.'/shelters.php';
-$pet = getPet($_GET['id']);
+$pet = Pet::fromDatabase($_GET['id']);
 
 $N = intval($_POST['photo-number']);
 $pictures = [];
 for($i = 0; $i < $N; ++$i){
     $picture = [
         'old' => $_POST ["old-$i"],
-        'new' => (isset($_FILES["new-$i"]) ? $_FILES["new-$i"] : null)
+        'new' => (isset($_FILES["new-$i"]) ? $_FILES["new-$i"]['tmp_name'] : null)
     ];
     $pictures[] = $picture;
 }
 
 if (isset($_SESSION['username'])){
 
-    if (userCanEditPet($_SESSION['username'], $_GET['id'])) {
-        editPet(
+    if (userCanEditPet($_SESSION['username'], intval($_GET['id']))) {
+        Pet::edit(
             $_GET['id'],
             $_POST['name'],
             $_POST['species'],
@@ -33,7 +33,7 @@ if (isset($_SESSION['username'])){
             $pictures
         );
         header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
-        die();
+        exit();
     }
 
 }
