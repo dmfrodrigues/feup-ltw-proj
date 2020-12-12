@@ -23,7 +23,6 @@ $comment_PUT = function(array $args): void{
         $_PUT['text'],
         $_PUT['picture']
     );
-    print_result($id);
 };
 
 $comment_photo_PUT = function(array $args): void{
@@ -138,8 +137,6 @@ $comment_id_photo_PUT = function(array $args): void{
     }
 
     setCommentPhoto($id, $tmpFilePath);
-    
-    print_result("comment/{$id}/photo");
 };
 
 $comment_id_photo_DELETE = function(array $args): void{

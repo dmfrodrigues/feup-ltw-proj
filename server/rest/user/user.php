@@ -33,7 +33,6 @@ $user_PUT = function(array $args): void{
     }
 
     $_SESSION['username'] = $user->getUsername();
-    print_result("user/{$user->getUsername()}");
 };
 
 $user_id_GET = function(array $args): void{
@@ -72,8 +71,6 @@ $user_id_PUT = function(array $args): void{
         $_PUT['name']
     );
     $_SESSION['username'] = $_PUT['username'];
-
-    print_result("user/{$_PUT['username']}");
 };
 
 $user_id_DELETE = function(array $args): void{
@@ -134,7 +131,6 @@ $user_id_photo_PUT = function(array $args): void{
     }
 
     $user->setPicture($tmpFilePath);
-    print_result($user->getPictureUrl());
 };
 
 $user_id_photo_DELETE = function(array $args): void{
