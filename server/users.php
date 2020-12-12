@@ -61,7 +61,12 @@ class User implements JsonSerializable {
         return path2url($path);
     }
 
-    public function setUsername    ( string $username    ) : void { $this->username     = $username    ; }
+    public function setUsername    ( string $username    ) : void {
+        if(!preg_match('/^[a-zA-Z0-9]+$/', $username)){
+            throw new InvalidArgumentException("username ('{$username}') should contain at least a character, and be made of numbers or letters only");
+        }
+        $this->username = $username;
+    }
     public function setPassword    ( string $password, bool $hashed = true) : void {
         $this->password = ($hashed?
             $password :

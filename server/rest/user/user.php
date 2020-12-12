@@ -17,9 +17,14 @@ $user_PUT = function(array $args): void{
 
     $_PUT = getPUT();
     $user = new User();
-    $user->setUsername($_PUT['username']);
-    $user->setPassword($_PUT['password'], false);
-    $user->setName    ($_PUT['name'    ]);
+    try{
+        $user->setUsername($_PUT['username']);
+        $user->setPassword($_PUT['password'], false);
+        $user->setName    ($_PUT['name'    ]);
+    } catch(InvalidArgumentException $e){
+        http_response_code(400);
+        die();
+    }
     try {
         $user->addToDatabase();
     } catch(UserAlreadyExistsException $e){
