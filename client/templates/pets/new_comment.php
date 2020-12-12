@@ -50,8 +50,7 @@
                     }
                 )
             )
-            .then((response) => response.json())
-            .then(function (newId){
+            .then(function (response){
                 updateCommentsSection();
             });
         } else {
@@ -65,8 +64,7 @@
                     picture : null
                 }
             )
-            .then((response) => response.json())
-            .then(function (newId){
+            .then(function (response){
                 updateCommentsSection();
             });
         }
