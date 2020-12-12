@@ -9,6 +9,8 @@ require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 
+session_start();
+
 $tree = [
     'user' => [null             => new ResourceHandlers(null                 , null, $user_PUT            , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers($user_id_GET         , null, $user_id_PUT         , $user_id_DELETE         ),
