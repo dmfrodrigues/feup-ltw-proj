@@ -12,11 +12,11 @@ require_once SERVER_DIR.'/errors/errors.php';
 $invitations = getShelterPendingInvitations($_SESSION['username']);
 $title = "Shelter invitations";
 
-require_once 'templates/common/header.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
 
 if(isset($_SESSION['isShelter']) && isset($_SESSION['username'])) {
-    require_once 'templates/users/view_shelter_invitations.php';
+    require_once CLIENT_DIR.'/templates/users/view_shelter_invitations.php';
     drawShelterInvitations($invitations, true);
 }
 
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

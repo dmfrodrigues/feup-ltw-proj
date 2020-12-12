@@ -5,13 +5,13 @@
         <span id="username"><?=$user->getUsername()?></span>
     </header>
     <?php
-    require_once 'templates/pets/view_pets_in_profile.php';
+    require_once CLIENT_DIR.'/templates/pets/view_pets_in_profile.php';
     
     $user = User::fromDatabase($_GET['username']);
     if (!isset($_SESSION['isShelter'])) {
         $shelter = User::fromDatabase($user->getUsername())->getShelterId();
         if (!is_null($shelter)) { ?>
-            <h2>Associated with shelter <a href="profile.php?username=<?=$shelter?>"><?=$shelter?></a></h2>
+            <h2>Associated with shelter <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$shelter?>"><?=$shelter?></a></h2>
         <?php }
     }
     else if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) { ?>
@@ -28,7 +28,7 @@
         <?php } else if ($user->getShelterId() === $_SESSION['username']) { ?>
             <button onclick="location.href = '../server/actions/remove_collaborator.php?username=<?=$user->getUsername()?>'">Remove this collaborator</button>
             <?php } else { ?> 
-                        <h2>This user is already associated with shelter <a href="profile.php?username=<?= $user->getShelterId() ?>"><?= $user->getShelterId() ?></a></h2>
+                        <h2>This user is already associated with shelter <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?= $user->getShelterId() ?>"><?= $user->getShelterId() ?></a></h2>
             <?php } ?>
         </div>
     <?php } ?>

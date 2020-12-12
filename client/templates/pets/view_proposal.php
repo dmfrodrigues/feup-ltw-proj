@@ -4,16 +4,16 @@
             <div id="proposal"> 
                 <?php if($isMyPetProposal) { ?>
                     <div id="proposal-header">
-                        <a href="profile.php?username=<?=$request->getUserId()?>">
+                        <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$request->getUserId()?>">
                             <img id="proposal-pic" src="../server/resources/img/profiles/<?=$request->getUserId()?>.jpg">
                         </a>
                     </div>
                 <?php } ?>
             <div id="proposal-info">
                 <?php if($isMyPetProposal) { ?>
-                    <p><?=$request->getUserId()?> on <?=$request->getDate()?> for <a id="proposal-pet" href="pet.php?id=<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
+                    <p><?=$request->getUserId()?> on <?=$request->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_SERVER_URL ?>/pet.php?id=<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
                 <?php } else { ?>
-                    <p>                              <?=$request->getDate()?> for <a id="proposal-pet" href="pet.php?id=<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
+                    <p>                              <?=$request->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_SERVER_URL ?>/pet.php?id=<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
                 <?php } ?>
                 
                 <div id="proposal-message">
@@ -22,11 +22,11 @@
                 
                 <?php if($isMyPetProposal) { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">Answer Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">Answer Request</button>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
-                    <button onclick="location.href='adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">View Chat</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">View Chat</button>
                 <?php } ?>
 
             </div>
@@ -42,12 +42,12 @@
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
-                    <a href="profile.php?username=<?=$adoptionRequest['user']?>">
+                    <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$adoptionRequest['user']?>">
                         <img id="proposal-pic" src="../server/resources/img/profiles/<?=$adoptionRequest['user']?>.jpg">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['messDate']?> for <a id="proposal-pet" href="<?= PROTOCOL_SERVER_URL ?>/pet.php?id=<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
@@ -63,12 +63,12 @@
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
                 <div id="proposal-header">
-                    <a href="profile.php?username=<?=$reqMessage['user']?>">
+                    <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$reqMessage['user']?>">
                         <img id="proposal-pic" src="../server/resources/img/profiles/<?=$reqMessage['user']?>.jpg">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="pet.php?id=<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
+                        <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="<?= PROTOCOL_SERVER_URL ?>/pet.php?id=<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$reqMessage['text']?></textarea>
@@ -86,7 +86,7 @@
             <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
             <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
             <div id="proposal-header">
-                <a href="profile.php?username=<?=$_SESSION['username']?>">
+                <a href="<?= PROTOCOL_SERVER_URL ?>/profile.php?username=<?=$_SESSION['username']?>">
                     <img id="proposal-pic" src="../server/resources/img/profiles/<?=$_SESSION['username']?>.jpg">
                 </a>
             </div>

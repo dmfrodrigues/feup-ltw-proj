@@ -11,6 +11,6 @@ $title = "Edit pet";
 
 $javascript_files = ['js/utils_elements.js', 'js/editPetImage.js'];
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/edit_pet.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/edit_pet.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

@@ -20,7 +20,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="<?= PROTOCOL_CLIENT_URL ?>/resources/favicon.ico">
+        <script>
+            const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
+            const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
+        </script>
         <script src="<?= PROTOCOL_CLIENT_URL ?>/js/rest.js"></script>
+        <script>
+            var api = new RestApi(API_URL);
+        </script>
         <?php
             if(isset($javascript_files)){
                 foreach($javascript_files as $js_file){
@@ -30,10 +37,6 @@
                 }
             }
         ?>
-        <script>
-            const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
-            var api = new RestApi(API_URL);
-        </script>
     </head>
     <body>
         <header>

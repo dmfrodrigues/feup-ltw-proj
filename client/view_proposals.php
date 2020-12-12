@@ -8,10 +8,10 @@ require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 $title = "Proposals";
 
-require_once 'templates/common/header.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $adoptionRequests = User::fromDatabase($_SESSION['username'])->getAdoptionRequestsToMe();
-    require_once 'templates/pets/view_proposal.php';
+    require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
     drawProposals($adoptionRequests);
 }
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';
