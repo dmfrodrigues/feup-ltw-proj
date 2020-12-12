@@ -8,6 +8,13 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class UserAlreadyExistsException extends RuntimeException{}
 
+class SignUpException extends Exception { 
+    public int $errorCode; 
+    public function __construct(int $code) {
+        $this->errorCode = $code;
+    }
+}
+
 class User implements JsonSerializable {
     private  string $username;
     private  string $password;
@@ -100,7 +107,7 @@ class User implements JsonSerializable {
     }
 
     static public function hashPassword(string $password) : string {
-        return sha1($password);
+        return password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
     }
 
     /**
@@ -130,6 +137,9 @@ class User implements JsonSerializable {
 
     public function addToDatabase() : void {
         global $db;
+
+        if (User::exists($this->username))
+            throw new UserAlreadyExistsException("The username ".$this->username." already exists! Please choose another one!");
 
         $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
         (:username, :password, :name)');
@@ -219,8 +229,11 @@ class User implements JsonSerializable {
      */
     static public function exists(string $username) : bool {
         global $db;
-        $stmt = $db->prepare('SELECT username FROM User WHERE username=:username');
-        $stmt->bindValue(':username', $username);
+        $stmt = $db->prepare('SELECT username
+        FROM User
+        WHERE upper(username)=:username');
+        $capitalUsername = strtoupper($username);
+        $stmt->bindParam(':username', $capitalUsername);
         $stmt->execute();
         $users = $stmt->fetchAll();
         return (count($users) > 0);
@@ -236,14 +249,15 @@ class User implements JsonSerializable {
     static public function checkCredentials(string $username, string $password) : bool {
         global $db;
         $password_sha1 = sha1($password);
-        $stmt = $db->prepare('SELECT username
+        $stmt = $db->prepare('SELECT password
         FROM User
-        WHERE username=:username AND password=:password');
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', $password_sha1);
+        WHERE username=:username');
+        $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $users = $stmt->fetchAll();
-        return (count($users) > 0);
+        $user = $stmt->fetch();
+        if ($user !== false && password_verify($password, $user['password'])) 
+            return true;
+        return false;
     }
 
     public function getFavoritePets() : array {

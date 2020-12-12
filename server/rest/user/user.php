@@ -27,7 +27,18 @@ $user_PUT = function(array $args): void{
         die();
     }
     try {
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $_PUT['username'])) 
+            throw new SignUpException(4);
+            
+        if(!preg_match('/^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$/', $_PUT['password'])) 
+            throw new SignUpException(5);
+        
         $user->addToDatabase();
+        print_result(array('success' => true));
+
+    } catch(SignUpException $e) {
+        print_result(array('success' => false, 'errorCode' => $e->errorCode));
+        die();
     } catch(UserAlreadyExistsException $e){
         http_response_code(409);
         die();
