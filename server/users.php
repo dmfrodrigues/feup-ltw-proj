@@ -486,10 +486,6 @@ function editUserPassword(string $username, string $password) {
     $user->updateDatabase();
 }
 
-function deleteUser(string $username): void {
-    User::deleteFromDatabase($username);
-}
-
 /**
  * Erase user picture.
  *
