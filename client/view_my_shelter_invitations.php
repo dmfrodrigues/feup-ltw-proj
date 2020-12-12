@@ -16,7 +16,9 @@ require_once CLIENT_DIR.'/templates/common/header.php';
 
 if(isset($_SESSION['isShelter']) && isset($_SESSION['username'])) {
     require_once CLIENT_DIR.'/templates/users/view_shelter_invitations.php';
+    echo '<section class="messages-column-body">';
     drawShelterInvitations($invitations, true);
+    echo '</section>';
 }
 
 require_once CLIENT_DIR.'/templates/common/footer.php';

@@ -14,8 +14,11 @@ require_once CLIENT_DIR.'/templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $shelterInvitations = getUserShelterInvitation($_SESSION['username']);
     require_once CLIENT_DIR.'/templates/users/view_shelter_invitations.php';
-    if(!isset($_GET['failed']) && !isset($_GET['errorCode']))
+    if(!isset($_GET['failed']) && !isset($_GET['errorCode'])){
+        echo '<section class="messages-column-body">';
         drawShelterInvitations($shelterInvitations, false);
+        echo '</section>';
+    }
     else { // Defensive programming
         drawInvitationError();
         die();

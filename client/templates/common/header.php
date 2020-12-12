@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/proposals.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/shelter.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/nav_bar.css">
+        <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/messages.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/responsive.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">

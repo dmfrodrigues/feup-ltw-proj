@@ -126,9 +126,9 @@
 			"delete-user";
 	}
 
-	div#proposal-message textarea,
-	div#proposal-message-submit textarea{
-		width: 35em;
+	div#proposal,
+	div#proposal-msg {
+		display: table;
 	}
 
 	#nav-bar .hamburger {

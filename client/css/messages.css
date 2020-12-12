@@ -1,0 +1,10 @@
+.messages-column-body{
+    max-width: 1200px;
+	margin: 2em auto;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+    display: block;
+    padding: 1em;
+}
