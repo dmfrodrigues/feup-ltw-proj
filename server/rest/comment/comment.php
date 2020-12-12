@@ -27,26 +27,30 @@ $comment_photo_PUT = function(array $args): void{
 
 $comment_id_GET = function(array $args): void{
     $id = intval($args[1]);
-    $ret = Comment::fromDatabase($id);
-    print_result($ret);
+    $comment = Comment::fromDatabase($id);
+
+    print_result($comment);
 };
 
 $comment_id_PUT = function(array $args): void{
     $id = $args[1];
+    $comment = Comment::fromDatabase($id);
 
     $string = file_get_contents("php://input");
     $_PUT = json_decode($string, true);
-    $ret = editPetComment(
+    
+    editPetComment(
         $id,
         $_PUT['text'],
         false,
         null
     );
-    print_result($ret);
 };
 
 $comment_id_photo_GET = function(array $args): void{
     $id = intval($args[1]);
+    $comment = Comment::fromDatabase($id);
+
     $url = PROTOCOL_SERVER_URL . "/resources/img/comments/{$id}.jpg";
     header("Location: {$url}");
     exit();
@@ -54,6 +58,7 @@ $comment_id_photo_GET = function(array $args): void{
 
 $comment_id_photo_PUT = function(array $args): void{
     $id = $args[1];
+    $comment = Comment::fromDatabase($id);
 
     // TODO: Replace this part by a PUT request to comment/photo
     $file = fopen('php://input', 'r');
@@ -69,7 +74,8 @@ $comment_id_photo_PUT = function(array $args): void{
 };
 
 $comment_id_photo_DELETE = function(array $args): void{
-    $id = $args[1];
+    $id = intval($args[1]);
+    $comment = Comment::fromDatabase($id);
 
     try{
         deletePetCommentPhoto($id);
