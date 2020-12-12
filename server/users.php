@@ -513,22 +513,6 @@ function changePictureUsername(string $oldUsername, string $newUsername) {
 }
 
 /**
- * Remove pet from user's favorites list.
- *
- * @param string $username  User's username
- * @param integer $id       ID of pet
- * @return void
- */
-function removeFromFavorites(string $username, int $id){
-    global $db;
-    $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
-    username=:username AND petId=:id');
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':id'      , $id      );
-    $stmt->execute();
-}
-
-/**
  * Get a user's favorite pets.
  *
  * @param string $username  User's username

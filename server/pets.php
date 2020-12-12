@@ -280,6 +280,22 @@ class Pet implements JsonSerializable {
         $stmt->bindValue(':id'      , $this->getId()      );
         $stmt->execute();
     }
+
+    /**
+     * Remove pet from user's favorites list.
+     *
+     * @param string $username  User's username
+     * @param integer $id       ID of pet
+     * @return void
+     */
+    public function removeFromFavorites(User $user) : void {
+        global $db;
+        $stmt = $db->prepare('DELETE FROM FavoritePet WHERE
+        username=:username AND petId=:id');
+        $stmt->bindValue(':username', $user->getUsername());
+        $stmt->bindValue(':id'      , $this->getId()      );
+        $stmt->execute();
+    }
 }
 
 class Comment implements JsonSerializable {
