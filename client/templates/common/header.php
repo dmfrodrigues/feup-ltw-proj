@@ -32,6 +32,7 @@
         ?>
         <script>
             const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
+            var api = new RestApi(API_URL);
         </script>
     </head>
     <body>

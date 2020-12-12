@@ -99,8 +99,6 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
 }
 
-api = new RestApi(API_URL);
-
 async function updateAdoptionChat() {
     let requestId = document.querySelector('input[name=requestID]').value;
     let response = await api.get(`adoptionMessage/${requestId}`);
