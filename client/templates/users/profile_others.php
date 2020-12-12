@@ -22,11 +22,11 @@
                     <button onclick="location.href = 'propose_to_collaborate.php?username=<?=$user->getUsername()?>'">Propose to collaborate</button>
                 <?php }
                 else { ?>
-                    <button onclick="location.href = '../server/actions/remove_collaboration_proposal.php?username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
+                    <button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/actions/remove_collaboration_proposal.php?username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
                 <?php }
             ?>            
         <?php } else if ($user->getShelterId() === $_SESSION['username']) { ?>
-            <button onclick="location.href = '../server/actions/remove_collaborator.php?username=<?=$user->getUsername()?>'">Remove this collaborator</button>
+            <button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/actions/remove_collaborator.php?username=<?=$user->getUsername()?>'">Remove this collaborator</button>
             <?php } else { ?> 
                         <h2>This user is already associated with shelter <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $user->getShelterId() ?>"><?= $user->getShelterId() ?></a></h2>
             <?php } ?>

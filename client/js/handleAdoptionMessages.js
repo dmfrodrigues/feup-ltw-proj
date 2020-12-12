@@ -53,7 +53,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
     let profilePic = document.createElement('img');
     profilePic.id = "proposal-pic";
-    profilePic.src = "../server/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
+    profilePic.src = PROTOCOL_SERVER_URL+"/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
 
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
