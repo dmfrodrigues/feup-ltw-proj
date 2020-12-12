@@ -5,7 +5,7 @@
       <button id="signup-shelter-button" class="dark" onclick="switchSignUpForms('shelter')">Shelters</button> 
     </header>
 
-    <form onsubmit="return onSubmit_signup(this)">
+    <form method="post" onsubmit="return onSubmit_signup(this)">
       <label> Name:
       <input type="text" id="name" name="name" placeholder="Name" required></label>
       <label> Username:
@@ -24,6 +24,7 @@
     <script>
       function onSubmit_signup(el){
         if(!signup_check()) return false;
+        if(el.querySelector('#shelterName') !== null) return true;
         let username = el.querySelector('#username').value;
         let password = el.querySelector('#pwd'     ).value;
         let name     = el.querySelector('#name'    ).value;
