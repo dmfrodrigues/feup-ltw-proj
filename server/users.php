@@ -318,6 +318,22 @@ class User implements JsonSerializable {
 
         return $requests;
     }
+
+    public function getPetsIAdopted() : array {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Pet 
+        WHERE status="adopted"
+        AND id IN (
+            SELECT pet FROM AdoptionRequest
+            WHERE user=:username
+            AND outcome="accepted"
+        )');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
+        $pets = $stmt->fetchAll();
+        return $pets;
+    }
 }
 
 class NoSuchUserException extends RuntimeException{}
@@ -715,25 +731,5 @@ function refuseOtherProposals(int $requestId, int $petId) {
  * @return array            Array of adopted pets
  */
 function getPetsAdoptedByUser(string $username) : array {
-    global $db;
-    $stmt = $db->prepare('SELECT
-    Pet.id,
-    Pet.name,
-    Pet.species,
-    Pet.age,
-    Pet.sex,
-    Pet.size,
-    Pet.color,
-    Pet.location,
-    Pet.description,
-    Pet.status,
-    Pet.adoptionDate,
-    Pet.postedBy
-    FROM Pet INNER JOIN AdoptionRequest ON Pet.id=AdoptionRequest.pet
-    WHERE AdoptionRequest.user=:username
-    AND Pet.status="adopted" AND AdoptionRequest.outcome="accepted"');
-    $stmt->bindValue(':username', $username);
-    $stmt->execute();
-    $pets = $stmt->fetchAll();
-    return $pets;
+    return User::fromDatabase($_SESSION['username'])->getPetsIAdopted();
 }

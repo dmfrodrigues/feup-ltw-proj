@@ -8,7 +8,8 @@ require_once SERVER_DIR . '/users.php';
 require_once SERVER_DIR . '/pets.php';
 
 if(isset($_SESSION['username'])){
-    $adoptedPets = getPetsAdoptedByUser($_SESSION['username']);
+    $user = User::fromDatabase($_SESSION['username']);
+    $adoptedPets = $user->getPetsIAdopted();
     $title = "Adopted pets by " . $_SESSION['username'];
 }
 
