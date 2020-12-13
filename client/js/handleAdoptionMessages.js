@@ -58,10 +58,11 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
     
+    /*
     if(lastInsertedComment.user == user) {
         proposalHeader.style.right = "28.5em";
         proposalInfo.style.marginLeft = "15em";
-    }
+    }*/
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
