@@ -36,8 +36,13 @@
             name    : name
           }
         )
-        .then(function (response){
-          return response.json();
+        .then(function (response) {
+          if(response.status != 400)
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
+          else if(!/[\w]+/.test(username))
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=4`;
+          else
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=5`;
         })
         .then(function (jsonResponse) {
           console.log(jsonResponse);

@@ -8,13 +8,6 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
 class UserAlreadyExistsException extends RuntimeException{}
 
-class SignUpException extends Exception { 
-    public int $errorCode; 
-    public function __construct(int $code) {
-        $this->errorCode = $code;
-    }
-}
-
 class User implements JsonSerializable {
     private  string $username;
     private  string $password;
@@ -74,6 +67,9 @@ class User implements JsonSerializable {
         $this->username = $username;
     }
     public function setPassword    ( string $password, bool $hashed = true) : void {
+        if(!preg_match('/^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$/', $password)) 
+            throw new InvalidArgumentException("Password needs be at least 7 characters long 
+            and contain at least one uppercase letter and 1 special character");
         $this->password = ($hashed?
             $password :
             (User::hashPassword($password))
