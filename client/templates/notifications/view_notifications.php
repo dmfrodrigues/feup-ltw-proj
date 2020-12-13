@@ -10,11 +10,15 @@
             <?php foreach($notifications as $notification) { 
                 if ($notification['read'] == 0) { ?>
                     <li><div id="unread-notification">
+                        <p>
                         <?=$notification['text']?>
+                        </p>
                     </div></li>
                 <?php } else { ?>
                     <li><div id="read-notification">
+                        <p>
                         <?=$notification['text']?>
+                        </p>
                     </div></li>
                 <?php } ?>
             <?php } ?>
