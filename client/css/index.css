@@ -1,0 +1,54 @@
+#index-body{
+    margin: 2em 1em 2em 1em;
+	padding: 2em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	text-align: center;
+	display: block;
+}
+
+#index-body header {
+    padding: 1em;
+    height: auto;
+    width: auto;
+    margin: auto;
+    background-color: var(--main-color);
+}
+
+#index-body > header > h2 {
+    color: white;
+}
+
+#index-body > header > p {
+    color: var(--dark-color);
+}
+
+.pets-main-page a {
+    text-decoration: none;
+    color: var(--main-color);  
+}
+
+.pets-main-page > h3 > a {
+    text-decoration: none;
+    color: var(--dark-color);  
+}
+
+
+.pets-main-page a:hover
+{
+    color: var(--main-color-light);
+    transition: 0.2s;
+}
+
+.pets-main-page h1{
+    font-size: x-large;
+    margin-top: 5em;
+
+}
+
+.pets-main-page > div{
+    display: grid;
+    grid-template-columns: repeat(3, 0.1fr);
+    column-gap: 1em;
+    justify-content: center;  
+}

@@ -3,6 +3,7 @@
     <head>
         <title><?php if(isset($title)) echo ($title . ' | ')?>Forever Home</title>    
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="<?=$CSRFtoken?>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/main.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/button.css">
@@ -17,6 +18,7 @@
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/shelter.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/nav_bar.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/messages.css">
+        <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/index.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/responsive.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -46,12 +48,12 @@
             <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="<?= PROTOCOL_CLIENT_URL ?>/signup.php">Sign up</a>
-                <a href="<?= PROTOCOL_API_URL ?>/login">Login</a>
+                <a href="<?= PROTOCOL_API_URL ?>/login?csrf=<?=$token?>">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
-                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="resources/img/new_notifications.svg" ></a>
+                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/new_notifications.svg" ></a>
                     <?php } else { ?>
-                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="resources/img/no_notifications.svg" ></a>
+                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/no_notifications.svg" ></a>
                     <?php } ?> 
                     <span><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 

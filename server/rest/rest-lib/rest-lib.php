@@ -26,6 +26,7 @@ class RestServer {
     private $_tree;
     public function __construct(array $tree){ $this->_tree = $tree; }
     public function serve(string $uri) : void {
+        
         if(substr($uri, -1) != '/') $uri = $uri.'/';
 
         $tree = $this->_tree;
@@ -61,6 +62,18 @@ class RestServer {
         if($handler == null){
             http_response_code(405);
             die();
+        }
+
+        $harmlessRoutes = ['login'];
+        if(!in_array($args[0], $harmlessRoutes)) {
+            $headers = apache_request_headers();
+            if(!isset($headers['X-CSRFToken']) && !isset($_GET['csrf']) && !isset($_COOKIE['CSRFToken'])) {
+                http_response_code(400);
+                die();
+            }
+            $csrfTok = isset($headers['X-CSRFToken']) ? $headers['X-CSRFToken'] : $_GET['csrf'];
+                
+            Authentication\verifyAPI_Token($csrfTok); 
         }
 
         $handler($args);

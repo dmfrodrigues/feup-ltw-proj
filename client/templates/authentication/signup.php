@@ -16,7 +16,7 @@
       <input type="password" id="rpt_pwd" placeholder="Password" required></label>
       <?php 
             if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
-            <p id="simple-fail-msg">Signup Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
+              <p id="simple-fail-msg">Signup Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
       <?php } ?>
           
       <input type="submit" class="dark" value="Sign up" id="submit-signup">
@@ -36,18 +36,18 @@
             name    : name
           }
         )
-        .then(function (response){
-          return response.json();
-        })
-        .then(function (jsonResponse) {
-          console.log(jsonResponse);
-          if(jsonResponse.errorCode) 
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=${jsonResponse.errorCode}`;
-          else
+        .then(function (response) {
+          if(response.status == 409)
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=2`;
+          else if(response.status != 400)
             location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
+          else if(!/[\w]+/.test(username))
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=4`;
+          else
+            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=5`;
         })
-        .catch(function (error){
-          console.log(error);
+        .catch(function (error) {
+          console.error(error);
         });
         return false;
       }
