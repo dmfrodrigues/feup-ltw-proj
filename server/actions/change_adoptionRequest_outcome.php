@@ -12,6 +12,8 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
 
+$user = User::fromDatabase($_GET['username']);
+
 if ($user->getUsername() != $_SESSION['username']) 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 
@@ -54,7 +56,7 @@ if($_GET['outcome'] === 'accepted') {
 if($_GET['outcome'] === 'rejected') {    
     
     $adoptionRequest = getAdoptionRequest($_GET['requestId']);
-    $userWhoProposed = $adoptionRequest['user'];
+    $userWhoProposed = User::fromDatabase($adoptionRequest['user']);
     $userWhoPostedPet = $adoptionRequest['postedBy'];
     addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet . " was refused.");
 }
