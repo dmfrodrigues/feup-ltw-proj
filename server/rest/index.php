@@ -32,7 +32,7 @@ $tree = [
         '[0-9]+'                => new ResourceHandlers($adoptionMsg_GET     , null, null                 , null                    )
     ],
     'notification' => [null     => new ResourceHandlers(null                 , null,                  null,                     null),
-        '[0-9]+'                => new ResourceHandlers($notification_GET    , null, $notification_PUT    , $notification_DELETE    )
+        '[0-9]+'                => new ResourceHandlers(null                 , null, $notification_PUT    , null                    )
     ]
 ];
 
