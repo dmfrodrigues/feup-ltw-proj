@@ -33,7 +33,7 @@ if (isset($_SESSION['username'])) {
 <?php
 }
 
-$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/handleFavorites.js'];
+$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js'];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/common/header.php';

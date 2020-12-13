@@ -46,6 +46,7 @@ class RestApi {
      * @param {String} uri URI
      */
     head(uri){
+        console.log(document.querySelector('meta[name=csrf-token]').content);
         return fetch(
             this._url_from_uri(uri),
             {

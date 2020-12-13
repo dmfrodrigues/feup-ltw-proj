@@ -88,7 +88,7 @@
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
         el_userPic.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${comment.user}`;
-        el_userPic.children[0].src = API_URL + `user/${comment.user}/photo`;
+        el_userPic.children[0].src = API_URL + `user/${comment.user}/photo?csrf=<?=$_SESSION['csrf']?>`;
 
         let el_text = editElement.querySelector("#comment-text");
         el_text.value = comment.text;
@@ -96,7 +96,7 @@
         let el_img = editElement.querySelector("#comment-picture");
         api.head(`comment/${comment.id}/photo`)
         .then(function(response){
-            el_img.src = API_URL + `comment/${comment.id}/photo`;
+            el_img.src = API_URL + `comment/${comment.id}/photo?csrf=<?=$_SESSION['csrf']?>`;
         })
         .catch(function(error){
             console.error(error);
