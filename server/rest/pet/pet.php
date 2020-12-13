@@ -10,7 +10,6 @@ require_once SERVER_DIR . '/Pet.php';
 $pet_new_GET = function(array $args): void {
     $auth = Authentication\check();
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::WRITE, $auth, null);
-    if($auth != null){ header("Location: {$_SERVER['HTTP_REFERER']}"); }
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
     require_once CLIENT_DIR.'/add_pet.php';
 };
