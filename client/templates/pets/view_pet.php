@@ -78,8 +78,14 @@
         $petAdopted = true;
 
     $shelter = getPetShelter($pet->getId());
-        
-    if(isset($_SESSION['username']) && Authorization\check(Resource::PET, Method::EDIT, $auth, $pet)){ ?>
+    
+    $isAuthorized = Authorization\check(
+        Authorization\Resource::PET,
+        Authorization\Method::EDIT,
+        $auth,
+        $pet
+    );
+    if(isset($_SESSION['username']) && $isAuthorized){ ?>
         <section id="action-edit-pet">
             <ul>
                 <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></li>
