@@ -9,8 +9,8 @@
 
 #index-body header {
     padding: 1em;
-    height: 10em;
-    width: 80em;
+    height: auto;
+    width: auto;
     margin: auto;
     background-color: var(--main-color);
 }
@@ -51,5 +51,4 @@
     grid-template-columns: repeat(3, 0.1fr);
     column-gap: 1em;
     justify-content: center;  
-
 }

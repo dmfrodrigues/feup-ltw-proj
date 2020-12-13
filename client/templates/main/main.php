@@ -1,8 +1,6 @@
 <section id="index-body">
     <header>
         <h2>A website where users can list rescue pets for adoption and offer them a forever home .</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquet vitae risus eget iaculis.
-            Curabitur leo urna, porta eu malesuada ac, congue at lorem. Vivamus sed nibh sapien. Maecenas at.</p>
     </header>
     <section class="pets-main-page">
         <h1><a href="pets.php">Pets Available for Adoption</a></h1>
