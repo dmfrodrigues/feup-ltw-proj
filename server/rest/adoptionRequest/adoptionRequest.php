@@ -7,6 +7,9 @@ require_once __DIR__ . '/../print.php';
 
 // adoptionMessages.php
 $adoptionRequest_id_messages_GET = function(array $args): void {
+    $id = $args[1];
+    $pet = Pet::fromDatabase($id);
+
     $auth = Authentication\check();
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     

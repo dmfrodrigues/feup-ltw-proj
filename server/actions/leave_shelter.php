@@ -10,10 +10,8 @@ require_once SERVER_DIR.'/errors/errors.php';
 
 session_start();
 
-$shelter = $_GET['shelter'];
-
 if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
-    $userShelter = User::fromDatabase($_SESSION['username'])->getShelterId();
+    $userShelter = User::fromDatabase($_SESSION['username'])->getShelter();
     if ($shelter === $userShelter) {
         leaveShelter($_SESSION['username']);
 

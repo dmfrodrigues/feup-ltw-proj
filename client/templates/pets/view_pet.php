@@ -39,9 +39,9 @@
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets();
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/heart.svg" height="30px">Add to favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
                 <button id="ask" onclick="location.href = '#comments'"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/question-mark.png" height="42px">Ask question</button>
                 <?php  if($_SESSION['username'] != $pet->getPostedById() ) { ?>

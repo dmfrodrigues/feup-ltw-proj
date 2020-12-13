@@ -6,7 +6,7 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
-$pet = Pet::fromDatabase($_GET['id']);
+
 $title = "New proposal";
 
 if (isset($_SESSION['username'])) {

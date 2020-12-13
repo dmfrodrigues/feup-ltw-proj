@@ -9,10 +9,8 @@ require_once SERVER_DIR.'/Shelter.php';
 
 session_start();
 
-$user = $_GET['username'];
-
 if (isset($_SESSION['isShelter']) && isset($_SESSION['username']) ) {
-    leaveShelter($user);
+    leaveShelter($user->getId());
     header("Location: " . PROTOCOL_API_URL."/user/" . $_SESSION['username']);
 }
 

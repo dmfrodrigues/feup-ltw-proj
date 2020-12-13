@@ -11,12 +11,12 @@ session_start();
 $failed = true;
 $usernameChanged = false;
 
-if(isShelter($_GET['username'])) {
+if(isShelter($user->getUsername())) {
     if(isset($_SESSION['username'])) {
 
-        $shelter = Shelter::fromDatabase($_GET['username']);
+        $shelter = Shelter::fromDatabase($user->getUsername());
 
-        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
+        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $user->getUsername()) {
             updateShelterInfo(
                 $shelter->getUsername(),
                 $_POST['username'],
@@ -47,9 +47,7 @@ if(isShelter($_GET['username'])) {
 }
 else {
 
-    $user = User::fromDatabase($_GET['username']);
-
-    if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
+    if(isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) {
         
         editUser(
             $user->getUsername(),
@@ -66,10 +64,10 @@ if (!$failed) {
     if ($usernameChanged)
         header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
     else
-        header("Location: " . PROTOCOL_API_URL . "/user/{$_GET['username']}");
+        header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
     
 } 
 else
-    header("Location: " . PROTOCOL_API_URL . "/user/{$_GET['username']}&failed=1");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}&failed=1");
 
 die();

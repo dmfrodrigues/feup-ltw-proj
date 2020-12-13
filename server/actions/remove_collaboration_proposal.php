@@ -10,7 +10,6 @@ require_once SERVER_DIR.'/Shelter.php';
 session_start();
 
 $shelter = $_SESSION['username'];
-$user = $_GET['username'];
 
 if (isset($_SESSION['isShelter']) && isset($shelter)) {
     deleteShelterInvitation($user, $shelter);

@@ -10,7 +10,7 @@ require_once SERVER_DIR.'/Shelter.php';
 
 session_start();
 
-if ($_GET['username'] != $_SESSION['username']) 
+if ($user->getUsername() != $_SESSION['username']) 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 
 changeAdoptionRequestOutcome($_GET['requestId'], $_GET['outcome']);

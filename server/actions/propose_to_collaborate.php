@@ -7,7 +7,7 @@ require_once SERVER_DIR.'/Shelter.php';
 
 session_start();
 
-$username = $_GET['username'];
+$username = $user->getUsername();
 
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){
     addShelterInvitation($_POST['description'], $username, $_SESSION['username']);

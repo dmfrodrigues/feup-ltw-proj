@@ -14,7 +14,7 @@ $javascript_files = [
 ];
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-$adoptionRequest = getAdoptionRequest($_GET['id']);
+$adoptionRequest = getAdoptionRequest($pet->getId());
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
     require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
     drawAdoptionRequestInitialMessage($adoptionRequest);

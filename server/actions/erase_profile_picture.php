@@ -7,14 +7,14 @@ require_once SERVER_DIR.'/Shelter.php';
 
 session_start();
 
-if($_GET['username'] != $_SESSION['username']){
+if($user->getUsername() != $_SESSION['username']){
     header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}");
 }
 
 try{
-    deleteUserPhoto($_GET['username']);
+    deleteUserPhoto($user->getUsername());
 
-    header("Location: " . PROTOCOL_API_URL . "/user/{$_GET['username']}");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
 } catch(CouldNotDeleteFileException $e){
     echo "Could not delete file";
     header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);
