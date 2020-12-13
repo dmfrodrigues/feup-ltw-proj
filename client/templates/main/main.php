@@ -46,7 +46,9 @@
         else{ ?>
         <div>
         <?php
-        for($idx=count($petsAdopted)-1; $idx > (count($petsAdopted) - 3); $idx--) {
+        $_pets = 0;
+        for($idx=count($petsAdopted)-1; $idx >= 0 && $_pets < 3; $idx--) {
+            $_pets++;
             $pet = $petsAdopted[$idx];
             $intro = explode(PHP_EOL, $pet->getDescription())[0];
             $photoUrl = getPetMainPhoto($pet);
