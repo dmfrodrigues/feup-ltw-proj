@@ -64,7 +64,7 @@
     function drawAllOtherMessages($adoptionRequestMessages): void { 
         foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
-                <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
+                <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
                 <input type="hidden" name="userWhoProposed" value="<?=$reqMessage['user']?>">
                 <input type="hidden" name="petName" value="<?=$reqMessage['petName']?>">
                 <div id="proposal-header">

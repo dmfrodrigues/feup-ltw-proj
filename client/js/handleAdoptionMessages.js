@@ -19,10 +19,18 @@ async function addNewAdoptionRequestMsg() {
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
 
+    let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]').value;
+
+    console.log(user);
+    console.log(document.querySelector('input[name=userWhoProposed]').value);
+
+    let notificationUser;
+    (isOwnerSendingMessage === true) ? notificationUser = user : notificationUser = document.querySelector('input[name=userWhoProposed]').value;
+
     api.put(
         `notification`,
         {
-            username: document.querySelector('input[name=userWhoProposed]').value,
+            username: notificationUser,
             subject : `newMessage`,
             text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
         }
