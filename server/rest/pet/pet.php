@@ -95,7 +95,7 @@ $pet_id_comments_GET = function(array $args): void{
         Authorization\Resource::COMMENT,
         Authorization\Method  ::READ  ,
         $auth,
-        $pet
+        null
     );
 
     print_result($ret);
