@@ -4,9 +4,12 @@ require_once __DIR__.'/server.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Comment.php';
 require_once SERVER_DIR.'/FavoritePet.php';
+require_once 'rest/authentication.php';
 require_once SERVER_DIR.'/AdoptionRequest.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
+
+use function Authentication\noHTML;
 
 class Pet implements JsonSerializable {
     private  int    $id          ;
@@ -23,19 +26,19 @@ class Pet implements JsonSerializable {
     private  string $postedBy    ;
     public function __construct(){}
 
-    public function getId          () : ?int    { return $this->id          ; }
-    public function getName        () :  string { return $this->name        ; }
-    public function getSpecies     () :  string { return $this->species     ; }
-    public function getAge         () :  float  { return $this->age         ; }
-    public function getSex         () :  string { return $this->sex         ; }
-    public function getSize        () :  string { return $this->size        ; }
-    public function getColor       () :  string { return $this->color       ; }
-    public function getLocation    () :  string { return $this->location    ; }
-    public function getDescription () :  string { return $this->description ; }
-    public function getStatus      () :  string { return $this->status      ; }
-    public function getAdoptionDate() : ?string { return $this->adoptionDate; }
-    public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy); }
-    public function getPostedById  () : string  { return $this->postedBy    ; }
+    public function getId          () : ?int    { return noHTML($this->id)                   ; }
+    public function getName        () :  string { return noHTML($this->name)                 ; }
+    public function getSpecies     () :  string { return noHTML($this->species)              ; }
+    public function getAge         () :  float  { return noHTML($this->age)                  ; }
+    public function getSex         () :  string { return noHTML($this->sex)                  ; }
+    public function getSize        () :  string { return noHTML($this->size)                 ; }
+    public function getColor       () :  string { return noHTML($this->color)                ; }
+    public function getLocation    () :  string { return noHTML($this->location)             ; }
+    public function getDescription () :  string { return noHTML($this->description)          ; }
+    public function getStatus      () :  string { return noHTML($this->status)               ; }
+    public function getAdoptionDate() : ?string { return noHTML($this->adoptionDate)         ; }
+    public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy) ; }
+    public function getPostedById  () : string  { return noHTML($this->postedBy)             ; }
     /**
      * @return User|null|string
      */
@@ -95,18 +98,62 @@ class Pet implements JsonSerializable {
         return $comments;
     }
 
-    public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
-    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
-    public function setSpecies     ( string $species     ) : void { $this->species      = $species     ; }
-    public function setAge         ( float  $age         ) : void { $this->age          = $age         ; }
-    public function setSex         ( string $sex         ) : void { $this->sex          = $sex         ; }
-    public function setSize        ( string $size        ) : void { $this->size         = $size        ; }
-    public function setColor       ( string $color       ) : void { $this->color        = $color       ; }
-    public function setLocation    ( string $location    ) : void { $this->location     = $location    ; }
-    public function setDescription ( string $description ) : void { $this->description  = $description ; }
-    public function setStatus      ( string $status      ) : void { $this->status       = $status      ; }
+    public function setId (int $id) : void { 
+        $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->id = $newId; 
+    }
+
+    public function setName (string $name) : void { 
+        $newName = filter_var($name, FILTER_SANITIZE_STRING);
+        $this->name = $newName; 
+    }
+
+    public function setSpecies (string $species) : void { 
+        $newSpecies = filter_var($species, FILTER_SANITIZE_STRING);
+        $this->species = $newSpecies; 
+    }
+
+    public function setAge (float $age) : void { 
+        $newAge = filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+        $this->age = $newAge; 
+    }
+
+    public function setSex (string $sex) : void { 
+        $newSex = filter_var($sex, FILTER_SANITIZE_STRING);
+        $this->sex = $newSex; 
+    }
+
+    public function setSize (string $size) : void { 
+        $newSize = filter_var($size, FILTER_SANITIZE_NUMBER_INT);
+        $this->size = $newSize; 
+    }
+
+    public function setColor (string $color) : void { 
+        $newColor = filter_var($color, FILTER_SANITIZE_STRING);
+        $this->color = $newColor; 
+    }
+
+    public function setLocation (string $location) : void { 
+        $newLocation = filter_var($location, FILTER_SANITIZE_STRING);
+        $this->location = $newLocation; 
+    }
+
+    public function setDescription (string $description) : void { 
+        $newDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        $this->description = $newDescription; 
+    }
+
+    public function setStatus (string $status) : void { 
+        $newStatus = filter_var($status, FILTER_SANITIZE_STRING);
+        $this->status = $newStatus; 
+    }
+
+    public function setPostedBy (string $postedBy) : void { 
+        $newpostedBy = filter_var($postedBy, FILTER_SANITIZE_STRING);
+        $this->postedBy = $newpostedBy; 
+    }
+    
     public function setAdoptionDate(?string $adoptionDate) : void { $this->adoptionDate = $adoptionDate; }
-    public function setPostedBy    ( string $postedBy    ) : void { $this->postedBy     = $postedBy    ; }
     public function setAuthor      ( string $author      ) : void { $this->setPostedBy($author)        ; }
 
     public function jsonSerialize() {
