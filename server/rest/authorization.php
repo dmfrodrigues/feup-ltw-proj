@@ -52,11 +52,12 @@ namespace Authorization {
     
     // ======================================================== PROFILE ========================================================
     Rules::add_rule(Resource::PROFILE, Method::READ , function(?\User $user, ?\User $otherUser){ return true               ; }); // Everyone can see
+    Rules::add_rule(Resource::PROFILE, Method::WRITE, function(?\User $user, ?\User $otherUser){ return true               ; }); // Everyone can write
     Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser){ return $user == $otherUser; }); // Edit itself
     
     // ======================================================== PET ========================================================
     Rules::add_rule(Resource::PET, Method::READ , function(?\User $user, ?\Pet $pet){ return true                      ; }); // Everyone can see
-    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet){ return $pet->getAuthor() == $user; }); // Author can write
+    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet){ return $user !== null            ; }); // Anyone can write
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet){ return $pet->getAuthor() == $user; }); // Author can edit
     
     // ======================================================== ADOPTION REQUEST ========================================================
@@ -72,7 +73,7 @@ namespace Authorization {
 
     // ======================================================== COMMENT ========================================================
     Rules::add_rule(Resource::COMMENT, Method::READ , function(?\User $user, ?\Comment $comment){ return true                          ; }); // Everyone can see
-    Rules::add_rule(Resource::COMMENT, Method::WRITE, function(?\User $user, ?\Comment $comment){ return true                          ; }); // Everyone can write
+    Rules::add_rule(Resource::COMMENT, Method::WRITE, function(?\User $user, ?\Comment $comment){ return $user !== null                ; }); // Everyone can write
     Rules::add_rule(Resource::COMMENT, Method::EDIT , function(?\User $user, ?\Comment $comment){ return $user == $comment->getAuthor(); }); // Author can edit its own comment
 
     // ======================================================== FAVORITE PET ========================================================
