@@ -15,6 +15,6 @@ if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) {
     $shelter = Shelter::fromDatabase($_SESSION['username']);
 }
 
-require_once 'templates/common/header.php';
-require_once 'templates/shelters/propose_to_collaborate.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/shelters/propose_to_collaborate.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

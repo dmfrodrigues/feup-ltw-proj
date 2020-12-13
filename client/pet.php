@@ -31,6 +31,6 @@ if (isset($_SESSION['username'])) {
 
 $javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/view_pet.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/view_pet.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

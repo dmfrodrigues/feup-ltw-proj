@@ -13,8 +13,8 @@ $user = User::fromDatabase($_GET['username']);
 
 $title = "Change password";
 
-require_once('templates/common/header.php');
+require_once CLIENT_DIR.'/templates/common/header.php';
 if (isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username'])
-    require_once('templates/users/change_password.php');
+    require_once CLIENT_DIR.'/templates/users/change_password.php';
 
-require_once('templates/common/footer.php');
+require_once CLIENT_DIR.'/templates/common/footer.php';

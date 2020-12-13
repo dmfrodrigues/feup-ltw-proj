@@ -10,6 +10,6 @@ $title = "Adopted pets";
 
 $javascript_files = ['js/filterPets.js'];
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/list_pets_adopted.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/list_pets_adopted.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

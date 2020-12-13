@@ -4,6 +4,7 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
 require_once __DIR__ . '/api_main.php';
 require_once API_DIR . '/rest-lib/rest-lib.php';
+require_once API_DIR . '/login/login.php';
 require_once API_DIR . '/user/user.php';
 require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
@@ -12,6 +13,7 @@ require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 session_start();
 
 $tree = [
+    'login'                     => new ResourceHandlers($login_GET           , null, null                 , null                    ),
     'user' => [null             => new ResourceHandlers(null                 , null, $user_PUT            , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers($user_id_GET         , null, $user_id_PUT         , $user_id_DELETE         ),
             'photo'             => new ResourceHandlers($user_id_photo_GET   , null, $user_id_photo_PUT   , $user_id_photo_DELETE   )

@@ -10,6 +10,6 @@ $title = "Pet album";
 
 $pet = Pet::fromDatabase($_GET['id']);
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/pet_album.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/pet_album.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';
