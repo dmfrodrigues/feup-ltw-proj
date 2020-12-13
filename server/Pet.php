@@ -472,7 +472,7 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  */
 function getPetMainPhoto(Pet $pet) : string {
     $picture = $pet->getMainPicture();
-    return ($picture == null ? 'resources/img/no-image.svg' : $picture);
+    return ($picture == null ? PROTOCOL_CLIENT_URL.'/resources/img/no-image.svg' : $picture);
 }
 
 /**

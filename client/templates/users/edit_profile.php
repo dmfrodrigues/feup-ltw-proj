@@ -9,7 +9,7 @@ function editProfile(User $user): void {
         <section id="profile-photo">
             <h3>Profile photo</h3>
             <div id="photo">
-                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? "resources/img/no-image.svg": $user->getPictureUrl()) ?>">
+                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
                 <details>
                     <summary>
                         <div class="dropdown-main" id="edit">✎ Edit</button>

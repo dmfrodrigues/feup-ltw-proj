@@ -1,6 +1,6 @@
 <section id="shelter-profile">
     <header>
-        <img class="profile-shelter-pic" id="profile_img" src="<?php echo (is_null($shelter->getPictureUrl()) ? "resources/img/no-image.svg": $shelter->getPictureUrl()) ?>">
+        <img class="profile-shelter-pic" id="profile_img" src="<?php echo (is_null($shelter->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $shelter->getPictureUrl()) ?>">
         <span id="name"><?=$shelter->getName()?></span>
         <span id="username"><?=$_SESSION['username']?></span>
         <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>/edit">Edit Shelter Profile</a>

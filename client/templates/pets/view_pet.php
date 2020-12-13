@@ -12,7 +12,7 @@
         <div id="pet-photos">
             <?php
             $photos = $pet->getPictures();
-            if (empty($photos)) $photoSelected = "resources/img/no-image.svg";
+            if (empty($photos)) $photoSelected = PROTOCOL_CLIENT_URL."/resources/img/no-image.svg";
             else $photoSelected = $photos[0];
             ?>
             <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
