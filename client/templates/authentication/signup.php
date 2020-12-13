@@ -44,13 +44,6 @@
           else
             location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=5`;
         })
-        .then(function (jsonResponse) {
-          console.log(jsonResponse);
-          if(jsonResponse.errorCode) 
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=${jsonResponse.errorCode}`;
-          else
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
-        })
         .catch(function (error){
           console.error(error);
         });
