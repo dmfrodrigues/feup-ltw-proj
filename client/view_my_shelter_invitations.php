@@ -1,5 +1,6 @@
 <?php
 session_start();
+session_regenerate_id(true);
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';

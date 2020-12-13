@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+session_regenerate_id(true);
 
 $javascript_files = ["js/signup.js"];
 
