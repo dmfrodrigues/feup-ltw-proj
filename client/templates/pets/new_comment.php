@@ -99,7 +99,7 @@
 
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
         el_pic.href = `<?= PROTOCOL_API_URL ?>/user/${user.username}`;
-        el_pic.children[0].src = API_URL + `user/${user.username}/photo`;
+        el_pic.children[0].src = API_URL + `user/${user.username}/photo?csrf=<?=$_SESSION['csrf']?>`;
 
         answerElement.addEventListener('submit', (e) => { newComment_onSubmit(e); });
 

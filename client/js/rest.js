@@ -33,7 +33,8 @@ class RestApi {
             {
                 method: 'GET',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name=csrf-token]').content
                 },
             }
         );
@@ -50,7 +51,8 @@ class RestApi {
             {
                 method: 'HEAD',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name=csrf-token]').content
                 },
             }
         );
@@ -68,7 +70,8 @@ class RestApi {
             {
                 method: 'POST',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name=csrf-token]').content
                 },
                 body: params
             }
@@ -95,7 +98,8 @@ class RestApi {
             {
                 method: 'PUT',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name=csrf-token]').content
                 },
                 body: data
             }
@@ -113,7 +117,8 @@ class RestApi {
             {
                 method: 'DELETE',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name=csrf-token]').content
                 }
             }
         );

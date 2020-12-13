@@ -64,11 +64,12 @@ function editProfile(User $user): void {
                     <label for="password">Password<a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername()?>/password/change"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></label>
                 </section>
             <?php } ?> 
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit" id="edit-profile-submit">
         </form>
         <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
             <section id='delete-user'>
-                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
             </section>
         <?php } ?> 
     </section>

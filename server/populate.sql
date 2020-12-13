@@ -9,15 +9,15 @@ PRAGMA encoding="UTF-8";
 -- User
 INSERT INTO User
 (username      , password                                  , name             ) VALUES
-("dmfr"        , "eff14f9ad2f2ecaa8df1ebb50fc7113d2eac89cb", "Diogo Rodrigues"),
-("BrenoAccioly", "6ee278a3b837d564187ccb3ecc877057701eb7b2", "Breno Accioly"  ),
-("2dukes"      , "463e890d73f5d6d1f3b1268ee7e426933370f8cb", "Rui Pinto"      ),
-("TiagooGomess", "0d47223986b750aecf2607ee8f26c58f7fe31e3a", "Tiago Gomes"    ),
-("Asdrubal007" , "65417b70a1a7bd08a6189f4d309d90979cbe7b56", "Asdrubal"       ),
-("balves"      , "c00ab69a0a4826bb8f8fb5bdf68503f92183a9be", "Bernardo Alves" ),
-("harold"      , "b131867c5de6fc08a4ce1fc50393cad671c82bd5", "Harold"         ),
-("Romanoff123" , "013564dc05c22e397a30d38805fae295ef8cb4cc", "Romanoff"       ),
-("AAOrg"       , "806715632407a53335ea3de53b4148580870e693", "AnimalAdoption" );
+("dmfr"        , "$2y$12$EoGlSpd.GFAjAfFdce4YwOXyJnYDuWgHHUQctTZSyGtVaOJlRvHXa", "Diogo Rodrigues"),
+("BrenoAccioly", "$2y$12$HhHbS9d5oBM4tBI7FAktkOSQ.wSEVNViUu87ol10ZUmqD1wn2vhFW", "Breno Accioly"  ),
+("2dukes"      , "$2y$12$ECt9IhyVUdCo.puADzqPHO0Ej0mW2VwciSllvK3cUwrDljo8khSHu", "Rui Pinto"      ),
+("TiagooGomess", "$2y$12$zk0AAfNkceZO/mWEuy1NyutU5G9tWwnZAee2S3BJvRcWqxK9APmC2", "Tiago Gomes"    ),
+("Asdrubal007" , "$2y$12$OEXd2oJuhCXbbeR5PHoka.Ia34mWEFb57QZktugj4gvMVZ3kBVM9C", "Asdrubal"       ),
+("balves"      , "$2y$12$cT/o/IB5m8b3qorTIMIJCO2NY6Kojx5qcUpSTsR0yD6rgRUpup6HS", "Bernardo Alves" ),
+("harold"      , "$2y$12$/4T.xjbm/zQL0/7dokZzbOW5X3zyi2I.1LvKVulki0U8.TDnUHMRe", "Harold"         ),
+("Romanoff123" , "$2y$12$JnFOKQEtl4H2Z1uskJHijubPMLT.B7JRSrOfnIpoR9CZVamGYXPVm", "Romanoff"       ),
+('AAOrg'       , "$2y$12$yEQM.B.ns.Ck3y6QANAnWe.xe99OR.Wj/G0QVdb8zVrLKWZvDfDYC", 'AnimalAdoption' );
 
 -- Shelter
 INSERT INTO Shelter(username, location, description) VALUES

@@ -30,7 +30,7 @@ $photos = $pet->getPictures();
         </header>
         <section id="description">
             <h2>Description</h2>
-            <textarea name="description"><?=$pet->getDescription()?></textarea>
+            <textarea name="description" required><?=$pet->getDescription()?></textarea>
         </section>
         <section id="about">
             <h2>About</h2>
@@ -68,9 +68,10 @@ $photos = $pet->getPictures();
                 <span class="value"><input type="text" name="color" value="<?=$pet->getColor()?>" required></span>
             </div>
         </section>
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
         <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
-        <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+    <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?csrf=<?=$_SESSION['csrf']?>&id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

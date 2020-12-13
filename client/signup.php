@@ -1,6 +1,9 @@
 <?php 
 
 require_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\CSPHeaderSet();
+$CSRFtoken = Authentication\CSRF_GetToken();
 require_once SERVER_DIR.'/errors/errors.php';
 require_once SERVER_DIR.'/Shelter.php';
 

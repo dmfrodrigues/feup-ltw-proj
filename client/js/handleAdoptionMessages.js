@@ -101,10 +101,13 @@ async function updateAdoptionChat() {
 
     let mainObject = document.querySelector("section");
     let title =document.createElement('h1');
+    let photo = document.getElementById('proposal-pet-photo');
+    
     mainObject.innerHTML = '';
     title.innerHTML = 'Proposal Chat';
     title.id = 'proposal-title';
     mainObject.appendChild(title);
+    mainObject.appendChild(photo);
 
     jsonResponse.forEach((comment) => {
         addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
