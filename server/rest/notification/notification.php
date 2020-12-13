@@ -6,7 +6,7 @@ require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/notifications.php';
 
-$notification_PUT = function(array $args): void{
+$notification_id_PUT = function(array $args): void{
     $auth = Authentication\check();
     Authorization\checkAndRespond(
         Authorization\Resource::NOTIFICATION,
@@ -14,8 +14,11 @@ $notification_PUT = function(array $args): void{
         $auth,
         null
     );
-
+    
     $_PUT = getPUT();
+
+    var_dump($_PUT);die();
+
     $id = addNotification(
         $_PUT['username'],
         $_PUT['subject'],

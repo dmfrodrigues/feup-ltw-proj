@@ -9,6 +9,7 @@ require_once API_DIR . '/user/user.php';
 require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
+require_once API_DIR . '/notification/notification.php';
 
 session_start();
 
@@ -35,7 +36,7 @@ $tree = [
         '[0-9]+'                => new ResourceHandlers($adoptionMsg_GET     , null, null                 , null                    )
     ],
     'notification' => [null     => new ResourceHandlers(null                 , null,                  null,                     null),
-        '[0-9]+'                => new ResourceHandlers(null                 , null, $notification_PUT    , null                    )
+        '[0-9]+'                => new ResourceHandlers(null                 , null, $notification_id_PUT    , null                    )
     ]
 ];
 

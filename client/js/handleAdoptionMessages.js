@@ -19,15 +19,6 @@ async function addNewAdoptionRequestMsg() {
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
 
-    api.put(
-        'notification',
-        {
-            username: user,
-            subject : "newMessage",
-            text    : "You received a new message from " + user
-        }
-    );
-
     if(!response.ok) {
         const message = `An error has occurred: ${response.status}`;
         throw new Error(message);
@@ -47,6 +38,18 @@ async function ajaxAddAdoptionRequest(bodyParams) {
 }
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
+
+    api.put(
+        'notification',
+        {
+            username: user,
+            subject : "newMessage",
+            text    : "You received a new message from " + user
+        }
+    ).then((response) => response.json()
+    ).then(function(response){ alert('YES');});
+
+
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
 
