@@ -19,6 +19,15 @@ async function addNewAdoptionRequestMsg() {
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
 
+    api.put(
+        'notification',
+        {
+            username: user,
+            subject : "newMessage",
+            text    : "You received a new message from " + user
+        }
+    );
+
     if(!response.ok) {
         const message = `An error has occurred: ${response.status}`;
         throw new Error(message);
