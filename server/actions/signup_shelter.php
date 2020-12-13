@@ -3,13 +3,8 @@ session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
 require_once SERVER_DIR.'/Shelter.php';
-
-if (!preg_match('/^[a-zA-Z0-9]+$/', $_POST['username'])) {
-    $_SESSION['messages'][] = array('type' => 'error', 'content' => 'Username can only contain letters and numbers!');
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1');
-    die();
-}
 
 try {
     addShelter(
@@ -27,7 +22,7 @@ try {
 } catch(UserAlreadyExistsException $e) {
     header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=2');
 } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=');
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=5');
 }
 
 die();

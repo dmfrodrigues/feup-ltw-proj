@@ -6,12 +6,14 @@ async function handleFavorites(target, username, petId) {
     let addToFavorites = checkAddToFavorites(target.innerHTML);
 
     let response = await ajaxAddOrRemoveFavorites(addToFavorites, params);
+    console.log(response);
     if(!response.ok) {
         const message = `An error has occured: ${response.status}`;
         throw new Error(message);
     }
 
     let jsonResponse = await response.json();
+    console.log(jsonResponse);
 
     if(jsonResponse.successful) 
         switchFavoriteButton(target, addToFavorites);

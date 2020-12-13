@@ -3,6 +3,7 @@
     <head>
         <title><?php if(isset($title)) echo ($title . ' | ')?>Forever Home</title>    
         <meta charset="UTF-8">
+        <meta name="csrf-token" content="<?=$CSRFtoken?>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/main.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/button.css">
@@ -47,7 +48,7 @@
             <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="<?= PROTOCOL_CLIENT_URL ?>/signup.php">Sign up</a>
-                <a href="<?= PROTOCOL_API_URL ?>/login">Login</a>
+                <a href="<?= PROTOCOL_API_URL ?>/login?csrf=<?=$token?>">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
                         <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/new_notifications.svg" ></a>
