@@ -12,9 +12,9 @@ require_once SERVER_DIR . '/errors/errors.php';
 $users = User::allWithoutShelter();
 $title = "Potential collaborators";
 
-require_once 'templates/common/header.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
 
 if(isset($_SESSION['username']))
-    require_once 'templates/users/view_potential_collaborators.php';
+    require_once CLIENT_DIR.'/templates/users/view_potential_collaborators.php';
 
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

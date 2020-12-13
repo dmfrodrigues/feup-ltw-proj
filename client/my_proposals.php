@@ -12,7 +12,7 @@ $title = "My proposals";
 $user = User::fromDatabase($_SESSION['username']);
 $adoptionRequests = $user->getAdoptionRequestsToOthers();
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/view_proposal.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
 drawMyProposals($adoptionRequests);
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

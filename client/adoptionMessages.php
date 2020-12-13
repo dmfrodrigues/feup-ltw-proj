@@ -10,15 +10,15 @@ require_once SERVER_DIR . '/Shelter.php';
 $title = "Adoption messages";
 
 $javascript_files = ["js/handleAdoptionMessages.js", "js/utils_elements.js"];
-require_once 'templates/common/header.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
 
 $adoptionRequest = getAdoptionRequest($_GET['id']);
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
-    require_once 'templates/pets/view_proposal.php';
+    require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
     drawAdoptionRequestInitialMessage($adoptionRequest);
     $adoptionRequestMessages = getAdoptionRequestMessages($adoptionRequest['id']);
     drawAllOtherMessages($adoptionRequestMessages);
     drawAnswerAdoptionRequest();
 }
 
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';
