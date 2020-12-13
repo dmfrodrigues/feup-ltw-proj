@@ -9,12 +9,13 @@ Authentication\verifyCSRF_Token();
 require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 
+$user = User::fromDatabase($_GET['username']);
+
 if (isset($_SESSION['username'])) {
     editUserPassword(
         $user->getUsername(),
         $_POST['pwd']
     );
     header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername());
-}
-
-die();
+    exit();
+} else { http_response_code(403); die(); }

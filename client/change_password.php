@@ -11,7 +11,9 @@ require_once SERVER_DIR . '/errors/errors.php';
 
 $title = "Change password";
 
-$javascript_files = ["js/signup.js"];
+$javascript_files = [
+    PROTOCOL_CLIENT_URL.'/js/signup.js'
+];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 if (isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername())
