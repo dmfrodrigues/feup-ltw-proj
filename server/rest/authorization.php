@@ -67,10 +67,10 @@ namespace Authorization {
     Rules::add_rule(Resource::ADOPTION_REQUEST, Method::EDIT , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can edit
     
     // ======================================================== ADOPTION REQUEST MESSAGE ========================================================
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getAuthor()          ; }); // Author can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getPet()->getAuthor(); }); // \Pet owner can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getAuthor()          ; }); // Author can write
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getPet()->getAuthor(); }); // \Pet owner can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can see
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // Pet owner can see
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // Pet owner can write
 
     // ======================================================== COMMENT ========================================================
     Rules::add_rule(Resource::COMMENT, Method::READ , function(?\User $user, ?\Comment $comment){ return true                          ; }); // Everyone can see

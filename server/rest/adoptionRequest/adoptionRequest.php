@@ -6,13 +6,38 @@ require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 
 // adoptionMessages.php
-$adoptionRequest_id_messages_GET = function(array $args): void {
+$adoptionRequest_id_message_GET = function(array $args): void {
     $id = $args[1];
-    $pet = Pet::fromDatabase($id);
+    $request = AdoptionRequest::fromDatabase($id);
 
     $auth = Authentication\check(true);
-    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    Authorization\checkAndRespond(
+        Authorization\Resource::ADOPTION_REQUEST,
+        Authorization\Method::READ,
+        $auth,
+        $request
+    );
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
     require_once CLIENT_DIR.'/adoptionMessages.php';
+};
+
+$adoptionRequest_id_message_PUT = function(array $args): void {
+    $id = $args[1];
+    $request = AdoptionRequest::fromDatabase($id);
+    $_PUT = getPUT();
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::ADOPTION_REQUEST_MESSAGE,
+        Authorization\Method::WRITE,
+        $auth,
+        $request
+    );
+
+    $message = new AdoptionRequestMessage();
+    $message->setText   ($_PUT['Msgtext']    );
+    $message->setRequest($id                 );
+    $message->setUser   ($auth->getUsername());
+    $message->addToDatabase();
 };

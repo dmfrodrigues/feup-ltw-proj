@@ -52,7 +52,19 @@ class AdoptionRequestMessage implements JsonSerializable {
     private  string $user       ;
     public function __construct(){}
 
-    public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
+    public function getId         () : int             { return $this->id                                    ; }
+    public function getText       () : string          { return $this->text                                  ; }
+    public function getRequest    () : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
+    public function getRequestId  () : int             { return $this->request                               ; }
+    public function getMessageDate() : string          { return $this->messageDate                           ; }
+    public function getUser       () : User            { return User           ::fromDatabase($this->user   ); }
+    public function getUserId     () : string          { return $this->user                                  ; }
+
+    public function setId         (int    $id         ) : void { $this->id          = $id         ; }
+    public function setText       (string $text       ) : void { $this->text        = $text       ; }
+    public function setRequest    (int    $request    ) : void { $this->request     = $request    ; }
+    public function setMessageDate(string $messageDate) : void { $this->messageDate = $messageDate; }
+    public function setUser       (string $user       ) : void { $this->user        = $user       ; }
 
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -66,6 +78,22 @@ class AdoptionRequestMessage implements JsonSerializable {
         $stmt->execute();
         $message = $stmt->fetch();
         return $message;
+    }
+
+    public function addToDatabase() : void {
+        global $db;
+        $stmt = $db->prepare('INSERT INTO AdoptionRequestMessage
+        (text, request, user)
+        VALUES
+        (:text, :request, :user)');
+        $stmt->bindValue(':text'       , $this->text   );
+        $stmt->bindValue(':request'    , $this->request);
+        $stmt->bindValue(':user'       , $this->user   );
+        $stmt->execute();
+        $this->id = $db->lastInsertId();
+        
+        $newMessage = AdoptionRequestMessage::fromDatabase($this->id);
+        $this->setMessageDate($newMessage->getMessageDate());
     }
 }
 

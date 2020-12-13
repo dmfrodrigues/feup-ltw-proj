@@ -59,7 +59,7 @@ $tree = [
     ],
     'adoptionRequest' => [
         '[0-9]+' => [
-            'messages'          => new ResourceHandlers($adoptionRequest_id_messages_GET, null, null      , null                    )
+            'message'           => new ResourceHandlers($adoptionRequest_id_message_GET, null, $adoptionRequest_id_message_PUT, null)
         ]
     ],
     'adoptionMessage' => [null  => new ResourceHandlers(null                 , null, null                 , null                    ),
