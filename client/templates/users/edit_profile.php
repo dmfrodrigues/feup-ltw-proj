@@ -61,7 +61,7 @@ function editProfile(User $user): void {
             <?php } ?>
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="password">
-                    <label for="password">Password<a href="change_password.php?username=<?= $user->getUsername()?>"><img src="resources/img/edit.svg"></a></label>
+                    <label for="password">Password<a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername()?>/password/change"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></label>
                 </section>
             <?php } ?> 
             <input type="submit" value="Submit" id="edit-profile-submit">

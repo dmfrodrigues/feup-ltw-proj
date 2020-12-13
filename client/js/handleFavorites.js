@@ -31,7 +31,7 @@ function switchFavoriteButton(target, removeFromFavorites) {
 
 function ajaxAddOrRemoveFavorites(addToFavorites, bodyParams) {
     let apiFile = addToFavorites ? 'add_favorite.php' : 'remove_favorite.php';
-    return fetch('AJAXRequests/' + apiFile, {
+    return fetch(PROTOCOL_CLIENT_URL+'/AJAXRequests/' + apiFile, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

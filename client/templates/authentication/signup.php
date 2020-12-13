@@ -37,7 +37,7 @@
           }
         )
         .then(function (response){
-          location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
+          location.href = `<?= PROTOCOL_API_URL ?>/user/${username}`;
         })
         .catch(function (error){
           console.error(error);

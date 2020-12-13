@@ -21,17 +21,17 @@
                 <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
                     <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet->getName() ?>" onclick="selectPhoto()" />
                 <?php } ?>
-                <a href="pet_album.php?id=<?= $pet->getId() ?>">All Photos</a>
+                <a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/photo">All Photos</a>
             </div>
         </div>
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
             <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
-            <span id="postedBy"><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
+            <span id="postedBy"><a href="<?= PROTOCOL_API_URL ?>/user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($_GET['id']);
                 if (!is_null($shelter)) { ?>
                 <section id="shelter">
-                    <h2>Associated with shelter <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $shelter?>"><?= $shelter?></a></h2>
+                    <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter?>"><?= $shelter?></a></h2>
                 </section>
             <?php } ?>
         </div>
@@ -82,7 +82,7 @@
     if(isset($_SESSION['username']) && userCanEditPet($_SESSION['username'],$pet->getId())){ ?>
         <section id="action-edit-pet">
             <ul>
-                <li><a href="edit_pet.php?id=<?= $pet->getId() ?>"><img src="resources/img/edit.svg"></a></li>
+                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php } ?>

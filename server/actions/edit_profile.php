@@ -63,12 +63,12 @@ else {
 
 if (!$failed) {
     if ($usernameChanged)
-        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_POST['username']}");
+        header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
     else
-        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
+        header("Location: " . PROTOCOL_API_URL . "/user/{$_GET['username']}");
     
 } 
 else
-    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$_GET['username']}&failed=1");
 
 die();

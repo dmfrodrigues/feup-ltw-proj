@@ -12,7 +12,7 @@ $user = $_GET['username'];
 
 if (isset($_SESSION['isShelter']) && isset($_SESSION['username']) ) {
     leaveShelter($user);
-    header("Location: " . PROTOCOL_CLIENT_URL."/profile.php?username=" . $_SESSION['username']);
+    header("Location: " . PROTOCOL_API_URL."/user/" . $_SESSION['username']);
 }
 
 die();

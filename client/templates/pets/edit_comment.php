@@ -4,8 +4,8 @@
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input id="comment-deleteFile" name="deleteFile" type="hidden" value="0">
     <article class="comment">
-        <span id="comment-user" class="user"><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=#">#</a></span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=#"><img class="profile-pic" src="#"></a>
+        <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src="#"></a>
         <div id="comment-content">
             <textarea id="comment-text" class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
@@ -83,11 +83,11 @@
         el_commentId.value = comment.id;
 
         let el_user = editElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${comment.user}`;
+        el_user.children[0].href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
         el_user.children[0].innerHTML = comment.user;
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
-        el_userPic.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${comment.user}`;
+        el_userPic.href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
         el_userPic.children[0].src = API_URL + `user/${comment.user}/photo`;
 
         let el_text = editElement.querySelector("#comment-text");

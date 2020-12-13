@@ -4,8 +4,10 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
 require_once __DIR__ . '/api_main.php';
 require_once API_DIR . '/rest-lib/rest-lib.php';
+require_once API_DIR . '/root/root.php';
 require_once API_DIR . '/login/login.php';
 require_once API_DIR . '/user/user.php';
+require_once API_DIR . '/shelter/shelter.php';
 require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionRequest/adoptionRequest.php';
@@ -33,10 +35,8 @@ $tree = [
         ]
     ],
     'shelter' => [null          => new ResourceHandlers($shelter_GET         , null, null                , null                    ),
-        '[a-zA-Z0-9]+' => [
-            'propose'           => new ResourceHandlers($shelter_id_propose_GET, null, null              , null                    ),
-            'potential'         => new ResourceHandlers($shelter_id_potential_GET, null, null            , null                    )
-        ]
+        'propose'               => new ResourceHandlers($shelter_propose_GET , null, null                , null                    ),
+        'potential'             => new ResourceHandlers($shelter_potential_GET, null, null               , null                    )
     ],
     'pet' => [null              => new ResourceHandlers($pet_GET             , null, null                 , null                    ),
         'new'                   => new ResourceHandlers($pet_new_GET         , null, null                 , null                    ),

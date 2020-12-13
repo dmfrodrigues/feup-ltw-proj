@@ -15,7 +15,7 @@ $shelter_GET = function(array $args): void {
 };
 
 // propose_to_collaborate.php
-$shelter_id_propose_GET = function(array $args): void {
+$shelter_propose_GET = function(array $args): void {
     $auth = Authentication\check();
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     
@@ -24,7 +24,7 @@ $shelter_id_propose_GET = function(array $args): void {
 };
 
 // view_potential_collaborators.php
-$shelter_id_potential_GET = function(array $args): void {
+$shelter_potential_GET = function(array $args): void {
     $auth = Authentication\check();
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     

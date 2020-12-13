@@ -13,7 +13,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){
 
     addNotification($username, "shelterInvitation", "The shelter " . $_SESSION['username'] . " invited you to be a collaborator.");
 
-    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=$username");
+    header("Location: " . PROTOCOL_API_URL . "/user/$username");
 }
 
 die();

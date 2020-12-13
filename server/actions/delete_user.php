@@ -9,8 +9,8 @@ require_once SERVER_DIR . '/Shelter.php';
     if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
         User::deleteFromDatabase($_SESSION['username']);
         session_destroy();
-        header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
+        header('Location: ' . PROTOCOL_API_URL);
         die();
     }
     else 
-        header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
+        header('Location: ' . PROTOCOL_API_URL . '/user/'.$_GET['username'].'&failed=1');

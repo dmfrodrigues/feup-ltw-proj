@@ -8,7 +8,7 @@ $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet->getPostedById()){
-        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
         die();
     }
 
@@ -17,6 +17,6 @@ if (isset($_SESSION['username'])){
     Pet::deleteFromDatabase($_GET['id']);
 }
 
-header("Location: " . PROTOCOL_CLIENT_URL . "/pets.php");
+header("Location: " . PROTOCOL_API_URL . "/pet");
 
 die();

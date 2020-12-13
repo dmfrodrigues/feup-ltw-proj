@@ -9,7 +9,7 @@ $user = User::fromDatabase($_GET['username']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $user->getUsername()){
-        header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
+        header('Location: ' . PROTOCOL_API_URL . '/user/'.$_GET['username'].'&failed=1');
         die();
     }
 
@@ -17,7 +17,7 @@ if (isset($_SESSION['username'])){
         $user->getUsername(),
         $_POST['pwd']
     );
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/profile.php?username='.$_GET['username']);
+    header('Location: ' . PROTOCOL_API_URL . '/user/'.$_GET['username']);
 }
 
 die();

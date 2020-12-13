@@ -18,7 +18,7 @@ if (isset($_SESSION['username'])){
 
     addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet->getName() . ", by " . $_SESSION['username'] . ".");
 
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }
 
 die();

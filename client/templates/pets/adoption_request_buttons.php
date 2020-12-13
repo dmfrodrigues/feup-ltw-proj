@@ -22,5 +22,5 @@
         if ($userWhoAdoptedPet->getUsername() == $_SESSION['username']) { ?>
                     <div id="rejected-proposal">The proposal was accepted! Have fun with your new pet! 😺</div>
         <?php } else { ?>
-        <div id="pet-already-adopted">The pet was already adopted by <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$userWhoAdoptedPet->getUsername()?>"><?=$userWhoAdoptedPet->getUsername()?></a> </div>
+        <div id="pet-already-adopted">The pet was already adopted by <a href="<?= PROTOCOL_API_URL ?>/user/<?=$userWhoAdoptedPet->getUsername()?>"><?=$userWhoAdoptedPet->getUsername()?></a> </div>
     <?php } }
