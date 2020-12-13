@@ -22,11 +22,11 @@
                 </div>  
                 
                 <?php if($isMyPetProposal) { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
                     <button onclick="location.href='<?= PROTOCOL_CLIENT_URL ?>/adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">Answer Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?csrf=<?=$_SESSION['csrf']?>&id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
                     <button onclick="location.href='<?= PROTOCOL_CLIENT_URL ?>/adoptionMessages.php?id=<?=$request->getId()?>'"id="answerRequest">View Chat</button>
                 <?php } ?>
 

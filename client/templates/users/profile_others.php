@@ -22,7 +22,7 @@
                     <button onclick="location.href = 'propose_to_collaborate.php?username=<?=$user->getUsername()?>'">Propose to collaborate</button>
                 <?php }
                 else { ?>
-                    <button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/actions/remove_collaboration_proposal.php?username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
+                    <button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/actions/remove_collaboration_proposal.php?csrf=<?=$_SESSION['csrf']?>&username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
                 <?php }
             ?>            
         <?php } else if ($user->getShelterId() === $_SESSION['username']) { ?>
