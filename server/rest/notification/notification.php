@@ -9,7 +9,7 @@ require_once SERVER_DIR . '/Notification.php';
 $notification_id_PUT = function(array $args): void{
     $auth = Authentication\check();
     Authorization\checkAndRespond(
-        Authorization\Resource::COMMENT, // TODO: change to NOTIFICATION
+        Authorization\Resource::NOTIFICATION,
         Authorization\Method  ::WRITE  ,
         $auth,
         null

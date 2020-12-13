@@ -81,9 +81,8 @@ require_once SERVER_DIR.'/Shelter.php';
     Rules::add_rule(Resource::COMMENT, Method::WRITE, function(?\User $user, ?\FavoritePet $favorite){ return $user == $favorite->getUser(); }); // \User can write
 
     // ======================================================== NOTIFICATION ========================================================
-    /* Rules::add_rule(Resource::NOTIFICATION, Method::READ , function(?\User $user, ?\Comment $comment){ return true; // Everyone can read and write, by now
-    Rules::add_rule(Resource::NOTIFICATION, Method::WRITE, function(?\User $user, ?\Comment $comment){ return true;
-    */
+    Rules::add_rule(Resource::NOTIFICATION, Method::READ , function(?\User $user, ?\Notification $notification){ return true; }); // Everybody can see by now
+    Rules::add_rule(Resource::NOTIFICATION, Method::WRITE, function(?\User $user, ?\Notification $notification){ return true; });
     
      function check(int $resourceType, int $method, ?\User $user, $resource): bool{
         if(isset(Rules::$rules[$resourceType])){
