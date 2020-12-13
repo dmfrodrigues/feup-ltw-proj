@@ -19,10 +19,10 @@ try {
                     $_SESSION['isShelter'] = 1;
                     header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
                 }
+            } else {
+                header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorCode=3');
             }
         }
-    } else {
-        header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorCode=3');
     }
 } catch(PDOException $e) {
     header('Location: ' . CLIENT_URL . '/login.php?failed=1&errorCode=-1');
