@@ -25,26 +25,27 @@ if($_GET['outcome'] === 'accepted') {
 
     $userWhoAdopted = Pet::fromDatabase($_GET['petId'])->getAdoptedBy();
     $userWhoPostedPet = $pet->getPostedBy();
-    addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
+    addNotification($userWhoAdopted, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
 
     foreach($refusedUsers as $refusedUser) {
-        addNotification($refusedUser->getUsername(), "proposedPetAdopted", "The pet you proposed, " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+        addNotification($refusedUser, "proposedPetAdopted", "The pet you proposed, " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
     }
-    addNotification($userWhoAdopted->getUsername(), "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
+    addNotification($userWhoAdopted, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was accepted.");
 
     $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['petId']);
     foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
         if ($userWhoFavoritePet['username'] !== $userWhoAdopted->getUsername() && $userWhoFavoritePet['username'] !== $userWhoPostedPet->getUsername())
-            addNotification($userWhoFavoritePet['username'], "favoriteAdopted", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+            addNotification(User::fromDatabase($userWhoFavoritePet['username']), "favoriteAdopted", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
     }
 
-    $shelter = getPetShelter($_GET['petId']);
+    $shelterId = getPetShelter($_GET['petId']);
+    $shelter = Shelter::fromDatabase($shelterId);
     if ($shelter !== null) {
         addNotification($shelter, "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
-        $collaborators = Shelter::fromDatabase($shelter)->getCollaborators();
+        $collaborators = $shelter->getCollaborators();
         foreach($collaborators as $collaborator) {
             if ($collaborator->getUsername() !== $userWhoAdopted->getUsername() && $collaborator->getUsername() !== $userWhoPostedPet->getUsername())
-                addNotification($collaborator->getUsername(), "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
+                addNotification($collaborator, "associatedPetAdopted", "Your associated pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was adopted by " . $userWhoAdopted->getUsername() . ".");
         }
     }
 
