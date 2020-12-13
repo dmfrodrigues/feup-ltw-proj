@@ -14,6 +14,6 @@ if (isset($_SESSION['username'])) {
     $user = User::fromDatabase($_SESSION['username']);
 }
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/add_proposal.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/add_proposal.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

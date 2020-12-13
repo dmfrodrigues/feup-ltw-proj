@@ -2,7 +2,7 @@
     function drawInvitation(User $user, Shelter $shelter, $text, $requestDate, $isShelter): void { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
-                    <a href="profile.php?username=<?= $shelter->getUsername() ?>"> 
+                    <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $shelter->getUsername() ?>"> 
                         <img id="proposal-pic" src="<?php 
                         $shelter_pic = $shelter->getPictureUrl();
                         echo (is_null($shelter_pic) ? "resources/img/no-image.svg" : $shelter_pic) ?>
@@ -13,7 +13,7 @@
                 <?php if (!$isShelter) { ?>
                     <p><?= $shelter->getUsername() ?> on <?=$requestDate?></p>
                 <?php } else { ?>
-                    <p>To <a href="profile.php?username=<?= $user->getUsername() ?>"><?= $user->getUsername() ?></a> on <?=$requestDate?></p>
+                    <p>To <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?= $user->getUsername() ?>"><?= $user->getUsername() ?></a> on <?=$requestDate?></p>
                 <?php } ?>
                 <div id="proposal-message">
                     <textarea readonly><?=$text?></textarea>

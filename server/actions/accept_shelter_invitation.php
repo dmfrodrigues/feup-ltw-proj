@@ -17,11 +17,11 @@ if (isset($_SESSION['username']) && isShelter($shelter)) {
         
         addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " accepted your invite to be a collaborator.");
 
-        header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']); 
+        header("Location: " . PROTOCOL_CLIENT_URL."/profile.php?username=" . $_SESSION['username']); 
         die();
     }    
 }
 
-header("Location: " . "../../client/view_shelter_invitations.php?failed=1&errorCode=1");
+header("Location: " . PROTOCOL_CLIENT_URL."/view_shelter_invitations.php?failed=1&errorCode=1");
 
 die();

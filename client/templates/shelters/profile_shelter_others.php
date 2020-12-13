@@ -12,7 +12,7 @@
         } ?> 
     </header>
     <?php
-    require_once 'templates/pets/view_pets_in_shelter_profile.php';
-    require_once 'templates/users/view_collaborators_in_shelter_profile.php';
+    require_once CLIENT_DIR.'/templates/pets/view_pets_in_shelter_profile.php';
+    require_once CLIENT_DIR.'/templates/users/view_collaborators_in_shelter_profile.php';
     ?>
 </section>

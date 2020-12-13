@@ -49,23 +49,24 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     proposalHeader.id = "proposal-header";
 
     let aLink = document.createElement("a");
-    aLink.href = "profile.php?username=" + lastInsertedComment.user;
+    aLink.href = PROTOCOL_CLIENT_URL+"/profile.php?username=" + lastInsertedComment.user;
 
     let profilePic = document.createElement('img');
     profilePic.id = "proposal-pic";
-    profilePic.src = "../server/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
+    profilePic.src = PROTOCOL_SERVER_URL+"/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
 
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
     
+    /*
     if(lastInsertedComment.user == user) {
         proposalHeader.style.right = "28.5em";
         proposalInfo.style.marginLeft = "15em";
-    }
+    }*/
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="${PROTOCOL_CLIENT_URL}/pet.php?id=${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';
