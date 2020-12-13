@@ -1,12 +1,12 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
-
-session_start();
 
 try {
     if (isset($_POST["csrf"]) && isset($_COOKIE["CSRFtoken"])) {

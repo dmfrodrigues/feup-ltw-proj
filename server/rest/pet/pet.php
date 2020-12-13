@@ -100,7 +100,7 @@ $pet_id_edit_GET = function(array $args): void {
 // pet_album.php
 $pet_id_photo_GET = function(array $args): void {
     $id = $args[1];
-    $pet = User::fromDatabase($id);
+    $pet = Pet::fromDatabase($id);
 
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
@@ -112,7 +112,7 @@ $pet_id_photo_GET = function(array $args): void {
 // add_proposal.php
 $pet_id_adopt_GET = function(array $args): void {
     $id = $args[1];
-    $pet = User::fromDatabase($id);
+    $pet = Pet::fromDatabase($id);
 
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(Authorization\Resource::ADOPTION_REQUEST, Authorization\Method::WRITE, $auth, null);

@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
@@ -12,8 +14,6 @@ require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionRequest/adoptionRequest.php';
 require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
-
-session_start();
 
 $tree = [
     null                        => new ResourceHandlers($root_GET            , null, null                 , null                    ),
