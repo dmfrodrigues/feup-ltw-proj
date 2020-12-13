@@ -194,9 +194,12 @@ section#proposal-container {
 }
 
 #proposal-pet-photo{
+	object-fit: cover;
+	object-position: center;
 	display: block;
 	margin: auto;
 	margin-bottom: 3em;
+	height: 15em;
 	width: 15em;
 	border-radius: 50%;
 }
