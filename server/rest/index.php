@@ -44,7 +44,8 @@ $tree = [
         '[0-9]+' => [null       => new ResourceHandlers($pet_id_GET          , null, null                 , $pet_id_DELETE          ),
             'comments'          => new ResourceHandlers($pet_id_comments_GET , null, null                 , null                    ),
             'edit'              => new ResourceHandlers($pet_id_edit_GET     , null, null                 , null                    ),
-            'photo'             => new ResourceHandlers($pet_id_photo_GET    , null, null                 , null                    )
+            'photo'             => new ResourceHandlers($pet_id_photo_GET    , null, null                 , null                    ),
+            'adopt'             => new ResourceHandlers($adoptionRequest_new_GET, null, null              , null                    )
         ]
     ],
     'comment' => [null          => new ResourceHandlers(null                 , null, $comment_PUT         , null                    ),
@@ -54,7 +55,6 @@ $tree = [
         ]
     ],
     'adoptionRequest' => [
-        'new'                   => new ResourceHandlers($adoptionRequest_new_GET, null, null              , null                    ),
         '[0-9]+' => [
             'messages'          => new ResourceHandlers($adoptionRequest_id_messages_GET, null, null      , null                    )
         ]

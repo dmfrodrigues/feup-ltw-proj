@@ -99,12 +99,24 @@ $pet_id_edit_GET = function(array $args): void {
 
 // pet_album.php
 $pet_id_photo_GET = function(array $args): void {
-    $username = $args[1];
-    $user = User::fromDatabase($username);
+    $id = $args[1];
+    $pet = User::fromDatabase($id);
 
     $auth = Authentication\check();
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
     require_once CLIENT_DIR.'/pet_album.php';
+};
+
+// add_proposal.php
+$pet_id_adopt_GET = function(array $args): void {
+    $id = $args[1];
+    $pet = User::fromDatabase($id);
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(Authorization\Resource::ADOPTION_REQUEST, Authorization\Method::WRITE, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/add_proposal.php';
 };
