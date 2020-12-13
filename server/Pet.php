@@ -124,7 +124,7 @@ class Pet implements JsonSerializable {
     }
 
     public function setSize (string $size) : void { 
-        $newSize = filter_var($size, FILTER_SANITIZE_NUMBER_INT);
+        $newSize = filter_var($size, FILTER_SANITIZE_STRING);
         $this->size = $newSize; 
     }
 
@@ -410,7 +410,9 @@ function addPet(
     $pet->setSpecies    ($species    );
     $pet->setAge        ($age        );
     $pet->setSex        ($sex        );
+    var_dump($size);
     $pet->setSize       ($size       );
+    var_dump($pet->getSize());
     $pet->setColor      ($color      );
     $pet->setLocation   ($location   );
     $pet->setDescription($description);
