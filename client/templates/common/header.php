@@ -24,7 +24,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="<?= PROTOCOL_CLIENT_URL ?>/resources/favicon.ico">
         <script>
-            const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
+            const API_URL = `<?= PROTOCOL_API_URL ?>/`;
             const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
             const PROTOCOL_CLIENT_URL = "<?= PROTOCOL_CLIENT_URL ?>";
         </script>
