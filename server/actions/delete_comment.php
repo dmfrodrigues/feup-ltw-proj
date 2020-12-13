@@ -1,11 +1,13 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR.'/Pet.php';
+
+session_start();
+
 $comment = Comment::fromDatabase(intval($_POST['id']));
 
 if($comment == null){ http_response_code(400); die(); }

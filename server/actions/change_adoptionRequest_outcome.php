@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
@@ -11,7 +10,9 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
 
-if ($_GET['username'] != $_SESSION['username']) 
+session_start();
+
+if ($user->getUsername() != $_SESSION['username']) 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 
 changeAdoptionRequestOutcome($_GET['requestId'], $_GET['outcome']);
@@ -57,4 +58,4 @@ if($_GET['outcome'] === 'rejected') {
     addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet . " was refused.");
 }
     
-header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username=" . $_SESSION['username']);
+header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}");

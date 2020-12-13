@@ -28,7 +28,7 @@ async function addNewAdoptionRequestMsg() {
 }
 
 async function ajaxAddAdoptionRequest(bodyParams) {
-    return fetch('AJAXRequests/addAdoptionMessage.php', {
+    return fetch(PROTOCOL_CLIENT_URL+'/AJAXRequests/addAdoptionMessage.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -49,7 +49,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     proposalHeader.id = "proposal-header";
 
     let aLink = document.createElement("a");
-    aLink.href = PROTOCOL_CLIENT_URL+"/profile.php?username=" + lastInsertedComment.user;
+    aLink.href = API_URL+"/user/" + lastInsertedComment.user;
 
     let profilePic = document.createElement('img');
     profilePic.id = "proposal-pic";
@@ -66,7 +66,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="${PROTOCOL_CLIENT_URL}/pet.php?id=${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="${API_URL}/pet/${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';

@@ -14,7 +14,7 @@ require_once SERVER_DIR.'/Pet.php';
  * @param string $text          Notification's subject
  * @return int ID of the new notification
  */
-function addNotification(string $user, string $subject, string $text) : int {
+function addNotification(User $user, string $subject, string $text) : int {
     global $db;
 
     $stmt = $db->prepare('INSERT INTO Notification

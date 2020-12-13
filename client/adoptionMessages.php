@@ -1,6 +1,4 @@
 <?php
-session_start();
-session_regenerate_id(true);
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';
@@ -13,10 +11,13 @@ require_once SERVER_DIR . '/Shelter.php';
 
 $title = "Adoption messages";
 
-$javascript_files = ["js/handleAdoptionMessages.js", "js/utils_elements.js"];
+$javascript_files = [
+    PROTOCOL_CLIENT_URL."/js/handleAdoptionMessages.js",
+    PROTOCOL_CLIENT_URL."/js/utils_elements.js"
+];
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-$adoptionRequest = getAdoptionRequest($_GET['id']);
+$adoptionRequest = getAdoptionRequest($pet->getId());
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
     require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
     drawAdoptionRequestInitialMessage($adoptionRequest);

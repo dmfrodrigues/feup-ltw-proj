@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
@@ -10,12 +9,13 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Shelter.php';
 
-$user = $_GET['username'];
+session_start();
+
 $shelter = $_SESSION['username'];
 
 if (isset($shelter) && isset($_SESSION['isShelter'])) {
     deleteShelterInvitation($user, $shelter);
-    header("Location: " . PROTOCOL_CLIENT_URL."/profile.php?username=" . $shelter);
+    header("Location: " . PROTOCOL_API_URL."/user/" . $shelter);
 }
 
 die();

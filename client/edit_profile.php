@@ -1,6 +1,4 @@
 <?php
-session_start();
-session_regenerate_id(true);
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';
@@ -16,8 +14,7 @@ $title = "Edit profile";
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-if ($_SESSION['username'] === $_GET['username']) {
-    $user = User::fromDatabase($_GET['username']);
+if ($_SESSION['username'] === $user->getUsername()) {
     require_once CLIENT_DIR.'/templates/users/edit_profile.php';
     editProfile($user);
 }

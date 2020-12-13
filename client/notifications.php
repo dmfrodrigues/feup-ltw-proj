@@ -1,6 +1,4 @@
 <?php
-session_start();
-session_regenerate_id(true);
 
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';
@@ -17,7 +15,7 @@ $title = "Notifications";
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
+if(isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername()) {
     $notifications = getNotifications($_SESSION['username']);
     require_once CLIENT_DIR.'/templates/notifications/view_notifications.php';
 }

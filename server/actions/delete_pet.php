@@ -1,16 +1,18 @@
 <?php
-session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR.'/Pet.php';
+
+session_start();
+
 $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet->getPostedById()){
-        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
         die();
     }
 
@@ -19,6 +21,6 @@ if (isset($_SESSION['username'])){
     Pet::deleteFromDatabase($_GET['id']);
 }
 
-header("Location: " . PROTOCOL_CLIENT_URL . "/pets.php");
+header("Location: " . PROTOCOL_API_URL . "/pet");
 
 die();
