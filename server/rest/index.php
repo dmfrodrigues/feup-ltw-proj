@@ -26,6 +26,9 @@ $tree = [
                 'change'        => new ResourceHandlers($user_id_password_change_GET, null, null          , null                    )
             ],
             'edit'              => new ResourceHandlers($user_id_edit_GET    , null, null                 , null                    ),
+            'favorite' => [null => new ResourceHandlers(null                 , null, $user_id_favorite_PUT, null                    ),
+                '[0-9]+'        => new ResourceHandlers(null                 , null, null                 , $user_id_favorite_id_DELETE),
+            ],
             'adopted'           => new ResourceHandlers($user_id_adopted_GET , null, null                 , null                    ),
             'myproposals'       => new ResourceHandlers($user_id_myproposals_GET, null, null              , null                    ),
             'notifications'     => new ResourceHandlers($user_id_notifications_GET, null, null            , null                    ),

@@ -188,6 +188,41 @@ $user_id_edit_GET = function(array $args): void {
     require_once CLIENT_DIR.'/edit_profile.php';
 };
 
+$user_id_favorite_PUT = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    $_PUT = getPUT();
+    $petId = $_PUT['petId'];
+    $pet = Pet::fromDatabase($petId);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::FAVORITE_PET,
+        Authorization\Method::WRITE,
+        $auth,
+        null
+    );
+    
+    $pet->addToFavorites($user);
+};
+
+$user_id_favorite_id_DELETE = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    $petId = $args[3];
+    $pet = Pet::fromDatabase($petId);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::FAVORITE_PET,
+        Authorization\Method::WRITE,
+        $auth,
+        null
+    );
+    
+    $pet->removeFromFavorites($user);
+};
+
 // view_adopted_pets_by_user.php
 $user_id_adopted_GET = function(array $args): void {
     $username = $args[1];
