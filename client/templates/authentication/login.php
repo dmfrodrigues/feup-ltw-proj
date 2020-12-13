@@ -15,6 +15,6 @@
     </form>
     <a href="">Forgot Password?</a>
     <footer>
-        <p>New User? <a href="signup.php">Sign up</a></p>
+        <p>New User? <a href="<?= PROTOCOL_CLIENT_URL ?>/signup.php">Sign up</a></p>
     </footer>
 </section>

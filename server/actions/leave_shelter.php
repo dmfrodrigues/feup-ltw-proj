@@ -18,11 +18,11 @@ if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
 
         addNotification($shelter, "userLeftShelter", "The user " . $_SESSION['username'] . " left the shelter.");
 
-        header("Location: " . "../../client/profile.php?username=" . $_SESSION['username']); 
+        header("Location: " . PROTOCOL_CLIENT_URL."/profile.php?username=" . $_SESSION['username']); 
         die();
     }
 }
 
-header("Location: " . "../../client/index.php");
+header("Location: " . PROTOCOL_CLIENT_URL."/index.php");
 
 die();

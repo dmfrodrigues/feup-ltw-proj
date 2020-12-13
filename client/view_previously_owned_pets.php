@@ -14,6 +14,6 @@ if(isset($_SESSION['username'])){
     $title = "previously owned by" . $_SESSION['username'];
 }
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/view_previously_owned_pets.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/view_previously_owned_pets.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

@@ -13,7 +13,7 @@ $shelter = $_SESSION['username'];
 
 if (isset($shelter) && isset($_SESSION['isShelter'])) {
     deleteShelterInvitation($user, $shelter);
-    header("Location: " . "../../client/profile.php?username=" . $shelter);
+    header("Location: " . PROTOCOL_CLIENT_URL."/profile.php?username=" . $shelter);
 }
 
 die();

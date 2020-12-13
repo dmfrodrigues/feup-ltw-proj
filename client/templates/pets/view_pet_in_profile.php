@@ -3,7 +3,7 @@ function viewPetInProfile(Pet $pet) : void {
     $photoUrl = getPetMainPhoto($pet);
     $intro = explode(PHP_EOL, $pet->getDescription())[0];
     ?>
-    <article class="pet-card" onclick="location.href = 'pet.php?id=<?= $pet->getId() ?>';">
+    <article class="pet-card" onclick="location.href = '<?= PROTOCOL_CLIENT_URL ?>/pet.php?id=<?= $pet->getId() ?>';">
         <div class="pet-card-inner">
             <div class="pet-card-front">
                 <img src="<?= $photoUrl ?>">
