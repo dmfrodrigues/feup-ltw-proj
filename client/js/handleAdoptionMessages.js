@@ -67,10 +67,11 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
     
+    /*
     if(lastInsertedComment.user == user) {
         proposalHeader.style.right = "28.5em";
         proposalInfo.style.marginLeft = "15em";
-    }
+    }*/
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
@@ -109,10 +110,13 @@ async function updateAdoptionChat() {
 
     let mainObject = document.querySelector("section");
     let title =document.createElement('h1');
+    let photo = document.getElementById('proposal-pet-photo');
+    
     mainObject.innerHTML = '';
     title.innerHTML = 'Proposal Chat';
     title.id = 'proposal-title';
     mainObject.appendChild(title);
+    mainObject.appendChild(photo);
 
     jsonResponse.forEach((comment) => {
         addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
