@@ -56,7 +56,7 @@ require_once SERVER_DIR.'/Shelter.php';
     
     // ======================================================== PET ========================================================
     Rules::add_rule(Resource::PET, Method::READ , function(?\User $user, ?\Pet $pet){ return true                      ; }); // Everyone can see
-    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet){ return $pet->getAuthor() == $user; }); // Author can write
+    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet){ return true                      ; }); // Anyone can write
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet){ return $pet->getAuthor() == $user; }); // Author can edit
     
     // ======================================================== ADOPTION REQUEST ========================================================
