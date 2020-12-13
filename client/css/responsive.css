@@ -15,6 +15,7 @@
 }
 
 @media (max-width: 80em) {
+	.pets-main-page > div,
 	.shelters-grid,
 	.pet-card-grid,
 	.potential-collaborators-grid {
@@ -74,6 +75,7 @@
 }
 
 @media (max-width: 40em) {
+	.pets-main-page > div,
 	.shelters-grid,
 	.pet-card-grid,
 	.potential-collaborators-grid {

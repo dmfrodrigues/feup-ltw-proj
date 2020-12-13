@@ -30,7 +30,7 @@ $photos = $pet->getPictures();
         </header>
         <section id="description">
             <h2>Description</h2>
-            <textarea name="description"><?=$pet->getDescription()?></textarea>
+            <textarea name="description" required><?=$pet->getDescription()?></textarea>
         </section>
         <section id="about">
             <h2>About</h2>
