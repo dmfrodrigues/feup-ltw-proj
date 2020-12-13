@@ -24,7 +24,7 @@ async function addNewAdoptionRequestMsg() {
         {
             username: document.querySelector('input[name=userWhoProposed]').value,
             subject : `newMessage`,
-            text    : `You received a new message from ` + user
+            text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
         }
     );
 
