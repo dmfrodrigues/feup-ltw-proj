@@ -192,3 +192,11 @@ section#proposal-container {
 	font-size: 2.5em;
 	padding-bottom: 1em;
 }
+
+#proposal-pet-photo{
+	display: block;
+	margin: auto;
+	margin-bottom: 3em;
+	width: 15em;
+	border-radius: 50%;
+}
