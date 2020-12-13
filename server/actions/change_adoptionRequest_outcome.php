@@ -8,6 +8,8 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
 
+session_start();
+
 if ($_GET['username'] != $_SESSION['username']) 
     header("Location: " . $_SERVER['HTTP_REFERER']);
 

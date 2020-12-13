@@ -7,6 +7,9 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
+
+session_start();
+
 $pet = Pet::fromDatabase($_GET['id']);
 
 $N = intval($_POST['photo-number']);

@@ -6,7 +6,7 @@ $photos = $pet->getPictures();
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet->getName()?>" required>
             <div id="data">
-                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet->getLocation()?>" required></span>
+                <span id="location"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet->getLocation()?>" required></span>
             </div>
             <div id="pet-photos">
                 <a id="add-photo" onclick="addPetPhoto(this.parentNode)"> ➕ Add photo</a>

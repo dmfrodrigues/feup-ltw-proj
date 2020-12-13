@@ -8,6 +8,8 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Shelter.php';
 
+session_start();
+
 $shelter = $_GET['shelter'];
 
 if (isset($_SESSION['username']) && isShelter($shelter)) {

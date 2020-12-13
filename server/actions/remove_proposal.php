@@ -6,6 +6,8 @@ require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 
+session_start();
+
 $petId = $_GET['id'];
 
 if (isset($_SESSION['username'])){

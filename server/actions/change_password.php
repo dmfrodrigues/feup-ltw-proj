@@ -4,6 +4,9 @@ require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR . '/connection.php';
 require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
+
+session_start();
+
 $user = User::fromDatabase($_GET['username']);
 
 if (isset($_SESSION['username'])){

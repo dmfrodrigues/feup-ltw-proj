@@ -99,7 +99,7 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="resources/img/update.svg"/></button></div>
+                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/update.svg"/></button></div>
                 </div>  
             </div>
         </div>

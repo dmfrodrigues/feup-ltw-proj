@@ -6,7 +6,7 @@ require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
-$pet = Pet::fromDatabase($_GET['id']);
+
 $comments = $pet->getComments();
 
 $title = $pet->getName();
@@ -24,11 +24,18 @@ if (isset($_SESSION['username'])) {
     <script>
         let user = <?= json_encode($user) ?>;
     </script>
-    <script src="js/handleFavorites.js" defer></script>
+    <script src="<?= PROTOCOL_CLIENT_URL ?>/js/handleFavorites.js" defer></script>
 <?php
 }
 
-$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
+$javascript_files = [
+    PROTOCOL_CLIENT_URL.'/js/utils_elements.js',
+    PROTOCOL_CLIENT_URL.'/js/Comment.js',
+    PROTOCOL_CLIENT_URL.'/js/CommentTree.js',
+    PROTOCOL_CLIENT_URL.'/js/petPhotos.js',
+    PROTOCOL_CLIENT_URL.'/js/commentImage.js',
+    PROTOCOL_CLIENT_URL.'/js/utils_elements.js'
+];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/view_pet.php';

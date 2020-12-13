@@ -5,6 +5,8 @@ require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Shelter.php';
 
+session_start();
+
 $username = $_GET['username'];
 
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){

@@ -4,6 +4,8 @@ require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR . '/connection.php';
 require_once SERVER_DIR . '/Pet.php';
 
+session_start();
+
 $oldComment = Comment::fromDatabase(intval($_POST['commentId']));
 
 if($oldComment == null){ http_response_code(400); die(); }

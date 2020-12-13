@@ -6,6 +6,8 @@ require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 require_once SERVER_DIR . '/Shelter.php';
 
+session_start();
+
 $failed = true;
 $usernameChanged = false;
 

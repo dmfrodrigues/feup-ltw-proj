@@ -26,9 +26,9 @@
         </div>
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
-            <span id="location"><img src="resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
+            <span id="location"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
             <span id="postedBy"><a href="<?= PROTOCOL_API_URL ?>/user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
-            <?php $shelter = getPetShelter($_GET['id']);
+            <?php $shelter = getPetShelter($pet->getId());
                 if (!is_null($shelter)) { ?>
                 <section id="shelter">
                     <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter?>"><?= $shelter?></a></h2>
@@ -41,9 +41,9 @@
                 if (in_array($pet, $favorite_pets)) { ?>
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="resources/img/heart.svg" height="30px">Add to favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $_GET['id'] ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
-                <button id="ask" onclick="location.href = '#comments'"><img src="resources/img/question-mark.png" height="42px">Ask question</button>
+                <button id="ask" onclick="location.href = '#comments'"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/question-mark.png" height="42px">Ask question</button>
                 <?php  if($_SESSION['username'] != $pet->getPostedById() ) { ?>
                     <div id="adoption-request-button">
                         <?php require_once CLIENT_DIR.'/templates/pets/adoption_request_buttons.php'; ?>
@@ -77,12 +77,12 @@
     if ($userWhoAdoptedPet != null)
         $petAdopted = true;
 
-    $shelter = getPetShelter($_GET['id']);
+    $shelter = getPetShelter($pet->getId());
         
     if(isset($_SESSION['username']) && userCanEditPet($_SESSION['username'],$pet->getId())){ ?>
         <section id="action-edit-pet">
             <ul>
-                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="resources/img/edit.svg"></a></li>
+                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php } ?>

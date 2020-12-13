@@ -8,7 +8,10 @@ require_once SERVER_DIR . '/Shelter.php';
 
 $title = "Adoption messages";
 
-$javascript_files = ["js/handleAdoptionMessages.js", "js/utils_elements.js"];
+$javascript_files = [
+    PROTOCOL_CLIENT_URL."/js/handleAdoptionMessages.js",
+    PROTOCOL_CLIENT_URL."/js/utils_elements.js"
+];
 require_once CLIENT_DIR.'/templates/common/header.php';
 
 $adoptionRequest = getAdoptionRequest($_GET['id']);
