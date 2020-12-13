@@ -20,10 +20,10 @@
                 </div>  
                 
                 <?php if(!$isShelter) { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?shelter=<?= $shelter->getUsername() ?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?shelter=<?= $shelter->getUsername() ?>'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="acceptRequest">Accept Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/shelter_cancel_invitation.php?username=<?= $user->getUsername() ?>'" id="refuseRequest">Remove Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/shelter_cancel_invitation.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>'" id="refuseRequest">Remove Request</button>
                 <?php } ?>
             </div>
         </div>

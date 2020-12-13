@@ -12,6 +12,7 @@
             <?php if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
                 <p id="simple-fail-msg">Sign In Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
             <?php } ?>
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
         <input type="submit" value="Submit" id="submit-password">
     </form>
 </article>

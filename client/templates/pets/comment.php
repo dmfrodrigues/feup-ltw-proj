@@ -18,6 +18,7 @@
                 <input id="action-delete-id" name="id" type="hidden">
                 <input id="action-delete-submit" type="submit" style="display: none">
                 <img class="icon" src="resources/img/trash.svg" onclick="this.parentNode.querySelector('#action-delete-submit').click()">
+                <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             </form>
             <img id="action-reply" class="icon" src="resources/img/reply.svg" onclick="onClickCommentReply(this.parentNode.parentNode.parentNode)" title="Reply">
         </div>

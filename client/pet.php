@@ -4,11 +4,13 @@ session_start();
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\CSPHeaderSet();
+$CSRFtoken = Authentication\CSRF_GetToken();
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
+
 $pet = Pet::fromDatabase($_GET['id']);
 $comments = $pet->getComments();
 
@@ -31,8 +33,9 @@ if (isset($_SESSION['username'])) {
 <?php
 }
 
-$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/utils_elements.js'];
+$javascript_files = ['js/utils_elements.js', 'js/Comment.js', 'js/CommentTree.js', 'js/petPhotos.js', 'js/commentImage.js', 'js/handleFavorites.js'];
 
+require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/view_pet.php';
 require_once CLIENT_DIR.'/templates/common/footer.php';

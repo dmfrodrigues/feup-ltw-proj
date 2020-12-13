@@ -52,6 +52,7 @@
             <label for="color">Color
             <span class="value"><input type="text" name="color" placeholder="Pet's color" required></span>
         </div></label>
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
         <input type="submit" value="Submit" id="add-pet-submit">
     </form>
 </article>
