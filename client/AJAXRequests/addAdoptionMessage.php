@@ -1,4 +1,5 @@
 <?php
+    require_once __DIR__.'/../../server/server.php';
     require_once SERVER_DIR.'/connection.php';
 
     $stmt1 = $db->prepare('INSERT INTO AdoptionRequestMessage(text, request, user)

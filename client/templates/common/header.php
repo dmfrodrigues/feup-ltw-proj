@@ -47,7 +47,7 @@
             <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
                 <a href="<?= PROTOCOL_CLIENT_URL ?>/signup.php">Sign up</a>
-                <a href="<?= API_URL ?>/login">Login</a>
+                <a href="<?= PROTOCOL_API_URL ?>/login">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
                         <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="resources/img/new_notifications.svg" ></a>

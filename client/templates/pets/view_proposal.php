@@ -39,7 +39,8 @@
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
         <section class="messages-column-body">
-            <h1 id="proposal-title">Proposal chat</h1>
+            <h1 id="proposal-title">Proposal Chat</h1>
+            <img id="proposal-pet-photo" alt="Pet photo" src="<?= getPetMainPhoto(Pet::fromDatabase($adoptionRequest['pet'])) ?>">
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
                 <div id="proposal-header">
