@@ -7,7 +7,7 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
-require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR.'/Notification.php';
 
 $title = $_GET['username'];
 
