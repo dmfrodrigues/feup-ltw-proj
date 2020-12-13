@@ -35,9 +35,7 @@ $tree = [
     'adoptionMessage' => [null  => new ResourceHandlers(null                 , null, null                 , null                    ),
         '[0-9]+'                => new ResourceHandlers($adoptionMsg_GET     , null, null                 , null                    )
     ],
-    'notification' => [null     => new ResourceHandlers(null                 , null,                  null,                     null),
-        '[0-9]+'                => new ResourceHandlers(null                 , null, $notification_id_PUT    , null                    )
-    ]
+    'notification'              => new ResourceHandlers(null                 , null, $notification_id_PUT , null                    )
 ];
 
 $server = new RestServer($tree);

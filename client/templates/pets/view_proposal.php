@@ -65,6 +65,7 @@
         foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
+                <input type="hidden" name="userWhoProposed" value="<?=$reqMessage['user']?>">
                 <div id="proposal-header">
                     <a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$reqMessage['user']?>">
                         <?php $proposal_pic = User::fromDatabase($reqMessage['user'])->getPictureUrl();?>
