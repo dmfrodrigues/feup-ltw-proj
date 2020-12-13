@@ -22,7 +22,7 @@ try {
 } catch(UserAlreadyExistsException $e) {
     header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=2');
 } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=');
+    header('Location: ' . PROTOCOL_CLIENT_URL . '/signup.php?failed=1&errorCode=5');
 }
 
 die();
