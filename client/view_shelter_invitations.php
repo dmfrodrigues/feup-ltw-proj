@@ -10,10 +10,10 @@ require_once SERVER_DIR . '/Shelter.php';
 
 $title = "Shelter invitations";
 
-require_once 'templates/common/header.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
 if(isset($_SESSION['username'])) {
     $shelterInvitations = getUserShelterInvitation($_SESSION['username']);
-    require_once 'templates/users/view_shelter_invitations.php';
+    require_once CLIENT_DIR.'/templates/users/view_shelter_invitations.php';
     if(!isset($_GET['failed']) && !isset($_GET['errorCode'])){
         echo '<section class="messages-column-body">';
         drawShelterInvitations($shelterInvitations, false);
@@ -24,4 +24,4 @@ if(isset($_SESSION['username'])) {
         die();
     }
 }
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

@@ -8,6 +8,6 @@ $title = "New pet";
 
 $javascript_files = ['js/utils_elements.js', 'js/addPet.js'];
 
-require_once 'templates/common/header.php';
-require_once 'templates/pets/add_pet.php';
-require_once 'templates/common/footer.php';
+require_once CLIENT_DIR.'/templates/common/header.php';
+require_once CLIENT_DIR.'/templates/pets/add_pet.php';
+require_once CLIENT_DIR.'/templates/common/footer.php';

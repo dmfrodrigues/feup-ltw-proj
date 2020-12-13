@@ -6,7 +6,7 @@
         <a href="edit_profile.php?username=<?=$_SESSION['username']?>">Edit Profile</a>
     </header>
     <?php
-    require_once 'templates/pets/view_pets_in_profile.php';
+    require_once CLIENT_DIR.'/templates/pets/view_pets_in_profile.php';
     ?>
     <section id="actions">
         <h2>Actions</h2>
@@ -19,7 +19,7 @@
             <?php 
                 if(checkUserBelongsToShelter($user->getUsername())) { 
                     $shelterName = User::fromDatabase($user->getUsername())->getShelterId(); ?>
-                    <li><button onclick="location.href = 'profile.php?username=<?=$shelterName?>'">View shelter</button></li>
+                    <li><button onclick="location.href = '<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$shelterName?>'">View shelter</button></li>
             <?php } else { ?>
                     <li><button onclick="location.href = 'view_shelter_invitations.php'">View shelter invitations</button></li>
             <?php } ?>
