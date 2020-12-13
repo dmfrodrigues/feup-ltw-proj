@@ -2,6 +2,8 @@
 session_start();
 
 include_once __DIR__.'/../server/server.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\CSPHeaderSet();
 include_once SERVER_DIR.'/connection.php';
 include_once __DIR__.'/../server/notifications.php';
 include_once SERVER_DIR.'/Shelter.php';
