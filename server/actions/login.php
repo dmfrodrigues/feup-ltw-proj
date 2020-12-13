@@ -14,14 +14,14 @@ try {
             if (User::checkCredentials($_POST['username'], $_POST['password'])) {
                 if (!isShelter($_POST['username'])){
                     $_SESSION['username'] = $_POST['username'];
-                    header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
+                    header('Location: ' . PROTOCOL_API_URL);
                 } else {
                     $_SESSION['username'] = $_POST['username'];
                     $_SESSION['isShelter'] = 1;
-                    header('Location: ' . PROTOCOL_CLIENT_URL . '/index.php');
+                    header('Location: ' . PROTOCOL_API_URL);
                 }
             } else {
-                header('Location: ' . PROTOCOL_CLIENT_URL . '/login.php?failed=1&errorCode=3');
+                header('Location: ' . PROTOCOL_API_URL . '/login?failed=1&errorCode=3');
             }
         }
     }
