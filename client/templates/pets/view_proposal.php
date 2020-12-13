@@ -86,7 +86,7 @@
     function drawAnswerAdoptionRequest(): void { ?>
         <div id="proposal-msg"> 
             <input type="hidden" value="1">
-            <input type="hidden" name="requestID" value="<?= $_GET['id']?>">
+            <input type="hidden" name="requestID" value="<?= $request->getId()?>">
             <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
             <div id="proposal-header">
                 <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>">
