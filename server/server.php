@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/server_constants.php';
+define('API_URL', SERVER_URL.'/rest');
 
 /**
  * Get protocol.
@@ -17,6 +18,7 @@ define('PROTOCOL', get_protocol());
 
 define('PROTOCOL_SERVER_URL', PROTOCOL . SERVER_URL);
 define('PROTOCOL_CLIENT_URL', PROTOCOL . CLIENT_URL);
+define('PROTOCOL_API_URL', PROTOCOL . API_URL);
 
 define('USER_PICTURE_MAX_SIZE', 1000000);
 define('PET_PICTURE_MAX_SIZE', 1000000);
