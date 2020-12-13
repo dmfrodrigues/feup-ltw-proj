@@ -24,7 +24,7 @@ function addNotification(User $user, string $subject, string $text) : int {
 
     $stmt->bindValue(':subject', $subject);
     $stmt->bindValue(':text', $text);
-    $stmt->bindValue(':user', $user);
+    $stmt->bindValue(':user', $user->getUsername());
     $stmt->execute();
     $notificationId = intval($db->lastInsertId());
 

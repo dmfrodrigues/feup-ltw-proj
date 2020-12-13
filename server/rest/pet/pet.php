@@ -145,7 +145,7 @@ $pet_id_adopt_GET = function(array $args): void {
         Authorization\Resource::ADOPTION_REQUEST,
         Authorization\Method::WRITE,
         $auth,
-        $pet
+        null
     );
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
