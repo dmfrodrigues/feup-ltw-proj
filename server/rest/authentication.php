@@ -62,7 +62,6 @@ namespace Authentication {
     }
 
     function verifyAPI_Token(string $token) {
-
         if($_SESSION['csrf'] != $token) {
             http_response_code(403);
             die();

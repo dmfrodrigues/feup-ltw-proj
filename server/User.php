@@ -244,7 +244,6 @@ class User implements JsonSerializable {
      */
     static public function checkCredentials(string $username, string $password) : bool {
         global $db;
-        $password_sha1 = sha1($password);
         $stmt = $db->prepare('SELECT password
         FROM User
         WHERE username=:username');
