@@ -23,11 +23,11 @@
                 
                 <?php if($isMyPetProposal) { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionMessages/<?=$request->getId()?>'" id="answerRequest">Answer Request</button>
+                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">Answer Request</button>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
                     <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?csrf=<?=$_SESSION['csrf']?>&id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionMessages/<?=$request->getId()?>'" id="answerRequest">View Chat</button>
+                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">View Chat</button>
                 <?php } ?>
 
             </div>
@@ -40,20 +40,20 @@
     function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
         <section class="messages-column-body">
             <h1 id="proposal-title">Proposal Chat</h1>
-            <img id="proposal-pet-photo" alt="Pet photo" src="<?= getPetMainPhoto(Pet::fromDatabase($adoptionRequest['pet'])) ?>">
+            <img id="proposal-pet-photo" alt="Pet photo" src="<?= getPetMainPhoto($adoptionRequest->getPet()) ?>">
             <div id="proposal-msg"> 
-                <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest['user']?>">
+                <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest->getUserId() ?>">
                 <div id="proposal-header">
-                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$adoptionRequest['user']?>">
-                        <?php $proposal_pic = User::fromDatabase($adoptionRequest['user'])->getPictureUrl();?>
+                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$adoptionRequest->getUserId()?>">
+                        <?php $proposal_pic = User::fromDatabase($adoptionRequest->getUserId())->getPictureUrl();?>
                         <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$adoptionRequest['user']?> on <?=$adoptionRequest['messDate']?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$adoptionRequest['pet']?>"><?=$adoptionRequest['petName']?></a></p>
+                        <p><?=$adoptionRequest->getUserId()?> on <?=$adoptionRequest->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$adoptionRequest->getPetId()?>"><?=$adoptionRequest->getPet()->getName()?></a></p>
                     
                     <div id="proposal-message">
-                        <textarea readonly>&nbsp;<?=$adoptionRequest['text']?></textarea>
+                        <textarea readonly>&nbsp;<?=$adoptionRequest->getText()?></textarea>
                     </div>  
                 </div>
             </div>
@@ -84,7 +84,7 @@
 
     <?php 
 
-    function drawAnswerAdoptionRequest(): void { ?>
+    function drawAnswerAdoptionRequest($request): void { ?>
         <div id="proposal-msg"> 
             <input type="hidden" value="1">
             <input type="hidden" name="requestID" value="<?= $request->getId()?>">

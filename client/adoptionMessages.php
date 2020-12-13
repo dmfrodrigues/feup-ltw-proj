@@ -17,13 +17,12 @@ $javascript_files = [
 ];
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-$adoptionRequest = getAdoptionRequest($pet->getId());
-if(isset($_SESSION['username']) && ($_SESSION['username'] == $adoptionRequest['user'] || $_SESSION['username'] == $adoptionRequest['postedBy'])) {
+if(isset($_SESSION['username']) && ($_SESSION['username'] == $request->getPet()->getPostedById() || $_SESSION['username'] == $request->getUserId())) {
     require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
-    drawAdoptionRequestInitialMessage($adoptionRequest);
-    $adoptionRequestMessages = getAdoptionRequestMessages($adoptionRequest['id']);
-    drawAllOtherMessages($adoptionRequestMessages);
-    drawAnswerAdoptionRequest();
+    drawAdoptionRequestInitialMessage($request);
+    $messages = getAdoptionRequestMessages($request->getId());
+    drawAllOtherMessages($messages);
+    drawAnswerAdoptionRequest($request);
 }
 
 require_once CLIENT_DIR.'/templates/common/footer.php';
