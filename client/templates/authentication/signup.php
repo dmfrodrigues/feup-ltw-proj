@@ -52,7 +52,7 @@
             location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
         })
         .catch(function (error){
-          console.log(error);
+          console.error(error);
         });
         return false;
       }
