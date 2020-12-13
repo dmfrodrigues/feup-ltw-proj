@@ -13,7 +13,7 @@ require_once SERVER_DIR . '/Shelter.php';
 $failed = true;
 $usernameChanged = false;
 
-$user = User::fromDatabase($_POST['username']);
+$user = User::fromDatabase($_GET['username']);
 
 if(isShelter($user->getUsername())) {
     if(isset($_SESSION['username'])) {
