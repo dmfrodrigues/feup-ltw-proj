@@ -18,8 +18,14 @@ $adoptionRequest_id_message_GET = function(array $args): void {
         $request
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
-    require_once CLIENT_DIR.'/adoptionMessages.php';
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false) { 
+        $adoptionMessages = $request->getAdoptionRequestMessages();
+        array_unshift($adoptionMessages, $request);
+        print_result($adoptionMessages);
+    }
+    else
+        require_once CLIENT_DIR.'/adoptionMessages.php';
+    
 };
 
 $adoptionRequest_id_message_PUT = function(array $args): void {

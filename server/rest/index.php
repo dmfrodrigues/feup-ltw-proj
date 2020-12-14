@@ -13,7 +13,6 @@ require_once API_DIR . '/shelter/shelter.php';
 require_once API_DIR . '/pet/pet.php';
 require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionRequest/adoptionRequest.php';
-require_once API_DIR . '/adoptionMessages/adoptionMessages.php';
 require_once API_DIR . '/notification/notification.php';
 
 $tree = [
@@ -67,9 +66,6 @@ $tree = [
         '[0-9]+' => [
             'message'           => new ResourceHandlers($adoptionRequest_id_message_GET, null, $adoptionRequest_id_message_PUT, null)
         ]
-    ],
-    'adoptionMessage' => [null  => new ResourceHandlers(null                 , null, null                 , null                    ),
-        '[0-9]+'                => new ResourceHandlers($adoptionMsg_GET     , null, null                 , null                    )
     ],
     'notification'              => new ResourceHandlers(null                 , null, $notification_id_PUT , null                    )
 ];

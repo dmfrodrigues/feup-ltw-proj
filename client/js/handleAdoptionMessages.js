@@ -3,6 +3,7 @@ let submitMsg = allMsgs[allMsgs.length - 1];
 let petOwner;
 let userWhoProposed;
 let isOwnerSendingMessage;
+let petName = document.querySelector('#proposal-info a').innerHTML;
 
 window.onload = function(event) {
     petOwner = document.querySelector('input[name=petOwner]').value;
@@ -35,7 +36,7 @@ async function addNewAdoptionRequestMsg() {
         {
             username: notificationUser,
             subject : `newMessage`,
-            text    : `You received a new message from ` + userWhoSend + ", regarding " +  document.querySelector('#proposal-info a').innerHTML
+            text    : `You received a new message from ` + userWhoSend + ", regarding " +  petName
         }
     );
 
@@ -52,7 +53,7 @@ async function addNewAdoptionRequestMsg() {
 }
 
 
-function addCommentToChat(lastInsertedComment, user, petId, petName) {
+function addCommentToChat(lastInsertedComment, user, petId) {
 
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
@@ -82,7 +83,7 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="${API_URL}/pet/${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messageDate} for <a id="proposal-pet" href="${API_URL}/pet/${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';
@@ -110,9 +111,8 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
 async function updateAdoptionChat() {
     let requestId = document.querySelector('input[name=requestID]').value;
-    let response = await api.get(`adoptionMessage/${requestId}`);
+    let response = await api.get(`adoptionRequest/${requestId}/message`);
     let jsonResponse = await response.json();
-
     let user = document.querySelector('input[name=username]').value;
 
     let mainObject = document.querySelector("section");
@@ -126,7 +126,7 @@ async function updateAdoptionChat() {
     mainObject.appendChild(photo);
 
     jsonResponse.forEach((comment) => {
-        addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
+        addCommentToChat(comment, user, jsonResponse[0].pet);
     });
     
     submitMsg.querySelector('textarea').value = "";

@@ -64,6 +64,25 @@ class AdoptionRequest implements JsonSerializable {
         $request = $stmt->fetch();
         return $request;
     }
+
+    public function getAdoptionRequestMessages() : array {
+      global $db;
+    
+      $stmt = $db->prepare('SELECT 
+          AdoptionRequestMessage.id,
+          AdoptionRequestMessage.text, 
+          AdoptionRequestMessage.request,
+          AdoptionRequestMessage.messageDate,
+          AdoptionRequestMessage.user
+          FROM AdoptionRequestMessage 
+          INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
+          WHERE AdoptionRequestMessage.request=:reqId');
+      $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequestMessage');
+      $stmt->bindValue(':reqId', $this->id);
+      $stmt->execute();
+      $adoptionRequestMessages = $stmt->fetchAll();
+      return $adoptionRequestMessages;
+    } 
 }
 
 class AdoptionRequestMessage implements JsonSerializable {
@@ -78,7 +97,7 @@ class AdoptionRequestMessage implements JsonSerializable {
     public function getText       () : string          { return noHTML($this->text)                           ; }
     public function getRequest    () : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request) ; }
     public function getRequestId  () : int             { return noHTML($this->request)                        ; }
-    public function getMessageDate() : string          { return noHTML($this->messageDate)                    ; }
+    public function getMessageDate() : string          { return $this->messageDate                            ; }
     public function getUser       () : User            { return User::fromDatabase($this->user)               ; }
     public function getUserId     () : string          { return noHTML($this->user)                           ; }
     public function getPet        () : Pet             { return $this->getRequest()->getPet()                 ; }
@@ -162,28 +181,6 @@ function getAdoptionRequest(int $id): array {
   $adoptionRequest = $stmt->fetch();
   return $adoptionRequest;
 }
-
-function getAdoptionRequestMessages(int $reqId) : array {
-  global $db;
-
-  $stmt = $db->prepare('SELECT 
-      AdoptionRequestMessage.text, 
-      AdoptionRequestMessage.request,
-      AdoptionRequestMessage.id,
-      AdoptionRequestMessage.messageDate AS messDate,
-      AdoptionRequestMessage.user,
-      AdoptionRequest.outcome,
-      AdoptionRequest.pet,
-      Pet.name AS petName
-      FROM AdoptionRequestMessage 
-      INNER JOIN AdoptionRequest ON AdoptionRequest.id=AdoptionRequestMessage.request
-      INNER JOIN Pet ON AdoptionRequest.pet=Pet.id
-      WHERE AdoptionRequestMessage.request=:reqId');
-  $stmt->bindValue(':reqId', $reqId);
-  $stmt->execute();
-  $adoptionRequestMessages = $stmt->fetchAll();
-  return $adoptionRequestMessages;
-} 
 
 /**
 * Change adoption request outcome

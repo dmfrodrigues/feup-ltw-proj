@@ -62,8 +62,7 @@
     <?php 
 
     function drawAllOtherMessages($adoptionRequestMessages): void { 
-        foreach($adoptionRequestMessages as $reqMess) { 
-            $reqMessage = AdoptionRequestMessage::fromDatabase($reqMess['id']); ?>
+        foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
                 <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $reqMessage->getPetOwner()->getUsername() ?>">
                 <input type="hidden" name="userWhoProposed" value="<?=$reqMessage->getRequest()->getUser()->getUsername() ?>">
