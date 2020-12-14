@@ -61,4 +61,4 @@ if($_GET['outcome'] === 'rejected') {
     addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $pet->getName() . ", posted by " . $userWhoPostedPet . " was refused.");
 }
     
-header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}");
+header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}/proposalstome");
