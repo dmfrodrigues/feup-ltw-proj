@@ -13,11 +13,6 @@ async function addNewAdoptionRequestMsg() {
 
     let Msg = inputDiv.querySelector('textarea').value;
 
-    // let data = { requestId: requestId, user: user, Msgtext: Msgtext};
-
-    // let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
-    //let response  = await ajaxAddAdoptionRequest(params);
-
     // let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]');
 
     // console.log(isOwnerSendingMessage);
