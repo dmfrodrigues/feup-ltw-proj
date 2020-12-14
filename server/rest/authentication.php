@@ -32,7 +32,12 @@ namespace Authentication {
         return htmlentities($input, ENT_QUOTES | ENT_HTML5, $encoding);
     }
 
-    function CSPHeaderSet() { 
+    /**
+     * Generate CSP Header.
+     * 
+     * @return void
+     */
+    function CSPHeaderSet() : void { 
         $headerCSP = "Content-Security-Policy:" .
             "default-src 'self' ;" .  
             "img-src 'self' data: ;" .
@@ -43,6 +48,11 @@ namespace Authentication {
         header($headerCSP);
     }
 
+    /**
+     * Get CSRF Token.
+     * 
+     * @return string Returns the CSRF token.
+     */
     function CSRF_GetToken() : ?string {
         if(isset($_SESSION['username'])) {
             if(isset($_SESSION['csrf'])) 
@@ -56,6 +66,11 @@ namespace Authentication {
         return null;
     }
 
+    /**
+     * Verify if CSRF Token is correct (ACTIONS).
+     * 
+     * @return void 
+     */
     function verifyCSRF_Token() : void {
         if(!isset($_GET['csrf'])) {
             if($_SESSION['csrf'] != $_POST['csrf']) {
@@ -71,6 +86,11 @@ namespace Authentication {
         }
     }
 
+    /**
+     * Verify if CSRF Token is correct (API REST).
+     * 
+     * @return void 
+     */
     function verifyAPI_Token(string $token) : bool{
         if($_SESSION['csrf'] != $token) 
             return false;

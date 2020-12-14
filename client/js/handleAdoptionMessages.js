@@ -1,39 +1,33 @@
-let proposals = document.querySelectorAll('div#proposal-msg');
 let allMsgs = document.querySelectorAll('#proposal-msg');
 let submitMsg = allMsgs[allMsgs.length - 1];
-
+let petOwner;
+let userWhoProposed;
+let isOwnerSendingMessage;
 
 window.onload = function(event) {
+    petOwner = document.querySelector('input[name=petOwner]').value;
+    userWhoProposed = document.querySelector('input[name=userWhoProposed]').value;
+    isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]').value;
     window.location='#proposal-messages-refresh';
 }
 
 async function addNewAdoptionRequestMsg() {
     let inputDiv = document.querySelector('#proposal-message-submit');
     let requestId = document.querySelector('input[name=requestID]').value;
-    let user = document.querySelector('input[name=username]').value;
 
-    let Msgtext = inputDiv.querySelector('textarea').value;
+    let Msg = inputDiv.querySelector('textarea').value;
 
-    let data = { requestId: requestId, user: user, Msgtext: Msgtext};
+    // --------------------- Notification ---------------------
 
-    let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
-    let response  = await ajaxAddAdoptionRequest(params);
-
-    let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]');
-
-    console.log(isOwnerSendingMessage);
-    console.log(user);
-    console.log(document.querySelector('input[name=userWhoProposed]'));
-
-    let notificationUser;
+    let notificationUser, userWhoSend;
 
     if (isOwnerSendingMessage == 1) {
-        notificationUser = user;
-        console.log("isOwnerSendingMessage == 1");
+        notificationUser = userWhoProposed;
+        userWhoSend = petOwner;
     }
     else {
-        notificationUser = document.querySelector('input[name=userWhoProposed]').value;
-        console.log("isOwnerSendingMessage != 1");
+        notificationUser = petOwner;
+        userWhoSend = userWhoProposed;
     }
 
     api.put(
@@ -41,27 +35,22 @@ async function addNewAdoptionRequestMsg() {
         {
             username: notificationUser,
             subject : `newMessage`,
-            text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
+            text    : `You received a new message from ` + userWhoSend + ", regarding " +  document.querySelector('#proposal-info a').innerHTML
         }
     );
 
-    if(!response.ok) {
-        const message = `An error has occurred: ${response.status}`;
-        throw new Error(message);
-    }
+    // --------------------- Adoption Request Message ---------------------
 
-    updateAdoptionChat();
+    api.put(
+        `adoptionRequest/${requestId}/message`,
+        {
+            Msgtext: Msg
+        }
+    ).then((response) => {
+        updateAdoptionChat();
+    })
 }
 
-async function ajaxAddAdoptionRequest(bodyParams) {
-    return fetch(PROTOCOL_CLIENT_URL+'/AJAXRequests/addAdoptionMessage.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: bodyParams
-    });
-}
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
 

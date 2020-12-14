@@ -39,7 +39,7 @@
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets();
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
