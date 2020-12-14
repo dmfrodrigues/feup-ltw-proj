@@ -20,7 +20,7 @@ require_once CLIENT_DIR.'/templates/common/header.php';
 if(isset($_SESSION['username']) && ($_SESSION['username'] == $request->getPet()->getPostedById() || $_SESSION['username'] == $request->getUserId())) {
     require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
     drawAdoptionRequestInitialMessage($request);
-    $messages = getAdoptionRequestMessages($request->getId());
+    $messages = $request->getAdoptionRequestMessages();
     drawAllOtherMessages($messages);
     drawAnswerAdoptionRequest($request);
 }
