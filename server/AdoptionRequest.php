@@ -74,24 +74,40 @@ class AdoptionRequestMessage implements JsonSerializable {
     private  string $user       ;
     public function __construct(){}
 
-    public function getId         () : int             { return $this->id                                     ; }
-    public function getText       () : string          { return $this->text                                   ; }
+    public function getId         () : int             { return noHTML($this->id)                             ; }
+    public function getText       () : string          { return noHTML($this->text)                           ; }
     public function getRequest    () : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request) ; }
-    public function getRequestId  () : int             { return $this->request                                ; }
-    public function getMessageDate() : string          { return $this->messageDate                            ; }
+    public function getRequestId  () : int             { return noHTML($this->request)                        ; }
+    public function getMessageDate() : string          { return noHTML($this->messageDate)                    ; }
     public function getUser       () : User            { return User::fromDatabase($this->user)               ; }
-    public function getUserId     () : string          { return $this->user                                   ; }
+    public function getUserId     () : string          { return noHTML($this->user)                           ; }
     public function getPet        () : Pet             { return $this->getRequest()->getPet()                 ; }
     public function getPetOwner   () : User            { return $this->getRequest()->getPet()->getPostedBy()  ; }
 
-    public function setId         (int    $id         ) : void { $this->id          = $id         ; }
-    public function setText       (string $text       ) : void { $this->text        = $text       ; }
-    public function setRequest    (int    $request    ) : void { $this->request     = $request    ; }
+    public function setId (int $id) : void { 
+      $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+      $this->id = $newId; 
+    }
+
+    public function setText (string $text) : void { 
+      $newText = filter_var($text, FILTER_SANITIZE_STRING);
+      $this->text = $newText; 
+    }
+
+    public function setRequest (int $request) : void {
+      $newRequest = filter_var($request, FILTER_SANITIZE_NUMBER_INT);
+      $this->request = $newRequest; 
+    }
+
+    public function setUser (string $user) : void {
+      $newUser = filter_var($user, FILTER_SANITIZE_STRING);
+      $this->user = $newUser; 
+    }
+
     public function setMessageDate(string $messageDate) : void { $this->messageDate = $messageDate; }
-    public function setUser       (string $user       ) : void { $this->user        = $user       ; }
 
     public function jsonSerialize() {
-		return get_object_vars($this);
+		  return get_object_vars($this);
     }
 
     static public function fromDatabase(string $id) : AdoptionRequestMessage {
