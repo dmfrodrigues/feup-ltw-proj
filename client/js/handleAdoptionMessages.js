@@ -2,7 +2,6 @@ let proposals = document.querySelectorAll('div#proposal-msg');
 let allMsgs = document.querySelectorAll('#proposal-msg');
 let submitMsg = allMsgs[allMsgs.length - 1];
 
-
 window.onload = function(event) {
     window.location='#proposal-messages-refresh';
 }
@@ -12,56 +11,49 @@ async function addNewAdoptionRequestMsg() {
     let requestId = document.querySelector('input[name=requestID]').value;
     let user = document.querySelector('input[name=username]').value;
 
-    let Msgtext = inputDiv.querySelector('textarea').value;
+    let Msg = inputDiv.querySelector('textarea').value;
 
-    let data = { requestId: requestId, user: user, Msgtext: Msgtext};
+    // let data = { requestId: requestId, user: user, Msgtext: Msgtext};
 
-    let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
-    let response  = await ajaxAddAdoptionRequest(params);
+    // let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
+    //let response  = await ajaxAddAdoptionRequest(params);
 
-    let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]');
+    // let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]');
 
-    console.log(isOwnerSendingMessage);
-    console.log(user);
-    console.log(document.querySelector('input[name=userWhoProposed]'));
+    // console.log(isOwnerSendingMessage);
+    // console.log(user);
+    // console.log(document.querySelector('input[name=userWhoProposed]'));
 
-    let notificationUser;
+    // let notificationUser;
 
-    if (isOwnerSendingMessage == 1) {
-        notificationUser = user;
-        console.log("isOwnerSendingMessage == 1");
-    }
-    else {
-        notificationUser = document.querySelector('input[name=userWhoProposed]').value;
-        console.log("isOwnerSendingMessage != 1");
-    }
+    // if (isOwnerSendingMessage == 1) {
+    //     notificationUser = user;
+    //     console.log("isOwnerSendingMessage == 1");
+    // }
+    // else {
+    //     notificationUser = document.querySelector('input[name=userWhoProposed]').value;
+    //     console.log("isOwnerSendingMessage != 1");
+    // }
+
+    // api.put(
+    //     `notification`,
+    //     {
+    //         username: notificationUser,
+    //         subject : `newMessage`,
+    //         text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
+    //     }
+    // );
 
     api.put(
-        `notification`,
+        `adoptionRequest/${requestId}/message`,
         {
-            username: notificationUser,
-            subject : `newMessage`,
-            text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
+            Msgtext: Msg
         }
     );
-
-    if(!response.ok) {
-        const message = `An error has occurred: ${response.status}`;
-        throw new Error(message);
-    }
 
     updateAdoptionChat();
 }
 
-async function ajaxAddAdoptionRequest(bodyParams) {
-    return fetch(PROTOCOL_CLIENT_URL+'/AJAXRequests/addAdoptionMessage.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: bodyParams
-    });
-}
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
