@@ -29,7 +29,7 @@
             <span id="location"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
             <span id="postedBy"><a href="<?= PROTOCOL_API_URL ?>/user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($pet->getId());
-                if (!is_null($shelter)) { ?>
+                if ($shelter != "") { ?>
                 <section id="shelter">
                     <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter?>"><?= $shelter?></a></h2>
                 </section>
