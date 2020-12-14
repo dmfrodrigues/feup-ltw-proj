@@ -19,8 +19,34 @@ async function addNewAdoptionRequestMsg() {
     let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
     let response  = await ajaxAddAdoptionRequest(params);
 
+    let isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]');
+
+    console.log(isOwnerSendingMessage);
+    console.log(user);
+    console.log(document.querySelector('input[name=userWhoProposed]'));
+
+    let notificationUser;
+
+    if (isOwnerSendingMessage == 1) {
+        notificationUser = user;
+        console.log("isOwnerSendingMessage == 1");
+    }
+    else {
+        notificationUser = document.querySelector('input[name=userWhoProposed]').value;
+        console.log("isOwnerSendingMessage != 1");
+    }
+
+    api.put(
+        `notification`,
+        {
+            username: notificationUser,
+            subject : `newMessage`,
+            text    : `You received a new message from ` + user + ", regarding " +  document.querySelector('input[name=petName]').value
+        }
+    );
+
     if(!response.ok) {
-        const message = `An error has occured: ${response.status}`;
+        const message = `An error has occurred: ${response.status}`;
         throw new Error(message);
     }
 
@@ -38,6 +64,7 @@ async function ajaxAddAdoptionRequest(bodyParams) {
 }
 
 function addCommentToChat(lastInsertedComment, user, petId, petName) {
+
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
 
