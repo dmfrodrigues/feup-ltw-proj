@@ -5,6 +5,7 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 
+use function Authentication\noHTML;
 
 class Notification implements JsonSerializable {
     private  int    $id          ;
@@ -14,19 +15,35 @@ class Notification implements JsonSerializable {
     private  float  $text        ;
     public function __construct(){}
 
-    public function getId          () : ?int    { return $this->id                  ; }
-    public function isRead         () :  int    { return $this->read                ; }
+    public function getId          () : ?int    { return noHTML($this->id)          ; }
+    public function isRead         () :  int    { return noHTML($this->read)        ; }
     public function getUser        () :  User   { return $this->user                ; }
-    public function getSubject     () :  string { return $this->subject             ; }
+    public function getSubject     () :  string { return noHTML($this->subject)     ; }
     public function getText        () :  string { return $this->text                ; }
+
+    public function setId (int $id) : void {
+        $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->id = $newId; 
+    }
+
+    public function setIsRead (int $isRead) : void {
+        $newisRead = filter_var($isRead, FILTER_SANITIZE_NUMBER_INT);
+        $this->read = $newisRead; 
+    }
+
+    public function setSubject (string $subject) : void {
+        $newSubject = filter_var($subject, FILTER_SANITIZE_STRING);
+        $this->subject = $newSubject; 
+    }
+
+    public function setText (string $text) : void {
+        $newText = filter_var($text, FILTER_SANITIZE_STRING);
+        $this->text = $newText; 
+    }
     
-    public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
-    public function setIsRead      ( int    $isRead      ) : void { $this->read         = $isRead      ; }
     public function setRead        (                     ) : void { $this->read         = 1            ; }
     public function setUser        ( User   $user        ) : void { $this->user         = $user        ; }
-    public function setSubject     ( string $subject     ) : void { $this->subject      = $subject     ; }
-    public function setText        ( string $text        ) : void { $this->text         = $text        ; }
-    
+
     public function jsonSerialize() {
 		return get_object_vars($this);
     }
