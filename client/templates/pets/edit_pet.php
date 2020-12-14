@@ -6,7 +6,7 @@ $photos = $pet->getPictures();
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet->getName()?>" required>
             <div id="data">
-                <span id="location"><img src="resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet->getLocation()?>" required></span>
+                <span id="location"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/location.png"><input type="text" name="location" placeholder="Location" value="<?=$pet->getLocation()?>" required></span>
             </div>
             <div id="pet-photos">
                 <a id="add-photo" onclick="addPetPhoto(this.parentNode)"> ➕ Add photo</a>
@@ -68,9 +68,10 @@ $photos = $pet->getPictures();
                 <span class="value"><input type="text" name="color" value="<?=$pet->getColor()?>" required></span>
             </div>
         </section>
+        <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
         <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
-        <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+    <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?csrf=<?=$_SESSION['csrf']?>&id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>
