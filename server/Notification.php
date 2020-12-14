@@ -168,7 +168,7 @@ function deleteNotification(int $notificationId) {
  * @return void
  */
 function deleteAllNotifications(string $username) {
-    
+
     $notifications = getNotifications($username);
 
     foreach($notifications as $notification)

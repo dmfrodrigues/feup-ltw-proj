@@ -31,7 +31,7 @@ $tree = [
             ],
             'adopted'           => new ResourceHandlers($user_id_adopted_GET , null, null                 , null                    ),
             'myproposals'       => new ResourceHandlers($user_id_myproposals_GET, null, null              , null                    ),
-            'notifications'     => new ResourceHandlers($user_id_notifications_GET, null, null            , null                    ),
+            'notifications'     => new ResourceHandlers($user_id_notifications_GET, null, null            , $notification_id_DELETE ),
             'proposalstome'     => new ResourceHandlers($user_id_proposalstome_GET, null, null            , null                    ),
             'invitations'       => new ResourceHandlers($user_id_invitations_GET, null, null              , null                    ),
             'previouslyOwned'   => new ResourceHandlers($user_id_previouslyOwned_GET, null, null          , null                    )
