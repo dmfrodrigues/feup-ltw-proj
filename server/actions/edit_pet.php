@@ -6,7 +6,7 @@ require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\verifyCSRF_Token();
-require_once SERVER_DIR.'/notifications.php';
+require_once SERVER_DIR.'/Notification.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
@@ -45,7 +45,8 @@ if (isset($_SESSION['username'])){
         $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['id']);
         foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
             if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
-                addNotification($userWhoFavoritePet['username'], "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was edited by " . $_SESSION['username'] . ".");
+                $user = User::fromDatabase($userWhoFavoritePet['username']);
+                addNotification($user, "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was edited by " . $_SESSION['username'] . ".");
             }
         }
 

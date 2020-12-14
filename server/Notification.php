@@ -5,6 +5,78 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 
+use function Authentication\noHTML;
+
+class Notification implements JsonSerializable {
+    private  int    $id          ;
+    private  int    $read        ;
+    private  User   $user        ;
+    private  string $subject     ;
+    private  float  $text        ;
+    public function __construct(){}
+
+    public function getId          () : ?int    { return noHTML($this->id)          ; }
+    public function isRead         () :  int    { return noHTML($this->read)        ; }
+    public function getUser        () :  User   { return $this->user                ; }
+    public function getSubject     () :  string { return noHTML($this->subject)     ; }
+    public function getText        () :  string { return $this->text                ; }
+
+    public function setId (int $id) : void {
+        $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->id = $newId; 
+    }
+
+    public function setIsRead (int $isRead) : void {
+        $newisRead = filter_var($isRead, FILTER_SANITIZE_NUMBER_INT);
+        $this->read = $newisRead; 
+    }
+
+    public function setSubject (string $subject) : void {
+        $newSubject = filter_var($subject, FILTER_SANITIZE_STRING);
+        $this->subject = $newSubject; 
+    }
+
+    public function setText (string $text) : void {
+        $newText = filter_var($text, FILTER_SANITIZE_STRING);
+        $this->text = $newText; 
+    }
+    
+    public function setRead        (                     ) : void { $this->read         = 1            ; }
+    public function setUser        ( User   $user        ) : void { $this->user         = $user        ; }
+
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
+    public function addToDatabase() : void {
+        global $db;
+
+        $stmt = $db->prepare('INSERT INTO Notification
+        (subject, text, user)
+        VALUES
+        (:subject, :text, :user)');
+
+        $stmt->bindValue(':subject', $this->subject);
+        $stmt->bindValue(':text', $this->text);
+        $stmt->bindValue(':user', $this->user->getUsername());
+        $stmt->execute();
+        $this->id = $db->lastInsertId();
+
+        $this->setIsRead(0);
+    }
+
+    static public function fromDatabase($id) : Notification {
+        global $db;
+        $stmt = $db->prepare('SELECT * FROM Notification WHERE id=:id');
+        $stmt->bindValue(':id', $id);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Notification');
+        $stmt->execute();
+        $notification = $stmt->fetch();
+        if($notification == false) throw new RuntimeException("No such notification");
+        return $notification;
+    }
+    
+}
 
 /**
  * Add new notification to database.
