@@ -17,9 +17,7 @@ async function addNewAdoptionRequestMsg() {
 
     let Msg = inputDiv.querySelector('textarea').value;
 
-    // --------------------- Notification -----------------------------------------------------------
-
-
+    // --------------------- Notification ---------------------
 
     let notificationUser, userWhoSend;
 
@@ -32,10 +30,6 @@ async function addNewAdoptionRequestMsg() {
         userWhoSend = userWhoProposed;
     }
 
-    console.log(notificationUser);
-    console.log(userWhoSend);
-    
-
     api.put(
         `notification`,
         {
@@ -45,7 +39,7 @@ async function addNewAdoptionRequestMsg() {
         }
     );
 
-    // -----------------------------------------------------------------------------------------------
+    // --------------------- Adoption Request Message ---------------------
 
     api.put(
         `adoptionRequest/${requestId}/message`,
