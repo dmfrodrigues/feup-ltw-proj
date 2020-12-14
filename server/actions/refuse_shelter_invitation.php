@@ -11,10 +11,10 @@ require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 
-$shelter = $_GET['shelter'];
+$shelter = Shelter::fromDatabase($_GET['shelter']);
 
-if (isset($_SESSION['username']) && isShelter($shelter)) {
-    deleteShelterInvitation($_SESSION['username'], $shelter);
+if (isset($_SESSION['username']) && isShelter($shelter->getUsername())) {
+    deleteShelterInvitation($_SESSION['username'], $shelter->getUsername());
 
     addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " refused your invite to be a collaborator.");
     

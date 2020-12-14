@@ -12,9 +12,11 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/errors/errors.php';
 
+$shelter = Shelter::fromDatabase($_GET['shelter']);
+
 if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
     $userShelter = User::fromDatabase($_SESSION['username'])->getShelter();
-    if ($shelter === $userShelter) {
+    if ($shelter->getUsername() === $userShelter->getUsername()) {
         leaveShelter($_SESSION['username']);
 
         addNotification($shelter, "userLeftShelter", "The user " . $_SESSION['username'] . " left the shelter.");
