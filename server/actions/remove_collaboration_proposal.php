@@ -14,7 +14,7 @@ require_once SERVER_DIR.'/Shelter.php';
 $shelter = $_SESSION['username'];
 
 if (isset($_SESSION['isShelter']) && isset($shelter)) {
-    deleteShelterInvitation($user, $shelter);
+    deleteShelterInvitation($_GET['username'], $shelter);
     header("Location: " . PROTOCOL_API_URL."/user/" . $shelter);
 }
 
