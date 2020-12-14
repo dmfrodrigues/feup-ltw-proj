@@ -4,7 +4,7 @@
     </header>
     <article id="notifications-body">
         <div id="delete-all-notifications">
-            <button>Delete All Notifications</button>
+            <button onclick="deleteUserNotifications('<?= $_SESSION['username'] ?>')">Delete All Notifications</button>
         </div>
         <ul>
             <?php foreach($notifications as $notification) { 
