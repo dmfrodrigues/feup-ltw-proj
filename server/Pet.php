@@ -36,7 +36,7 @@ class Pet implements JsonSerializable {
     public function getLocation    () :  string { return noHTML($this->location)             ; }
     public function getDescription () :  string { return noHTML($this->description)          ; }
     public function getStatus      () :  string { return noHTML($this->status)               ; }
-    public function getAdoptionDate() : ?string { return noHTML($this->adoptionDate)         ; }
+    public function getAdoptionDate() : ?string { return $this->adoptionDate                 ; }
     public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy) ; }
     public function getPostedById  () : string  { return noHTML($this->postedBy)             ; }
     /**

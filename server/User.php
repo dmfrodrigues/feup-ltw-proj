@@ -37,7 +37,7 @@ class User implements JsonSerializable {
     public function getUsername    () :  string { return noHTML($this->username)     ; }
     public function getPassword    () :  string { return noHTML($this->password)     ; }
     public function getName        () :  string { return noHTML($this->name)         ; }
-    public function getRegisteredOn() :  string { return noHTML($this->registeredOn) ; }
+    public function getRegisteredOn() :  string { return $this->registeredOn         ; }
     /**
      * @return Shelter|null
      */
