@@ -18,8 +18,10 @@ $shelter = Shelter::fromDatabase($shelterId);
 
 if (isset($_SESSION['username']) && isShelter($shelterId)) {
     if(acceptShelterInvite($_SESSION['username'], $shelterId)) {
+
+        $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
         
-        addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " accepted your invite to be a collaborator.");
+        addNotification($shelter, "invitationOutcome", "The user " . $userLink . " accepted your invite to be a collaborator.");
 
         header("Location: " . PROTOCOL_API_URL."/user/{$_SESSION['username']}"); 
         die();
