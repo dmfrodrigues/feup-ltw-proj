@@ -62,22 +62,23 @@
     <?php 
 
     function drawAllOtherMessages($adoptionRequestMessages): void { 
-        foreach($adoptionRequestMessages as $reqMessage) { ?>
+        foreach($adoptionRequestMessages as $reqMess) { 
+            $reqMessage = AdoptionRequestMessage::fromDatabase($reqMess['id']); ?>
             <div id="proposal-msg"> 
-                <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] == $reqMessage['user']?>">
-                <input type="hidden" name="userWhoProposed" value="<?=$reqMessage['user']?>">
-                <input type="hidden" name="petName" value="<?=$reqMessage['petName']?>">
+                <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $reqMessage->getPetOwner()->getUsername() ?>">
+                <input type="hidden" name="userWhoProposed" value="<?=$reqMessage->getRequest()->getUser()->getUsername() ?>">
+                <input type="hidden" name="petOwner" value="<?=$reqMessage->getPetOwner()->getUsername()?>">
                 <div id="proposal-header">
-                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage['user']?>">
-                        <?php $proposal_pic = User::fromDatabase($reqMessage['user'])->getPictureUrl();?>
+                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage->getUserId()?>">
+                        <?php $proposal_pic = User::fromDatabase($reqMessage->getUserId())->getPictureUrl();?>
                         <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$reqMessage['user']?> on <?=$reqMessage['messDate']?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$reqMessage['pet']?>"><?=$reqMessage['petName']?></a></p>
+                        <p><?=$reqMessage->getUserId()?> on <?=$reqMessage->getMessageDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$reqMessage->getPet()->getName()?>"><?=$reqMessage->getPet()->getName()?></a></p>
                     
                     <div id="proposal-message">
-                        <textarea readonly>&nbsp;<?=$reqMessage['text']?></textarea>
+                        <textarea readonly>&nbsp;<?=$reqMessage->getText()?></textarea>
                     </div>  
                 </div>
             </div>
@@ -107,7 +108,7 @@
             </div>
         </div>
     </section>
-    <?php } ?>      
+    <?php } ?>
 
     <?php
 

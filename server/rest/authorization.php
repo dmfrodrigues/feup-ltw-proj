@@ -79,11 +79,11 @@ namespace Authorization {
     Rules::add_rule(Resource::COMMENT, Method::EDIT , function(?\User $user, ?\Comment $comment){ return $user == $comment->getAuthor(); }); // Author can edit its own comment
 
     // ======================================================== FAVORITE PET ========================================================
-    Rules::add_rule(Resource::COMMENT, Method::READ , function(?\User $user, ?\FavoritePet $favorite){ return true                         ; }); // Everyone can see
-    Rules::add_rule(Resource::COMMENT, Method::WRITE, function(?\User $user, ?\FavoritePet $favorite){ return $user == $favorite->getUser(); }); // \User can write
+    Rules::add_rule(Resource::FAVORITE_PET, Method::READ , function(?\User $user, ?\FavoritePet $favorite){ return true                         ; }); // Everyone can see
+    Rules::add_rule(Resource::FAVORITE_PET, Method::WRITE, function(?\User $user, ?\FavoritePet $favorite){ return !$user->isShelter()          ; }); // All but shelters can mark a favorite
 
     // ======================================================== NOTIFICATION ========================================================
-    Rules::add_rule(Resource::NOTIFICATION, Method::READ , function(?\User $user, ?\Notification $notification){ return true; }); // Everybody can see by now
+    Rules::add_rule(Resource::NOTIFICATION, Method::READ , function(?\User $user, ?\Notification $notification){ return $notification->getUser()->getUsername() == $user->getUsername(); }); // Everybody can see by now
     Rules::add_rule(Resource::NOTIFICATION, Method::WRITE, function(?\User $user, ?\Notification $notification){ return true; });
     
      function check(int $resourceType, int $method, ?\User $user, $resource): bool{

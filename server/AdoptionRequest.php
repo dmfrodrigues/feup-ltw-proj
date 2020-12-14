@@ -15,7 +15,7 @@ class AdoptionRequest implements JsonSerializable {
     public function getId      () : int    { return noHTML($this->id)                      ; }
     public function getText    () : string { return noHTML($this->text)                    ; }
     public function getOutcome () : string { return noHTML($this->outcome)                 ; }
-    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet)        ; }
+    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)          ; }
     public function getPetId   () : int    { return noHTML($this->pet)                     ; }
     public function getUser    () : ?User  { return User::fromDatabase($this->user)        ; }
     public function getAuthor  () : ?User  { return $this->getUser()                       ; }
@@ -74,14 +74,16 @@ class AdoptionRequestMessage implements JsonSerializable {
     private  string $user       ;
     public function __construct(){}
 
-    public function getId         () : int             { return $this->id                                    ; }
-    public function getText       () : string          { return $this->text                                  ; }
-    public function getRequest    () : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
-    public function getRequestId  () : int             { return $this->request                               ; }
-    public function getMessageDate() : string          { return $this->messageDate                           ; }
-    public function getUser       () : User            { return User           ::fromDatabase($this->user   ); }
-    public function getUserId     () : string          { return $this->user                                  ; }
-    
+    public function getId         () : int             { return $this->id                                     ; }
+    public function getText       () : string          { return $this->text                                   ; }
+    public function getRequest    () : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request) ; }
+    public function getRequestId  () : int             { return $this->request                                ; }
+    public function getMessageDate() : string          { return $this->messageDate                            ; }
+    public function getUser       () : User            { return User::fromDatabase($this->user)               ; }
+    public function getUserId     () : string          { return $this->user                                   ; }
+    public function getPet        () : Pet             { return $this->getRequest()->getPet()                 ; }
+    public function getPetOwner   () : User            { return $this->getRequest()->getPet()->getPostedBy()  ; }
+
     public function setId         (int    $id         ) : void { $this->id          = $id         ; }
     public function setText       (string $text       ) : void { $this->text        = $text       ; }
     public function setRequest    (int    $request    ) : void { $this->request     = $request    ; }
