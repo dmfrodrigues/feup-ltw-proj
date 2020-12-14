@@ -81,7 +81,7 @@ class AdoptionRequestMessage implements JsonSerializable {
     public function getMessageDate() : string          { return $this->messageDate                           ; }
     public function getUser       () : User            { return User           ::fromDatabase($this->user   ); }
     public function getUserId     () : string          { return $this->user                                  ; }
-
+    
     public function setId         (int    $id         ) : void { $this->id          = $id         ; }
     public function setText       (string $text       ) : void { $this->text        = $text       ; }
     public function setRequest    (int    $request    ) : void { $this->request     = $request    ; }
