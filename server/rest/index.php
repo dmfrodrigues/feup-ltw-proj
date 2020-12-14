@@ -37,9 +37,14 @@ $tree = [
             'previouslyOwned'   => new ResourceHandlers($user_id_previouslyOwned_GET, null, null          , null                    )
         ]
     ],
-    'shelter' => [null          => new ResourceHandlers($shelter_GET         , null, null                , null                    ),
-        'propose'               => new ResourceHandlers($shelter_propose_GET , null, null                , null                    ),
-        'potential'             => new ResourceHandlers($shelter_potential_GET, null, null               , null                    )
+    'shelter' => [null          => new ResourceHandlers($shelter_GET         , null, null                 , null                    ),
+        '[a-zA-Z0-9]+' => [
+            'potential'         => new ResourceHandlers($shelter_potential_GET, null, null                , null                    ),
+            'propose' => [
+                '[a-zA-Z0-9]+'  => new ResourceHandlers($shelter_id_propose_userId_GET, null, null        , null                    )
+            ],
+            'invitations'       => new ResourceHandlers($shelter_id_invitations_GET, null, null           , null                    )
+        ],
     ],
     'pet' => [null              => new ResourceHandlers($pet_GET             , null, null                 , null                    ),
         'new'                   => new ResourceHandlers($pet_new_GET         , null, null                 , null                    ),

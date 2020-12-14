@@ -13,10 +13,11 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/errors/errors.php';
 
-$shelter = $_GET['shelter'];
+$shelterId = $_GET['shelter'];
+$shelter = Shelter::fromDatabase($shelterId);
 
-if (isset($_SESSION['username']) && isShelter($shelter)) {
-    if(acceptShelterInvite($_SESSION['username'], $shelter)) {
+if (isset($_SESSION['username']) && isShelter($shelterId)) {
+    if(acceptShelterInvite($_SESSION['username'], $shelterId)) {
         
         addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " accepted your invite to be a collaborator.");
 

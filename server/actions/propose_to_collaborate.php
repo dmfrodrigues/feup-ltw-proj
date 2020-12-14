@@ -9,14 +9,14 @@ Authentication\verifyCSRF_Token();
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Shelter.php';
 
-$username = $user->getUsername();
+$user = User::fromDatabase($_GET['username']);
 
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){
-    addShelterInvitation($_POST['description'], $username, $_SESSION['username']);
+    addShelterInvitation($_POST['description'], $user->getUsername(), $_SESSION['username']);
 
-    addNotification($username, "shelterInvitation", "The shelter " . $_SESSION['username'] . " invited you to be a collaborator.");
+    addNotification($user, "shelterInvitation", "The shelter " . $_SESSION['username'] . " invited you to be a collaborator.");
 
-    header("Location: " . PROTOCOL_API_URL . "/user/$username");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
 }
 
 die();

@@ -12,9 +12,10 @@ require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Shelter.php';
 
 $shelter = $_SESSION['username'];
+$user = User::fromDatabase($_GET['username']);
 
 if (isset($shelter) && isset($_SESSION['isShelter'])) {
-    deleteShelterInvitation($user, $shelter);
+    deleteShelterInvitation($user->getUsername(), $shelter);
     header("Location: " . PROTOCOL_API_URL."/user/" . $shelter);
 }
 
