@@ -3,6 +3,8 @@
 require_once __DIR__.'/server.php';
 require_once __DIR__.'/Pet.php';
 
+use function Authentication\noHTML;
+
 define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
 
 class Comment implements JsonSerializable {
@@ -15,28 +17,52 @@ class Comment implements JsonSerializable {
 
     public function __construct(){}
 
-    public function getId      () : int    { return $this->id                      ; }
-    public function getPostedOn() : string { return $this->postedOn                ; }
-    public function getText    () : string { return $this->text                    ; }
-    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)  ; }
-    public function getPetId   () : int    { return $this->pet                     ; }
-    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
-    public function getAuthor  () : ?User  { return $this->getUser()               ; }
-    public function getUserId  () : string { return $this->user                    ; }
-    public function getAuthorId() : string { return $this->getUserId()             ; }
-    public function getAnswerTo() : ?int   { return $this->answerTo                ; }
+    public function getId      () : int    { return noHTML($this->id)                      ; }
+    public function getPostedOn() : string { return noHTML($this->postedOn)                ; }
+    public function getText    () : string { return noHTML($this->text)                    ; }
+    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)          ; }
+    public function getPetId   () : int    { return noHTML($this->pet)                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user)        ; }
+    public function getAuthor  () : ?User  { return $this->getUser()                       ; }
+    public function getUserId  () : string { return noHTML($this->user)                    ; }
+    public function getAuthorId() : string { return noHTML($this->getUserId())             ; }
+    public function getAnswerTo() : ?int   { return noHTML($this->answerTo)                ; }
     public function getPictureUrl() : string {
         return SERVER_DIR . "resources/img/comments/{$this->getId()}.jpg";
     }
     
-    public function setId      (int    $id      ) : void { $this->id       = $id      ; }
-    public function setPostedOn(string $postedOn) : void { $this->postedOn = $postedOn; }
-    public function setText    (string $text    ) : void { $this->text     = $text    ; }
-    public function setPetId   (int    $pet     ) : void { $this->pet      = $pet     ; }
-    public function setUserId  (string $user    ) : void { $this->user     = $user    ; }
-    public function setAuthorId(string $author  ) : void { $this->setUserId($author)  ; }
-    public function setAnswerTo(?int   $answerTo) : void { $this->answerTo = $answerTo; }
+    public function setId (int $id) : void { 
+        $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->id = $newId; 
+    }
+
+    public function setText (string $text) : void {
+        $newText = filter_var($text, FILTER_SANITIZE_STRING);
+        $this->text = $newText; 
+    }
+
+    public function setPetId (int $pet) : void {
+        $newPetId = filter_var($pet, FILTER_SANITIZE_NUMBER_INT);
+        $this->pet  = $newPetId; 
+    }
+
+    public function setUserId (string $user) : void {
+        $newUser = filter_var($user, FILTER_SANITIZE_STRING);
+        $this->user = $newUser; 
+    }
+
+    public function setAuthorId(string $author) : void {
+        $newAuthor = filter_var($author, FILTER_SANITIZE_STRING);
+        $this->setUserId($newAuthor)  ; 
+    }
+
+    public function setAnswerTo(?int $answerTo) : void {
+        $newanswerTo= filter_var($answerTo, FILTER_SANITIZE_NUMBER_INT);
+        $this->answerTo = $newanswerTo; 
+    }
     
+    public function setPostedOn (string $postedOn) : void {$this->postedOn = $postedOn; }
+
     public function jsonSerialize() {
 		return get_object_vars($this);
     }

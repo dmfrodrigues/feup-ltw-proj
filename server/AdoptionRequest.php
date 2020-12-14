@@ -1,5 +1,7 @@
 <?php
 
+use function Authentication\noHTML;
+
 class AdoptionRequest implements JsonSerializable {
     private  int    $id         ;
     private  string $text       ;
@@ -10,22 +12,42 @@ class AdoptionRequest implements JsonSerializable {
 
     public function __construct(){}
 
-    public function getId      () : int    { return $this->id                      ; }
-    public function getText    () : string { return $this->text                    ; }
-    public function getOutcome () : string { return $this->outcome                 ; }
-    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet ); }
-    public function getPetId   () : int    { return $this->pet                     ; }
-    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
-    public function getAuthor  () : ?User  { return $this->getUser()               ; }
-    public function getUserId  () : string { return $this->user                    ; }
-    public function getAuthorId() : string { return $this->getUserId()             ; }
-    public function getDate    () : string { return $this->requestDate             ; }
+    public function getId      () : int    { return noHTML($this->id)                      ; }
+    public function getText    () : string { return noHTML($this->text)                    ; }
+    public function getOutcome () : string { return noHTML($this->outcome)                 ; }
+    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet)        ; }
+    public function getPetId   () : int    { return noHTML($this->pet)                     ; }
+    public function getUser    () : ?User  { return User::fromDatabase($this->user)        ; }
+    public function getAuthor  () : ?User  { return $this->getUser()                       ; }
+    public function getUserId  () : string { return noHTML($this->user)                    ; }
+    public function getAuthorId() : string { return noHTML($this->getUserId())             ; }
+    public function getDate    () : string { return noHTML($this->requestDate)             ; }
 
-    public function setId     (int    $id         ) : void { $this->id          = $id         ; }
-    public function setText   (string $text       ) : void { $this->text        = $text       ; }
-    public function setOutcome(string $outcome    ) : void { $this->outcome     = $outcome    ; }
-    public function setPet    (int    $pet        ) : void { $this->pet         = $pet        ; }
-    public function setUser   (string $user       ) : void { $this->user        = $user       ; }
+    public function setId (int $id) : void { 
+      $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+      $this->id = $newId; 
+    }
+
+    public function setText (string $text) : void {
+      $newText = filter_var($text, FILTER_SANITIZE_STRING);
+      $this->text = $newText; 
+    }
+
+    public function setOutcome (string $outcome) : void {
+      $newOutcome = filter_var($outcome, FILTER_SANITIZE_STRING);
+      $this->outcome = $newOutcome; 
+    }
+
+    public function setPet (int $pet) : void { 
+      $newPet = filter_var($pet, FILTER_SANITIZE_NUMBER_INT);
+      $this->pet = $newPet; 
+    }
+
+    public function setUser (string $user) : void {
+      $newUser = filter_var($user, FILTER_SANITIZE_STRING);
+      $this->user = $newUser; 
+    }
+
     public function setAuthor (string $author     ) : void { $this->setUser($author)          ; }
     public function setDate   (string $requestDate) : void { $this->requestDate = $requestDate; }
     
