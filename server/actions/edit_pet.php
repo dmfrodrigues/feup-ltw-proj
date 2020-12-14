@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
@@ -10,6 +11,7 @@ require_once SERVER_DIR.'/User.php';
 require_once SERVER_DIR.'/Shelter.php';
 require_once SERVER_DIR.'/Pet.php';
 require_once SERVER_DIR.'/Shelter.php';
+
 $pet = Pet::fromDatabase($_GET['id']);
 
 $N = intval($_POST['photo-number']);
@@ -47,11 +49,11 @@ if (isset($_SESSION['username'])){
             }
         }
 
-        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
+        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}");
         exit();
     }
 
 }
 
-header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
 die();

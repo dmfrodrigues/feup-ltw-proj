@@ -24,7 +24,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="<?= PROTOCOL_CLIENT_URL ?>/resources/favicon.ico">
         <script>
-            const API_URL = `<?= PROTOCOL_SERVER_URL ?>/rest/`;
+            const API_URL = `<?= PROTOCOL_API_URL ?>/`;
             const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
             const PROTOCOL_CLIENT_URL = "<?= PROTOCOL_CLIENT_URL ?>";
         </script>
@@ -44,18 +44,18 @@
     </head>
     <body>
         <header>
-            <h1><a href="<?= PROTOCOL_CLIENT_URL ?>/index.php">Forever home</a></h1>
+            <h1><a href="<?= PROTOCOL_API_URL ?>">Forever home</a></h1>
             <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
-                <a href="<?= PROTOCOL_CLIENT_URL ?>/signup.php">Sign up</a>
+                <a href="<?= PROTOCOL_API_URL ?>/user/new">Sign up</a>
                 <a href="<?= PROTOCOL_API_URL ?>/login">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
-                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/new_notifications.svg" ></a>
+                        <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>/notifications"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/new_notifications.svg" ></a>
                     <?php } else { ?>
-                        <a href="<?= PROTOCOL_CLIENT_URL ?>/notifications.php?username=<?=$_SESSION['username']?>"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/no_notifications.svg" ></a>
+                        <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>/notifications"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/no_notifications.svg" ></a>
                     <?php } ?> 
-                    <span><a href="<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
+                    <span><a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
                 <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
@@ -65,9 +65,9 @@
                 <input type="checkbox" id="nav-hamburger"> 
                 <label class="hamburger" for="nav-hamburger"></label>
                 <ul>
-                    <li><a href="<?= PROTOCOL_CLIENT_URL ?>/pets.php">Pets Listed for Adoption</a></li>
-                    <li><a href="<?= PROTOCOL_CLIENT_URL ?>/adopted_pets.php">Adopted Pets</a></li>
-                    <li><a href="<?= PROTOCOL_CLIENT_URL ?>/view_shelters.php">View Shelters</a></li>
+                    <li><a href="<?= PROTOCOL_API_URL ?>/pet">Pets Listed for Adoption</a></li>
+                    <li><a href="<?= PROTOCOL_API_URL ?>/pet/adopted">Adopted Pets</a></li>
+                    <li><a href="<?= PROTOCOL_API_URL ?>/shelter">View Shelters</a></li>
                 </ul>
         </nav>
         <main>

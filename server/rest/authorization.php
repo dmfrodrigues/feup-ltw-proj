@@ -17,6 +17,7 @@ namespace Authorization {
         const ADOPTION_REQUEST_MESSAGE = 5;
         const COMMENT                  = 6;
         const FAVORITE_PET             = 7;
+        const SHELTER_INVITATION       = 8;
     }
 
     class Rules {
@@ -62,14 +63,15 @@ namespace Authorization {
     
     // ======================================================== ADOPTION REQUEST ========================================================
     Rules::add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // \Pet owner can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // Pet owner can see
+    Rules::add_rule(Resource::ADOPTION_REQUEST, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return true                                    ; }); // Anyone can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST, Method::EDIT , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can edit
     
     // ======================================================== ADOPTION REQUEST MESSAGE ========================================================
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getAuthor()          ; }); // Author can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getPet()->getAuthor(); }); // \Pet owner can see
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getAuthor()          ; }); // Author can write
-    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequestMessage $message){ return $user == $message->getRequest()->getPet()->getAuthor(); }); // \Pet owner can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can see
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // Pet owner can see
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can write
+    Rules::add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getPet()->getAuthor(); }); // Pet owner can write
 
     // ======================================================== COMMENT ========================================================
     Rules::add_rule(Resource::COMMENT, Method::READ , function(?\User $user, ?\Comment $comment){ return true                          ; }); // Everyone can see
@@ -79,7 +81,10 @@ namespace Authorization {
     // ======================================================== FAVORITE PET ========================================================
     Rules::add_rule(Resource::COMMENT, Method::READ , function(?\User $user, ?\FavoritePet $favorite){ return true                         ; }); // Everyone can see
     Rules::add_rule(Resource::COMMENT, Method::WRITE, function(?\User $user, ?\FavoritePet $favorite){ return $user == $favorite->getUser(); }); // \User can write
-
+    
+    // ======================================================== FAVORITE PET ========================================================
+    Rules::add_rule(Resource::SHELTER_INVITATION, Method::READ , function(?\User $user, $invitation){ return isShelter($user->getUsername()); }); // Everyone can see
+    
     function check(int $resourceType, int $method, ?\User $user, $resource): bool{
         if(isset(Rules::$rules[$resourceType])){
             if(isset(Rules::$rules[$resourceType][$method])){

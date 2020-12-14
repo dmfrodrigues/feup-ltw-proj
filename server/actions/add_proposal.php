@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
@@ -16,11 +17,11 @@ if (isset($_SESSION['username'])){
     addAdoptionRequest($_SESSION['username'], $petId, $_POST['description']);
 
     $pet = Pet::fromDatabase($petId);
-    $petOwner = $pet->getPostedById();
+    $petOwner = $pet->getPostedBy();
 
     addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet->getName() . ", by " . $_SESSION['username'] . ".");
 
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }
 
 die();

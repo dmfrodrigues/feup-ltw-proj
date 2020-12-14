@@ -38,13 +38,13 @@
         )
         .then(function (response) {
           if(response.status == 409)
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=2`;
+            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=2`;
           else if(response.status != 400)
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/profile.php?username=${username}`;
+            location.href = `<?= PROTOCOL_API_URL ?>/user/${username}`;
           else if(!/[\w]+/.test(username))
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=4`;
+            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=4`;
           else
-            location.href = `<?= PROTOCOL_CLIENT_URL ?>/signup.php?failed=1&errorCode=5`;
+            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=5`;
         })
         .catch(function (error) {
           console.error(error);

@@ -26,14 +26,14 @@ async function handleFavorites(target, username, petId) {
 
 function switchFavoriteButton(target, removeFromFavorites) {
     if(removeFromFavorites) 
-        target.innerHTML = '<img src="resources/img/anti-heart.svg" height="30px">Remove from favorites';
+        target.innerHTML = `<img src="${PROTOCOL_CLIENT_URL}/resources/img/anti-heart.svg" height="30px">Remove from favorites`;
     else
-        target.innerHTML = '<img src="resources/img/heart.svg" height="30px">Add to favorites';
+        target.innerHTML = `<img src="${PROTOCOL_CLIENT_URL}/resources/img/heart.svg" height="30px">Add to favorites`;
 }
 
 function ajaxAddOrRemoveFavorites(addToFavorites, bodyParams) {
     let apiFile = addToFavorites ? 'add_favorite.php' : 'remove_favorite.php';
-    return fetch('AJAXRequests/' + apiFile, {
+    return fetch(PROTOCOL_CLIENT_URL+'/AJAXRequests/' + apiFile, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

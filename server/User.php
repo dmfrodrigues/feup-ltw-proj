@@ -2,9 +2,12 @@
 
 require_once __DIR__.'/server.php';
 require_once SERVER_DIR.'/files.php';
+require_once 'rest/authentication.php';
 require_once __DIR__.'/Pet.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
+
+use function Authentication\noHTML;
 
 class UserAlreadyExistsException extends RuntimeException{}
 
@@ -31,10 +34,10 @@ class User implements JsonSerializable {
         // $this->admin = $admin;
     }
 
-    public function getUsername    () :  string { return $this->username    ; }
-    public function getPassword    () :  string { return $this->password    ; }
-    public function getName        () :  string { return $this->name        ; }
-    public function getRegisteredOn() :  string { return $this->registeredOn; }
+    public function getUsername    () :  string { return noHTML($this->username)     ; }
+    public function getPassword    () :  string { return noHTML($this->password)     ; }
+    public function getName        () :  string { return noHTML($this->name)         ; }
+    public function getRegisteredOn() :  string { return noHTML($this->registeredOn) ; }
     /**
      * @return Shelter|null
      */
@@ -44,7 +47,7 @@ class User implements JsonSerializable {
             (Shelter::fromDatabase($this->shelter))
         );
     }
-    public function getShelterId() : ?string { return $this->shelter; }
+    public function getShelterId() : ?string { return noHTML($this->shelter); }
     // public function isAdmin        () :  bool   { return $this->admin       ; }
     public function isShelter() : bool {
         return (Shelter::fromDatabase($this->getUsername()) != null);
@@ -75,9 +78,15 @@ class User implements JsonSerializable {
             (User::hashPassword($password))
         );
     }
-    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
+    public function setName ( string $name ) : void { 
+        $newName = filter_var($name, FILTER_SANITIZE_STRING);
+        $this->name = $newName; 
+    }
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
-    public function setShelter     (?string $shelter     ) : void { $this->shelter      = $shelter     ; }
+    public function setShelter     (?string $shelter     ) : void {
+        $newShelter = filter_var($shelter, FILTER_SANITIZE_STRING);
+        $this->shelter = $newShelter ; 
+    }
     /**
      * Save new user picture.
      *

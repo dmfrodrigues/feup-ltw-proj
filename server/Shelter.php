@@ -2,20 +2,29 @@
 
 require_once __DIR__.'/server.php';
 require_once SERVER_DIR.'/User.php';
+require_once 'rest/authentication.php';
 require_once __DIR__.'/Pet.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
+
+use function Authentication\noHTML;
 
 class Shelter extends User {
     private string $description;
     private string $location;
     public function __construct(){}
 
-    public function getDescription() : string { return $this->description; }
-    public function getLocation   () : string { return $this->location   ; }
+    public function getDescription() : string { return noHTML($this->description) ; }
+    public function getLocation   () : string { return noHTML($this->location)    ; }
 
-    public function setDescription(string $description) : void { $this->description = $description; }
-    public function setLocation   (string $location   ) : void { $this->location    = $location   ; }
+    public function setDescription(string $description) : void {
+        $newDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        $this->description = $newDescription; 
+    }
+    public function setLocation   (string $location   ) : void {
+        $newLocation = filter_var($location, FILTER_SANITIZE_STRING);
+        $this->location = $newLocation; 
+    }
 
     public function jsonSerialize() {
         $ret = parent::jsonSerialize();

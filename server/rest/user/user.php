@@ -36,11 +36,20 @@ $user_PUT = function(array $args): void{
     $_SESSION['username'] = $user->getUsername();
 };
 
+// signup.php
+$user_new_GET = function(array $args): void {
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/signup.php';
+};
+
 $user_id_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
 
-    $auth = Authentication\check();
+    $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::PROFILE,
         Authorization\Method  ::READ   ,
@@ -49,7 +58,8 @@ $user_id_GET = function(array $args): void{
     );
 
     if($user == null){ http_response_code(404); die(); }
-    print_result($user);
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false) print_result($user);
+    else require_once CLIENT_DIR.'/profile.php';
 };
 
 $user_id_PUT = function(array $args): void{
@@ -152,4 +162,132 @@ $user_id_photo_DELETE = function(array $args): void{
     } catch(CouldNotDeleteFileException $e){
         http_response_code(404); die();
     }
+};
+
+// change_password.php
+$user_id_password_change_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/change_password.php';
+};
+
+// edit_profile.php
+$user_id_edit_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/edit_profile.php';
+};
+
+$user_id_favorite_PUT = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    $_PUT = getPUT();
+    $petId = $_PUT['petId'];
+    $pet = Pet::fromDatabase($petId);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::FAVORITE_PET,
+        Authorization\Method::WRITE,
+        $auth,
+        null
+    );
+    
+    $pet->addToFavorites($user);
+};
+
+$user_id_favorite_id_DELETE = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    $petId = $args[3];
+    $pet = Pet::fromDatabase($petId);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::FAVORITE_PET,
+        Authorization\Method::WRITE,
+        $auth,
+        null
+    );
+    
+    $pet->removeFromFavorites($user);
+};
+
+// view_adopted_pets_by_user.php
+$user_id_adopted_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/view_adopted_pets_by_user.php';
+};
+
+// my_proposals.php
+$user_id_myproposals_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/my_proposals.php';
+};
+
+// notifications.php
+$user_id_notifications_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/notifications.php';
+};
+
+// view_proposals.php
+$user_id_proposalstome_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/view_proposals.php';
+};
+
+// view_shelter_invitations.php
+$user_id_invitations_GET = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/view_shelter_invitations.php';
+};
+
+// view_previously_owned_pets.php
+$user_id_previouslyOwned_GET = function(array $args): void {
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/view_previously_owned_pets.php';
 };

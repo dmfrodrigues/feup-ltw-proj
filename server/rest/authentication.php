@@ -4,7 +4,17 @@ namespace Authentication {
     require_once SERVER_DIR . '/User.php';
     require_once SERVER_DIR . '/Shelter.php';
 
-    function check() : ?\User {
+    function check(bool $harmless = false) : ?\User {
+        if(!$harmless) {
+            $headers = apache_request_headers();
+            if(!isset($headers['X-CSRFToken']) && !isset($_GET['csrf']) && !isset($_COOKIE['CSRFToken'])) {
+                http_response_code(400);
+                die();
+            }
+            $csrfTok = isset($headers['X-CSRFToken']) ? $headers['X-CSRFToken'] : $_GET['csrf'];
+            if(!\Authentication\verifyAPI_Token($csrfTok))
+                return null;
+        }
         if(isset($_SESSION['username'])){ 
             return \User::fromDatabase($_SESSION['username']);
         } else return null;
@@ -61,10 +71,9 @@ namespace Authentication {
         }
     }
 
-    function verifyAPI_Token(string $token) {
-        if($_SESSION['csrf'] != $token) {
-            http_response_code(403);
-            die();
-        }
+    function verifyAPI_Token(string $token) : bool{
+        if($_SESSION['csrf'] != $token) 
+            return false;
+        return true;
     }
 }

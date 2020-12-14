@@ -14,7 +14,7 @@ require_once SERVER_DIR.'/Pet.php';
  * @param string $text          Notification's subject
  * @return int ID of the new notification
  */
-function addNotification(string $user, string $subject, string $text) : int {
+function addNotification(User $user, string $subject, string $text) : int {
     global $db;
 
     $stmt = $db->prepare('INSERT INTO Notification
@@ -24,7 +24,7 @@ function addNotification(string $user, string $subject, string $text) : int {
 
     $stmt->bindValue(':subject', $subject);
     $stmt->bindValue(':text', $text);
-    $stmt->bindValue(':user', $user);
+    $stmt->bindValue(':user', $user->getUsername());
     $stmt->execute();
     $notificationId = intval($db->lastInsertId());
 

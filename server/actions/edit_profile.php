@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
@@ -12,12 +13,14 @@ require_once SERVER_DIR . '/Shelter.php';
 $failed = true;
 $usernameChanged = false;
 
-if(isShelter($_GET['username'])) {
+$user = User::fromDatabase($_GET['username']);
+
+if(isShelter($user->getUsername())) {
     if(isset($_SESSION['username'])) {
 
-        $shelter = Shelter::fromDatabase($_GET['username']);
+        $shelter = Shelter::fromDatabase($user->getUsername());
 
-        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $_GET['username']) {
+        if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $user->getUsername()) {
             updateShelterInfo(
                 $shelter->getUsername(),
                 $_POST['username'],
@@ -48,9 +51,7 @@ if(isShelter($_GET['username'])) {
 }
 else {
 
-    $user = User::fromDatabase($_GET['username']);
-
-    if(isset($_SESSION['username']) && $_SESSION['username'] === $_GET['username']) {
+    if(isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) {
         
         editUser(
             $user->getUsername(),
@@ -65,12 +66,12 @@ else {
 
 if (!$failed) {
     if ($usernameChanged)
-        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_POST['username']}");
+        header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
     else
-        header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}");
+        header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
     
 } 
 else
-    header("Location: " . PROTOCOL_CLIENT_URL . "/profile.php?username={$_GET['username']}&failed=1");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}&failed=1");
 
 die();

@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once __DIR__.'/../server/server.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\CSPHeaderSet();
@@ -8,7 +6,6 @@ $CSRFtoken = Authentication\CSRF_GetToken();
 require_once SERVER_DIR.'/connection.php';
 require_once SERVER_DIR.'/notifications.php';
 require_once SERVER_DIR.'/Pet.php';
-$pet = Pet::fromDatabase($_GET['id']);
 
 $title = "Edit pet";
 

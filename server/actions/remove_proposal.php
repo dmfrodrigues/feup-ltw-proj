@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
@@ -13,7 +14,7 @@ $petId = $_GET['id'];
 
 if (isset($_SESSION['username'])){
     withdrawAdoptionRequest($_SESSION['username'], $petId);
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }
 
 die();
