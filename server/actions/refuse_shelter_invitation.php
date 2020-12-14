@@ -16,7 +16,9 @@ $shelter = Shelter::fromDatabase($_GET['shelter']);
 if (isset($_SESSION['username']) && isShelter($shelter->getUsername())) {
     deleteShelterInvitation($_SESSION['username'], $shelter->getUsername());
 
-    addNotification($shelter, "invitationOutcome", "The user " . $_SESSION['username'] . " refused your invite to be a collaborator.");
+    $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+
+    addNotification($shelter, "invitationOutcome", "The user " . $userLink . " refused your invite to be a collaborator.");
     
     header("Location: " . PROTOCOL_API_URL."/user/" . $_SESSION['username']);
 }
