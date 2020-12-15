@@ -10,6 +10,6 @@ $root_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/index.php';
 };

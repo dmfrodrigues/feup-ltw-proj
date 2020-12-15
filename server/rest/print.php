@@ -12,6 +12,6 @@ function print_result($result): void {
             header('Content-Type: application/json');
             echo(json_encode($result));
             break;
-        default: http_response_code(415); die();
+        default: my_response_code(415); die();
     }
 }

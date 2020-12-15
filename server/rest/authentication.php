@@ -8,7 +8,7 @@ namespace Authentication {
         if(!$harmless) {
             $headers = apache_request_headers();
             if(!isset($headers['X-CSRFToken']) && !isset($_GET['csrf']) && !isset($_COOKIE['CSRFToken'])) {
-                http_response_code(400);
+                my_response_code(400);
                 die();
             }
             $csrfTok = isset($headers['X-CSRFToken']) ? $headers['X-CSRFToken'] : $_GET['csrf'];
@@ -74,13 +74,13 @@ namespace Authentication {
     function verifyCSRF_Token() : void {
         if(!isset($_GET['csrf'])) {
             if($_SESSION['csrf'] != $_POST['csrf']) {
-                http_response_code(403);
+                my_response_code(403);
                 die();
             }
         }
         else {
             if($_SESSION['csrf'] != $_GET['csrf']) {
-                http_response_code(403);
+                my_response_code(403);
                 die();
             }
         }

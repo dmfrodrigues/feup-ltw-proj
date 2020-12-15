@@ -18,4 +18,4 @@ if (isset($_SESSION['username'])) {
     );
     header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername());
     exit();
-} else { http_response_code(403); die(); }
+} else { my_response_code(403); die(); }

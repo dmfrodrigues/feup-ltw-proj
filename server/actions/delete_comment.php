@@ -10,7 +10,7 @@ require_once SERVER_DIR.'/Pet.php';
 
 $comment = Comment::fromDatabase(intval($_POST['id']));
 
-if($comment == null){ http_response_code(400); die(); }
+if($comment == null){ my_response_code(400); die(); }
 if (isset($_SESSION['username']) && $_SESSION['username'] === $comment->getUserId()){
     try {
         deletePetComment($_POST['id']);

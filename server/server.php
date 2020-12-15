@@ -31,3 +31,5 @@ function path2url($file, $Protocol=PROTOCOL): string {
 }
 
 class CouldNotDeleteFileException extends RuntimeException{}
+
+require_once SERVER_DIR.'/my_response_code.php';

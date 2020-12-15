@@ -1,7 +1,8 @@
 body {
+    margin: 0;
     padding: 0;
     width: auto;
-    min-height: 80vh;
+    min-height: 100vh;
     font-family: "Inter", sans-serif;
     background-color: #333;
     display: flex;
@@ -10,16 +11,22 @@ body {
 }
 
 #error {
-    border-radius: 10%;
+    padding: 1em;
+    border-radius: 1em;
     background-color: #fc9d04;
-    width: 20em;
-    height: 13em;
-    margin-top: 5em;
-    padding-top: 2em;
+    width: 18em;
     text-align: center;
 }
 
+#error > h2{
+    margin: 1em 0 0.3em 0;
+}
+
 #error > h3{
+    margin: 0.3em 0 1em 0;
+}
+
+#error > h4{
     color: black;
 }
 
@@ -30,5 +37,5 @@ body {
 
 #error a:hover {
     font-size: larger;
-    transition: 0.4s;
+    transition: 0.1s;
 }
