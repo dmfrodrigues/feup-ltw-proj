@@ -414,6 +414,7 @@ function addUser(string $username, string $password, string $name){
 function editUser(string $oldUsername, string $newUsername, string $name) {
     $user = User::fromDatabase($oldUsername);
     if($user == null) throw new NoSuchUserException($oldUsername);
+    if ($newUsername === "new") throw new InvalidUsernameException("The username ".$newUsername." is invalid! Please choose another one!");
     $user->setName($name);
     $user->updateDatabase();
 
