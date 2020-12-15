@@ -48,7 +48,7 @@ $comment_id_GET = function(array $args): void{
     $comment = Comment::fromDatabase($id);
     if($comment == null){ my_response_code(404); die(); }
 
-    $auth = Authentication\check();
+    $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::COMMENT,
         Authorization\Method  ::READ   ,

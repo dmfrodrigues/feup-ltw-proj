@@ -28,6 +28,10 @@
         let username = el.querySelector('#username').value;
         let password = el.querySelector('#pwd'     ).value;
         let name     = el.querySelector('#name'    ).value;
+        if (username === "new") {
+          location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
+          return false;
+        } 
         api.put(
           `user`,
           {
