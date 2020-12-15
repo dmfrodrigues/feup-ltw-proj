@@ -55,7 +55,20 @@
                     <div id="adoption-request-button">
                         <?php require_once CLIENT_DIR.'/templates/pets/adoption_request_buttons.php'; ?>
                     </div>
-                <?php } ?>
+                <?php } 
+
+                    $userWhoAdoptedPet = Pet::fromDatabase($pet->getId())->getAdoptedBy();
+                    $petAdopted = false;
+                    if ($userWhoAdoptedPet != null)
+                        $petAdopted = true;
+
+                    if (!$petAdopted && $pet->getPostedById() === $_SESSION['username']) { ?>
+                        <section id="view-pet-proposals">
+                            <ul>
+                                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/proposals">View Pet Proposals</a></li>
+                            </ul>
+                        </section>
+                    <?php } ?>
             <?php } ?>
         </div>
     </header>
@@ -79,11 +92,7 @@
         <div id="color"><span class="name">Color</span><span class="value"><?= $pet->getColor() ?></span></div>
     </section>
     <?php 
-    $userWhoAdoptedPet = Pet::fromDatabase($pet->getId())->getAdoptedBy();
-    $petAdopted = false;
-    if ($userWhoAdoptedPet != null)
-        $petAdopted = true;
-
+    
     $shelter = getPetShelter($pet->getId());
     
     $isAuthorized = Authorization\check(
@@ -96,13 +105,6 @@
         <section id="action-edit-pet">
             <ul>
                 <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></li>
-            </ul>
-        </section>
-    <?php }
-    if (!$petAdopted && isset($_SESSION['username']) && $pet->getPostedById() === $_SESSION['username']) { ?>
-        <section id="view-pet-proposals">
-            <ul>
-                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/proposals">View Pet Proposals</a></li>
             </ul>
         </section>
     <?php }
