@@ -1,6 +1,6 @@
 div#proposal {
     background-color: var(--disable-color);
-    width: 107em;
+    width: auto;
     height: 15em;
     text-align: center;
 	position: relative;
@@ -8,8 +8,9 @@ div#proposal {
 }
 
 div#proposal-msg {
+	width: auto;
+	display: block;
     background-color: var(--disable-color);
-    width: 107em;
     height: 9em;
     text-align: center;	
 	position: relative;
@@ -35,14 +36,13 @@ h3 {
 }
 
 #proposal-header {
-	position: absolute;
-	top: 0;
 	display: inline-block;
 	height: 3em;
 	width: 4em;
 }
 
 div#proposal-info {
+	text-align: left;
 	display: inline-block;
 	vertical-align: top;
 	height: 95%;
@@ -61,18 +61,16 @@ div#proposal-info a:hover{
 div#proposal-message,
 div#proposal-message-submit {
 	border-radius: 2%;
-	height: 50%;
 }
 
 div#proposal-message-submit {
-	left: 41.5em;
-	position: absolute;
+	height: auto;
+	display: block;
 }
 
 div#proposal-message textarea, div#proposal-message-submit textarea {
-    width: 45em;
+    width: 100%;
     height: 100%;
-    overflow: auto;
     border: 1px solid #888; 
     background-color: white;
     border-radius: 1em;
@@ -179,9 +177,6 @@ button#submitAnswer {
 }
 
 #proposal-messages-refresh {
-	position: absolute;
-	right: 2em;
-	top: 3em;
 	display: inline-block;
 }
 
@@ -196,4 +191,15 @@ section#proposal-container {
 #proposal-title {
 	font-size: 2.5em;
 	padding-bottom: 1em;
+}
+
+#proposal-pet-photo{
+	object-fit: cover;
+	object-position: center;
+	display: block;
+	margin: auto;
+	margin-bottom: 3em;
+	height: 15em;
+	width: 15em;
+	border-radius: 50%;
 }

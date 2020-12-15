@@ -1,51 +1,64 @@
-let proposals = document.querySelectorAll('div#proposal-msg');
 let allMsgs = document.querySelectorAll('#proposal-msg');
 let submitMsg = allMsgs[allMsgs.length - 1];
-
-proposals.forEach((proposal) => {
-    let myMessage = proposal.querySelector('input[type=hidden]').value == "1";
-
-    if(myMessage) {
-        proposal.querySelector('div#proposal-header').style.right = '28.5em';
-        proposal.querySelector('div#proposal-info').style.marginLeft = "15em";
-    }
-})
+let petOwner, petOwnerLink;
+let userWhoProposed, userWhoProposedLink;
+let isOwnerSendingMessage;
+let petName = document.querySelector('#proposal-info a').innerHTML;
+let petLink;
 
 window.onload = function(event) {
+    petOwner = document.querySelector('input[name=petOwner]').value;
+    userWhoProposed = document.querySelector('input[name=userWhoProposed]').value;
+    petOwnerLink = document.querySelector('input[name=petOwnerLink]').value;
+    userWhoProposedLink = document.querySelector('input[name=userWhoProposedLink]').value;
+    petLink = document.querySelector('input[name=petLink]').value;
+    isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]').value;
     window.location='#proposal-messages-refresh';
 }
 
 async function addNewAdoptionRequestMsg() {
     let inputDiv = document.querySelector('#proposal-message-submit');
     let requestId = document.querySelector('input[name=requestID]').value;
-    let user = document.querySelector('input[name=username]').value;
 
-    let Msgtext = inputDiv.querySelector('textarea').value;
+    let Msg = inputDiv.querySelector('textarea').value;
 
-    let data = { requestId: requestId, user: user, Msgtext: Msgtext};
+    // --------------------- Notification ---------------------
 
-    let params = Object.keys(data).map((key) => { return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]) }).join('&');
-    let response  = await ajaxAddAdoptionRequest(params);
+    let notificationUser, userWhoSendLink;
 
-    if(!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
+    if (isOwnerSendingMessage == 1) {
+        notificationUser = userWhoProposed;
+        userWhoSendLink = petOwnerLink;
+    }
+    else {
+        notificationUser = petOwner;
+        userWhoSendLink = userWhoProposedLink;
     }
 
-    updateAdoptionChat();
+    api.put(
+        `notification`,
+        {
+            username: notificationUser,
+            subject : `newMessage`,
+            text    : `You received a new message from ` + userWhoSendLink + ", regarding " +  petLink
+        }
+    );
+
+    // --------------------- Adoption Request Message ---------------------
+
+    api.put(
+        `adoptionRequest/${requestId}/message`,
+        {
+            Msgtext: Msg
+        }
+    ).then((response) => {
+        updateAdoptionChat();
+    })
 }
 
-async function ajaxAddAdoptionRequest(bodyParams) {
-    return fetch('AJAXRequests/addAdoptionMessage.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: bodyParams
-    });
-}
 
-function addCommentToChat(lastInsertedComment, user, petId, petName) {
+function addCommentToChat(lastInsertedComment, user, petId) {
+
     let proposal = document.createElement("div");
     proposal.id = "proposal-msg";
 
@@ -57,23 +70,24 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
     proposalHeader.id = "proposal-header";
 
     let aLink = document.createElement("a");
-    aLink.href = "profile.php?username=" + lastInsertedComment.user;
+    aLink.href = API_URL+"/user/" + lastInsertedComment.user;
 
     let profilePic = document.createElement('img');
     profilePic.id = "proposal-pic";
-    profilePic.src = "../server/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
+    profilePic.src = PROTOCOL_SERVER_URL+"/resources/img/profiles/" + lastInsertedComment.user + ".jpg";
 
     let proposalInfo = document.createElement("div");
     proposalInfo.id = "proposal-info";
     
+    /*
     if(lastInsertedComment.user == user) {
         proposalHeader.style.right = "28.5em";
         proposalInfo.style.marginLeft = "15em";
-    }
+    }*/
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messDate} for <a id="proposal-pet" href="pet.php?id=${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messageDate} for <a id="proposal-pet" href="${API_URL}/pet/${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';
@@ -99,24 +113,24 @@ function addCommentToChat(lastInsertedComment, user, petId, petName) {
 
 }
 
-api = new RestApi(API_URL);
-
 async function updateAdoptionChat() {
     let requestId = document.querySelector('input[name=requestID]').value;
-    let response = await api.get(`adoptionMessage/${requestId}`);
+    let response = await api.get(`adoptionRequest/${requestId}/message`);
     let jsonResponse = await response.json();
-
     let user = document.querySelector('input[name=username]').value;
 
     let mainObject = document.querySelector("section");
     let title =document.createElement('h1');
+    let photo = document.getElementById('proposal-pet-photo');
+    
     mainObject.innerHTML = '';
     title.innerHTML = 'Proposal Chat';
     title.id = 'proposal-title';
     mainObject.appendChild(title);
+    mainObject.appendChild(photo);
 
     jsonResponse.forEach((comment) => {
-        addCommentToChat(comment, user, jsonResponse[0].pet, jsonResponse[0].petName);
+        addCommentToChat(comment, user, jsonResponse[0].pet);
     });
     
     submitMsg.querySelector('textarea').value = "";

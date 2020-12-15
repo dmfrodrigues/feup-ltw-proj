@@ -9,7 +9,7 @@ function editProfile(User $user): void {
         <section id="profile-photo">
             <h3>Profile photo</h3>
             <div id="photo">
-                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? "resources/img/no-image.svg": $user->getPictureUrl()) ?>">
+                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
                 <details>
                     <summary>
                         <div class="dropdown-main" id="edit">✎ Edit</button>
@@ -61,21 +61,20 @@ function editProfile(User $user): void {
             <?php } ?>
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="password">
-                    <label for="password">Password<a href="change_password.php?username=<?= $user->getUsername()?>"><img src="resources/img/edit.svg"></a></label>
+                    <label for="password">Password<a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername()?>/password/change"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></label>
                 </section>
             <?php } ?> 
+            <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit" id="edit-profile-submit">
         </form>
         <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
             <section id='delete-user'>
-                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
             </section>
         <?php } ?> 
     </section>
 </article>
 <script defer>
-    api = new RestApi(API_URL);
-
     function editUserPhoto_submitForm(editUserPhotoForm){
         let files = editUserPhotoForm.querySelector("#profile_picture").files;
         let picture = (files.length <= 0 ? null : files[0]);

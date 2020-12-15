@@ -1,10 +1,15 @@
 <?php
 
 require_once __DIR__.'/server.php';
-require_once SERVER_DIR.'/users.php';
+require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/Comment.php';
+require_once SERVER_DIR.'/FavoritePet.php';
+require_once 'rest/authentication.php';
+require_once SERVER_DIR.'/AdoptionRequest.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
-define('COMMENTS_IMAGES_DIR', SERVER_DIR . '/resources/img/comments');
+
+use function Authentication\noHTML;
 
 class Pet implements JsonSerializable {
     private  int    $id          ;
@@ -21,19 +26,19 @@ class Pet implements JsonSerializable {
     private  string $postedBy    ;
     public function __construct(){}
 
-    public function getId          () : ?int    { return $this->id          ; }
-    public function getName        () :  string { return $this->name        ; }
-    public function getSpecies     () :  string { return $this->species     ; }
-    public function getAge         () :  float  { return $this->age         ; }
-    public function getSex         () :  string { return $this->sex         ; }
-    public function getSize        () :  string { return $this->size        ; }
-    public function getColor       () :  string { return $this->color       ; }
-    public function getLocation    () :  string { return $this->location    ; }
-    public function getDescription () :  string { return $this->description ; }
-    public function getStatus      () :  string { return $this->status      ; }
-    public function getAdoptionDate() : ?string { return $this->adoptionDate; }
-    public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy); }
-    public function getPostedById  () : string  { return $this->postedBy    ; }
+    public function getId          () : ?int    { return noHTML($this->id)                   ; }
+    public function getName        () :  string { return noHTML($this->name)                 ; }
+    public function getSpecies     () :  string { return noHTML($this->species)              ; }
+    public function getAge         () :  float  { return noHTML($this->age)                  ; }
+    public function getSex         () :  string { return noHTML($this->sex)                  ; }
+    public function getSize        () :  string { return noHTML($this->size)                 ; }
+    public function getColor       () :  string { return noHTML($this->color)                ; }
+    public function getLocation    () :  string { return noHTML($this->location)             ; }
+    public function getDescription () :  string { return noHTML($this->description)          ; }
+    public function getStatus      () :  string { return noHTML($this->status)               ; }
+    public function getAdoptionDate() : ?string { return $this->adoptionDate                 ; }
+    public function getPostedBy    () : ?User   { return User::fromDatabase($this->postedBy) ; }
+    public function getPostedById  () : string  { return noHTML($this->postedBy)             ; }
     /**
      * @return User|null|string
      */
@@ -93,18 +98,62 @@ class Pet implements JsonSerializable {
         return $comments;
     }
 
-    public function setId          ( int    $id          ) : void { $this->id           = $id          ; }
-    public function setName        ( string $name        ) : void { $this->name         = $name        ; }
-    public function setSpecies     ( string $species     ) : void { $this->species      = $species     ; }
-    public function setAge         ( float  $age         ) : void { $this->age          = $age         ; }
-    public function setSex         ( string $sex         ) : void { $this->sex          = $sex         ; }
-    public function setSize        ( string $size        ) : void { $this->size         = $size        ; }
-    public function setColor       ( string $color       ) : void { $this->color        = $color       ; }
-    public function setLocation    ( string $location    ) : void { $this->location     = $location    ; }
-    public function setDescription ( string $description ) : void { $this->description  = $description ; }
-    public function setStatus      ( string $status      ) : void { $this->status       = $status      ; }
+    public function setId (int $id) : void { 
+        $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
+        $this->id = $newId; 
+    }
+
+    public function setName (string $name) : void { 
+        $newName = filter_var($name, FILTER_SANITIZE_STRING);
+        $this->name = $newName; 
+    }
+
+    public function setSpecies (string $species) : void { 
+        $newSpecies = filter_var($species, FILTER_SANITIZE_STRING);
+        $this->species = $newSpecies; 
+    }
+
+    public function setAge (float $age) : void { 
+        $newAge = filter_var($age, FILTER_SANITIZE_NUMBER_INT);
+        $this->age = $newAge; 
+    }
+
+    public function setSex (string $sex) : void { 
+        $newSex = filter_var($sex, FILTER_SANITIZE_STRING);
+        $this->sex = $newSex; 
+    }
+
+    public function setSize (string $size) : void { 
+        $newSize = filter_var($size, FILTER_SANITIZE_STRING);
+        $this->size = $newSize; 
+    }
+
+    public function setColor (string $color) : void { 
+        $newColor = filter_var($color, FILTER_SANITIZE_STRING);
+        $this->color = $newColor; 
+    }
+
+    public function setLocation (string $location) : void { 
+        $newLocation = filter_var($location, FILTER_SANITIZE_STRING);
+        $this->location = $newLocation; 
+    }
+
+    public function setDescription (string $description) : void { 
+        $newDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        $this->description = $newDescription; 
+    }
+
+    public function setStatus (string $status) : void { 
+        $newStatus = filter_var($status, FILTER_SANITIZE_STRING);
+        $this->status = $newStatus; 
+    }
+
+    public function setPostedBy (string $postedBy) : void { 
+        $newpostedBy = filter_var($postedBy, FILTER_SANITIZE_STRING);
+        $this->postedBy = $newpostedBy; 
+    }
+    
     public function setAdoptionDate(?string $adoptionDate) : void { $this->adoptionDate = $adoptionDate; }
-    public function setPostedBy    ( string $postedBy    ) : void { $this->postedBy     = $postedBy    ; }
     public function setAuthor      ( string $author      ) : void { $this->setPostedBy($author)        ; }
 
     public function jsonSerialize() {
@@ -209,14 +258,18 @@ class Pet implements JsonSerializable {
         return $stmt->execute();
     }
 
-    static public function deletefromDatabase(int $id) : bool {
-        rmdir_recursive(PETS_IMAGES_DIR."/$id");
+    public function delete() : void {
+        rmdir_recursive(PETS_IMAGES_DIR."/{$this->getId()}");
 
         global $db;
         $stmt = $db->prepare('DELETE FROM Pet
         WHERE id=:id');
-        $stmt->bindValue(':id', $id);
-        return $stmt->execute();
+        $stmt->bindValue(':id', $this->getId());
+        $stmt->execute();
+    }
+
+    static public function deletefromDatabase(int $id) : void {
+        Pet::fromDatabase($id)->delete();
     }
 
 
@@ -322,147 +375,6 @@ class Pet implements JsonSerializable {
     }
 }
 
-class Comment implements JsonSerializable {
-    private int    $id      ;
-    private string $postedOn;
-    private string $text    ;
-    private int    $pet     ;
-    private string $user    ;
-    private ?int   $answerTo;
-
-    public function __construct(){}
-
-    public function getId      () : int    { return $this->id                      ; }
-    public function getPostedOn() : string { return $this->postedOn                ; }
-    public function getText    () : string { return $this->text                    ; }
-    public function getPet     () : Pet    { return Pet::fromDatabase($this->pet)  ; }
-    public function getPetId   () : int    { return $this->pet                     ; }
-    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
-    public function getAuthor  () : ?User  { return $this->getUser()               ; }
-    public function getUserId  () : string { return $this->user                    ; }
-    public function getAuthorId() : string { return $this->getUserId()             ; }
-    public function getAnswerTo() : ?int   { return $this->answerTo                ; }
-    public function getPictureUrl() : string {
-        return SERVER_DIR . "resources/img/comments/{$this->getId()}.jpg";
-    }
-    
-    public function setId      (int    $id      ) : void { $this->id       = $id      ; }
-    public function setPostedOn(string $postedOn) : void { $this->postedOn = $postedOn; }
-    public function setText    (string $text    ) : void { $this->text     = $text    ; }
-    public function setPetId   (int    $pet     ) : void { $this->pet      = $pet     ; }
-    public function setUserId  (string $user    ) : void { $this->user     = $user    ; }
-    public function setAuthorId(string $author  ) : void { $this->setUserId($author)  ; }
-    public function setAnswerTo(?int   $answerTo) : void { $this->answerTo = $answerTo; }
-    
-    public function jsonSerialize() {
-		return get_object_vars($this);
-    }
-
-    /**
-     * Get comment about a pet.
-     *
-     * @param integer $commentId    ID of comment
-     * @return Comment              Comment
-     */
-    static public function fromDatabase(int $id) : ?Comment {
-        global $db;
-        $stmt = $db->prepare('SELECT * FROM Comment WHERE id=:id');
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
-        $comment = $stmt->fetch();
-        return $comment;
-    }
-}
-
-class FavoritePet implements JsonSerializable {
-    private string $username;
-    private int    $petId   ;
-
-    public function __construct(){}
-
-    public function getUser  () : ?User  { return User::fromDatabase($this->username); }
-    public function getUserId() : string { return $this->username                    ; }
-    public function getPet   () : ?Pet   { return Pet ::fromDatabase($this->petId   ); }
-    public function getPetId () : int    { return $this->petId                       ; }
-
-    public function setUserId(string $username) : void { $this->username = $username; }
-    public function setPetId (int    $petId   ) : void { $this->petId    = $petId   ; }
-
-    public function jsonSerialize() {
-		return get_object_vars($this);
-    }
-}
-
-class AdoptionRequest implements JsonSerializable {
-    private  int    $id         ;
-    private  string $text       ;
-    private  string $outcome    ;
-    private  int    $pet        ;
-    private  string $user       ;
-    private  string $requestDate;
-
-    public function __construct(){}
-
-    public function getId      () : int    { return $this->id                      ; }
-    public function getText    () : string { return $this->text                    ; }
-    public function getOutcome () : string { return $this->outcome                 ; }
-    public function getPet     () : Pet    { return Pet ::fromDatabase($this->pet ); }
-    public function getPetId   () : int    { return $this->pet                     ; }
-    public function getUser    () : ?User  { return User::fromDatabase($this->user); }
-    public function getAuthor  () : ?User  { return $this->getUser()               ; }
-    public function getUserId  () : string { return $this->user                    ; }
-    public function getAuthorId() : string { return $this->getUserId()             ; }
-    public function getDate    () : string { return $this->requestDate             ; }
-
-    public function setId     (int    $id         ) : void { $this->id          = $id         ; }
-    public function setText   (string $text       ) : void { $this->text        = $text       ; }
-    public function setOutcome(string $outcome    ) : void { $this->outcome     = $outcome    ; }
-    public function setPet    (int    $pet        ) : void { $this->pet         = $pet        ; }
-    public function setUser   (string $user       ) : void { $this->user        = $user       ; }
-    public function setAuthor (string $author     ) : void { $this->setUser($author)          ; }
-    public function setDate   (string $requestDate) : void { $this->requestDate = $requestDate; }
-    
-    public function jsonSerialize() {
-		return get_object_vars($this);
-    }
-
-    static public function fromDatabase(int $id) : AdoptionRequest {
-        global $db;
-        $stmt = $db->prepare('SELECT * FROM AdoptionRequest WHERE id=:id');
-        $stmt->bindValue(':id', $id);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequest');
-        $stmt->execute();
-        $request = $stmt->fetch();
-        return $request;
-    }
-}
-
-class AdoptionRequestMessage implements JsonSerializable {
-    private  int    $id         ;
-    private  string $text       ;
-    private  int    $request    ;
-    private  string $messageDate;
-    private  string $user       ;
-    public function __construct(){}
-
-    public function getRequest() : AdoptionRequest { return AdoptionRequest::fromDatabase($this->request); }
-
-    public function jsonSerialize() {
-		return get_object_vars($this);
-    }
-
-    static public function fromDatabase(string $id) : AdoptionRequestMessage {
-        global $db;
-        $stmt = $db->prepare('SELECT * FROM AdoptionRequestMessage WHERE id=:id');
-        $stmt->bindValue(':id', $id);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'AdoptionRequestMessage');
-        $stmt->execute();
-        $message = $stmt->fetch();
-        return $message;
-    }
-}
-
 /**
  * Add new pet to database.
  *
@@ -498,7 +410,9 @@ function addPet(
     $pet->setSpecies    ($species    );
     $pet->setAge        ($age        );
     $pet->setSex        ($sex        );
+    var_dump($size);
     $pet->setSize       ($size       );
+    var_dump($pet->getSize());
     $pet->setColor      ($color      );
     $pet->setLocation   ($location   );
     $pet->setDescription($description);
@@ -607,147 +521,7 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  */
 function getPetMainPhoto(Pet $pet) : string {
     $picture = $pet->getMainPicture();
-    return ($picture == null ? 'resources/img/no-image.svg' : $picture);
-}
-
-function getPetComment(int $commentId) : ?Comment {
-    return Comment::fromDatabase($commentId);
-}
-
-/**
- * Adds comment about pet.
- *
- * @param integer $id       ID of pet
- * @param string $username  User's username
- * @param ?int $answerTo    ID of comment it is replying to, or null if not a reply
- * @param string $text      Text of the comment
- * @param array $tmpFilePath       Is tmpFilePath coming or not?
- * @return integer          ID of the new comment
- */
-function addPetComment(int $id, string $username, ?int $answerTo, string $text, ?string $tmpFileId) : int {
-    if($tmpFileId == null && $text == '')
-        throw new RuntimeException('Comment must have a text or an image');
-
-    if($tmpFileId != null){
-        $tmpFilePath = sys_get_temp_dir().'/'.$tmpFileId;
-        checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
-    }
-
-    global $db;
-    
-    $stmt = $db->prepare('INSERT INTO Comment
-    (pet, user, answerTo, text)
-    VALUES
-    (:pet, :user, :answerTo, :text)');
-    $stmt->bindValue(':pet'        , $id         );
-    $stmt->bindValue(':user'       , $username   );
-    $stmt->bindValue(':answerTo'   , $answerTo   );
-    $stmt->bindValue(':text'       , $text       );
-    $stmt->execute();
-    $commentId = (int)$db->lastInsertId();
-
-    if($tmpFileId != null){
-        setCommentPhoto($commentId, $tmpFilePath);
-    }
-
-    return $commentId;
-}
-
-function setCommentPhoto(int $commentId, string $tmpFilePath) : void {
-    $ext = checkImageFile($tmpFilePath, COMMENT_PICTURE_MAX_SIZE);
-    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    convertImage(
-        $tmpFilePath,
-        $ext,
-        $tmpFilePathpath,
-        85
-    );
-}
-
-/**
- * Edits comment about pet.
- *
- * @param integer   $commentId      ID of comment
- * @param string    $text           Text of comment
- * @param string    $tmpFilePath    Picture tmpFilePath (as obtained from $_FILES['tmpFilePath_field'])
- * @return void
- */
-function editPetComment(int $commentId, string $text, bool $deleteFile, ?string $tmpFilePath){
-    $oldComment = Comment::fromDatabase($commentId);
-
-    $noFileSent = false;
-    try{
-        $ext = checkImageFile($tmpFilePath, 1000000);
-    } catch(NoFileSentException $e){
-        $noFileSent = true;
-    }
-    if($text === '' && $noFileSent && ($deleteFile || $oldComment == null || $oldComment->getPictureUrl() === ''))
-        throw new RuntimeException('Comment must have a text or an image');
-
-    global $db;
-    
-    $stmt = $db->prepare('UPDATE Comment SET
-    text=:text
-    WHERE id=:id');
-    $stmt->bindValue(':text', $text     );
-    $stmt->bindValue(':id'  , $commentId);
-    $stmt->execute();
-    
-    if($deleteFile){
-        deletePetCommentPhoto($commentId);
-    }
-
-    if(!$noFileSent){
-        $filePath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-        convertImage(
-            $tmpFilePath,
-            $ext,
-            $filePath,
-            85
-        );
-    }
-}
-
-/**
- * Delete pet comment.
- *
- * @param integer $id   Pet comment ID
- * @return void
- */
-function deletePetComment(int $id){
-    global $db;
-    
-    $stmt = $db->prepare('DELETE FROM Comment
-    WHERE id=:id');
-    $stmt->bindValue(':id', $id);
-    $stmt->execute();
-
-    deletePetCommentPhoto($id);
-}
-
-/**
- * Get photos associated to comments about a pet.
- *
- * @param integer $id    ID of the comment
- * @return string        URL of comment photo, or null if there is none
- */
-function getCommentPicture(int $id) : ?string {
-    $path = SERVER_DIR . "/resources/img/comments/$id.jpg";
-    if(!file_exists($path)) return null;
-    return path2url($path);
-}
-
-/**
- * Delete comment photo.
- *
- * @param integer $commentId    ID of comment
- * @return void
- */
-function deletePetCommentPhoto(int $commentId){
-    $tmpFilePathpath = COMMENTS_IMAGES_DIR . "/$commentId.jpg";
-    if(file_exists($tmpFilePathpath))
-        if(!unlink($tmpFilePathpath))
-            throw new CouldNotDeleteFileException("Could not delete '$tmpFilePathpath'");
+    return ($picture == null ? PROTOCOL_CLIENT_URL.'/resources/img/no-image.svg' : $picture);
 }
 
 /**

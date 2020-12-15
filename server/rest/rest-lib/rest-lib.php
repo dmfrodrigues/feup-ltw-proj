@@ -26,7 +26,9 @@ class RestServer {
     private $_tree;
     public function __construct(array $tree){ $this->_tree = $tree; }
     public function serve(string $uri) : void {
+
         if(substr($uri, -1) != '/') $uri = $uri.'/';
+        if($uri === '/') $uri = '';
 
         $tree = $this->_tree;
         $args = [];

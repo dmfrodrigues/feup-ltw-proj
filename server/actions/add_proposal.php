@@ -1,11 +1,15 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once SERVER_DIR.'/notifications.php';
-require_once SERVER_DIR.'/pets.php';
-require_once SERVER_DIR.'/users.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR.'/Notification.php';
+require_once SERVER_DIR.'/Pet.php';
+require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/Shelter.php';
 
 $petId = $_GET['id'];
 
@@ -13,11 +17,14 @@ if (isset($_SESSION['username'])){
     addAdoptionRequest($_SESSION['username'], $petId, $_POST['description']);
 
     $pet = Pet::fromDatabase($petId);
-    $petOwner = $pet->getPostedById();
+    $petOwner = $pet->getPostedBy();
 
-    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $pet->getName() . ", by " . $_SESSION['username'] . ".");
+    $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+    $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
 
-    header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id=$petId");
+    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $petNameLink . ", by " . $userLink . ".");
+
+    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }
 
 die();

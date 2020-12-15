@@ -52,8 +52,6 @@ document.addEventListener("DOMContentLoaded", function(_event) {
     // window.setInterval(updateCommentsSection, 10000);
 });
 
-api = new RestApi(API_URL);
-
 /**
  * Update comments section
  */

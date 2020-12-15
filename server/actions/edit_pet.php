@@ -1,10 +1,17 @@
 <?php
+
 session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/connection.php';
-require_once SERVER_DIR.'/pets.php';
-require_once SERVER_DIR.'/shelters.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR.'/Notification.php';
+require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/Shelter.php';
+require_once SERVER_DIR.'/Pet.php';
+require_once SERVER_DIR.'/Shelter.php';
+
 $pet = Pet::fromDatabase($_GET['id']);
 
 $N = intval($_POST['photo-number']);
@@ -32,11 +39,27 @@ if (isset($_SESSION['username'])){
             $_POST['description'],
             $pictures
         );
-        header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}");
+
+        $pet = Pet::fromDatabase($_GET['id']);
+        $userWhoPostedPet = $pet->getPostedBy();
+        $usersWhoFavoritePet = getUsersWhoFavoritePet($_GET['id']);
+        foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
+            if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
+                $user = User::fromDatabase($userWhoFavoritePet['username']);
+
+                $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+                $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet->getUsername() . "'>" . $userWhoPostedPet->getUsername() . "</a>";
+                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+
+                addNotification($user, "favoriteEdited", "Your favorite pet " . $petNameLink . ", posted by " . $userWhoPostedPetLink . " was edited by " . $userLink . ".");
+            }
+        }
+
+        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}");
         exit();
     }
 
 }
 
-header("Location: " . PROTOCOL_CLIENT_URL . "/pet.php?id={$_GET['id']}'&failed=1");
+header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
 die();

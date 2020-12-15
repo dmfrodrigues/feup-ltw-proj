@@ -2,6 +2,7 @@ function signup_check() {
     let pwd     = document.getElementById('pwd'    ).value;
     let rpt_pwd = document.getElementById('rpt_pwd').value;
     if(pwd != rpt_pwd) {
+        document.querySelector('p').remove();
         let errorMsg = document.createElement('p');
         let errorString = 'Passwords don\'t match!';
         errorMsg.id = 'simple-fail-msg';
@@ -36,12 +37,12 @@ function switchSignUpForms(formType) {
     removeFormChilds(form);
 
     if(formType == 'user') {
-        form.setAttribute('action', '../server/actions/signup.php');
+        form.setAttribute('action', PROTOCOL_SERVER_URL+'/actions/signup.php');
         generateUserForm(form);
         changeButtonColour('signup-user-button', 'signup-shelter-button');
     }
     else {
-        form.setAttribute('action', '../server/actions/signup_shelter.php');
+        form.setAttribute('action', PROTOCOL_SERVER_URL+'/actions/signup_shelter.php');
         generateShelterForm(form);
         changeButtonColour('signup-shelter-button', 'signup-user-button');
     }

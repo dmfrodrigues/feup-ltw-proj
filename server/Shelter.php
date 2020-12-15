@@ -1,10 +1,103 @@
 <?php
 
 require_once __DIR__.'/server.php';
-require_once SERVER_DIR.'/users.php';
-require_once __DIR__.'/pets.php';
+require_once SERVER_DIR.'/User.php';
+require_once 'rest/authentication.php';
+require_once __DIR__.'/Pet.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
+
+use function Authentication\noHTML;
+
+class Shelter extends User {
+    private string $description;
+    private string $location;
+    public function __construct(){}
+
+    public function getDescription() : string { return noHTML($this->description) ; }
+    public function getLocation   () : string { return noHTML($this->location)    ; }
+
+    public function setDescription(string $description) : void {
+        $newDescription = filter_var($description, FILTER_SANITIZE_STRING);
+        $this->description = $newDescription; 
+    }
+    public function setLocation   (string $location   ) : void {
+        $newLocation = filter_var($location, FILTER_SANITIZE_STRING);
+        $this->location = $newLocation; 
+    }
+
+    public function jsonSerialize() {
+        $ret = parent::jsonSerialize();
+        $ret = $ret + get_object_vars($this);
+        return $ret;
+    }
+
+    static public function fromDatabase(string $username) : ?Shelter {
+        global $db;
+        $stmt = $db->prepare('SELECT
+        User.username,
+        User.password,
+        User.name,
+        User.registeredOn,
+        User.shelter,
+        Shelter.description,
+        Shelter.location
+        FROM User NATURAL JOIN Shelter
+        WHERE User.username=:username');
+        $stmt->bindValue(':username', $username);
+        $stmt->execute();
+        $obj = $stmt->fetch();
+        if($obj == false) return null;
+        $shelter = new Shelter();
+        $shelter->setUsername    ($obj['username'    ]);
+        $shelter->setPassword    ($obj['password'    ]);
+        $shelter->setName        ($obj['name'        ]);
+        $shelter->setRegisteredOn($obj['registeredOn']);
+        $shelter->setShelter     ($obj['shelter'     ]);
+        $shelter->setDescription ($obj['description' ]);
+        $shelter->setLocation    ($obj['location'    ]);
+        return $shelter;
+    }
+
+    /**
+     * Get Shelter pets for adoption
+     *
+     * @return array            Array containing all the info about the pets
+     */
+    public function getPetsForAdoption() : array {
+        global $db;
+    
+        $stmt = $db->prepare('SELECT * FROM PET
+            WHERE postedBy IN (
+                SELECT username FROM User
+                WHERE shelter=:shelter
+            ) AND Pet.status="forAdoption"
+        ');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Pet');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $shelterPets = $stmt->fetchAll();
+
+        return $shelterPets;
+    }
+
+    /**
+     * Get shelter collaborators.
+     *
+     * @return array            Array containing collaborators (Users)
+     */
+    public function getCollaborators() : array {
+        global $db;
+
+        $stmt = $db->prepare('SELECT * FROM User 
+        WHERE shelter=:shelter');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->bindValue(':shelter', $this->getUsername());
+        $stmt->execute();
+        $collaborators = $stmt->fetchAll();
+        return $collaborators;
+    }
+}
 
 /**
  * Checks if the username is from a shelter.
@@ -105,6 +198,10 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
     if($lastUsername != $newUsername)
         if (User::exists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+
+    if($newUsername === "new") {
+        throw new InvalidUsernameException("The username ".$newUsername." is invalid! Please choose another one!");
+    }
     
     $stmt1 = $db->prepare('UPDATE User
         SET username=:newUsername, name=:name
@@ -352,7 +449,6 @@ function userCanEditPet(string $username, int $petId) : bool {
 
         return false;
 
-        //if (in_array($pet, $pets, TRUE)) return true; // BUG AQUI!!!!
     } else {
         $postedBy = $pet->getPostedBy();
         if ($postedBy->getUsername() == $username) return true;
@@ -362,4 +458,19 @@ function userCanEditPet(string $username, int $petId) : bool {
     }
 
     return false;
+}
+
+/**
+ * Returns array with all shelters
+ *
+ * @return array           Array of shelters
+ */
+function getAllShelters() : array {
+    global $db;
+    $stmt = $db->prepare('SELECT
+        *
+        FROM Shelter
+    ');
+    $stmt->execute();
+    return $stmt->fetchAll();
 }

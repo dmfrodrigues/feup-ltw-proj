@@ -1,43 +1,51 @@
-async function handleFavorites(target, username, petId) {
-    
-    let data = { username: username, petId: petId };
-    let params = Object.keys(data).map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])).join('&');
-    
+async function handleFavorites(target, username, petId) {  
     let addToFavorites = checkAddToFavorites(target.innerHTML);
+    let petOwner = document.querySelector('input[name=petOwner]').value;
+    let petLink = document.querySelector('input[name=petName]').value;
+    let userLink = document.querySelector('input[name=userLink]').value;
 
-    let response = await ajaxAddOrRemoveFavorites(addToFavorites, params);
-    if(!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-    }
+    if(addToFavorites) {
+        api.put(
+            `user/${username}/favorite`,
+            {
+                petId: petId
+            }
+        ).then((response) => {
+            switchFavoriteButton(target, addToFavorites);
+        });
 
-    let jsonResponse = await response.json();
+        api.put(
+            `notification`,
+            {
+                username: petOwner,
+                subject : `newMessage`,
+                text    : `The user ` + userLink + " added your pet " +  petLink + " to his favorite's list."
+            }
+        );
 
-    if(jsonResponse.successful) 
-        switchFavoriteButton(target, addToFavorites);
-    else {
-        const message = `An error has occured: ${jsonResponse}`;
-        throw new Error(message);
-    }
-    
+    } else {
+        api.delete(
+            `user/${username}/favorite/${petId}`, { }
+        ).then((response) => {
+            switchFavoriteButton(target, addToFavorites);
+        });
+
+        api.put(
+            `notification`,
+            {
+                username: petOwner,
+                subject : `newMessage`,
+                text    : `The user ` + userLink + " removed your pet " +  petLink + " from his favorite's list."
+            }
+        );
+    }   
 }
 
 function switchFavoriteButton(target, removeFromFavorites) {
     if(removeFromFavorites) 
-        target.innerHTML = '<img src="resources/img/anti-heart.svg" height="30px">Remove from favorites';
+        target.innerHTML = `<img src="${PROTOCOL_CLIENT_URL}/resources/img/anti-heart.svg" height="30px">Remove from favorites`;
     else
-        target.innerHTML = '<img src="resources/img/heart.svg" height="30px">Add to favorites';
-}
-
-function ajaxAddOrRemoveFavorites(addToFavorites, bodyParams) {
-    let apiFile = addToFavorites ? 'add_favorite.php' : 'remove_favorite.php';
-    return fetch('AJAXRequests/' + apiFile, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: bodyParams   
-    });
+        target.innerHTML = `<img src="${PROTOCOL_CLIENT_URL}/resources/img/heart.svg" height="30px">Add to favorites`;
 }
 
 function checkAddToFavorites(linkContent) {
