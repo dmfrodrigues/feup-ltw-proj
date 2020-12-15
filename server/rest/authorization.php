@@ -2,6 +2,7 @@
 namespace Authorization {
     require_once __DIR__.'/../server.php';
     require_once SERVER_DIR.'/User.php';
+    require_once SERVER_DIR.'/Pet.php';
     require_once SERVER_DIR.'/Shelter.php';
 
     abstract class Method {
@@ -59,7 +60,24 @@ namespace Authorization {
     // ======================================================== PET ========================================================
     Rules::add_rule(Resource::PET, Method::READ , function(?\User $user, ?\Pet $pet){ return true                      ; }); // Everyone can see
     Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet){ return $user !== null            ; }); // Anyone can write
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet){ return $pet->getAuthor() == $user; }); // Author can edit
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet)
+        { 
+            if (is_null($user)) return false;
+
+            if ($pet->getStatus() !== "forAdoption") // if pet was adopted, only the user who adopted it can edit it
+                return $user == \Pet::fromDatabase($pet->getId())->getAdoptedBy();
+            
+            $petOwner = $pet->getAuthor();
+            $shelter = $petOwner->getShelter();
+            if ($shelter != null) // associated shelter can edit it
+                if ($shelter->getUsername() == $user->getUsername()) return true;
+            
+            $collaborators = $shelter->getCollaborators();
+            foreach($collaborators as $collaborator) // collaborators of the associated shelter can edit it
+                if ($collaborator->getUsername() == $user->getUsername()) return true;
+            
+            return $pet->getAuthor() == $user;
+        });
     
     // ======================================================== ADOPTION REQUEST ========================================================
     Rules::add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(?\User $user, ?\AdoptionRequest $request){ return $user == $request->getAuthor()          ; }); // Author can see
