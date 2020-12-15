@@ -121,14 +121,33 @@
 
     <?php
 
-    function drawProposals(array $adoptionRequests): void {
+    function drawProposals(array $adoptionRequests): void { ?> 
+        <h1>Adoption Requests</h1><?php
+
+        $counter = 0;
+        foreach($adoptionRequests as $request)
+            if ($request->getOutcome() !== 'accepted') $counter++;
+
+        if ($counter == 0) { ?>
+            <p>There are no new adoption proposals!</p>
+        <?php }
+
         foreach($adoptionRequests as $request) {
             if ($request->getOutcome() !== 'accepted')
                 drawPetProposal($request, true);
             }    
     }
 
-    function drawMyProposals(array $adoptionRequests): void {
+    function drawMyProposals(array $adoptionRequests): void { ?>
+        <h1>My Adoption Requests</h1><?php
+
+        $counter = 0;
+        foreach($adoptionRequests as $request)
+            if ($request->getOutcome() !== 'accepted') $counter++;
+        
+        if ($counter == 0) { ?>
+            <p>There are no new adoption requests made by you!</p>
+        <?php }
         foreach($adoptionRequests as $request) 
             drawPetProposal($request, false);
     }

@@ -16,5 +16,7 @@ $adoptionRequests = $user->getAdoptionRequestsToOthers();
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/view_proposal.php';
+echo '<section class="messages-column-body">';
 drawMyProposals($adoptionRequests);
+echo '</section>';
 require_once CLIENT_DIR.'/templates/common/footer.php';
