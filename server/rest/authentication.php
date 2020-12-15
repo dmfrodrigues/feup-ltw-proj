@@ -7,7 +7,7 @@ namespace Authentication {
     function check(bool $harmless = false) : ?\User {
         if(!$harmless) {
             $headers = apache_request_headers();
-            if(!isset($headers['X-CSRFToken']) && !isset($_GET['csrf']) && !isset($_COOKIE['CSRFToken'])) {
+            if(!isset($headers['X-CSRFToken']) && !isset($_GET['csrf'])) {
                 my_response_code(400);
                 die();
             }
