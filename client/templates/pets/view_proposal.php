@@ -37,7 +37,19 @@
 
     <?php 
 
-    function drawAdoptionRequestInitialMessage($adoptionRequest) { ?>
+    function drawAdoptionRequestInitialMessage($adoptionRequest) { 
+            $userWhoProposed = $adoptionRequest->getUser()->getUsername();
+            $userWhoProposedLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoProposed . "'>" . $userWhoProposed . "</a>";
+            $petOwner = $adoptionRequest->getPet()->getPostedById();
+            $petOwnerLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $petOwner . "'>" . $petOwner . "</a>";
+            $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $adoptionRequest->getPet()->getId() . "'>" . $adoptionRequest->getPet()->getName() . "</a>";
+        ?>
+        <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $petOwner ?>">
+        <input type="hidden" name="userWhoProposed" value="<?=$userWhoProposed ?>">
+        <input type="hidden" name="petOwner" value="<?=$petOwner ?>">
+        <input type="hidden" name="userWhoProposedLink" value="<?=$userWhoProposedLink ?>">
+        <input type="hidden" name="petOwnerLink" value="<?=$petOwnerLink ?>">
+        <input type="hidden" name="petLink" value="<?=$petLink ?>">
         <section class="messages-column-body">
             <h1 id="proposal-title">Proposal Chat</h1>
             <img id="proposal-pet-photo" alt="Pet photo" src="<?= getPetMainPhoto($adoptionRequest->getPet()) ?>">
@@ -62,21 +74,8 @@
     <?php 
 
     function drawAllOtherMessages($adoptionRequestMessages): void { 
-        foreach($adoptionRequestMessages as $reqMessage) { 
-            
-            $userWhoProposed = $reqMessage->getRequest()->getUser()->getUsername();
-            $userWhoProposedLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoProposed . "'>" . $userWhoProposed . "</a>";
-            $petOwner = $reqMessage->getPetOwner()->getUsername();
-            $petOwnerLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $petOwner . "'>" . $petOwner . "</a>";
-            $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $reqMessage->getPet()->getId() . "'>" . $reqMessage->getPet()->getName() . "</a>";
-            ?>
+        foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
-                <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $reqMessage->getPetOwner()->getUsername() ?>">
-                <input type="hidden" name="userWhoProposed" value="<?=$userWhoProposed ?>">
-                <input type="hidden" name="petOwner" value="<?=$petOwner ?>">
-                <input type="hidden" name="userWhoProposedLink" value="<?=$userWhoProposedLink ?>">
-                <input type="hidden" name="petOwnerLink" value="<?=$petOwnerLink ?>">
-                <input type="hidden" name="petLink" value="<?=$petLink ?>">
                 <div id="proposal-header">
                     <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($reqMessage->getUserId())->getPictureUrl();?>
