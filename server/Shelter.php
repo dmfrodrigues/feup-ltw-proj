@@ -198,6 +198,10 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
     if($lastUsername != $newUsername)
         if (User::exists($newUsername))
             throw new UserAlreadyExistsException("The username ".$newUsername." already exists! Please choose another one!");
+
+    if($newUsername === "new") {
+        throw new InvalidUsernameException("The username ".$newUsername." is invalid! Please choose another one!");
+    }
     
     $stmt1 = $db->prepare('UPDATE User
         SET username=:newUsername, name=:name

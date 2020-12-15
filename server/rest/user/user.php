@@ -31,6 +31,9 @@ $user_PUT = function(array $args): void{
     } catch(UserAlreadyExistsException $e){
         http_response_code(409);
         die();
+    } catch(InvalidUsernameException $e){
+        http_response_code(412);
+        die();
     }
 
     $_SESSION['username'] = $user->getUsername();

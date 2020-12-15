@@ -39,6 +39,8 @@
         .then(function (response) {
           if(response.status == 409)
             location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=2`;
+          if(response.status == 412)
+            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
           else if(response.status != 400)
             location.href = `<?= PROTOCOL_API_URL ?>/user/${username}`;
           else if(!/[\w]+/.test(username))
