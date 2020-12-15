@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 $javascript_files = ["js/signup.js"];
 
