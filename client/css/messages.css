@@ -7,7 +7,18 @@
 	grid-area: 2 / 1 / span 1 / span 1;
 	align-self: center;
     display: block;
-    padding: 1em;
+    padding: 2em;
+}
+
+#notifications #notifications-body #delete-all-notifications button {
+	margin: 2em 2em 0.5em 3em;
+	padding: 2em;
+	padding-top: 1em;
+}
+
+#notifications #notifications-body #delete-all-notifications:hover {
+	transform: scale(1.1) translateX(2em);
+	transition: 0.3s;
 }
 
 #notifications-body > ul{
@@ -16,17 +27,40 @@
 
 #notifications-body > ul > li{
 	list-style: none;
-	margin: 1em;
+	margin: 2em 2em 2em 0em;
+	background-color: rgb(255, 247, 209);
+	padding: 1em;
+	border-radius: 20px;
+}
+
+#notifications-body > ul > li:hover{
+	transform: scale(1.05);
+	transition: 0.3s;
 }
 
 #notifications-body > ul > li p{
 	text-align: left;
 }
 
+#notifications-body > ul > li p a {
+	text-decoration: none;
+	font-weight: bolder;
+}
+
 #read-notification{
 	color: var(--disabled-color);
 }
 
+#read-notification a{
+	color: var(--disabled-color);
+}
+
 #unread-notification{
-	color: var(--main-color);
+	color: var(black);
+	font-weight: 500;
+}
+
+#unread-notification a{
+	color: black;
+	font-weight: 900;
 }

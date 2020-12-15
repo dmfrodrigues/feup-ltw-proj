@@ -1,13 +1,17 @@
 let allMsgs = document.querySelectorAll('#proposal-msg');
 let submitMsg = allMsgs[allMsgs.length - 1];
-let petOwner;
-let userWhoProposed;
+let petOwner, petOwnerLink;
+let userWhoProposed, userWhoProposedLink;
 let isOwnerSendingMessage;
 let petName = document.querySelector('#proposal-info a').innerHTML;
+let petLink;
 
 window.onload = function(event) {
     petOwner = document.querySelector('input[name=petOwner]').value;
     userWhoProposed = document.querySelector('input[name=userWhoProposed]').value;
+    petOwnerLink = document.querySelector('input[name=petOwnerLink]').value;
+    userWhoProposedLink = document.querySelector('input[name=userWhoProposedLink]').value;
+    petLink = document.querySelector('input[name=petLink]').value;
     isOwnerSendingMessage = document.querySelector('input[name=isOwnerSending]').value;
     window.location='#proposal-messages-refresh';
 }
@@ -20,15 +24,15 @@ async function addNewAdoptionRequestMsg() {
 
     // --------------------- Notification ---------------------
 
-    let notificationUser, userWhoSend;
+    let notificationUser, userWhoSendLink;
 
     if (isOwnerSendingMessage == 1) {
         notificationUser = userWhoProposed;
-        userWhoSend = petOwner;
+        userWhoSendLink = petOwnerLink;
     }
     else {
         notificationUser = petOwner;
-        userWhoSend = userWhoProposed;
+        userWhoSendLink = userWhoProposedLink;
     }
 
     api.put(
@@ -36,7 +40,7 @@ async function addNewAdoptionRequestMsg() {
         {
             username: notificationUser,
             subject : `newMessage`,
-            text    : `You received a new message from ` + userWhoSend + ", regarding " +  petName
+            text    : `You received a new message from ` + userWhoSendLink + ", regarding " +  petLink
         }
     );
 

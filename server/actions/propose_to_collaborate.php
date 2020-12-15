@@ -14,7 +14,9 @@ $user = User::fromDatabase($_GET['username']);
 if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){
     addShelterInvitation($_POST['description'], $user->getUsername(), $_SESSION['username']);
 
-    addNotification($user, "shelterInvitation", "The shelter " . $_SESSION['username'] . " invited you to be a collaborator.");
+    $shelterLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+
+    addNotification($user, "shelterInvitation", "The shelter " . $shelterLink . " invited you to be a collaborator.");
 
     header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
 }

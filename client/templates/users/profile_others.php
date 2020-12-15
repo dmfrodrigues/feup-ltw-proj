@@ -9,7 +9,7 @@
     
     if (!isset($_SESSION['isShelter'])) {
         $shelter = User::fromDatabase($user->getUsername())->getShelterId();
-        if (!is_null($shelter)) { ?>
+        if ($shelter != "") { ?>
             <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?=$shelter?>"><?=$shelter?></a></h2>
         <?php }
     }

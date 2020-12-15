@@ -27,3 +27,17 @@ $notification_id_PUT = function(array $args): void{
     );
 };
 
+$notification_id_DELETE = function(array $args): void{
+    $username = $args[1];
+
+    $auth = Authentication\check();
+    Authorization\checkAndRespond(
+        Authorization\Resource::NOTIFICATION,
+        Authorization\Method  ::WRITE  ,
+        $auth,
+        null
+    );
+
+    deleteAllNotifications($username);
+};
+

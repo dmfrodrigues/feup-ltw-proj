@@ -13,10 +13,13 @@ require_once SERVER_DIR.'/Notification.php';
 
 $title = "Notifications";
 
+$javascript_files = [PROTOCOL_CLIENT_URL.'/js/deleteNotifications.js'];
+
 require_once CLIENT_DIR.'/templates/common/header.php';
 
 if(isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername()) {
     $notifications = getNotifications($_SESSION['username']);
+
     require_once CLIENT_DIR.'/templates/notifications/view_notifications.php';
 }
     

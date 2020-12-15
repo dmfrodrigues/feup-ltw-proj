@@ -46,7 +46,12 @@ if (isset($_SESSION['username'])){
         foreach($usersWhoFavoritePet as $userWhoFavoritePet) {
             if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
                 $user = User::fromDatabase($userWhoFavoritePet['username']);
-                addNotification($user, "favoriteEdited", "Your favorite pet " . $pet->getName() . ", posted by " . $userWhoPostedPet->getUsername() . " was edited by " . $_SESSION['username'] . ".");
+
+                $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+                $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet->getUsername() . "'>" . $userWhoPostedPet->getUsername() . "</a>";
+                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+
+                addNotification($user, "favoriteEdited", "Your favorite pet " . $petNameLink . ", posted by " . $userWhoPostedPetLink . " was edited by " . $userLink . ".");
             }
         }
 
