@@ -287,7 +287,7 @@ function refuseOtherProposals(int $requestId, int $petId) {
   $adoption_requests = Pet::fromDatabase($petId)->getAdoptionRequests();
   foreach ($adoption_requests as $request){
       if ($request->getId() != $requestId) {
-          $request->setOutcome("rejected");
+          changeAdoptionRequestOutcome($request->getId(), "rejected");
           array_push($refusedUsers, $request->getUser());
       }
   } 
