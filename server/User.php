@@ -10,6 +10,7 @@ define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 use function Authentication\noHTML;
 
 class UserAlreadyExistsException extends RuntimeException{}
+class InvalidUsernameException extends RuntimeException{}
 
 class User implements JsonSerializable {
     private  string $username;
@@ -393,6 +394,10 @@ require_once __DIR__.'/Shelter.php';
  * @return void
  */
 function addUser(string $username, string $password, string $name){
+
+    if ($username === "new")
+        throw new InvalidUsernameException("The username ".$username." is invalid! Please choose another one!");
+
     $user = new User($username, '', $name);
     $user->setPassword($password, false);
     $user->addToDatabase();

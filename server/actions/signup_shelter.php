@@ -22,6 +22,8 @@ try {
     header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=-1');
 } catch(UserAlreadyExistsException $e) {
     header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=2');
+} catch(InvalidUsernameException $e) {
+    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=6');
 } catch(Exception $e) {
     header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=5');
 }
