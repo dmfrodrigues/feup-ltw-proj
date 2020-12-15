@@ -151,3 +151,21 @@ $pet_id_adopt_GET = function(array $args): void {
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
     require_once CLIENT_DIR.'/add_proposal.php';
 };
+
+$pet_id_proposals_GET = function(array $args): void {
+    $id = $args[1];
+    $pet = Pet::fromDatabase($id);
+    $adoptionRequests = $pet->getAdoptionRequests();
+
+    $auth = Authentication\check(true);
+    Authorization\checkAndRespond(
+        Authorization\Resource::PET,
+        Authorization\Method::READ,
+        $auth,
+        $pet
+    );
+    
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    require_once CLIENT_DIR.'/view_pet_adoption_requests.php';
+};
+

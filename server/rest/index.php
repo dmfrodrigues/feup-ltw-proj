@@ -53,7 +53,8 @@ $tree = [
             'comments'          => new ResourceHandlers($pet_id_comments_GET , null, null                 , null                    ),
             'edit'              => new ResourceHandlers($pet_id_edit_GET     , null, null                 , null                    ),
             'photo'             => new ResourceHandlers($pet_id_photo_GET    , null, null                 , null                    ),
-            'adopt'             => new ResourceHandlers($pet_id_adopt_GET    , null, null                 , null                    )
+            'adopt'             => new ResourceHandlers($pet_id_adopt_GET    , null, null                 , null                    ),
+            'proposals'         => new ResourceHandlers($pet_id_proposals_GET, null, null                 , null                    )
         ]
     ],
     'comment' => [null          => new ResourceHandlers(null                 , null, $comment_PUT         , null                    ),

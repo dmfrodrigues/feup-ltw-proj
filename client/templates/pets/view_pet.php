@@ -98,8 +98,14 @@
                 <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></li>
             </ul>
         </section>
-    <?php } ?>
-    <?php
+    <?php }
+    if (!$petAdopted && isset($_SESSION['username']) && $pet->getPostedById() === $_SESSION['username']) { ?>
+        <section id="view-pet-proposals">
+            <ul>
+                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/proposals">View Pet Proposals</a></li>
+            </ul>
+        </section>
+    <?php }
     require_once CLIENT_DIR.'/templates/pets/comments.php';
     ?>
 </article>
