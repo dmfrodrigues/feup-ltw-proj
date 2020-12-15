@@ -62,11 +62,21 @@
     <?php 
 
     function drawAllOtherMessages($adoptionRequestMessages): void { 
-        foreach($adoptionRequestMessages as $reqMessage) { ?>
+        foreach($adoptionRequestMessages as $reqMessage) { 
+            
+            $userWhoProposed = $reqMessage->getRequest()->getUser()->getUsername();
+            $userWhoProposedLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoProposed . "'>" . $userWhoProposed . "</a>";
+            $petOwner = $reqMessage->getPetOwner()->getUsername();
+            $petOwnerLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $petOwner . "'>" . $petOwner . "</a>";
+            $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $reqMessage->getPet()->getId() . "'>" . $reqMessage->getPet()->getName() . "</a>";
+            ?>
             <div id="proposal-msg"> 
                 <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $reqMessage->getPetOwner()->getUsername() ?>">
-                <input type="hidden" name="userWhoProposed" value="<?=$reqMessage->getRequest()->getUser()->getUsername() ?>">
-                <input type="hidden" name="petOwner" value="<?=$reqMessage->getPetOwner()->getUsername()?>">
+                <input type="hidden" name="userWhoProposed" value="<?=$userWhoProposed ?>">
+                <input type="hidden" name="petOwner" value="<?=$petOwner ?>">
+                <input type="hidden" name="userWhoProposedLink" value="<?=$userWhoProposedLink ?>">
+                <input type="hidden" name="petOwnerLink" value="<?=$petOwnerLink ?>">
+                <input type="hidden" name="petLink" value="<?=$petLink ?>">
                 <div id="proposal-header">
                     <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($reqMessage->getUserId())->getPictureUrl();?>

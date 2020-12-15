@@ -37,9 +37,13 @@
         </div>
         <div id="actions">
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
-                $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets(); ?>
+                $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets(); 
+                $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+                ?>
                 <input type="hidden" name="petOwner" value="<?=$pet->getPostedById()?>"> 
-                <input type="hidden" name="petName" value="<?=$pet->getName()?>">
+                <input type="hidden" name="petName" value="<?=$petLink?>">
+                <input type="hidden" name="userLink" value="<?=$userLink?>">
                 <?php
                 if (in_array($pet, $favorite_pets)) { ?>
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/anti-heart.svg" height="30px">Remove from favorites</button>

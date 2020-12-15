@@ -1,7 +1,8 @@
 async function handleFavorites(target, username, petId) {  
     let addToFavorites = checkAddToFavorites(target.innerHTML);
     let petOwner = document.querySelector('input[name=petOwner]').value;
-    let petName = document.querySelector('input[name=petName]').value;
+    let petLink = document.querySelector('input[name=petName]').value;
+    let userLink = document.querySelector('input[name=userLink]').value;
 
     if(addToFavorites) {
         api.put(
@@ -18,7 +19,7 @@ async function handleFavorites(target, username, petId) {
             {
                 username: petOwner,
                 subject : `newMessage`,
-                text    : `The user ` + username + " added your pet " +  petName + " to his favorite's list."
+                text    : `The user ` + userLink + " added your pet " +  petLink + " to his favorite's list."
             }
         );
 
@@ -34,7 +35,7 @@ async function handleFavorites(target, username, petId) {
             {
                 username: petOwner,
                 subject : `newMessage`,
-                text    : `The user ` + username + " removed your pet " +  petName + " from his favorite's list."
+                text    : `The user ` + userLink + " removed your pet " +  petLink + " from his favorite's list."
             }
         );
     }   
