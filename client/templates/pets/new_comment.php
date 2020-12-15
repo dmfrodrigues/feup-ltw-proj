@@ -4,8 +4,13 @@
     <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
     <input id="comment-answerTo" name="answerTo" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
-    <input type="hidden" name="petName" value="<?=$pet->getName()?>">
+    <?php 
+    $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+    $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+    ?>
+    <input type="hidden" name="petLink" value="<?=$petLink?>">
     <input type="hidden" name="petOwner" value="<?=$pet->getPostedById()?>"> 
+    <input type="hidden" name="userLink" value="<?=$userLink?>">
     <article class="comment">
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
@@ -72,15 +77,15 @@
         }
 
         let petOwner = document.querySelector('input[name=petOwner]').value;
-        let petName = document.querySelector('input[name=petName]').value;
-        let userWhoCommented = newCommentForm.querySelector('#comment-username'     ).value
+        let petLink = document.querySelector('input[name=petLink]').value;
+        let userLink = newCommentForm.querySelector('input[name=userLink]').value
 
         api.put(
             `notification`,
             {
                 username: petOwner,
                 subject : `newMessage`,
-                text    : `The user ` + userWhoCommented + " commented your pet " +  petName + "."
+                text    : `The user ` + userLink + " commented your pet " +  petLink + "."
             }
         );
         
