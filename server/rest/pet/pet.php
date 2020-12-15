@@ -90,7 +90,7 @@ $pet_id_comments_GET = function(array $args): void{
     $pet = Pet::fromDatabase($id);
     $ret = $pet->getComments($id);
 
-    $auth = Authentication\check();
+    $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::COMMENT,
         Authorization\Method  ::READ  ,
