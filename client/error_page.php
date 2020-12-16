@@ -12,7 +12,7 @@
             <h1>😿</h1>
             <h2><?= $code ?></h2>
             <h3><?= $message ?></h3>
-            <h4><a href="index.php">Go to home</a></h4>
+            <h4><a href="<?= PROTOCOL_API_URL ?>/">Go to home</a></h4>
         </div>
     </body>
 </html>
