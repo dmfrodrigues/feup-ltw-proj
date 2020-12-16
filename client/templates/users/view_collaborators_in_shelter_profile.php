@@ -3,7 +3,7 @@
     <div class="shelter-collaborators-grid">
         <?php
         require_once CLIENT_DIR.'/templates/users/view_collaborator_in_shelter_profile.php';
-        if(empty($collaborators)) echo '<p>No collaborators</p>';
+        if(empty($collaborators)) echo '<p class="default-info-text">No collaborators</p>';
         else
             foreach ($collaborators as $collaborator) {
                 viewCollaboratorInShelterProfile($collaborator);

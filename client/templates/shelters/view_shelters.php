@@ -1,5 +1,5 @@
+<h1 class="default-title">Shelters</h2>
 <section id="shelters">
-    <h2>Shelters</h2>
     <div class="shelters-grid">
         <?php
         include_once 'view_shelter_card.php';

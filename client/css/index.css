@@ -1,22 +1,45 @@
 #index-body{
     margin: 2em 1em 2em 1em;
-	padding: 2em;
+	padding: 4em;
 	border-radius: 1em;
 	background-color: var(--light-color);
 	text-align: center;
 	display: block;
 }
 
+#index-body {
+  animation: fadein 2s;
+}
+@keyframes fadein {
+  from { opacity: 0}
+  to   { opacity: 1}
+}
+
 #index-body header {
     padding: 1em;
     height: auto;
     width: auto;
+    max-width: 70em;
     margin: auto;
-    background-color: var(--main-color);
+    background-color: var(--main-color-light);
+    border-radius: 20px;
+}
+
+#index-body header {
+  animation: header-scale 3s;
+}
+@keyframes header-scale {
+    0% {
+        transform: scale(0.0);
+    }
+    100% {
+        transform: scale(1.0);
+    }
 }
 
 #index-body > header > h2 {
-    color: white;
+    color: black;
+    font-weight: 500;
 }
 
 #index-body > header > p {

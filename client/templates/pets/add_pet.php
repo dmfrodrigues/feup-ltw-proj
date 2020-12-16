@@ -1,6 +1,6 @@
 <article id="add-pet">
     <header>
-        <h1>Information about the new pet</h1>
+        <h1 class="secondary-title">Information about the new pet</h1>
     </header>
     <form action="<?= PROTOCOL_SERVER_URL ?>/actions/add_pet.php" method="post" enctype="multipart/form-data">
         <div class="pets-name">

@@ -32,10 +32,11 @@
     <?php 
 
     function drawEmptyInvitations(): void { ?>
-        <h2 style="text-align: center">No Shelter Invitations found!</h2>
+        <p class="default-info-text">No Shelter Invitations found!</p>
     <?php } 
 
-    function drawShelterInvitations($shelterInvitations, $isShelter): void {
+    function drawShelterInvitations($shelterInvitations, $isShelter): void { ?>
+        <h1 class="secondary-title">Shelter Invitations</h1> <?php
         if(count($shelterInvitations) > 0) { 
             foreach($shelterInvitations as $invitation){
                 $user    = User   ::fromDatabase($invitation['user'   ]);

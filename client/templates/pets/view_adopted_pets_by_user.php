@@ -1,5 +1,5 @@
 <section id="adopted-pets-profile">
-    <h2>Adopted Pets</h2>
+    <h1 class="secondary-title">Adopted Pets</h2>
     <div class="adopted-pets-profile-grid" class="pet-card-grid">
         <?php
         require_once CLIENT_DIR.'/templates/pets/view_pet_in_profile.php';
