@@ -105,7 +105,7 @@ img.profile-pic,
 #previously-owned-pets-profile,
 #adopted-pets-profile {
 	margin: 2em 1em 2em 1em;
-	padding: 1em;
+	padding: 1em 1em 2em 1em;
 	border-radius: 1em;
 	background-color: var(--light-color);
 	grid-area: 2 / 1 / span 1 / span 1;

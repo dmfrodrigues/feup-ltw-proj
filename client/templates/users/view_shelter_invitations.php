@@ -32,7 +32,7 @@
     <?php 
 
     function drawEmptyInvitations(): void { ?>
-        <p>No Shelter Invitations found!</p>
+        <p class="default-info-text">No Shelter Invitations found!</p>
     <?php } 
 
     function drawShelterInvitations($shelterInvitations, $isShelter): void { ?>

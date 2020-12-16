@@ -92,3 +92,7 @@ body > footer p {
 	margin-bottom: 1.5em;
 	margin-top: 1em;
 }
+
+.default-info-text {
+	text-align: center;
+}
