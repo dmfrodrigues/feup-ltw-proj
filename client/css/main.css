@@ -86,3 +86,9 @@ body > footer p {
 .default-title {
 	margin: 1.5em 0 0.5em 0;
 }
+
+.secondary-title {
+	font-size: 2em;
+	margin-bottom: 1.5em;
+	margin-top: 1em;
+}

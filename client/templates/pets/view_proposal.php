@@ -121,7 +121,7 @@
     <?php
 
     function drawProposals(array $adoptionRequests): void { ?> 
-        <h1>Adoption Requests</h1><?php
+        <h1 class="secondary-title">Adoption Requests</h1><?php
 
         $counter = 0;
         foreach($adoptionRequests as $request)
@@ -138,7 +138,7 @@
     }
 
     function drawMyProposals(array $adoptionRequests): void { ?>
-        <h1>My Adoption Requests</h1><?php
+        <h1 class="secondary-title">My Adoption Requests</h1><?php
 
         $counter = 0;
         foreach($adoptionRequests as $request)

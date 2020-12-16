@@ -19,11 +19,6 @@
 		"delete-user .";
 }
 
-#edit-profile header h1 {
-	font-size: 2em;
-	margin-bottom: 1.5em;
-}
-
 #edit-profile #edit-profile-body #profile-photo #photo {
 	position: relative;
 }

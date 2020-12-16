@@ -10,8 +10,6 @@
 
 #add-pet header h1 {
 	grid-area: header;
-	font-size: 2em;
-	margin-bottom: 1.5em;
 }
 
 #add-pet form {

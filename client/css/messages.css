@@ -7,7 +7,7 @@
 	grid-area: 2 / 1 / span 1 / span 1;
 	align-self: center;
     display: block;
-    padding: 2em;
+	padding: 1em 2em 2em 2em;
 }
 
 #notifications #notifications-body #delete-all-notifications button {

@@ -3,7 +3,7 @@ function editProfile(User $user): void {
     ?>
     <article id="edit-profile">
     <header>
-        <h1>Edit Profile</h1>
+        <h1 class="secondary-title">Edit Profile</h1>
     </header>
     <section id="edit-profile-body">
         <section id="profile-photo">
