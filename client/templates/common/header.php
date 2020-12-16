@@ -65,9 +65,9 @@
                 <input type="checkbox" id="nav-hamburger"> 
                 <label class="hamburger" for="nav-hamburger"></label>
                 <ul>
-                    <li><a href="<?= PROTOCOL_API_URL ?>/pet">Pets Listed for Adoption</a></li>
-                    <li><a href="<?= PROTOCOL_API_URL ?>/pet/adopted">Adopted Pets</a></li>
-                    <li><a href="<?= PROTOCOL_API_URL ?>/shelter">View Shelters</a></li>
+                    <li><a <?php if(isset($title) && $title=="Pets") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/pet">Pets Listed for Adoption</a></li>
+                    <li><a <?php if(isset($title) && $title=="Adopted pets") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/pet/adopted">Adopted Pets</a></li>
+                    <li><a <?php if(isset($title) && $title=="Shelters") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/shelter">View Shelters</a></li>
                 </ul>
         </nav>
         <main>
