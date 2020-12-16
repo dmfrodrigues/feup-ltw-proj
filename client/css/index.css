@@ -39,6 +39,7 @@
 
 #index-body > header > h2 {
     color: black;
+    font-weight: 500;
 }
 
 #index-body > header > p {
