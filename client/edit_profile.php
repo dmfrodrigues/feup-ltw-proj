@@ -14,7 +14,7 @@ $title = "Edit profile";
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 
-if ($_SESSION['username'] === $user->getUsername()) {
+if ($_SESSION['username']) {
     require_once CLIENT_DIR.'/templates/users/edit_profile.php';
     editProfile($user);
 }
