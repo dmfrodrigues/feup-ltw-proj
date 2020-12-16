@@ -18,7 +18,7 @@
         <?php if (!checkUserBelongsToShelter($user->getUsername())) { 
                 $outcome = shelterInvitationIsPending($user->getUsername(), $_SESSION['username']);
                 if (!$outcome) { ?>
-                    <button onclick="location.href = '<?= PROTOCOL_API_URL ?>/user/<?= $_SESSION['username'] ?>/propose/<?=$user->getUsername()?>'">Propose to collaborate</button>
+                    <button onclick="location.href = '<?= PROTOCOL_API_URL ?>/shelter/<?= $_SESSION['username'] ?>/propose/<?=$user->getUsername()?>'">Propose to collaborate</button>
                 <?php }
                 else { ?>
                     <button onclick="location.href = '<?= PROTOCOL_SERVER_URL ?>/actions/remove_collaboration_proposal.php?csrf=<?=$_SESSION['csrf']?>&username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
