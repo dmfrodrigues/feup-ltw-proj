@@ -33,6 +33,11 @@
     transition: 0.3s;
 }
 
+#nav-bar .nav-selected{
+    color: var(--main-color);
+    background-color: white;
+}
+
 #nav-hamburger{
     display: none;
 }
