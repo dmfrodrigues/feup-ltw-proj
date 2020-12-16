@@ -61,7 +61,6 @@ namespace Authorization {
 
     Rules::add_rule(Resource::PET, Method::READ , function(?\User $user, ?\Pet $pet) : bool { return true                      ; }); // Everyone can see
     Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet) : bool { return $user !== null            ; }); // Anyone can write
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { return $user !== null            ; }); // User needs 
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if pet was adopted, only the user who adopted it can edit it
         if ($user == null) return false;
         if ($pet->getStatus() === "forAdoption") return false;
@@ -84,6 +83,10 @@ namespace Authorization {
             if ($collaborator->getUsername() == $user->getUsername()) return true;
         }
         return false;
+    });
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // collaborators of the associated shelter can edit it
+        if ($user    == null) return false;
+        if ($pet->getStatus() === "forAdoption") return $user == $pet->getAuthor();
     });
 
     // ======================================================== ADOPTION REQUEST ========================================================
