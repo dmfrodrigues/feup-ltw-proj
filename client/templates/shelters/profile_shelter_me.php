@@ -13,7 +13,7 @@
         <h2>Actions</h2>
         <ul>
             <li><button onclick="location.href = '<?= PROTOCOL_API_URL ?>/shelter/<?= $_SESSION['username'] ?>/potential'"> Propose a User to be a Collaborator</button></li>
-            <li><button onclick="location.href = '<?= PROTOCOL_API_URL ?>/user/<?=$shelter->getUsername()?>/invitations'"> View Collaboration Invitations</button></li>
+            <li><button onclick="location.href = '<?= PROTOCOL_API_URL ?>/shelter/<?=$shelter->getUsername()?>/invitations'"> View Collaboration Invitations</button></li>
         </ul>
     </section>
 </section>
