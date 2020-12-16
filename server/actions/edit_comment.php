@@ -10,7 +10,7 @@ require_once SERVER_DIR . '/Pet.php';
 
 $oldComment = Comment::fromDatabase(intval($_POST['commentId']));
 
-if($oldComment == null){ http_response_code(400); die(); }
+if($oldComment == null){ my_response_code(400); die(); }
 if ($oldComment->getUserId() != $_SESSION['username']) {
     header("Location: " . $_SERVER['HTTP_REFERER']);
     die();

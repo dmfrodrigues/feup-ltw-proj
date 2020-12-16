@@ -128,6 +128,6 @@ namespace Authorization {
 
     function checkAndRespond(int $resourceType, int $method, ?\User $user, $resource) : void {
         $ret = check($resourceType, $method, $user, $resource);
-        if(!$ret){ http_response_code(403); die(); }
+        if(!$ret){ my_response_code(403); die(); }
     }
 }

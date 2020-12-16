@@ -25,7 +25,7 @@ if(isShelter($user->getUsername())) {
         require_once CLIENT_DIR.'/templates/shelters/profile_shelter_others.php';
 } else {
     $user = User::fromDatabase($user->getUsername());
-    if($user == null){ http_response_code(404); die(); }
+    if($user == null){ my_response_code(404); die(); }
     $added_pets = $user->getPetsNotAdopted();
     $favorite_pets = $user->getFavoritePets();
 

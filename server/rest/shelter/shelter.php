@@ -10,7 +10,7 @@ $shelter_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/view_shelters.php';
 };
 
@@ -29,7 +29,7 @@ $shelter_id_propose_userId_GET = function(array $args): void {
         null
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/propose_to_collaborate.php';
 };
 
@@ -38,7 +38,7 @@ $shelter_potential_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(Authorization\Resource::PET, Authorization\Method::READ, $auth, null);
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/view_potential_collaborators.php';
 };
 
@@ -54,6 +54,6 @@ $shelter_id_invitations_GET = function(array $args): void {
         null
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/view_my_shelter_invitations.php';
 };

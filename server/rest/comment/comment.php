@@ -46,7 +46,7 @@ $comment_photo_PUT = function(array $args): void{
 $comment_id_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
-    if($comment == null){ http_response_code(404); die(); }
+    if($comment == null){ my_response_code(404); die(); }
 
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
@@ -84,7 +84,7 @@ $comment_id_PUT = function(array $args): void{
 $comment_id_DELETE = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
-    if($comment == null){ http_response_code(404); die(); }
+    if($comment == null){ my_response_code(404); die(); }
 
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -155,6 +155,6 @@ $comment_id_photo_DELETE = function(array $args): void{
         deletePetCommentPhoto($id);
         print_result("comment/{$id}/photo");
     } catch(CouldNotDeleteFileException $e){
-        http_response_code(404); die();
+        my_response_code(404); die();
     }
 };

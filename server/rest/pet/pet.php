@@ -16,7 +16,7 @@ $pet_GET = function(array $args): void {
         null
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die();      }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die();      }
     require_once CLIENT_DIR.'/pets.php';
 };
 
@@ -30,7 +30,7 @@ $pet_new_GET = function(array $args): void {
         null
     );
 
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/add_pet.php';
 };
 
@@ -46,14 +46,14 @@ $pet_adopted_GET = function(array $args): void {
         null
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/adopted_pets.php';
 };
 
 $pet_id_GET = function(array $args): void{
     $id = intval($args[1]);
     $pet = Pet::fromDatabase($id);
-    if($pet == null){ http_response_code(404); die(); }
+    if($pet == null){ my_response_code(404); die(); }
     
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
@@ -70,7 +70,7 @@ $pet_id_GET = function(array $args): void{
 $pet_id_DELETE = function(array $args): void {
     $id = intval($args[1]);
     $pet = Pet::fromDatabase($id);
-    if($pet == null){ http_response_code(404); die(); }
+    if($pet == null){ my_response_code(404); die(); }
     
     $auth = Authentication\check();
     Authorization\checkAndRespond(
@@ -114,7 +114,7 @@ $pet_id_edit_GET = function(array $args): void {
         $pet
     );
 
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/edit_pet.php';
 };
 
@@ -131,7 +131,7 @@ $pet_id_photo_GET = function(array $args): void {
         $pet
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/pet_album.php';
 };
 
@@ -148,7 +148,7 @@ $pet_id_adopt_GET = function(array $args): void {
         null
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/add_proposal.php';
 };
 
@@ -165,7 +165,7 @@ $pet_id_proposals_GET = function(array $args): void {
         $pet
     );
     
-    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ http_response_code(415); die(); }
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
     require_once CLIENT_DIR.'/view_pet_adoption_requests.php';
 };
 

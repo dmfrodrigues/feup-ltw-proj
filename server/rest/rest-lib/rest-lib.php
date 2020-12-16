@@ -45,7 +45,7 @@ class RestServer {
                 }
             }
             if(!$matched){
-                http_response_code(400);
+                my_response_code(400);
                 die();
             }
         }
@@ -61,7 +61,7 @@ class RestServer {
         }
 
         if($handler == null){
-            http_response_code(405);
+            my_response_code(405);
             die();
         }
 
