@@ -60,11 +60,31 @@ namespace Authorization {
     // ======================================================== PET ========================================================
 
     Rules::add_rule(Resource::PET, Method::READ , function(?\User $user, ?\Pet $pet) : bool { return true                      ; }); // Everyone can see
-    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet): bool { return $user !== null            ; }); // Anyone can write
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { return $user !== null; }); // User needs 
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { if ($user == null) return false; if ($pet->getStatus() !== "forAdoption") $user == \Pet::fromDatabase($pet->getId())->getAdoptedBy();}); // if pet was adopted, only the user who adopted it can edit it
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { if ($user == null) return false; if ($pet->getStatus() !== "forAdoption") return false; $shelter = $pet->getAuthor()->getShelter(); if ($shelter != null) return $shelter->getUsername() == $user->getUsername(); }); // associated shelter can edit it
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { if ($user == null) return false; if ($pet->getStatus() !== "forAdoption") return false; $shelter = $pet->getAuthor()->getShelter(); if ($shelter == null) return false; $collaborators = $shelter->getCollaborators(); foreach($collaborators as $collaborator) { if ($collaborator->getUsername() == $user->getUsername()) return true; } return false; }); // collaborators of the associated shelter can edit it
+    Rules::add_rule(Resource::PET, Method::WRITE, function(?\User $user, ?\Pet $pet) : bool { return $user !== null            ; }); // Anyone can write
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool { return $user !== null            ; }); // User needs 
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if pet was adopted, only the user who adopted it can edit it
+        if ($user == null) return false;
+        if ($pet->getStatus() === "forAdoption") return false;
+        return ($user == $pet->getAdoptedBy());
+    });
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // associated shelter can edit it
+        if ($user    == null) return false;
+        if ($pet->getStatus() !== "forAdoption") return false;
+        $shelter = $pet->getAuthor()->getShelter();
+        if ($shelter == null) return false;
+        return $shelter->getUsername() == $user->getUsername();
+    });
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // collaborators of the associated shelter can edit it
+        if ($user    == null) return false;
+        if ($pet->getStatus() !== "forAdoption") return false;
+        $shelter = $pet->getAuthor()->getShelter();
+        if ($shelter == null) return false;
+        $collaborators = $shelter->getCollaborators();
+        foreach($collaborators as $collaborator) {
+            if ($collaborator->getUsername() == $user->getUsername()) return true;
+        }
+        return false;
+    });
 
     // ======================================================== ADOPTION REQUEST ========================================================
     Rules::add_rule(Resource::ADOPTION_REQUEST, Method::READ , function(?\User $user, ?\AdoptionRequest $request) : bool { return $user == $request->getAuthor()          ; }); // Author can see
