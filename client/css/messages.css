@@ -17,7 +17,7 @@
 }
 
 #notifications #notifications-body #delete-all-notifications:hover {
-	transform: scale(1.1) translateX(2em);
+	transform: scale(1.1) translateX(2.5em);
 	transition: 0.3s;
 }
 
