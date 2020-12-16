@@ -66,14 +66,14 @@ namespace Authorization {
         if ($pet->getStatus() === "forAdoption") return false;
         return ($user == $pet->getAdoptedBy());
     });
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // associated shelter can edit it
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, associated shelter can edit it
         if ($user    == null) return false;
         if ($pet->getStatus() !== "forAdoption") return false;
         $shelter = $pet->getAuthor()->getShelter();
         if ($shelter == null) return false;
         return $shelter->getUsername() == $user->getUsername();
     });
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // collaborators of the associated shelter can edit it
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, collaborators of the associated shelter can edit it
         if ($user    == null) return false;
         if ($pet->getStatus() !== "forAdoption") return false;
         $shelter = $pet->getAuthor()->getShelter();
@@ -84,7 +84,7 @@ namespace Authorization {
         }
         return false;
     });
-    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // collaborators of the associated shelter can edit it
+    Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, the owner can edit it
         if ($user    == null) return false;
         if ($pet->getStatus() === "forAdoption") return $user == $pet->getAuthor();
     });
