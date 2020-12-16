@@ -10,6 +10,22 @@
 	text-align: center;
 }
 
+
+#login,
+#signup {
+  animation: authenticate-scale 1s;
+}
+@keyframes authenticate-scale {
+    0% {
+		transform: scale(2.0) translateY(8em);
+		opacity: 0.0;
+    }
+    100% {
+		transform: scale(1.0);
+		opacity: 1;
+    }
+}
+
 #login header,
 #signup header {
 	display: block;
