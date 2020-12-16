@@ -1,6 +1,6 @@
 <section id="notifications">
     <header>
-        <h1>Notifications</h1>
+        <h1 class="secondary-title">Notifications</h1>
     </header>
     <article id="notifications-body">
         <div id="delete-all-notifications">
