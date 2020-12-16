@@ -48,7 +48,7 @@ $shelter_id_invitations_GET = function(array $args): void {
 
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
-        Authorization\Resource::SHELTER_INVITATION,
+        Authorization\Resource::PROFILE,
         Authorization\Method::READ,
         $auth,
         null
