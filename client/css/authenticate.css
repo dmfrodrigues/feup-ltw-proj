@@ -10,7 +10,6 @@
 	text-align: center;
 }
 
-
 #login,
 #signup {
   animation: authenticate-scale 1s;

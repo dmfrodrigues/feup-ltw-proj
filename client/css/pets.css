@@ -14,6 +14,21 @@
 	--text-button-color-3: red;
 }
 
+#pet {
+  animation: pet-scale 1s;
+}
+@keyframes pet-scale {
+    0% {
+		transform: scale(1.05);
+		opacity: 0.3;
+    }
+    100% {
+		transform: scale(1.0);
+		opacity: 1;
+    }
+}
+
+
 #pet header,
 #pet section {
 	margin: 0 0 1em 0;
@@ -420,6 +435,21 @@
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-template-areas: "searches pet-list";
+}
+
+#shelters,
+#pets-page {
+  animation: pets-scale 1s;
+}
+@keyframes pets-scale {
+    0% {
+		transform: scale(1.05);
+		opacity: 0.3;
+    }
+    100% {
+		transform: scale(1.0);
+		opacity: 1;
+    }
 }
 
 #pets-page #searches {
