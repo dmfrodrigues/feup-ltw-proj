@@ -15,6 +15,14 @@
     margin-right: auto;
 }
 
+.shelter-pets-grid {
+    margin-top: 2em;
+	display: grid;
+	column-gap: 1em;
+	row-gap: 4em;
+	grid-template-columns: repeat(1, 1fr);
+}
+
 .shelter-collaborators-grid{
     margin-top: 2em;
 	display: grid;
@@ -23,6 +31,7 @@
 	grid-template-columns: repeat(2, 1fr);
 }
 
+.shelter-pets-grid p,
 .shelter-collaborators-grid p {
     margin: auto;
     grid-area: 1 / 1 / 1 / span 2;
