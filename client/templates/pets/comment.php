@@ -8,7 +8,7 @@
             <img class="profile-pic" src="">
         </a>
         <span id="comment-date" class="date">2020-31-12 00:00:00</span>
-        <div id="comment-content">
+        <div id="comment-content" <?php if(!isset($_SERVER['username'])) echo 'class="noedit"' ?>>
             <p id="comment-text" class="comment-text"></p>
             <img id="comment-picture" class="comment-picture" src="">
         </div>
