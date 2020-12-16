@@ -102,9 +102,9 @@ body > footer p {
 #pet,
 #shelter-profile,
 #profile {
-  animation: profile-scale 1s;
+  animation: animation-scale 1s;
 }
-@keyframes profile-scale {
+@keyframes animation-scale {
     0% {
 		transform: scale(1.05);
 		opacity: 0.3;
