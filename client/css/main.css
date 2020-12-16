@@ -82,3 +82,7 @@ body > footer p {
 #templates {
 	display: none;
 }
+
+.default-title {
+	margin: 1.5em 0 0.5em 0;
+}
