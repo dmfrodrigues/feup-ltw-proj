@@ -56,6 +56,16 @@ namespace Authorization {
     Rules::add_rule(Resource::PROFILE, Method::READ , function(?\User $user, ?\User $otherUser) : bool { return true               ; }); // Everyone can see
     Rules::add_rule(Resource::PROFILE, Method::WRITE, function(?\User $user, ?\User $otherUser) : bool { return true               ; }); // Everyone can write
     Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool { return $user == $otherUser; }); // Edit itself
+    Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool {                                 // Collaborators can edit shelter
+        /* if (!isShelter($otherUser->getUsername())) return false;
+        $shelter = \Shelter::fromDatabase($otherUser->getUsername());
+        $collaborators = $shelter->getCollaborators();
+        foreach($collaborators as $collaborator) {
+            if ($collaborator->getUsername() == $user) return true;
+        }
+        return false; */
+        return true;
+     });
     
     // ======================================================== PET ========================================================
 
