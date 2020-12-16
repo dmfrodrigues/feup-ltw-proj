@@ -21,30 +21,54 @@ if(isShelter($user->getUsername())) {
         $shelter = Shelter::fromDatabase($user->getUsername());
 
         if (isset($_SESSION['isShelter']) && $_SESSION['username'] === $user->getUsername()) {
-            updateShelterInfo(
-                $shelter->getUsername(),
-                $_POST['username'],
-                $_POST['name'],
-                $_POST['location'],
-                $_POST['description']
-            );
-            $_SESSION['username'] = $_POST['username'];
-            $usernameChanged = true;
-            $failed = false;
+            try {
+                updateShelterInfo(
+                    $shelter->getUsername(),
+                    $_POST['username'],
+                    $_POST['name'],
+                    $_POST['location'],
+                    $_POST['description']
+                );
+                $_SESSION['username'] = $_POST['username'];
+                $usernameChanged = true;
+                $failed = false;
+            } catch(UserAlreadyExistsException $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
+                die();
+            } catch(InvalidUsernameException $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
+                die();
+            } catch(Exception $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
+                die();
+            }
+            
         }
             
         $user = User::fromDatabase($_SESSION['username']);
 
         $userShelter = User::fromDatabase($user->getUsername())->getShelterId();
         if ($userShelter === $shelter->getUsername()) { // if who is editing is not the shelter itself, the username cannot be changed
-            updateShelterInfo(
-                $shelter->getUsername(),
-                $shelter->getUsername(),
-                $_POST['name'],
-                $_POST['location'],
-                $_POST['description']
-            );
-            $failed = false;
+            try {
+                updateShelterInfo(
+                    $shelter->getUsername(),
+                    $shelter->getUsername(),
+                    $_POST['name'],
+                    $_POST['location'],
+                    $_POST['description']
+                );
+                $failed = false;
+            } catch(UserAlreadyExistsException $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=2');
+                die();
+            } catch(InvalidUsernameException $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=6');
+                die();
+            } catch(Exception $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=5');
+                die();
+            }
+            
         }
 
     }
@@ -53,14 +77,26 @@ else {
 
     if(isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) {
         
-        editUser(
-            $user->getUsername(),
-            $_POST['username'],
-            $_POST['name']
-        );
-        $_SESSION['username'] = $_POST['username'];
-        $usernameChanged = true;
-        $failed = false;
+        try {
+            editUser(
+                $user->getUsername(),
+                $_POST['username'],
+                $_POST['name']
+            );
+            $_SESSION['username'] = $_POST['username'];
+            $usernameChanged = true;
+            $failed = false;
+        } catch(UserAlreadyExistsException $e) {
+                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
+                die();
+        } catch(InvalidUsernameException $e) {
+            header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
+            die();
+        } catch(Exception $e) {
+            header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
+            die();
+        }
+        
     }
 }
 
@@ -69,9 +105,6 @@ if (!$failed) {
         header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
     else
         header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
-    
 } 
-else
-    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}&failed=1");
 
 die();
