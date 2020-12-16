@@ -15,6 +15,8 @@ $usernameChanged = false;
 
 $user = User::fromDatabase($_GET['username']);
 
+$shelterId = null;
+
 if(isShelter($user->getUsername())) {
     if(isset($_SESSION['username'])) {
 
@@ -58,6 +60,7 @@ if(isShelter($user->getUsername())) {
                     $_POST['description']
                 );
                 $failed = false;
+                $shelterId = $shelter->getUsername();
             } catch(UserAlreadyExistsException $e) {
                 header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=2');
                 die();
@@ -101,7 +104,10 @@ else {
 }
 
 if (!$failed) {
-    if ($usernameChanged)
+
+    if ($shelterId !== null)
+        header("Location: " . PROTOCOL_API_URL . "/user/{$shelterId}");
+    else if ($usernameChanged)
         header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
     else
         header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
