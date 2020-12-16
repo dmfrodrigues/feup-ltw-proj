@@ -17,21 +17,6 @@ img.profile-pic,
 	grid-template-rows: auto auto auto;
 }
 
-#shelter-profile,
-#profile {
-  animation: profile-scale 1s;
-}
-@keyframes profile-scale {
-    0% {
-		transform: scale(1.05);
-		opacity: 0.3;
-    }
-    100% {
-		transform: scale(1.0);
-		opacity: 1;
-    }
-}
-
 #profile > *,
 #shelter-profile > * {
 	margin: 1em;
