@@ -1,8 +1,8 @@
 #shelters,
 #potential-collaborators {
-    max-width: 1200px;
-    margin: 3em auto;
-    padding: 1em 0em 3em 5em;
+	max-width: 1200px;
+	margin: 3em auto;
+	padding: 1em 0em 3em 5em;
 	border-radius: 1em;
 	background-color: var(--light-color);
 	grid-area: 2 / 1 / span 1 / span 1;
@@ -11,20 +11,20 @@
 }
 
 #shelter-collaborators {
-    margin-left: auto;
-    margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .shelter-pets-grid {
-    margin-top: 2em;
+	margin-top: 2em;
 	display: grid;
 	column-gap: 1em;
 	row-gap: 4em;
-	grid-template-columns: repeat(1, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 }
 
-.shelter-collaborators-grid{
-    margin-top: 2em;
+.shelter-collaborators-grid {
+	margin-top: 2em;
 	display: grid;
 	column-gap: 1em;
 	row-gap: 4em;
@@ -33,13 +33,13 @@
 
 .shelter-pets-grid p,
 .shelter-collaborators-grid p {
-    margin: auto;
-    grid-area: 1 / 1 / 1 / span 2;
+	margin: auto;
+	grid-area: 1 / 1 / 1 / span 2;
 }
 
 .shelters-grid,
 .potential-collaborators-grid {
-    margin-top: 2em;
+	margin-top: 2em;
 	display: grid;
 	column-gap: 2em;
 	row-gap: 4em;
@@ -48,35 +48,35 @@
 
 .shelter-card,
 .collaborator-card {
-    cursor: pointer;
-    max-width: 250px;
-    transition: transform 0.3s;
-    margin: 1em;
+	cursor: pointer;
+	max-width: 250px;
+	transition: transform 0.3s;
+	margin: 1em;
 }
 
 .shelter-card:hover,
 .collaborator-card:hover {
-    transform: scale(1.1);
-    transition: 0.3s;
+	transform: scale(1.1);
+	transition: 0.3s;
 }
 
 #shelter-card-content,
-#collaborator-card-content{
-    position: relative;
+#collaborator-card-content {
+	position: relative;
 }
 
 .shelter-card img,
 .collaborator-card img {
 	height: 250px;
-    width: 250px;
-    border-radius: 10%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	width: 250px;
+	border-radius: 10%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .shelter-card h2,
 .collaborator-card h2 {
-    position: absolute;
-    color: var(--main-color);
-    bottom: 0.5em;
-    left: 10%;
+	position: absolute;
+	color: var(--main-color);
+	bottom: 0.5em;
+	left: 10%;
 }

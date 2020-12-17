@@ -1,5 +1,5 @@
 @media (max-width: 110em) {
-	#pet-album section{
+	#pet-album section {
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
@@ -23,11 +23,11 @@
 	}
 
 	.shelter-collaborators-grid,
-	#pet-album section{
+	#pet-album section {
 		grid-template-columns: repeat(1, 1fr);
 	}
 
-	.shelter-collaborators-grid .collaborator-card{
+	.shelter-collaborators-grid .collaborator-card {
 		margin: auto;
 	}
 }
@@ -43,7 +43,7 @@
 	#shelter-profile {
 		display: block;
 	}
-	#profile #owned{
+	#profile #owned {
 		margin: auto;
 	}
 	#pet header {
@@ -60,7 +60,7 @@
 		margin-left: 0;
 	}
 
-	#edit-pet form{
+	#edit-pet form {
 		width: auto;
 		margin: 0;
 	}
@@ -78,6 +78,7 @@
 	.pets-main-page > div,
 	.shelters-grid,
 	.pet-card-grid,
+	.shelter-pets-grid,
 	.potential-collaborators-grid {
 		grid-template-columns: repeat(1, 1fr);
 	}
@@ -134,39 +135,38 @@
 	}
 
 	#nav-bar .hamburger {
-        display: block;
+		display: block;
 		padding: 1em;
 		color: white;
-        background-color: var(--dark-color);
-    }
-    
-    #nav-bar .hamburger:before {
-        content:'\2630';
+		background-color: var(--dark-color);
 	}
 
-    #nav-hamburger:checked + .hamburger:before {
-        content:'\2715';
-    }
-    
-    #nav-hamburger:checked + .hamburger + ul li{
+	#nav-bar .hamburger:before {
+		content: "\2630";
+	}
+
+	#nav-hamburger:checked + .hamburger:before {
+		content: "\2715";
+	}
+
+	#nav-hamburger:checked + .hamburger + ul li {
 		opacity: 1;
 		max-height: max-content;
 	}
 
-	#nav-hamburger:checked + .hamburger + ul{
+	#nav-hamburger:checked + .hamburger + ul {
 		opacity: 1;
 	}
 
 	#nav-bar ul {
 		opacity: 0;
-		transition: all .3s;
+		transition: all 0.3s;
 	}
 
 	#nav-bar ul li {
 		width: 100%;
 		max-height: 0;
 		opacity: 0;
-        transition: all .3s;
+		transition: all 0.3s;
 	}
-	
 }

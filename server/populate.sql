@@ -27,6 +27,9 @@ INSERT INTO Shelter(username, location, description) VALUES
 ('SPA'  , 'Lisbon' , 'Animals are everything to us!'),
 ('WFFA' , 'Algarve', 'Among animals we stand.      ');
 
+UPDATE User SET shelter = 'AAOrg' WHERE username = 'dmfr';
+UPDATE User SET shelter = 'AAOrg' WHERE username = 'BrenoAccioly';
+
 -- Admin
 -- INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 
@@ -82,4 +85,6 @@ INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
 INSERT INTO ShelterInvite(text, user, shelter, requestDate) VALUES
 ('Please join us!', 'dmfr', 'AAOrg', '2020-12-17 19:51:55'),
 ('Please join us!', 'dmfr',  'WFFA', '2020-12-17 19:51:55');
+
+
 

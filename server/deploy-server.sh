@@ -15,8 +15,9 @@ curl -L "https://picsum.photos/seed/picsum/400/400"                             
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output resources/img/profiles/balves.jpg
 curl -L "https://picsum.photos/seed/picsum/400/400"                                                              --output resources/img/profiles/Romanoff123.jpg
 curl -L "https://i.pinimg.com/originals/26/5c/45/265c4522da736f8d313282ba02cd97be.jpg" --output resources/img/profiles/AAOrg.jpg
+curl -L "https://static.cdnbridge.com/resources/18/160536/picture/4E/85145422.jpg" --output resources/img/profiles/APA.jpg
 curl -L "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCOGgM-Ah2W38knb1fDm2fLM3csHhJE-rZzw&usqp=CAU" --output resources/img/profiles/SPA.jpg
-curl -L "https://www.humanesocietymiami.org/wp-content/uploads/2020/04/Adopt-a-shelter-pet-today_dog-2000px.jpg" --output resources/img/profiles/WFFA.jpg
+curl -L "https://ecinsider.org/wp-content/uploads/2020/06/V4qNNw93IZvHGuhegG5imcGHl0SrFeqObXwHRAGx.jpeg" --output resources/img/profiles/WFFA.jpg
 
 mkdir -p resources/img/pets
 mkdir -p resources/img/pets/1
