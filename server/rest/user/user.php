@@ -110,11 +110,10 @@ $user_id_photo_GET = function(array $args): void{
     $username = $args[1];
     $user = User::fromDatabase($username);
 
-    $auth = Authentication\check();
     Authorization\checkAndRespond(
         Authorization\Resource::PROFILE,
         Authorization\Method  ::READ   ,
-        $auth,
+        null,
         $user
     );
 
