@@ -46,6 +46,7 @@ div#proposal-info {
 	display: inline-block;
 	vertical-align: top;
 	height: 95%;
+	width: 20em;
 }
 
 div#proposal-info a{
