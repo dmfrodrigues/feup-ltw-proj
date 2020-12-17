@@ -53,6 +53,8 @@ Username/password (role):
 - Minimum requirements: yes
 
 - Extra requirements:
+    - See adopted pets.
+    - Add and view pet photos.
     - Pet comment section.
     - Private chat between users regarding pet adopted proposals.
     - Animal shelters are also able to register as users.
