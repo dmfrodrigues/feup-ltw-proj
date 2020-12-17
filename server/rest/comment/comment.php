@@ -103,11 +103,10 @@ $comment_id_photo_GET = function(array $args): void{
     $id = intval($args[1]);
     $comment = Comment::fromDatabase($id);
 
-    $auth = Authentication\check();
     Authorization\checkAndRespond(
         Authorization\Resource::COMMENT,
         Authorization\Method  ::READ   ,
-        $auth,
+        null,
         $comment
     );
 
