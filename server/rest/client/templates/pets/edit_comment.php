@@ -32,6 +32,8 @@
     function editComment_removePicture(comment){
         let deleteFile = comment.querySelector('input[name="deleteFile"]');
         deleteFile.value = "1";
+        let inputFile = comment.querySelector('input[name="picture"]');
+        inputFile.value = "";
         let img = comment.querySelector('#comment-picture');
         img.src = "";
     }
