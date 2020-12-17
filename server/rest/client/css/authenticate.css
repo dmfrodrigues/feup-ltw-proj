@@ -46,8 +46,8 @@
 	text-align: center;
 }
 
-#login input[type='text'], #login input[type='password'],
-#signup input[type='text'], #signup input[type='password'] {
+#login input[type='text'] , #login input[type='password'] , #login input[type='email'] ,
+#signup input[type='text'], #signup input[type='password'], #signup input[type='email'] {
 	margin: 1em;
 	border: 0;
 	background-color: var(--bg-color);
