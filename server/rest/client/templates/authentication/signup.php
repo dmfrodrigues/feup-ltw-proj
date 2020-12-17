@@ -32,7 +32,6 @@
         let email    = el.querySelector('#email'   ).value;
         let name     = el.querySelector('#name'    ).value;
         if (username === "new") {
-          let csrfToken = document.querySelector('meta[name=csrf-token]').content;
           location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
           return false;
         } 
