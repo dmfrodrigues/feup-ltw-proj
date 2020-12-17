@@ -15,28 +15,16 @@ class InvalidUsernameException extends RuntimeException{}
 class User implements JsonSerializable {
     private  string $username;
     private  string $password;
+    private  string $email;
     private  string $name;
     private  string $registeredOn;
     private ?string $shelter;
     // private  bool   $admin;
-    public function __construct(
-        string $username     = '',
-        string $password     = '',
-        string $name         = '',
-        string $registeredOn = '',
-       ?string $shelter      = null
-        // bool   $admin        = false
-    ){
-        $this->username     = $username;
-        $this->password     = $password;
-        $this->name         = $name;
-        $this->registeredOn = $registeredOn;
-        $this->shelter      = $shelter;
-        // $this->admin = $admin;
-    }
+    public function __construct(){}
 
     public function getUsername    () :  string { return noHTML($this->username)     ; }
     public function getPassword    () :  string { return noHTML($this->password)     ; }
+    public function getEmail       () :  string { return noHTML($this->email)        ; }
     public function getName        () :  string { return noHTML($this->name)         ; }
     public function getRegisteredOn() :  string { return $this->registeredOn         ; }
     /**
@@ -83,6 +71,10 @@ class User implements JsonSerializable {
         $newName = filter_var($name, FILTER_SANITIZE_STRING);
         $this->name = $newName; 
     }
+    public function setEmail(string $email) : void {
+        $newEmail = filter_var($email, FILTER_SANITIZE_STRING);
+        $this->email = $newEmail;
+    }
     public function setRegisteredOn( string $registeredOn) : void { $this->registeredOn = $registeredOn; }
     public function setShelter     (?string $shelter     ) : void {
         $newShelter = filter_var($shelter, FILTER_SANITIZE_STRING);
@@ -124,13 +116,7 @@ class User implements JsonSerializable {
     static public function allWithoutShelter() : array {
         global $db;
 
-        $stmt = $db->prepare('SELECT
-            username, 
-            password,
-            name,
-            registeredOn,
-            shelter
-            FROM User
+        $stmt = $db->prepare('SELECT * FROM User
             WHERE shelter is NULL
             AND username NOT IN (SELECT username FROM SHELTER)
         ');
@@ -147,10 +133,11 @@ class User implements JsonSerializable {
         if (User::exists($this->username))
             throw new UserAlreadyExistsException("The username ".$this->username." already exists! Please choose another one!");
 
-        $stmt = $db->prepare('INSERT INTO User(username, password, name) VALUES
-        (:username, :password, :name)');
+        $stmt = $db->prepare('INSERT INTO User(username, password, email, name) VALUES
+        (:username, :password, :email, :name)');
         $stmt->bindValue(':username', $this->username);
         $stmt->bindValue(':password', $this->password);
+        $stmt->bindValue(':email'   , $this->email);
         $stmt->bindValue(':name'    , $this->name);
         if(!$stmt->execute()) throw new RuntimeException();
 
@@ -390,16 +377,20 @@ require_once __DIR__.'/Shelter.php';
  *
  * @param string $username  User's username
  * @param string $password  Password
+ * @param string $email     Email
  * @param string $name      Real name
  * @return void
  */
-function addUser(string $username, string $password, string $name){
+function addUser(string $username, string $password, string $email, string $name){
 
     if ($username === "new")
         throw new InvalidUsernameException("The username ".$username." is invalid! Please choose another one!");
 
-    $user = new User($username, '', $name);
+    $user = new User();
+    $user->setUsername($username);
     $user->setPassword($password, false);
+    $user->setEmail   ($email);
+    $user->setName    ($name);
     $user->addToDatabase();
 }
 

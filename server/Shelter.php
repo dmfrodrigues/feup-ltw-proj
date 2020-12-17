@@ -129,13 +129,13 @@ function isShelter(string $username) : bool {
  * @param string $password     Password
  * @return void
  */
-function addShelter(string $username, string $name, string $location, string $description, $password){
+function addShelter(string $username, string $name, string $location, string $description, string $password, string $email){
     global $db;
 
     if (User::exists($username))
         throw new UserAlreadyExistsException("The username ".$username." already exists! Please choose another one!");
     
-    addUser($username, $password, $name);
+    addUser($username, $password, $email, $name);
     
     $stmt2 = $db->prepare('INSERT INTO Shelter(username, location, description) VALUES
     (:username, :location, :description)');

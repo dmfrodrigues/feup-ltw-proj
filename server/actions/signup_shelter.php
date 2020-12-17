@@ -13,7 +13,8 @@ try {
         htmlspecialchars($_POST['shelterName']), 
         htmlspecialchars($_POST['location']), 
         htmlspecialchars($_POST['description']), 
-        htmlspecialchars($_POST['pwd'])
+        htmlspecialchars($_POST['pwd']),
+        htmlspecialchars($_POST['email'])
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     $_SESSION['isShelter'] = 1;
