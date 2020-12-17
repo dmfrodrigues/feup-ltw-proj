@@ -34,6 +34,14 @@ INSERT INTO Pet
 (    'Abby',   'Dog',   2, 'F',  'L', 'White', 'Barcelos', 'Very cute puppy.'        , 'forAdoption', '2dukes'      ),
 (   'Flash',   'Dog',   3, 'F',  'M', 'Black',    'Braga', 'Very cute puppy.'        , 'forAdoption', 'TiagooGomess'),
 (   'Haley',   'Dog',   5, 'M',  'L',  'Gray',    'Porto', 'Another very cute puppy.', 'forAdoption', 'dmfr'        ),
+(   'Raven',   'Dog',   6, 'M',  'S', 'Brown',     'Gaia', 'Just a white puppy.'     , 'forAdoption', 'BrenoAccioly'),
+(   'Kitty',   'Cat',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'forAdoption', '2dukes'      ),
+(   'Kitty',   'Cat',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'forAdoption', 'TiagooGomess'),
+('Princesa',   'Cat',   5, 'M', 'XS',  'Gray',   'Olaias', 'Another very cute cat.'  , 'forAdoption', 'dmfr'        ),
+(   'Oscar',   'Cat',   1, 'M',  'S', 'White',     'Gaia', 'Just a white cat.'       , 'forAdoption', 'dmfr'        ),
+(    'Abby',   'Dog',   2, 'F',  'L', 'White', 'Barcelos', 'Very cute puppy.'        , 'forAdoption', '2dukes'      ),
+(   'Flash',   'Dog',   3, 'F',  'M', 'Black',    'Braga', 'Very cute puppy.'        , 'forAdoption', 'TiagooGomess'),
+(   'Haley',   'Dog',   5, 'M',  'L',  'Gray',    'Porto', 'Another very cute puppy.', 'forAdoption', 'dmfr'        ),
 (   'Raven',   'Dog',   6, 'M',  'S', 'Brown',     'Gaia', 'Just a white puppy.'     , 'forAdoption', 'BrenoAccioly');
 
 
