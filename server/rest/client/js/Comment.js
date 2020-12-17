@@ -39,7 +39,7 @@ class Comment {
             if (user_name === user.username) {
                 let edit_el = actions_el.querySelector("#action-edit");
                 edit_el.style.display = "";
-                let delete_el = actions_el.querySelector("#action-delete");
+                let delete_el = actions_el.querySelector(`#action-delete-${this.id}`);
                 delete_el.style.display = "";
             }
 

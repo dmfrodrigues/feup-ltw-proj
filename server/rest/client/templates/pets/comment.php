@@ -81,6 +81,11 @@
         
         let el_deleteId = commentElement.querySelector("#action-delete-id"); el_deleteId.value = `${comment.id}`;
 
+        // Change IDs
+        let el_action_delete        = commentElement.querySelector('#action-delete'       ); el_action_delete       .id = `action-delete-${comment.id}`;
+        let el_action_delete_id     = commentElement.querySelector('#action-delete-id'    ); el_action_delete_id    .id = `action-delete-id-${comment.id}`;
+        let el_action_delete_submit = commentElement.querySelector('#action-delete-submit'); el_action_delete_submit.id = `action-delete-submit-${comment.id}`;
+
         return commentElement;
     }
 </script>

@@ -1,36 +1,36 @@
 <template id="editComment">
 <form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" method="put">
-    <input id="commentId" name="commentId" type="hidden">
-    <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
-    <input id="comment-deleteFile" name="deleteFile" type="hidden" value="0">
+    <input name="commentId" type="hidden">
+    <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
+    <input name="deleteFile" type="hidden" value="0">
     <article class="comment">
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
         <div id="comment-content">
-            <textarea id="comment-text" class="comment-text" name="text" placeholder="Write a comment..." rows="1"
+            <textarea class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()" title="Add picture">
+            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
-            <input type="submit" id="comment-submit" value="Submit">
+            <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
 </form>
 </template>
 <script>
     function editComment_checkTextOrImage(comment){
-        let text = comment.querySelector('#comment-text');
-        let file = comment.querySelector('#comment-picture-input');
-        let deleteFile = comment.querySelector('#comment-deleteFile');
+        let text = comment.querySelector('textarea[name="text"]');
+        let file = comment.querySelector('input[name="picture"]');
+        let deleteFile = comment.querySelector('input[name="deleteFile"]');
         let good = (text.value != '' || file.value != '' || deleteFile.value === '0');
         if(!good) alert("Edited comment must have at least text or an image.");
         return good;
     }
 
     function editComment_removePicture(comment){
-        let deleteFile = comment.querySelector('#comment-deleteFile');
+        let deleteFile = comment.querySelector('input[name="deleteFile"]');
         deleteFile.value = "1";
         let img = comment.querySelector('#comment-picture');
         img.src = "";
@@ -40,17 +40,17 @@
         let id_split = editCommentForm.id.split('-');
         let id = id_split[id_split.length-1];
 
-        let files = editCommentForm.querySelector('#comment-picture-input').files;
+        let files = editCommentForm.querySelector('input[name="picture"]').files;
         let picture = (files.length <= 0 ? null : files[0]);
         let deleteFile = (
-            editCommentForm.querySelector('#comment-deleteFile').value === "1" &&
+            editCommentForm.querySelector('input[name="deleteFile"]').value === "1" &&
             picture === null
         );
 
         api.put(
             `comment/${id}`,
             {
-                text: editCommentForm.querySelector('#comment-text').value,
+                text: editCommentForm.querySelector('textarea[name="text"]').value,
             }
         )
         .then(function (response){
@@ -79,7 +79,7 @@
 
         editElement.id = `edit-comment-${comment.id}`;
 
-        let el_commentId = editElement.querySelector('#commentId');
+        let el_commentId = editElement.querySelector('input[name="commentId"]');
         el_commentId.value = comment.id;
 
         let el_user = editElement.querySelector("#comment-user");
@@ -90,7 +90,7 @@
         el_userPic.href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
         el_userPic.children[0].src = API_URL + `user/${comment.user}/photo?csrf=<?=$_SESSION['csrf']?>`;
 
-        let el_text = editElement.querySelector("#comment-text");
+        let el_text = editElement.querySelector('textarea[name="text"]');
         el_text.value = comment.text;
 
         let el_img = editElement.querySelector("#comment-picture");

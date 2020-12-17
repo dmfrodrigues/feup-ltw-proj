@@ -93,7 +93,7 @@
 	border-radius: 1em;
 }
 
-#comments article.comment input#comment-submit {
+#comments article.comment input.comment-submit {
 	border: none;
 	border-radius: 1em;
 	padding: 0.75em 1.5em;
@@ -102,7 +102,7 @@
 	cursor: pointer;
 }
 
-#comments article.comment input#comment-submit:hover {
+#comments article.comment input.comment-submit:hover {
 	transform: scale(1.1);
 	transition: 0.3s;
 }

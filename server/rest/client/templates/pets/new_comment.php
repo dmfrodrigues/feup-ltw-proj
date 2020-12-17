@@ -1,9 +1,9 @@
 <template id="newComment">
 <form class="answer" enctype="multipart/form-data" method="put">
-    <input id="comment-petId" name="petId" type="hidden" value="<?= $pet->getId() ?>">
-    <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
-    <input id="comment-answerTo" name="answerTo" type="hidden">
-    <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
+    <input name="petId" type="hidden" value="<?= $pet->getId() ?>">
+    <input name="username" type="hidden" value="<?= $user->getUsername() ?>">
+    <input name="answerTo" type="hidden">
+    <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <?php 
     $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
     $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
@@ -15,28 +15,28 @@
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
         <div id="comment-content">
-            <textarea id="comment-text" class="comment-text" name="text" placeholder="Write a comment..." rows="1"
+            <textarea class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()" title="Add picture">
-            <input type="submit" id="comment-submit" value="Submit">
+            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
+            <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
 </form>
 </template>
 <script>
     function newComment_checkTextOrImage(newCommentForm){
-        let text = newCommentForm.querySelector('#comment-text');
-        let file = newCommentForm.querySelector('#comment-picture-input');
+        let text = newCommentForm.querySelector('textarea[name="text"]');
+        let file = newCommentForm.querySelector('input[name="picture"]');
         let good = (text.value != '' || file.value != '');
         if(!good) alert("New comment must have at least text or an image.");
         return good;
     }
 
     function newComment_submitForm(newCommentForm){
-        let files = newCommentForm.querySelector('#comment-picture-input').files;
+        let files = newCommentForm.querySelector('input[name="picture"]').files;
         let picture = (files.length <= 0 ? null : files[0]);
 
         if(picture !== null){
@@ -49,10 +49,10 @@
                 api.put(
                     'comment',
                     {
-                        petId   : newCommentForm.querySelector('#comment-petId'        ).value,
-                        username: newCommentForm.querySelector('#comment-username'     ).value,
-                        answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
-                        text    : newCommentForm.querySelector('#comment-text'         ).value,
+                        petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
+                        username: newCommentForm.querySelector('input[name="username"]').value,
+                        answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
+                        text    : newCommentForm.querySelector('textarea[name="text"]' ).value,
                         picture : tmpPhotoId
                     }
                 )
@@ -64,10 +64,10 @@
             api.put(
                 'comment',
                 {
-                    petId   : newCommentForm.querySelector('#comment-petId'        ).value,
-                    username: newCommentForm.querySelector('#comment-username'     ).value,
-                    answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
-                    text    : newCommentForm.querySelector('#comment-text'         ).value,
+                    petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
+                    username: newCommentForm.querySelector('input[name="username"]').value,
+                    answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
+                    text    : newCommentForm.querySelector('textarea[name="text"]' ).value,
                     picture : null
                 }
             )
@@ -110,7 +110,7 @@
         
         answerElement.id = `new-comment-${comment.id}`;
 
-        let el_answerTo = answerElement.querySelector('#comment-answerTo');
+        let el_answerTo = answerElement.querySelector('input[name="answerTo"]');
         el_answerTo.value = comment.id;
 
         let el_user = answerElement.querySelector("#comment-user");
