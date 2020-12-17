@@ -2,7 +2,7 @@
 <form class="answer" enctype="multipart/form-data" method="put">
     <input id="comment-petId" name="petId" type="hidden" value="<?= $pet->getId() ?>">
     <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
-    <input id="comment-answerTo" name="answerTo" type="hidden">
+    <input name="answerTo" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <?php 
     $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
@@ -49,10 +49,10 @@
                 api.put(
                     'comment',
                     {
-                        petId   : newCommentForm.querySelector('#comment-petId'        ).value,
-                        username: newCommentForm.querySelector('#comment-username'     ).value,
-                        answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
-                        text    : newCommentForm.querySelector('#comment-text'         ).value,
+                        petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
+                        username: newCommentForm.querySelector('input[name="username"]').value,
+                        answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
+                        text    : newCommentForm.querySelector('input[name="text"]'    ).value,
                         picture : tmpPhotoId
                     }
                 )
@@ -64,10 +64,10 @@
             api.put(
                 'comment',
                 {
-                    petId   : newCommentForm.querySelector('#comment-petId'        ).value,
-                    username: newCommentForm.querySelector('#comment-username'     ).value,
-                    answerTo: newCommentForm.querySelector('#comment-answerTo'     ).value,
-                    text    : newCommentForm.querySelector('#comment-text'         ).value,
+                    petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
+                    username: newCommentForm.querySelector('input[name="username"]').value,
+                    answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
+                    text    : newCommentForm.querySelector('input[name="text"]'    ).value,
                     picture : null
                 }
             )
@@ -110,7 +110,7 @@
         
         answerElement.id = `new-comment-${comment.id}`;
 
-        let el_answerTo = answerElement.querySelector('#comment-answerTo');
+        let el_answerTo = answerElement.querySelector('input[name="answerTo"]');
         el_answerTo.value = comment.id;
 
         let el_user = answerElement.querySelector("#comment-user");
