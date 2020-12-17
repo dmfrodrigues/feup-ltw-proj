@@ -9,8 +9,10 @@ Authentication\verifyCSRF_Token();
 require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 
+$user = User::fromDatabase($_GET['username']);
+
 if(isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername()) {
-    User::deleteFromDatabase($_SESSION['username']);
+    User::deleteFromDatabase($user->getUsername());
     session_destroy();
     header('Location: ' . PROTOCOL_API_URL);
     die();
