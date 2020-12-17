@@ -52,7 +52,7 @@
                         petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
                         username: newCommentForm.querySelector('input[name="username"]').value,
                         answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
-                        text    : newCommentForm.querySelector('input[name="text"]'    ).value,
+                        text    : newCommentForm.querySelector('textarea[name="text"]' ).value,
                         picture : tmpPhotoId
                     }
                 )
@@ -67,7 +67,7 @@
                     petId   : newCommentForm.querySelector('input[name="petId"]'   ).value,
                     username: newCommentForm.querySelector('input[name="username"]').value,
                     answerTo: newCommentForm.querySelector('input[name="answerTo"]').value,
-                    text    : newCommentForm.querySelector('input[name="text"]'    ).value,
+                    text    : newCommentForm.querySelector('textarea[name="text"]' ).value,
                     picture : null
                 }
             )

@@ -21,7 +21,7 @@
 </template>
 <script>
     function editComment_checkTextOrImage(comment){
-        let text = comment.querySelector('input[name="text"]');
+        let text = comment.querySelector('textarea[name="text"]');
         let file = comment.querySelector('input[name="picture"]');
         let deleteFile = comment.querySelector('input[name="deleteFile"]');
         let good = (text.value != '' || file.value != '' || deleteFile.value === '0');
@@ -50,7 +50,7 @@
         api.put(
             `comment/${id}`,
             {
-                text: editCommentForm.querySelector('input[name="text"]').value,
+                text: editCommentForm.querySelector('textarea[name="text"]').value,
             }
         )
         .then(function (response){
