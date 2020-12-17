@@ -1,7 +1,7 @@
 <template id="newComment">
 <form class="answer" enctype="multipart/form-data" method="put">
     <input name="petId" type="hidden" value="<?= $pet->getId() ?>">
-    <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
+    <input name="username" type="hidden" value="<?= $user->getUsername() ?>">
     <input name="answerTo" type="hidden">
     <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <?php 
