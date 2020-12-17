@@ -42,7 +42,7 @@ INSERT INTO Pet
 (   'Haley'    ,   'Dog',   5, 'M',  'L',  'Gray',    'Porto', 'Another very cute puppy.', 'forAdoption', 'dmfr'        ),
 (   'Raven'    , 'Snake',   6, 'M',  'S', 'Brown',     'Gaia', 'Just a white puppy.'     , 'forAdoption', 'BrenoAccioly'),
 (   'Bolt'    ,    'Dog',   3, 'F',  'S', 'White',    'Minho', 'Very cute dog.'          , 'forAdoption', '2dukes'      ),
-('Ratatouille' , 'Mouse',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'forAdoption', 'TiagooGomess'),
+('Ratatouille' , 'Mouse',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'adopted'    , 'TiagooGomess'),
 ('Princesa'    ,   'Cat',   5, 'M', 'XS',  'Gray',   'Olaias', 'Another very cute cat.'  , 'forAdoption', 'dmfr'        ),
 (   'Oscar'    ,  'Lion',   1, 'M',  'S', 'White',     'Gaia', 'Just a white cat.'       , 'forAdoption', 'dmfr'        );
 
@@ -71,7 +71,9 @@ INSERT INTO FavoritePet(username, petId) VALUES
 
 
 INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
-('I want to adopt your pet!', 'pending' , 3, '2dukes'       , '2020-12-17 19:51:55'),
-('I want to adopt your pet!', 'pending' , 3, 'TiagooGomess' , '2020-12-17 19:51:55'),
-('I want to adopt your pet!', 'pending' , 3, 'BrenoAccioly' , '2020-12-17 19:51:55'),
-('I want to adopt your pet!', 'accepted', 4, '2dukes'       , '2020-12-17 19:51:55');
+('I want to adopt your pet!', 'pending' , 3 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'pending' , 3 , 'TiagooGomess' , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'pending' , 3 , 'BrenoAccioly' , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 10, 'dmfr'         , '2020-12-17 19:51:55');
