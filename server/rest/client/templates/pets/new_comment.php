@@ -21,7 +21,7 @@
         </div>
         <div id="comment-actions" class="actions">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
-            <input type="submit" id="comment-submit" value="Submit">
+            <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
 </form>

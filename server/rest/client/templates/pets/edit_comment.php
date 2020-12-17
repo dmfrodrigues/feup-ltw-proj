@@ -14,7 +14,7 @@
         <div id="comment-actions" class="actions">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
-            <input type="submit" id="comment-submit" value="Submit">
+            <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
 </form>
