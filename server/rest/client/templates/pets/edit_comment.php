@@ -1,7 +1,7 @@
 <template id="editComment">
 <form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" method="put">
     <input id="commentId" name="commentId" type="hidden">
-    <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
+    <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input name="deleteFile" type="hidden" value="0">
     <article class="comment">
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
@@ -12,7 +12,7 @@
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()" title="Add picture">
+            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
             <input type="submit" id="comment-submit" value="Submit">
         </div>
@@ -22,7 +22,7 @@
 <script>
     function editComment_checkTextOrImage(comment){
         let text = comment.querySelector('#comment-text');
-        let file = comment.querySelector('#comment-picture-input');
+        let file = comment.querySelector('input[name="picture"]');
         let deleteFile = comment.querySelector('input[name="deleteFile"]');
         let good = (text.value != '' || file.value != '' || deleteFile.value === '0');
         if(!good) alert("Edited comment must have at least text or an image.");
@@ -40,7 +40,7 @@
         let id_split = editCommentForm.id.split('-');
         let id = id_split[id_split.length-1];
 
-        let files = editCommentForm.querySelector('#comment-picture-input').files;
+        let files = editCommentForm.querySelector('input[name="picture"]').files;
         let picture = (files.length <= 0 ? null : files[0]);
         let deleteFile = (
             editCommentForm.querySelector('input[name="deleteFile"]').value === "1" &&

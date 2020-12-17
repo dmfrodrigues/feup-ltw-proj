@@ -3,7 +3,7 @@
     <input name="petId" type="hidden" value="<?= $pet->getId() ?>">
     <input id="comment-username" name="username" type="hidden" value="<?= $user->getUsername() ?>">
     <input name="answerTo" type="hidden">
-    <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
+    <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <?php 
     $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
     $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
@@ -20,7 +20,7 @@
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector('#comment-picture-input').click()" title="Add picture">
+            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
             <input type="submit" id="comment-submit" value="Submit">
         </div>
     </article>
@@ -29,14 +29,14 @@
 <script>
     function newComment_checkTextOrImage(newCommentForm){
         let text = newCommentForm.querySelector('#comment-text');
-        let file = newCommentForm.querySelector('#comment-picture-input');
+        let file = newCommentForm.querySelector('input[name="picture"]');
         let good = (text.value != '' || file.value != '');
         if(!good) alert("New comment must have at least text or an image.");
         return good;
     }
 
     function newComment_submitForm(newCommentForm){
-        let files = newCommentForm.querySelector('#comment-picture-input').files;
+        let files = newCommentForm.querySelector('input[name="picture"]').files;
         let picture = (files.length <= 0 ? null : files[0]);
 
         if(picture !== null){
