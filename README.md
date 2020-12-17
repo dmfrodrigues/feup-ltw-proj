@@ -69,35 +69,35 @@ Username/password (role):
 ## Libraries
 - [Google font *Inter*](https://fonts.google.com/specimen/Inter)
 
-# Features:
- - Security
-     - XSS: yes
+## Features:
+- Security
+    - XSS: yes
         - Filtering and encoding inputs: yes
         - CSP: yes
-     - CSRF: yes
-     - SQL using prepare/execute: yes
-     - Passwords:
+    - CSRF: yes
+    - SQL using prepare/execute: yes
+    - Passwords:
         - bcrypt with salt algorithm: yes
         - at least 7 characters: yes
         - include at least 1 uppercase letter: yes
         - include at least 1 special character: yes
-     - Data Validation: regex, php, html, javascript, ajax
-     - Other:
+    - Data Validation: regex, php, html, javascript, ajax
+    - Other:
         - Regenerate session: yes
         - Usernames are case insensitive: yes
 
- - Technologies
-     - Separated logic/database/presentation: yes
-     - Semantic HTML tags: yes
-     - Responsive CSS: yes
-     - Javascript: yes
-     - Ajax: yes
-     - REST API: yes
-     - Other:
+- Technologies
+    - Separated logic/database/presentation: yes
+    - Semantic HTML tags: yes
+    - Responsive CSS: yes
+    - Javascript: yes
+    - Ajax: yes
+    - REST API: yes
+    - Other:
     
 - Usability:
-     - Error/success messages: yes
-     - Forms don't lose data on error: no
+    - Error/success messages: yes
+    - Forms don't lose data on error: no
 
 - Minimum requirements: yes
 
