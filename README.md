@@ -1,4 +1,20 @@
-# ltw-project-g22
+# Forever Home
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+- **Project name:** Forever Home
+- **Short description:** A website for posting and adopting pets
+- **Environment:** Unix
+- **Tools:** HTML/CSS, Javascript, PHP
+- **Institution:** [FEUP](https://sigarra.up.pt/feup/en/web_page.Inicial)
+- **Course:** [LTW](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459485) (Web Languages and Technologies)
+<!-- - **Project grade:** ??.?/20.0 -->
+- **Group members:**
+    - [Breno Accioly de Barros Pimentel](https://github.com/BrenoAccioly) (<up201800170@fe.up.pt>)
+    - [Diogo Miguel Ferreira Rodrigues](https://github.com/dmfrodrigues) (<up201806429@fe.up.pt>)
+    - [Rui Filipe Mendes Pinto](https://github.com/2dukes) (<up201806441@fe.up.pt>)
+    - [Tiago Gonçalves Gomes](https://github.com/TiagooGomess) (<up201806658@fe.up.pt>)
+
 
 ## Installing
 
@@ -37,6 +53,22 @@ Each deploy environment has a specific set of constants. Thus, for each environm
 
 To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from directory `server/`.
 
+## Credentials
+Username/password (role):
+
+- dmfr/dmfr (user)
+- BrenoAccioly/BrenoAccioly (user)
+- 2dukes/2dukes (user)
+- TiagooGomess/TiagooGomess (user)
+- Asdrubal007/Asdrubal007 (user)
+- balves/balves (user)
+- harold/harold (user)
+- Romanoff123/Romanoff123 (user)
+- AAOrg/AAOrg (shelter)
+
+## Libraries
+- [Google font *Inter*](https://fonts.google.com/specimen/Inter)
+
 ## Mockups
 #### Register
 ![Mockup](https://drive.google.com/uc?id=1LiE9tmwayZv44HtkqKMEm6Amxtdo9xo0)
@@ -69,3 +101,11 @@ Comment(<ins>id</ins>, pet→Pet, user→User, postedOn, text, answerTo→Commen
 CommentPhoto(<ins>id</ins>, commentId→Comment, url)  
 AdoptionRequest(<ins>id</ins>, user→User, pet→Pet, text, outcome)  
 AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)  
+
+# License
+
+© 2020 Breno Pimentel, Diogo Rodrigues, Rui Pinto, Tiago Gomes
+
+All files are licensed under [GNU General Public License v3](LICENSE) by **© 2020 Breno Pimentel, Diogo Rodrigues, Rui Pinto, Tiago Gomes**.
+
+The files not authored by us (if any) are presented as a fundamental complement to this project, and are made available under *fair use for education*.
