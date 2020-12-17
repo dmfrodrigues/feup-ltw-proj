@@ -21,6 +21,7 @@
         </div>
         <div id="comment-actions" class="actions">
             <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
+            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/cross.svg" onclick="newComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
             <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
@@ -33,6 +34,13 @@
         let good = (text.value != '' || file.value != '');
         if(!good) alert("New comment must have at least text or an image.");
         return good;
+    }
+
+    function newComment_removePicture(comment){
+        let inputFile = comment.querySelector('input[name="picture"]');
+        inputFile.value = "";
+        let img = comment.querySelector('#comment-picture');
+        img.src = "";
     }
 
     function newComment_submitForm(newCommentForm){
