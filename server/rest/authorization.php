@@ -122,6 +122,10 @@ namespace Authorization {
     // ======================================================== NOTIFICATION ========================================================
     Rules::add_rule(Resource::NOTIFICATION, Method::READ , function(?\User $user, ?\Notification $notification) : bool { return $notification->getUser()->getUsername() == $user->getUsername(); }); // User who received the notification
     Rules::add_rule(Resource::NOTIFICATION, Method::WRITE, function(?\User $user, ?\Notification $notification) : bool { return true; });
+
+    // ======================================================== SHELTER_INVITATION ========================================================
+    Rules::add_rule(Resource::SHELTER_INVITATION, Method::READ , function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return ($user->getUsername() == $shelterInvite->getShelter()->getUsername()) || ($user->getUsername() == $shelterInvite->getUser()->getUsername());}); // User who received the notification
+    Rules::add_rule(Resource::SHELTER_INVITATION, Method::WRITE, function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return $user->getUsername() == $shelterInvite->getShelter()->getUsername(); });
     
      function check(int $resourceType, int $method, ?\User $user, $resource): bool{
         if(isset(Rules::$rules[$resourceType])){
