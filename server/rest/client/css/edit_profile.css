@@ -75,8 +75,8 @@
 	justify-self: center;
 }
 
-#edit-profile #edit-profile-body textarea,
-#edit-profile #edit-profile-body input {
+#edit-profile #edit-profile-body form textarea,
+#edit-profile #edit-profile-body form input {
 	padding: 1em;
 	margin-bottom: 2.5em;
 	margin-top: 0.5em;
