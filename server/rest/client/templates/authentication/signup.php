@@ -33,7 +33,7 @@
         let name     = el.querySelector('#name'    ).value;
         if (username === "new") {
           let csrfToken = document.querySelector('meta[name=csrf-token]').content;
-          location.href = `<?= PROTOCOL_API_URL ?>/user/new?csrf=${csrfToken}failed=1&errorCode=6`;
+          location.href = `<?= PROTOCOL_API_URL ?>/user/new?csrf=${csrfToken}&failed=1&errorCode=6`;
           return false;
         } 
         api.put(
