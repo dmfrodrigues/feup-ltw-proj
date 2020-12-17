@@ -77,3 +77,7 @@ INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
 ('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
 ('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
 ('I want to adopt your pet!', 'accepted', 10, 'dmfr'         , '2020-12-17 19:51:55');
+
+
+INSERT INTO ShelterInvite(text, user, shelter, requestDate) VALUES
+
