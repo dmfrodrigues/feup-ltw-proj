@@ -8,7 +8,7 @@ require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
 
 $user_PUT = function(array $args): void{
-    $auth = Authentication\check();
+    $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::PROFILE,
         Authorization\Method  ::READ   ,
