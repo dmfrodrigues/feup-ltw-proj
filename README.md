@@ -81,7 +81,7 @@ Username/password (role):
         - at least 7 characters: yes
         - include at least 1 uppercase letter: yes
         - include at least 1 special character: yes
-    - Data Validation: regex, php, html, javascript, ajax
+    - Data Validation: regex, php, html, javascript
     - Other:
         - Regenerate session: yes
         - Usernames are case insensitive: yes
