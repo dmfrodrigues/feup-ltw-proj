@@ -1,4 +1,7 @@
 <?php
+
+use phpDocumentor\Reflection\Types\Resource_;
+
 session_start();
 
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
@@ -15,8 +18,14 @@ require_once API_DIR . '/comment/comment.php';
 require_once API_DIR . '/adoptionRequest/adoptionRequest.php';
 require_once API_DIR . '/notification/notification.php';
 
+$rest_GET = function(array $args) : void {
+    if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
+    require_once CLIENT_DIR.'/rest.php';
+};
+
 $tree = [
     null                        => new ResourceHandlers($root_GET            , null, null                 , null                    ),
+    'rest'                      => new ResourceHandlers($rest_GET            , null, null                 , null                    ),
     'login'                     => new ResourceHandlers($login_GET           , null, null                 , null                    ),
     'user' => [null             => new ResourceHandlers(null                 , null, $user_PUT            , null                    ),
         'new'                   => new ResourceHandlers($user_new_GET        , null, null                 , null                    ),
