@@ -18,6 +18,15 @@
 
 ## Installing
 
+### Build database
+
+To build the database, run
+```sh
+cd server
+./deploy-server.sh
+```
+It may be necessary to change the script's permissions.
+
 ### Routing
 
 The REST API component of the server sends requests to `server/rest/<path>` to `server/index.php` which are then routed to the correct functions. This is unlike what apache2 typically does: route the request to the corresponding file in the file system.
