@@ -275,6 +275,7 @@ class ShelterInvite implements JsonSerializable {
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'ShelterInvite');
         $stmt->execute();
         $shelterInvite = $stmt->fetch();
+        if ($shelterInvite == false) return null;
 
         return $shelterInvite;
     }
