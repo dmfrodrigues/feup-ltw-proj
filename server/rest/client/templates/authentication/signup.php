@@ -29,6 +29,7 @@
         if(el.querySelector('#shelterName') !== null) return true;
         let username = el.querySelector('#username').value;
         let password = el.querySelector('#pwd'     ).value;
+        let email    = el.querySelector('#email'   ).value;
         let name     = el.querySelector('#name'    ).value;
         if (username === "new") {
           location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
@@ -39,6 +40,7 @@
           {
             username: username,
             password: password,
+            email   : email,
             name    : name
           }
         )
