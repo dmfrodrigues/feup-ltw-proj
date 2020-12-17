@@ -416,10 +416,7 @@ function getShelterPendingInvitations(string $shelter) : array {
     global $db;
 
     $stmt = $db->prepare('SELECT
-        text,
-        user,
-        shelter,
-        requestDate
+        *
         FROM ShelterInvite
         WHERE shelter=:shelter
     ');

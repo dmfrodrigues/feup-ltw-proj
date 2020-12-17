@@ -51,7 +51,7 @@
         <input type="hidden" name="petOwnerLink" value="<?=$petOwnerLink ?>">
         <input type="hidden" name="petLink" value="<?=$petLink ?>">
         <section class="messages-column-body">
-            <h1 id="proposal-title">Proposal Chat</h1>
+            <h1 class="secondary-title">Proposal Chat</h1>
             <img id="proposal-pet-photo" alt="Pet photo" src="<?= getPetMainPhoto($adoptionRequest->getPet()) ?>">
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest->getUserId() ?>">
