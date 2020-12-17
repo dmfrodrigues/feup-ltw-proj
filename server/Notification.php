@@ -37,8 +37,7 @@ class Notification implements JsonSerializable {
     }
 
     public function setText (string $text) : void {
-        $newText = filter_var($text, FILTER_SANITIZE_STRING);
-        $this->text = $newText; 
+        $this->text = $text; 
     }
     
     public function setRead        (                     ) : void { $this->read         = 1            ; }
