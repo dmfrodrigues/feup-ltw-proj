@@ -227,6 +227,60 @@ function updateShelterInfo(string $lastUsername, string $newUsername, string $na
     return ($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0);
 }
 
+class ShelterInvite implements JsonSerializable {
+    private  string $text       ;
+    private  string $user       ;
+    private  string $shelter    ;
+    private  string $requestDate;
+
+    public function __construct(){}
+
+    public function getText       () : string   { return noHTML($this->text)                    ; }
+    public function getUser       () : ?User    { return User::fromDatabase($this->user)        ; }
+    public function getUserId     () : string   { return noHTML($this->user)                    ; }
+    public function getShelter    () : ?Shelter { return Shelter::fromDatabase($this->shelter)  ; }
+    public function getRequestDate() : string   { return noHTML($this->requestDate)             ; }
+    public function setText (string $text) : void {
+    $newText = filter_var($text, FILTER_SANITIZE_STRING);
+    $this->text = $newText;
+    }
+
+    public function setUser (string $user) : void {
+      $newUser = filter_var($user, FILTER_SANITIZE_STRING);
+      $this->user = $newUser; 
+    }
+
+    public function setShelter (string $shelter) : void {
+      $newShelter = filter_var($shelter, FILTER_SANITIZE_STRING);
+      $this->shelter = $newShelter; 
+    }
+
+    public function setRequestDate (string $requestDate) : void { $this->requestDate = $requestDate; }
+    
+    public function jsonSerialize() {
+		return get_object_vars($this);
+    }
+
+    static public function fromDatabase(string $user, string $shelter) : ?ShelterInvite {
+        global $db;
+
+        $stmt = $db->prepare('SELECT
+            *
+            FROM ShelterInvite
+            WHERE shelter=:shelter
+            AND user=:user
+        ');
+        $stmt->bindValue(':shelter', $shelter);
+        $stmt->bindValue(':user', $user);
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'ShelterInvite');
+        $stmt->execute();
+        $shelterInvite = $stmt->fetch();
+        if ($shelterInvite == false) return null;
+
+        return $shelterInvite;
+    }
+}
+
 /**
  * Add a Shelter invitation to a specific user
  *
@@ -471,3 +525,5 @@ function getAllShelters() : array {
     $stmt->execute();
     return $stmt->fetchAll();
 }
+
+

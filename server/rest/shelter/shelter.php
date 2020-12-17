@@ -43,15 +43,18 @@ $shelter_potential_GET = function(array $args): void {
 };
 
 $shelter_id_invitations_GET = function(array $args): void {
+    
+    $auth = Authentication\check(true);
+
     $shelterId = $args[1];
     $shelter = Shelter::fromDatabase($shelterId);
+    $invitation = ShelterInvite::fromDatabase($auth->getUsername(), $shelter->getUsername());
 
-    $auth = Authentication\check(true);
     Authorization\checkAndRespond(
-        Authorization\Resource::PROFILE,
+        Authorization\Resource::SHELTER_INVITATION,
         Authorization\Method::READ,
         $auth,
-        null
+        $invitation
     );
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
