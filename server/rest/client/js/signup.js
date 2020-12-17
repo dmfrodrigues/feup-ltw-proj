@@ -52,7 +52,7 @@ function generateUserForm(form) {
     let inputs = [
         {name: "Name", id_name: "name", placeholder: "Name", inputType: "text", required: true},
         {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true, pattern: '^[a-zA-Z0-9]+$'},
-        {name: "Email", id_name: "email", placeholder: "example@domain.org", inputType: "email", required: true, pattern: '^.+@.+\..+$'},
+        {name: "Email", id_name: "email", placeholder: "Email", inputType: "email", required: true, pattern: '^.+@.+\..+$'},
         {name: "Password", id_name: "pwd", placeholder: "Password", inputType: "password", required: false},
         {name: "Repeat Password", id_name: "rpt_pwd", placeholder: "Password", inputType: "password", required: true}
     ];
@@ -65,7 +65,7 @@ function generateShelterForm(form) {
         {name: "Description", id_name: "description", placeholder: "Small Description", inputType: "text", required: true},
         {name: "Location", id_name: "location", placeholder: "Location", inputType: "text", required: true},
         {name: "Username", id_name: "username", placeholder: "Username", inputType: "text", required: true, pattern: '^[a-zA-Z0-9]+$'},
-        {name: "Email", id_name: "email", placeholder: "example@domain.org", inputType: "email", required: true, pattern: '^.+@.+\..+$'},
+        {name: "Email", id_name: "email", placeholder: "Email", inputType: "email", required: true, pattern: '^.+@.+\..+$'},
         {name: "Password", id_name: "pwd", placeholder: "Password", inputType: "password", required: false},
         {name: "Repeat Password", id_name: "rpt_pwd", placeholder: "Password", inputType: "password", required: true}
     ];
