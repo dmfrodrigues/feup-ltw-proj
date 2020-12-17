@@ -49,6 +49,13 @@ div#proposal-info {
 	width: 20em;
 }
 
+div#proposal-info-box {
+	text-align: left;
+	display: inline-block;
+	vertical-align: top;
+	height: 95%;
+}
+
 div#proposal-info a{
 	text-decoration: none;
 	font-weight: bold;
