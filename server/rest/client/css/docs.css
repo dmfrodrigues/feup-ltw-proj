@@ -1,0 +1,46 @@
+#docs {
+	margin: 2em;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	align-self: center;
+}
+
+#docs table {
+    border-collapse: collapse;
+    table-layout: fixed ;
+    width: 100% ;
+}
+
+#docs table,
+#docs th,
+#docs td {
+    border: 1px solid gray;
+}
+
+#docs th {
+    background-color: var(--main-color-light);
+}
+
+#docs th,
+#docs td {
+    padding: 0.3em;
+}
+
+#docs th:first-of-type,
+#docs td:first-of-type {
+    white-space: nowrap;
+    width: 13em;
+}
+
+#docs .green {
+    background-color: #80FF80;
+}
+
+#docs .red {
+    background-color: #FF8080;
+}
+
+#docs .blue {
+    background-color: #8080FF;
+}

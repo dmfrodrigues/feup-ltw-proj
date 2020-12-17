@@ -4,12 +4,21 @@
  - Rui Pinto (201806441)
  - Tiago Gomes (201806658)
 
-# Credentials
- - dmfr / dmfr (user)
- - AAOrg / AAOrg (shelter)
+## Credentials
+Username/password (role):
 
-# Libraries:
- - none
+- dmfr/dmfr (user)
+- BrenoAccioly/BrenoAccioly (user)
+- 2dukes/2dukes (user)
+- TiagooGomess/TiagooGomess (user)
+- Asdrubal007/Asdrubal007 (user)
+- balves/balves (user)
+- harold/harold (user)
+- Romanoff123/Romanoff123 (user)
+- AAOrg/AAOrg (shelter)
+
+## Libraries
+- [Google font *Inter*](https://fonts.google.com/specimen/Inter)
 
 # Features:
  - Security
@@ -44,11 +53,11 @@
 - Minimum requirements: yes
 
 - Extra requirements:
-    - Pet comment section
-    -  
-    - Animal shelters should also be able to register as users
+    - Pet comment section.
+    - Private chat between users regarding pet adopted proposals.
+    - Animal shelters are also able to register as users.
     - Shelters have a dedicated page with all pets available for adoption.
     - Users can be collaborators of a certain shelter and have permission to edit information about the shelter and any pets for adoption.
-    - Users that adopt a pet should be able to still post photos of that animal after the adoption.
+    - Users that adopt a pet are able to still post photos of that animal after the adoption.
     - Users should receive a notification anytime something important happens.
     - Develop a REST API.

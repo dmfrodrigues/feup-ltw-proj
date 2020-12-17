@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="csrf-token" content="<?=$CSRFtoken?>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/docs.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/main.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/button.css">
         <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/authenticate.css">
