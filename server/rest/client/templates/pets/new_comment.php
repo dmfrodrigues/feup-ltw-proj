@@ -15,7 +15,7 @@
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
         <div id="comment-content">
-            <textarea id="comment-text" class="comment-text" name="text" placeholder="Write a comment..." rows="1"
+            <textarea class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <img id="comment-picture" class="comment-picture" src="">
         </div>
@@ -28,7 +28,7 @@
 </template>
 <script>
     function newComment_checkTextOrImage(newCommentForm){
-        let text = newCommentForm.querySelector('#comment-text');
+        let text = newCommentForm.querySelector('textarea[name="text"]');
         let file = newCommentForm.querySelector('input[name="picture"]');
         let good = (text.value != '' || file.value != '');
         if(!good) alert("New comment must have at least text or an image.");
