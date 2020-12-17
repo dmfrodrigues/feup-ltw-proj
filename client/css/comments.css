@@ -23,6 +23,9 @@
 #comments article.comment > #comment-content {
 	grid-area: 2 / 2 / span 2 / span 2;
 }
+#comments article.comment > #comment-content.noedit {
+	grid-area: 2 / 2 / span 2 / span 3;
+}
 #comments article.comment > .actions {
 	grid-area: 2 / 4;
 }
