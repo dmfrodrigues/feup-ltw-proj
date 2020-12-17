@@ -10,7 +10,7 @@
                         </a>
                     </div>
                 <?php } ?>
-            <div id="proposal-info">
+            <div id="proposal-info-box">
                 <?php if($isMyPetProposal) { ?>
                     <p><?=$request->getUserId()?> on <?=$request->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
                 <?php } else { ?>
