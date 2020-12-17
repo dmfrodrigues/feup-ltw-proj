@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '/server_constants.php';
+define('API_DIR', SERVER_DIR.'/rest');
 define('API_URL', SERVER_URL.'/rest');
+
+define('CLIENT_DIR', API_DIR.'/client');
 
 /**
  * Get protocol.
