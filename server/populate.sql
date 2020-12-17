@@ -80,4 +80,6 @@ INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
 
 
 INSERT INTO ShelterInvite(text, user, shelter, requestDate) VALUES
+('Please join us!', 'dmfr', 'AAOrg', '2020-12-17 19:51:55'),
+('Please join us!', 'dmfr',  'WFFA', '2020-12-17 19:51:55');
 
