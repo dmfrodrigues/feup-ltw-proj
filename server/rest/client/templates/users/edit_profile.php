@@ -81,7 +81,6 @@ function editProfile(User $user): void {
 
         if(picture != null){
             api.put("user/<?= $user->getUsername() ?>/photo", picture)
-            .then((response) => response.json())
             .then(function(response){
                 window.location.reload(true);
             });
