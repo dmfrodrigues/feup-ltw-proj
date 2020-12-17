@@ -2,7 +2,7 @@
 <form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" method="put">
     <input id="commentId" name="commentId" type="hidden">
     <input id="comment-picture-input" name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
-    <input id="comment-deleteFile" name="deleteFile" type="hidden" value="0">
+    <input name="deleteFile" type="hidden" value="0">
     <article class="comment">
         <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
         <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
@@ -23,14 +23,14 @@
     function editComment_checkTextOrImage(comment){
         let text = comment.querySelector('#comment-text');
         let file = comment.querySelector('#comment-picture-input');
-        let deleteFile = comment.querySelector('#comment-deleteFile');
+        let deleteFile = comment.querySelector('input[name="deleteFile"]');
         let good = (text.value != '' || file.value != '' || deleteFile.value === '0');
         if(!good) alert("Edited comment must have at least text or an image.");
         return good;
     }
 
     function editComment_removePicture(comment){
-        let deleteFile = comment.querySelector('#comment-deleteFile');
+        let deleteFile = comment.querySelector('input[name="deleteFile"]');
         deleteFile.value = "1";
         let img = comment.querySelector('#comment-picture');
         img.src = "";
@@ -43,7 +43,7 @@
         let files = editCommentForm.querySelector('#comment-picture-input').files;
         let picture = (files.length <= 0 ? null : files[0]);
         let deleteFile = (
-            editCommentForm.querySelector('#comment-deleteFile').value === "1" &&
+            editCommentForm.querySelector('input[name="deleteFile"]').value === "1" &&
             picture === null
         );
 
