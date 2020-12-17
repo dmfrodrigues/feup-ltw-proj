@@ -21,6 +21,7 @@ $user_PUT = function(array $args): void{
     try{
         $user->setUsername($_PUT['username']);
         $user->setPassword($_PUT['password'], false);
+        $user->setEmail   ($_PUT['email']);
         $user->setName    ($_PUT['name'    ]);
     } catch(InvalidArgumentException $e){
         my_response_code(400);

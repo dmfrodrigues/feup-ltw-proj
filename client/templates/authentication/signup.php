@@ -10,6 +10,8 @@
       <input type="text" id="name" name="name" placeholder="Name" required></label>
       <label> Username:
       <input type="text" id="username" name="username" placeholder="Username" required pattern="^[a-zA-Z0-9]+$"></label>
+      <label> Email:
+      <input type="email" id="email" name="email" placeholder="example@domain.org" required pattern="^.+@.+\..+$"></label>
       <label> Password:
       <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
       <label> Repeat Password:
