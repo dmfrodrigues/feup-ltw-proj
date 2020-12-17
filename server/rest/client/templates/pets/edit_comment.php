@@ -1,6 +1,6 @@
 <template id="editComment">
 <form class="edit" enctype="multipart/form-data" onsubmit="return editComment_checkTextOrImage(this)" method="put">
-    <input id="commentId" name="commentId" type="hidden">
+    <input name="commentId" type="hidden">
     <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input name="deleteFile" type="hidden" value="0">
     <article class="comment">
