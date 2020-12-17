@@ -41,6 +41,5 @@ $javascript_files = [
 ];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
-require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/view_pet.php';
 require_once CLIENT_DIR.'/templates/common/footer.php';

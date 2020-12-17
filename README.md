@@ -69,31 +69,3 @@ Comment(<ins>id</ins>, pet→Pet, user→User, postedOn, text, answerTo→Commen
 CommentPhoto(<ins>id</ins>, commentId→Comment, url)  
 AdoptionRequest(<ins>id</ins>, user→User, pet→Pet, text, outcome)  
 AdoptionRequestMessage(<ins>id</ins>, request→AdoptionRequest, text)  
-
-## REST
-
-| Request              | GET                | POST               | PUT                | DELETE             |
-|----------------------|--------------------|--------------------|--------------------|--------------------|
-| `login`              | :heavy_check_mark: | :soon:             | :x:                | :soon:             |
-| `user`               | :x:                | :x:                | :heavy_check_mark: | :x:                |
-| `user/<id>`          | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| `user/<id>/photo`    | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| `pet`                | :soon:             | :x:                | :soon:             | :x:                |
-| `pet/<id>`           | :heavy_check_mark: | :soon:             | :soon:             | :heavy_check_mark: |
-| `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                | :x:                |
-| `comment/photo`      | :x:                | :x:                | :heavy_check_mark: | :x:                |
-| `comment/<id>`       | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-| `comment/<id>/photo` | :heavy_check_mark: | :x:                | :heavy_check_mark: | :heavy_check_mark: |
-
-| Request              | JSON               | HTML               | Redirect           |
-|----------------------|--------------------|--------------------|--------------------|
-| `user`               | :x:                | :x:                | :x:                |
-| `user/<id>`          | :heavy_check_mark: | :soon:             | :x:                |
-| `user/<id>/photo`    | :x:                | :x:                | :heavy_check_mark: |         
-| `pet`                | :soon:             |                    | :x:                |
-| `pet/<id>`           | :soon:             | :soon:             | :x:                |
-| `pet/<id>/comments`  | :heavy_check_mark: | :x:                | :x:                |
-| `comment/photo`      | :x:                | :x:                | :x:                |
-| `comment/<id>`       | :soon:             |                    | :x:                |
-| `comment/<id>/photo` | :x:                | :x:                | :heavy_check_mark: |
-
