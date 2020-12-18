@@ -11,7 +11,6 @@
             if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
                 <p id="simple-fail-msg">Sign In Failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
           <?php } ?>
-        <input type="hidden" name="csrf" value="<?=$token?>">
         <input type="submit" class="dark" value="Login" id="submit-login">
     </form>
     <a href="<?= PROTOCOL_API_URL ?>/passwordReset">Forgot Password?</a>

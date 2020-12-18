@@ -4,13 +4,12 @@
         <label>
             Username <input type="text" name="username" required>
         </label>
-        <input type="hidden" name="csrf" value="<?= $token ?>">
         <input type="submit" class="dark" value="Reset">
     </form>
     <p id="password-reset-notice" style="display: none;">A password reset email was sent</p>
 </section>
 <script>
-    onSubmit_reset(el){
+    function onSubmit_reset(el){
         let username = el.querySelector('input[name="username"]').value;
         api.put(
             'passwordReset',
@@ -24,6 +23,7 @@
         .catch(function (error){
             console.log(error);
         });
+        return false;
     }
 
 </script>
