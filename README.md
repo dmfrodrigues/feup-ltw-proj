@@ -62,6 +62,22 @@ Each deploy environment has a specific set of constants. Thus, for each environm
 
 To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from directory `server/`.
 
+### Email service
+To enable email service, you have to provide valid credentials in file `server/rest/email.cred`, following the template:
+```txt
+<email address>
+<password>
+```
+
+For instance:
+```txt
+foreverhomeorg@gmail.com
+password
+```
+
+The actual Gmail email we will use is <foreverhomeorg@gmail.com>.
+The corresponding password is to be kept secret, and as such only available on request to our team.
+
 ## Credentials
 Username/password (role):
 
