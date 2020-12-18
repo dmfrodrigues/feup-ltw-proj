@@ -9,7 +9,7 @@
                         ">
                     </a>
                 </div>
-            <div id="proposal-info">
+            <div id="proposal-info-box">
                 <?php if (!$isShelter) { ?>
                     <p><?= $shelter->getUsername() ?> on <?=$requestDate?></p>
                 <?php } else { ?>

@@ -93,8 +93,6 @@
     </section>
     <?php 
     
-    $shelter = getPetShelter($pet->getId());
-    
     $isAuthorized = Authorization\check(
         Authorization\Resource::PET,
         Authorization\Method::EDIT,

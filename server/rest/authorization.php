@@ -96,6 +96,7 @@ namespace Authorization {
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, the owner can edit it
         if ($user    == null) return false;
         if ($pet->getStatus() === "forAdoption") return $user == $pet->getAuthor();
+        return false;
     });
 
     // ======================================================== ADOPTION REQUEST ========================================================
