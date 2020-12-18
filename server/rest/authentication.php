@@ -32,6 +32,10 @@ namespace Authentication {
         return htmlentities($input, ENT_QUOTES | ENT_HTML5, $encoding);
     }
 
+    function yesHTML($input, $encoding = 'UTF-8'){
+        return html_entity_decode($input, ENT_QUOTES | ENT_HTML5, $encoding);
+    }
+
     /**
      * Generate CSP Header.
      * 

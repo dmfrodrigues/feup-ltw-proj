@@ -73,7 +73,7 @@ INSERT INTO FavoritePet(username, petId) VALUES
 ('TiagooGomess'   , 1);
 
 
-INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
+INSERT INTO AdoptionRequest(text, outcome, pet, user, messageDate) VALUES
 ('I want to adopt your pet!', 'pending' , 3 , '2dukes'       , '2020-12-17 19:51:55'),
 ('I want to adopt your pet!', 'pending' , 3 , 'TiagooGomess' , '2020-12-17 19:51:55'),
 ('I want to adopt your pet!', 'pending' , 3 , 'BrenoAccioly' , '2020-12-17 19:51:55'),

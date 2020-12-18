@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS AdoptionRequest;
 DROP TABLE IF EXISTS AdoptionRequestMessage;
 DROP TABLE IF EXISTS Comment;
 DROP TABLE IF EXISTS FavoritePet;
+DROP TABLE IF EXISTS PasswordResetToken;
 
 DROP TRIGGER IF EXISTS Comment_answerPet;
 DROP TRIGGER IF EXISTS Comment_answerTime;
