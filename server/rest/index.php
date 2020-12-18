@@ -28,7 +28,7 @@ $tree = [
     null                        => new ResourceHandlers($root_GET            , null, null                 , null                    ),
     'rest'                      => new ResourceHandlers($rest_GET            , null, null                 , null                    ),
     'login'                     => new ResourceHandlers($login_GET           , null, null                 , null                    ),
-    'passwordReset'             => new ResourceHandlers($passwordReset_GET   , null, null                 , null                    ),
+    'passwordReset'             => new ResourceHandlers($passwordReset_GET   , null, $passwordReset_PUT   , null                    ),
     'user' => [null             => new ResourceHandlers(null                 , null, $user_PUT            , null                    ),
         'new'                   => new ResourceHandlers($user_new_GET        , null, null                 , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers($user_id_GET         , null, $user_id_PUT         , $user_id_DELETE         ),

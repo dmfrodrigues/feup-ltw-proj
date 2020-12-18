@@ -52,18 +52,21 @@ class PasswordResetToken {
         $this->expires = date("Y-m-d H:i:s", time() + PasswordResetToken::$VALIDITY);
     }
 
-    static public function fromDatabase(string $username) : PasswordResetToken {
+    static public function fromDatabase(string $username) : ?PasswordResetToken {
         global $db;
         $stmt = $db->prepare('SELECT * FROM PasswordResetToken WHERE username=:username');
         $stmt->bindValue(':username', $username);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'PasswordResetToken');
         $stmt->execute();
         $reset = $stmt->fetch();
-        if($reset == false) throw new RuntimeException("No such password reset token");
+        if($reset == false) return null;
         return $reset;
     }
 
     public function addToDatabase() : void {
+        $oldReset = PasswordResetToken::fromDatabase($this->username);
+        if($oldReset !== null) $oldReset->deleteFromDatabase();
+        
         global $db;
         $stmt = $db->prepare('INSERT INTO PasswordResetToken(username, token, expires)
         VALUES (:username, :token, :expires)');
@@ -74,6 +77,14 @@ class PasswordResetToken {
         
         $newReset = PasswordResetToken::fromDatabase($this->username);
         $this->created = $newReset->created;
+    }
+
+    public function deleteFromDatabase() : void {
+        global $db;
+        $stmt = $db->prepare('DELETE FROM PasswordResetToken
+        WHERE username=:username');
+        $stmt->bindValue(':username', $this->username);
+        $stmt->execute();
     }
 
     static public function cleanOldEntries() : void {
