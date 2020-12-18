@@ -12,8 +12,8 @@ require SERVER_DIR.'/../PHPMailer/src/SMTP.php';
 /*
 $emailServer = new EmailServer_PHPMailer();
 $emailServer->setHost    ('smtp.gmail.com');
-$emailServer->setUsername('foreverhomeorg@gmail.com');
-$emailServer->setPassword('FoReVeRhOmE');
+$emailServer->setUsername('...');
+$emailServer->setPassword('...');
 $emailServer->setFrom    ('foreverhomeorg@gmail.com', 'Forever Home');
 
 $message = new EmailMessage();
