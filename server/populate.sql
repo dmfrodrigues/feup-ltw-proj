@@ -4,44 +4,87 @@
 PRAGMA foreign_keys=ON;
 PRAGMA encoding="UTF-8";
 
--- Shelter
-INSERT INTO Shelter(name, location, description) VALUES
-('AnimalAdoption', 'Lisbon', 'We take care of animals.');
-
 -- User
 INSERT INTO User
-(username      , password                                  , name             ) VALUES
-("dmfr"        , "eff14f9ad2f2ecaa8df1ebb50fc7113d2eac89cb", "Diogo Rodrigues"),
-("BrenoAccioly", "6ee278a3b837d564187ccb3ecc877057701eb7b2", "Breno Accioly"  ),
-("2dukes"      , "463e890d73f5d6d1f3b1268ee7e426933370f8cb", "Rui Pinto"      ),
-("TiagooGomess", "0d47223986b750aecf2607ee8f26c58f7fe31e3a", "Tiago Gomes"    ),
-("Asdrubal007" , "65417b70a1a7bd08a6189f4d309d90979cbe7b56", "Asdrubal"       ),
-("balves"      , "c00ab69a0a4826bb8f8fb5bdf68503f92183a9be", "Bernardo Alves" ),
-("harold"      , "b131867c5de6fc08a4ce1fc50393cad671c82bd5", "Harold"         ),
-("Romanoff123" , "013564dc05c22e397a30d38805fae295ef8cb4cc", "Romanoff"       );
+(username      , password                                                      , email                       , name                             ) VALUES
+("dmfr"        , "$2y$12$EoGlSpd.GFAjAfFdce4YwOXyJnYDuWgHHUQctTZSyGtVaOJlRvHXa", "dmfrodrigues2000@gmail.com", "Diogo Rodrigues"                ),
+("BrenoAccioly", "$2y$12$HhHbS9d5oBM4tBI7FAktkOSQ.wSEVNViUu87ol10ZUmqD1wn2vhFW", "a@b.c"                     , "Breno Accioly"                  ),
+("2dukes"      , "$2y$12$ECt9IhyVUdCo.puADzqPHO0Ej0mW2VwciSllvK3cUwrDljo8khSHu", "b@b.c"                     , "Rui Pinto"                      ),
+("TiagooGomess", "$2y$12$zk0AAfNkceZO/mWEuy1NyutU5G9tWwnZAee2S3BJvRcWqxK9APmC2", "c@b.c"                     , "Tiago Gomes"                    ),
+("Asdrubal007" , "$2y$12$OEXd2oJuhCXbbeR5PHoka.Ia34mWEFb57QZktugj4gvMVZ3kBVM9C", "d@b.c"                     , "Asdrubal"                       ),
+("balves"      , "$2y$12$cT/o/IB5m8b3qorTIMIJCO2NY6Kojx5qcUpSTsR0yD6rgRUpup6HS", "e@b.c"                     , "Bernardo Alves"                 ),
+("harold"      , "$2y$12$/4T.xjbm/zQL0/7dokZzbOW5X3zyi2I.1LvKVulki0U8.TDnUHMRe", "f@b.c"                     , "Harold"                         ),
+("Romanoff123" , "$2y$12$JnFOKQEtl4H2Z1uskJHijubPMLT.B7JRSrOfnIpoR9CZVamGYXPVm", "g@b.c"                     , "Romanoff"                       ),
+('AAOrg'       , "$2y$12$yEQM.B.ns.Ck3y6QANAnWe.xe99OR.Wj/G0QVdb8zVrLKWZvDfDYC", "h@b.c"                     , 'AnimalAdoption'                 ),
+('APA'         , "$2y$12$tZg0pfo16a82dBUv1iYaZOlGOsssnXULAESxp7/srmlv3QTar1LIC", "i@b.c"                     , 'Associação Protetora de Animais'),
+('SPA'         , "$2y$12$5B2Tz7oEF1hnbn/iwawJE.QktOot6yD180cjRc0WhVCfmnq/fz4MK", "j@b.c"                     , 'Sociedade Protetora de Animais' ),
+('WFFA'        , "$2y$12$rpy6I9Rx78Y6si/IbIEQguke5p2crE.DOUQvMyoOW.U3FzqoFTWK.", "k@b.c"                     , 'We Fight For Animals'           );
 
--- Notification
-INSERT INTO Notification
-    VALUES(NULL, 0, 'MyNotification', 'You received a notification.', 'Asdrubal007');
+-- Shelter
+INSERT INTO Shelter(username, location, description) VALUES
+('AAOrg', 'Lisbon' , 'We take care of animals.     '),
+('APA'  , 'Braga'  , 'We love animals!             '),
+('SPA'  , 'Lisbon' , 'Animals are everything to us!'),
+('WFFA' , 'Algarve', 'Among animals we stand.      ');
+
+UPDATE User SET shelter = 'AAOrg' WHERE username = 'dmfr';
+UPDATE User SET shelter = 'AAOrg' WHERE username = 'BrenoAccioly';
 
 -- Admin
-INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
+-- INSERT INTO Admin VALUES ("dmfr"), ("BrenoAccioly"), ("2dukes"), ("TiagooGomess");
 
 -- Pet
 INSERT INTO Pet
-(name      , species, age, sex, size, color  , location , description             , status       , postedBy      ) VALUES
-(   'Kitty',   'Cat',   3, 'F',  'S', 'White', 'Marvila', 'Very cute cat.'        , 'forAdoption', '2dukes'      ),
-(   'Kitty',   'Cat',   3, 'F',  'S', 'White', 'Marvila', 'Very cute cat.'        , 'forAdoption', 'TiagooGomess'),
-('Princesa',   'Cat',   5, 'M', 'XS',  'Gray',  'Olaias', 'Another very cute cat.', 'forAdoption', 'dmfr'        ),
-(   'Oscar',   'Cat',   6, 'M',  'S', 'White',    'Gaia', 'Just a white cat.'     , 'forAdoption', 'dmfr'        );
+(name          , species, age, sex, size, color  ,  location , description               , status       , postedBy      ) VALUES
+(   'Kitty'    ,   'Cat',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'forAdoption', '2dukes'      ),
+( 'Belinha'    ,   'Cat',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'forAdoption', 'TiagooGomess'),
+('Princesa'    ,   'Cat',   5, 'M', 'XS',  'Gray',   'Olaias', 'Another very cute cat.'  , 'forAdoption', 'dmfr'        ),
+(   'Oscar'    ,   'Cat',   1, 'M',  'S', 'White',     'Gaia', 'Just a white cat.'       , 'adopted'    , 'dmfr'        ),
+(    'Abby'    ,   'Dog',   2, 'F',  'L', 'White', 'Barcelos', 'Very cute puppy.'        , 'forAdoption', '2dukes'      ),
+(   'Flash'    ,   'Dog',   3, 'F', 'XL', 'Black',    'Braga', 'Very cute puppy.'        , 'forAdoption', 'TiagooGomess'),
+(   'Haley'    ,   'Dog',   5, 'M',  'L',  'Gray',    'Porto', 'Another very cute puppy.', 'forAdoption', 'dmfr'        ),
+(   'Raven'    , 'Snake',   6, 'M',  'S', 'Brown',     'Gaia', 'Just a white puppy.'     , 'forAdoption', 'BrenoAccioly'),
+(   'Bolt'    ,    'Dog',   3, 'F',  'S', 'White',    'Minho', 'Very cute dog.'          , 'forAdoption', '2dukes'      ),
+('Ratatouille' , 'Mouse',   3, 'F',  'S', 'White',  'Marvila', 'Very cute cat.'          , 'adopted'    , 'TiagooGomess'),
+('Princesa'    ,   'Cat',   5, 'M', 'XS',  'Gray',   'Olaias', 'Another very cute cat.'  , 'forAdoption', 'dmfr'        ),
+(   'Oscar'    ,  'Lion',   1, 'M',  'S', 'White',     'Gaia', 'Just a white cat.'       , 'forAdoption', 'dmfr'        );
 
 
 -- Comment
 INSERT INTO Comment(id, pet, user, text, answerTo) VALUES
-(1, 1, 'Asdrubal007', 'A simple comment.', NULL),
-(2, 1, 'dmfr'       , 'Hello!'           , NULL),
-(3, 1, 'Asdrubal007', 'Another simple comment.', 1);
+(1, 1, 'Asdrubal007'   , 'A simple comment.'        , NULL),
+(2, 1, 'dmfr'          , 'Hello!'                   , NULL),
+(3, 1, 'Asdrubal007'   , 'Another simple comment.'  , 1   ),
+(4, 2, 'TiagooGomess'  , 'A simple comment.'        , NULL),
+(5, 3, '2dukes'        , 'Hello!'                   , NULL),
+(6, 4, 'Asdrubal007'   , 'A simple comment.'        , NULL),
+(7, 5, 'dmfr'          , 'Hello!'                   , NULL),
+(8, 5, 'Asdrubal007'   , 'A simple comment.'        , 7   ),
+(9, 6, 'dmfr'          , 'Hello!'                   , NULL);
 
 -- FavoritePet
 INSERT INTO FavoritePet(username, petId) VALUES
-('Romanoff123', 1);
+('Romanoff123'    , 1),
+('dmfr'           , 1),
+('dmfr'           , 8),
+('dmfr'           , 9),
+('dmfr'           , 10),
+('2dukes'         , 2),
+('TiagooGomess'   , 1);
+
+
+INSERT INTO AdoptionRequest(text, outcome, pet, user, requestDate) VALUES
+('I want to adopt your pet!', 'pending' , 3 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'pending' , 3 , 'TiagooGomess' , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'pending' , 3 , 'BrenoAccioly' , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 4 , '2dukes'       , '2020-12-17 19:51:55'),
+('I want to adopt your pet!', 'accepted', 10, 'dmfr'         , '2020-12-17 19:51:55');
+
+
+INSERT INTO ShelterInvite(text, user, shelter, requestDate) VALUES
+('Please join us!', 'dmfr', 'AAOrg', '2020-12-17 19:51:55'),
+('Please join us!', 'dmfr',  'WFFA', '2020-12-17 19:51:55');
+
+
+

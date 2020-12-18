@@ -5,43 +5,58 @@ class NoFileSentException extends RuntimeException{}
 /**
  * Check things about image file.
  *
- * @param array $file       File
+ * @param string $filePath  File path
  * @param integer $size     Maximum file size, in bytes
  * @return string           File extension
  */
-function checkImageFile(array $file, int $size) : string {
+function checkImageFile(?string $filePath, int $maxFileSize) : string {
     // Undefined | Multiple Files | $_FILES Corruption Attack
     // If this request falls under any of them, treat it invalid.
-    if (
-        !isset($file['error']) ||
-        is_array($file['error'])
-    ) {
-        throw new RuntimeException('Invalid parameters.');
-    }
+    
+    if($filePath == null)
+        throw new NoFileSentException("No file sent.");
 
-    // Check $file['error'] value.
-    switch ($file['error']) {
-        case UPLOAD_ERR_OK:
-            break;
-        case UPLOAD_ERR_NO_FILE:
-            throw new NoFileSentException('No file sent.');
-        case UPLOAD_ERR_INI_SIZE:
-        case UPLOAD_ERR_FORM_SIZE:
-            throw new RuntimeException('Exceeded filesize limit.');
-        default:
-            throw new RuntimeException('Unknown errors.');
-    }
-
-    // You should also check filesize here.
-    if ($file['size'] > $size) {
-        throw new RuntimeException('Exceeded filesize limit 1MB.');
+    // Check file size
+    $fileSize = filesize($filePath);
+    if ($fileSize > $maxFileSize) {
+        throw new RuntimeException("Exceeded filesize limit {$maxFileSize}B.");
     }
 
     // DO NOT TRUST $file['mime'] VALUE !!
     // Check MIME Type by yourself.
     $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($filePath);
     if (false === $ext = array_search(
-        $finfo->file($file['tmp_name']),
+        $mime,
+        array(
+            'jpg' => 'image/jpeg',
+            'png' => 'image/png',
+            'gif' => 'image/gif',
+        ),
+        true
+    )) {
+        throw new RuntimeException("Invalid file format (mime={$mime}).");
+    }
+
+    return $ext;
+}
+
+/**
+ * Check things about image file added or edited in edit page.
+ *
+ * @param array $file       File
+ * @param integer $size     Maximum file size, in bytes
+ * @return string           File extension
+ */
+function checkEditImageFile(array $file, int $size) : string {
+    // Undefined | Multiple Files | $_FILES Corruption Attack
+    // If this request falls under any of them, treat it invalid.
+    
+    // DO NOT TRUST $file['mime'] VALUE !!
+    // Check MIME Type by yourself.
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    if (false === $ext = array_search(
+        $finfo->file($file['new']),
         array(
             'jpg' => 'image/jpeg',
             'png' => 'image/png',

@@ -1,16 +1,20 @@
 <?php
+
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/pets.php';
-include_once SERVER_DIR.'/users.php';
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR.'/Pet.php';
+require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/Shelter.php';
 
 $petId = $_GET['id'];
 
 if (isset($_SESSION['username'])){
     withdrawAdoptionRequest($_SESSION['username'], $petId);
-    header("Location: " . CLIENT_URL . "/pet.php?id=$petId");
+    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }
 
 die();

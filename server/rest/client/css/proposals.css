@@ -1,0 +1,208 @@
+div#proposal {
+    background-color: var(--disable-color);
+    width: auto;
+    height: 15em;
+    text-align: center;
+	position: relative;
+	margin-top: 1em;
+}
+
+div#proposal-msg {
+	width: auto;
+	display: block;
+    background-color: var(--disable-color);
+    height: 9em;
+    text-align: center;	
+	position: relative;
+	margin-top: 1em;
+}
+
+h3 {
+	display: block;
+}
+
+#proposal-pic {
+	border-radius: 100%;
+	width: 3em;
+	height: 3em;
+}
+
+#proposal-text {
+	width: 15em;
+	height: 5em;
+	background-color: red;
+	vertical-align: top;
+	margin: auto;
+}
+
+#proposal-header {
+	display: inline-block;
+	height: 3em;
+	width: 4em;
+}
+
+div#proposal-info {
+	text-align: left;
+	display: inline-block;
+	vertical-align: top;
+	height: 95%;
+	width: 20em;
+}
+
+div#proposal-info-box {
+	text-align: left;
+	display: inline-block;
+	vertical-align: top;
+	height: 95%;
+}
+
+div#proposal-info a{
+	text-decoration: none;
+	font-weight: bold;
+	color: var(--main-color);
+}
+
+div#proposal-info a:hover{
+	color: white;
+}
+
+div#proposal-message,
+div#proposal-message-submit {
+	border-radius: 2%;
+}
+
+div#proposal-message-submit {
+	height: auto;
+	display: block;
+}
+
+div#proposal-message textarea, div#proposal-message-submit textarea {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #888; 
+    background-color: white;
+    border-radius: 1em;
+    border: 0px;
+	resize: none;
+	padding: 1em;
+	margin-right: 0em;
+}
+
+div#proposal-message textarea:focus,
+div#proposal-message-submit textarea:focus {
+	outline: none;
+}
+
+a#proposal-pet {
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#proposal button {
+	margin: 3em 1em;
+	width: 13em;
+	height: 2.5em;
+	border-radius: 1em;
+	border: 0px;
+	color: black;
+	transition-duration: 0.3s;
+	display: inline-block;
+
+}
+
+button#acceptRequest {
+	background-color: lightgreen;
+}
+
+button#acceptRequest:hover {
+	background-color: green;
+	color: white;
+}
+
+button#refuseRequest,
+button#cancelRequest {
+	background-color: #ff726f;
+}
+
+button#refuseRequest:hover,
+button#cancelRequest:hover {
+	background-color: #f70d1a;
+	color: white;
+}
+
+button#answerRequest {
+	background-color: var(--main-color);
+}
+
+button#answerRequest:hover {
+	background-color: orange;
+	color: white;
+}
+
+button#submitAnswer {
+	width: 7em;
+	vertical-align: top;
+}
+
+#adoption-request,
+#collaboration-proposal {
+	max-width: 1200px;
+	margin: 2em auto;
+	padding: 3em 5em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	grid-area: 2 / 1 / span 1 / span 1;
+}
+
+#proposal-request,
+#collaboration-proposal-body {
+    display: body;
+}
+
+#proposal-request textarea,
+#collaboration-proposal-body textarea{
+    padding: 0.5em;
+    width: 100%;
+    border: none;
+	outline: none;
+	resize: none;
+	border-radius: 5px;
+}
+
+#collaboration-proposal-submit,
+#add-proposal-submit {
+	cursor: pointer;
+	border: 0;
+	color: white;
+	background-color: var(--main-color);
+	padding: 0.5em 1em 0.5em 1em;
+}
+
+#collaboration-proposal-submit:hover,
+#add-proposal-submit:hover {
+	color: var(--main-color);
+	background-color: white;
+}
+
+#proposal-messages-refresh {
+	display: inline-block;
+}
+
+section#proposal-container {
+	margin: 2em 1em 2em 1em;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	text-align: center;
+}
+
+#proposal-pet-photo{
+	object-fit: cover;
+	object-position: center;
+	display: block;
+	margin: auto;
+	margin-bottom: 3em;
+	height: 15em;
+	width: 15em;
+	border-radius: 50%;
+}

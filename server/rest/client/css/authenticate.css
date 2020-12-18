@@ -1,0 +1,97 @@
+#login,
+#signup {
+	margin: 2em auto 2em auto;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	width: 25em;
+	grid-area: 2 / 1 / span 1 / span 1;
+	align-self: center;
+	text-align: center;
+}
+
+#login,
+#signup {
+  animation: authenticate-scale 1s;
+}
+@keyframes authenticate-scale {
+    0% {
+		transform: scale(2.0) translateY(8em);
+		opacity: 0.0;
+    }
+    100% {
+		transform: scale(1.0);
+		opacity: 1;
+    }
+}
+
+#login header,
+#signup header {
+	display: block;
+	margin: 1em;
+	border-bottom: solid 0.25em;
+	color: var(--main-color);
+}
+
+#login form label {
+	display: block;
+}
+#signup form label {
+	display: block;
+	text-align: right;
+}
+
+#signup form label[for='shelter_check'] {
+	display: block;
+	text-align: center;
+}
+
+#login input[type='text'] , #login input[type='password'] , #login input[type='email'] ,
+#signup input[type='text'], #signup input[type='password'], #signup input[type='email'] {
+	margin: 1em;
+	border: 0;
+	background-color: var(--bg-color);
+}
+
+#login input[type='submit'],
+#login input[type='submit'] {
+	margin: 1em;
+}
+
+#login a {
+	margin-top: 1em;
+	color: var(--main-color);
+	text-decoration: none;
+}
+
+#login footer {
+	margin: 1em;
+	border-top: solid 0.25em;
+	color: var(--main-color);
+}
+
+#login footer p {
+	color: black;
+}
+
+#signup button#signup-shelter-button,
+#signup button#signup-user-button {
+	background-color: var(--main-color-light);
+	border-radius: 0px;	
+	width: 12em;
+}
+
+#signup button#signup-user-button {
+	background-color: var(--main-color);
+}
+
+#signup button#signup-shelter-button:hover,
+#signup button#signup-user-button:hover {
+	transition: 0.25;
+	background-color: var(--main-color);
+}
+
+#simple-fail-msg {
+	color: red;
+	font-weight: bolder;
+}

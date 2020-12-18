@@ -1,0 +1,70 @@
+button,
+input[type='submit'] {
+	height: 2.5em;
+	border-radius: 1em;
+	border: 0px;
+	padding: 0.5em 1em;
+	color: var(--main-color);
+	background-color: white;
+	transition: color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+button:hover,
+input[type='submit']:hover {
+	background-color: var(--main-color);
+	color: white;
+}
+
+button.dark,
+input.dark[type='submit'] {
+	height: 2.5em;
+	border-radius: 1em;
+	border: 0px;
+	padding: 0.5em 1em;
+	color: white;
+	background-color: var(--main-color);
+    transition-duration: 0.3s;
+    cursor: pointer;
+}
+
+button.dark:hover,
+input.dark[type='submit']:hover {
+	background-color: var(--main-color-light);
+	color: white;
+}
+
+button.image,
+input.image[type='submit'] {
+	width: 2.5em;
+	height: 2.5em;
+	padding: 0;
+	border-radius: auto;
+	border: auto;
+	padding: auto;
+	color: transparent;
+	background-color: transparent;
+	transition: filter 0.3s;
+}
+
+button.image:hover,
+input.image[type='submit']:hover {
+	background-color: transparent;
+	color: transparent;
+	filter: brightness(130%) saturate(100%);
+}
+
+button.rotating,
+input.rotating[type='submit'] {
+	animation: rotation 1.5s infinite linear;
+	filter: none !important;
+}
+
+@keyframes rotation {
+	from {
+	  	transform: rotate(0deg);
+	}
+	to {
+	  	transform: rotate(359deg);
+	}
+}

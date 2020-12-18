@@ -1,18 +1,22 @@
 <?php
+
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/users.php';
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR.'/User.php';
+require_once SERVER_DIR.'/Shelter.php';
 
-if($_GET['username'] != $_SESSION['username']){
-    header("Location: " . CLIENT_URL . "/profile.php?username={$_SESSION['username']}");
+if($user->getUsername() != $_SESSION['username']){
+    header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}");
 }
 
 try{
-    eraseUserPicture($_GET['username']);
+    deleteUserPhoto($user->getUsername());
 
-    header("Location: " . CLIENT_URL . "/profile.php?username={$_GET['username']}");
+    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
 } catch(CouldNotDeleteFileException $e){
     echo "Could not delete file";
     header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);

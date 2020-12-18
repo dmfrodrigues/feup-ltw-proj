@@ -1,15 +1,23 @@
 <?php
+
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR.'/connection.php';
-include_once SERVER_DIR.'/pets.php';
-$comment = getPetComment($_POST['id']);
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR.'/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR.'/Pet.php';
 
-if (isset($_SESSION['username']) && $_SESSION['username'] === $comment['user']){
-    deletePetComment($_POST['id']);
+$comment = Comment::fromDatabase(intval($_POST['id']));
+
+if($comment == null){ my_response_code(400); die(); }
+if (isset($_SESSION['username']) && $_SESSION['username'] === $comment->getUserId()){
+    try {
+        deletePetComment($_POST['id']);
+    }
+    catch(Exception $e) { }
 }
 
-header("Location: {$_SERVER['HTTP_REFERER']}");
+header("Location: ". $_SERVER['HTTP_REFERER']);
 
 die();

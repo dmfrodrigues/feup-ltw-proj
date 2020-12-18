@@ -21,42 +21,59 @@ DROP TRIGGER IF EXISTS Comment_answerTime;
 PRAGMA foreign_keys=ON;
 
 CREATE TABLE Shelter (
-    id INTEGER,
-    name        VARCHAR NOT NULL CHECK(name         <> ''),
+    username    VARCHAR NOT NULL CHECK(username <> ''),
     location    VARCHAR NOT NULL CHECK(location     <> ''),
     description VARCHAR NOT NULL CHECK(description  <> ''),
-    registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT Shelter_PK PRIMARY KEY(id)
+    CONSTRAINT Shelter_PK PRIMARY KEY(username),
+    CONSTRAINT Shelter_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE ShelterInvite (
+    text    VARCHAR NOT NULL CHECK(text <> ''),
+    user    VARCHAR NOT NULL, -- Response User
+    shelter VARCHAR NOT NULL CHECK(shelter <> ''),
+    requestDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT AdoptionRequest_PK PRIMARY KEY(user, shelter),
+    CONSTRAINT AdoptionRequest_FK1 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT AdoptionRequest_FK2 FOREIGN KEY(shelter) REFERENCES Shelter ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE User (
-    username    VARCHAR NOT NULL CHECK(username <> ''),
-    password    VARCHAR NOT NULL,
-    name        VARCHAR NOT NULL CHECK(name     <> ''),
+    username     VARCHAR NOT NULL CHECK(username <> ''),
+    password     VARCHAR NOT NULL,
+    email        VARCHAR NOT NULL CHECK(email LIKE "%@%.%"),
+    name         VARCHAR NOT NULL CHECK(name     <> ''),
     registeredOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    shelter INTEGER,
+    shelter      VARCHAR,
 
     CONSTRAINT User_PK PRIMARY KEY(username),
     CONSTRAINT User_FK FOREIGN KEY (shelter) REFERENCES Shelter ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE TABLE Admin (
-    username VARCHAR,
-
-    CONSTRAINT Admin_PK PRIMARY KEY(username),
-    CONSTRAINT Admin_FK FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE Notification (
-    id          INTEGER,
+    id          INTEGER NOT NULL,
     read        INTEGER NOT NULL DEFAULT 0,
     subject     VARCHAR NOT NULL,
-    text        VARCHAR,
+    text        VARCHAR NOT NULL CHECK (text <> ''),
     user        VARCHAR NOT NULL,
 
     CONSTRAINT Notification_PK PRIMARY KEY(id),
-    CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT Notification_FK FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT subjectRule CHECK (subject LIKE 'adoptionProposalOutcome' OR
+                                  subject LIKE 'newPetAdoptionProposal' OR
+                                  subject LIKE 'newMessage' OR
+                                  subject LIKE 'favoriteAdopted' OR
+                                  subject LIKE 'proposedPetAdopted' OR
+                                  subject LIKE 'shelterInvitation' OR
+                                  subject LIKE 'userLeftShelter' OR
+                                  subject LIKE 'invitationOutcome' OR
+                                  subject LIKE 'associatedPetAdopted' OR
+                                  subject LIKE 'myPetFavoritesChanges' OR
+                                  subject LIKE 'newPetComment' OR
+                                  subject LIKE 'favoriteEdited')
 );
 
 CREATE TABLE Pet (
@@ -106,10 +123,12 @@ CREATE TABLE AdoptionRequestMessage (
     id      INTEGER NOT NULL,
     text    VARCHAR NOT NULL CHECK(text <> ''),
     request INTEGER NOT NULL,
-    messageDate DATE CHECK(messageDate IS strftime('%Y-%m-%d', messageDate)), -- Check date format
+    messageDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user VARCHAR NOT NULL,
 
     CONSTRAINT AdoptionRequestMessage_PK PRIMARY KEY(id),
-    CONSTRAINT AdoptionRequestMessage_FK FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT AdoptionRequestMessage_FK1 FOREIGN KEY(request) REFERENCES AdoptionRequest ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT AdoptionRequestMessage_FK2 FOREIGN KEY(user) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Comment (

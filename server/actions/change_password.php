@@ -1,22 +1,26 @@
 <?php
+
 session_start();
 
-include_once __DIR__ . '/../server.php';
-include_once SERVER_DIR . '/connection.php';
-include_once SERVER_DIR . '/users.php';
-$user = getUser($_GET['username']);
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR . '/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR . '/User.php';
+require_once SERVER_DIR . '/Shelter.php';
 
-if (isset($_SESSION['username'])){
-    if($_SESSION['username'] != $user["username"]){
-        header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
-        die();
-    }
+$user = User::fromDatabase($_GET['username']);
 
-    editUserPassword(
-        $user["username"],
-        $_POST['pwd']
-    );
-    header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username']);
+if (isset($_SESSION['username'])) {
+    try {
+        editUserPassword(
+            $user->getUsername(),
+            $_POST['pwd']
+        );
+        header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername());
+        exit();
+    } catch(Exception $e) {
+    header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
 }
-
-die();
+    
+} else { my_response_code(403); die(); }

@@ -1,0 +1,237 @@
+#edit-profile {
+	margin: 3em auto 2em auto;
+	padding: 1em 0em 1em 3em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	align-self: center;
+	text-align: center;
+	max-width: 60em;
+}
+
+#edit-profile #edit-profile-body {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-areas:
+		"profile-photo username"
+		"profile-photo name"
+		"profile-photo password"
+		"profile-photo submit"
+		"delete-user .";
+}
+
+#edit-profile #edit-profile-body #profile-photo #photo {
+	position: relative;
+}
+
+#edit-profile #edit-profile-body #profile-photo {
+	width: 300px;
+	grid-area: profile-photo;
+}
+
+#edit-profile #edit-profile-body #profile-photo img {
+	display: inline;
+	width: 300px;
+	height: 300px;
+}
+
+#edit-profile #edit-profile-body #profile-photo details {
+	position: absolute;
+	left: 222px;
+	top: 263px;
+}
+
+#edit-profile #edit-profile-body #profile-photo details summary {
+	list-style: none;
+}
+
+#edit-profile #profile-photo details summary::-webkit-details-marker {
+	display: none;
+}
+
+#edit-profile #edit-profile-body #profile-photo div#edit {
+	width: 50px;
+}
+
+#edit-profile #edit-profile-body #password label,
+#edit-profile #edit-profile-body #name label,
+#edit-profile #edit-profile-body #description label,
+#edit-profile #edit-profile-body #location label,
+#edit-profile #edit-profile-body #username label {
+	display: block;
+	text-align: center;
+	width: 20em;
+	text-align: start;
+}
+
+#edit-profile #edit-profile-body input #username {
+	grid-area: username;
+	align-self: center;
+	justify-self: center;
+}
+
+#edit-profile #edit-profile-body input #password {
+	grid-area: password;
+	align-self: center;
+	justify-self: center;
+}
+
+#edit-profile #edit-profile-body form textarea,
+#edit-profile #edit-profile-body form input {
+	padding: 1em;
+	margin-bottom: 2.5em;
+	margin-top: 0.5em;
+	width: 20em;
+	border-radius: 12px;
+}
+
+#edit-profile #edit-profile-body textarea {
+	border: 2px solid;
+}
+
+#edit-profile #edit-profile-body input:hover,
+#edit-profile #edit-profile-body textarea:hover {
+	transition: transform 0.3s;
+	transform: scale(1.05);
+}
+
+#edit-profile #edit-profile-body form #password a img {
+	color: var(--main-color);
+	width: 2.5em;
+	display: block;
+	margin-top: 1em;
+	margin-left: 0.5em;
+}
+
+#edit-profile #edit-profile-body form #password a img:hover {
+	transition: transform 0.6s;
+	transform: scale(1.3) rotate(360deg);
+}
+
+#edit-profile #edit-profile-body form #edit-profile-submit {
+	padding-bottom: 2em;
+	cursor: pointer;
+	border: 0em;
+	color: white;
+	font-weight: 700;
+	font-size: 1.2em;
+	width: 10em;
+	background-color: var(--main-color);
+	margin-top: 2em;
+	margin-left: 3em;
+	grid-area: submit;
+	justify-self: center;
+	align-self: center;
+	display: block;
+}
+
+#edit-profile #edit-profile-body form #edit-profile-submit:hover {
+	background-color: rgb(255, 184, 53);
+	color: black;
+}
+
+.dropdown-main {
+	padding: 4px 8px;
+	cursor: pointer;
+	border: 1px solid lightgray;
+	background-color: white;
+	border-radius: 6px;
+}
+
+.dropdown-main:hover {
+	transition: transform 0.3s;
+	transform: scale(1.1);
+}
+
+.dropdown {
+	padding: 6px 0;
+	cursor: pointer;
+	border: 1px solid lightgray;
+	background-color: white;
+	border-radius: 6px;
+}
+
+.dropdown ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dropdown ul li {
+	white-space: nowrap;
+	padding: 0.3em 8px;
+}
+
+.dropdown ul li * {
+	cursor: inherit;
+}
+
+.dropdown ul li:hover {
+	background-color: var(--main-color);
+	color: white;
+}
+
+.dropdown a,
+.dropdown-main a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.dropdown ul li.disabled {
+	color: var(--disabled-color) !important;
+}
+.dropdown ul li.disabled:hover {
+	color: white !important;
+	background-color: var(--main-color-light) !important;
+}
+.dropdown ul li.disabled a {
+	pointer-events: none !important;
+}
+
+#edit-profile #edit-profile-body #delete-user {
+	margin: 3em auto 2em 0;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: #ff6c6a;
+	width: 12em;
+	grid-area: delete-user;
+	align-self: start;
+	justify-self: flex-start;
+}
+
+#edit-profile #edit-profile-body #delete-user:hover {
+	transition: transform 0.6s;
+	transform: scale(1.1);
+}
+
+#edit-profile #edit-profile-body #delete-user a {
+	color: black;
+	text-decoration: none;
+	font-weight: 600;
+}
+
+#edit-profile #edit-profile-body #delete-user a:hover {
+	color: rgb(121, 0, 0);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+#change-password {
+	margin: 2em auto 2em auto;
+	padding: 1em;
+	border-radius: 1em;
+	background-color: var(--light-color);
+	width: 25em;
+	align-self: center;
+	text-align: center;
+}
+
+#change-password input {
+	margin: 1em;
+}
+
+#change-password #submit-password {
+	border: 0;
+	color: white;
+	background-color: var(--main-color);
+	padding: 0.5em 1em 0.5em 1em;
+}

@@ -1,15 +1,21 @@
 <?php
-    session_start();
 
-    include_once __DIR__ . '/../server.php';
-    include_once SERVER_DIR . '/connection.php';
-    include_once SERVER_DIR . '/users.php';
+session_start();
 
-    if(isset($_SESSION['username']) && $_SESSION['username'] == $_GET['username']) {
-        deleteUser($_SESSION['username']);
-        session_destroy();
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
-        die();
-    }
-    else 
-        header('Location: ' . CLIENT_URL . '/profile.php?username='.$_GET['username'].'&failed=1');
+require_once __DIR__ . '/../server.php';
+require_once SERVER_DIR . '/connection.php';
+require_once SERVER_DIR . '/rest/authentication.php';
+Authentication\verifyCSRF_Token();
+require_once SERVER_DIR . '/User.php';
+require_once SERVER_DIR . '/Shelter.php';
+
+$user = User::fromDatabase($_GET['username']);
+
+if(isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername()) {
+    User::deleteFromDatabase($user->getUsername());
+    session_destroy();
+    header('Location: ' . PROTOCOL_API_URL);
+    die();
+}
+else 
+    header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername().'&failed=1');
