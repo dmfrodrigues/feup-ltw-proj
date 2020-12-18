@@ -8,7 +8,7 @@ class AdoptionRequest implements JsonSerializable {
     private  string $outcome    ;
     private  int    $pet        ;
     private  string $user       ;
-    private  string $requestDate;
+    private  string $messageDate;
 
     public function __construct(){}
 
@@ -21,7 +21,7 @@ class AdoptionRequest implements JsonSerializable {
     public function getAuthor  () : ?User  { return $this->getUser()                       ; }
     public function getUserId  () : string { return noHTML($this->user)                    ; }
     public function getAuthorId() : string { return noHTML($this->getUserId())             ; }
-    public function getDate    () : string { return noHTML($this->requestDate)             ; }
+    public function getDate    () : string { return $this->messageDate                     ; }
 
     public function setId (int $id) : void { 
       $newId = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
@@ -48,8 +48,8 @@ class AdoptionRequest implements JsonSerializable {
       $this->user = $newUser; 
     }
 
-    public function setAuthor (string $author     ) : void { $this->setUser($author)          ; }
-    public function setDate   (string $requestDate) : void { $this->requestDate = $requestDate; }
+    public function setAuthor (string $author     ) : void { $this->setUser($author)           ; }
+    public function setDate   (string $messageDate) : void { $this->messageDate = $messageDate ; }
     
     public function jsonSerialize() {
 		return get_object_vars($this);
@@ -171,7 +171,7 @@ function getAdoptionRequest(int $id): array {
       AdoptionRequest.outcome,
       AdoptionRequest.pet,
       AdoptionRequest.user,
-      AdoptionRequest.requestDate AS messDate,
+      AdoptionRequest.messageDate AS messDate,
       Pet.postedBy,
       Pet.name AS petName
       FROM AdoptionRequest INNER JOIN Pet ON Pet.id=AdoptionRequest.pet
@@ -227,7 +227,7 @@ function userRequestedPet(string $username, int $petId) : bool {
 function getAdoptionRequestOutcome(string $username, string $petId) : ?string {
   global $db;
   $stmt = $db->prepare('SELECT outcome FROM AdoptionRequest
-  WHERE user=:username AND pet=:petId ORDER BY requestDate DESC');
+  WHERE user=:username AND pet=:petId ORDER BY messageDate DESC');
   $stmt->bindValue(':username', $username);
   $stmt->bindValue(':petId', $petId);
   $stmt->execute();
