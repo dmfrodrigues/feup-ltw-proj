@@ -99,6 +99,16 @@ class PasswordResetToken {
         return $reset;
         */
     }
+
+    static public function check(string $username, string $token) : bool {
+        global $db;
+        $stmt = $db->prepare('SELECT username, token FROM PasswordResetToken
+        WHERE username=:username AND token=:token');
+        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':token'   , $token   );
+        $stmt->execute();
+        return (count($stmt->fetchAll()) > 0); 
+    }
 }
 
 require_once SERVER_DIR.'/connection.php';

@@ -16,7 +16,10 @@ $javascript_files = [
 ];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
-if (isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername())
-    require_once CLIENT_DIR.'/templates/users/change_password.php';
+$isLoggedIn = (isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername());
+$hasToken   = (isset($_GET['token']) && PasswordResetToken::check($user->getUsername(), $_GET['token']));
+
+if ($isLoggedIn) require_once CLIENT_DIR.'/templates/users/change_password.php';
+if ($hasToken  ) require_once CLIENT_DIR.'/templates/users/reset_password.php';
 
 require_once CLIENT_DIR.'/templates/common/footer.php';
