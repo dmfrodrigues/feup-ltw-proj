@@ -6,6 +6,7 @@ require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/User.php';
 require_once SERVER_DIR . '/Shelter.php';
+require_once SERVER_DIR . '/PasswordResetToken.php';
 
 $user_PUT = function(array $args): void{
     $auth = Authentication\check(true);
@@ -165,6 +166,30 @@ $user_id_photo_DELETE = function(array $args): void{
     } catch(CouldNotDeleteFileException $e){
         my_response_code(404); die();
     }
+};
+
+$user_id_password_PUT = function(array $args): void {
+    $username = $args[1];
+    $user = User::fromDatabase($username);
+    $_PUT = getPUT();
+
+    $auth = Authentication\check(true);
+    $isSameUser = Authorization\check(Authorization\Resource::PROFILE, Authorization\Method::EDIT, $auth, $user);
+
+    $hasToken = false;
+    if(isset($_PUT['token'])){
+        $reset = PasswordResetToken::check($username, $_PUT['token']);
+        if($reset !== null) $hasToken = true;
+    }
+
+    if($isSameUser){
+        $user->setPassword($_PUT['password'], false);
+        $user->updateDatabase();
+    } else if($hasToken){
+        $reset->deleteFromDatabase();
+        $user->setPassword($_PUT['password'], false);
+        $user->updateDatabase();
+    } else { my_response_code(403); die(); }
 };
 
 // change_password.php

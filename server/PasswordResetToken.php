@@ -100,14 +100,18 @@ class PasswordResetToken {
         */
     }
 
-    static public function check(string $username, string $token) : bool {
+    static public function check(string $username, string $token) : ?PasswordResetToken {
+        PasswordResetToken::cleanOldEntries();
+
         global $db;
-        $stmt = $db->prepare('SELECT username, token FROM PasswordResetToken
+        $stmt = $db->prepare('SELECT * FROM PasswordResetToken
         WHERE username=:username AND token=:token');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'PasswordResetToken');
         $stmt->bindValue(':username', $username);
         $stmt->bindValue(':token'   , $token   );
         $stmt->execute();
-        return (count($stmt->fetchAll()) > 0); 
+        $reset = $stmt->fetch();
+        return ($reset === false ? null : $reset);
     }
 }
 

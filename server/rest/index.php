@@ -33,7 +33,7 @@ $tree = [
         'new'                   => new ResourceHandlers($user_new_GET        , null, null                 , null                    ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers($user_id_GET         , null, $user_id_PUT         , $user_id_DELETE         ),
             'photo'             => new ResourceHandlers($user_id_photo_GET   , null, $user_id_photo_PUT   , $user_id_photo_DELETE   ),
-            'password' => [
+            'password' => [null => new ResourceHandlers(null                 , null, $user_id_password_PUT, null                    ),
                 'change'        => new ResourceHandlers($user_id_password_change_GET, null, null          , null                    )
             ],
             'edit'              => new ResourceHandlers($user_id_edit_GET    , null, null                 , null                    ),
