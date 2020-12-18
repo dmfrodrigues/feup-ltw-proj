@@ -4,6 +4,7 @@
         <label>
             Username <input type="text" name="username" required>
         </label>
+        <input type="hidden" name="csrf" value="<?= $token ?>">
         <input type="submit" class="dark" value="Reset">
     </form>
     <p id="password-reset-notice" style="display: none;">A password reset email was sent</p>
