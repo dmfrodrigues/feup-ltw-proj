@@ -8,8 +8,8 @@ header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
 $raw_uri = $_SERVER["REQUEST_URI"];
-$base_uri = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
-$uri = str_replace($base_uri, '', $raw_uri);
+$uri = str_replace(SERVER_URL_PATH, '', $raw_uri);
+
 
 // REST
 require_once API_DIR . '/rest-lib/rest-lib.php';
