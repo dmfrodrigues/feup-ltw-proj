@@ -12,8 +12,8 @@ require_once SERVER_DIR . '/classes/Shelter.php';
 $title = "Adoption messages";
 
 $javascript_files = [
-    PROTOCOL_CLIENT_URL."/js/handleAdoptionMessages.js",
-    PROTOCOL_CLIENT_URL."/js/utils_elements.js"
+    "rest/client/js/handleAdoptionMessages.js",
+    "rest/client/js/utils_elements.js"
 ];
 require_once CLIENT_DIR.'/templates/common/header.php';
 

@@ -3,8 +3,8 @@
 <html lang="en-US">
     <head>
         <title>Error</title>
-        <link rel="stylesheet" href="<?= PROTOCOL_CLIENT_URL ?>/css/error.css">
-        <link rel="shortcut icon" type="image/ico" href="<?= PROTOCOL_CLIENT_URL ?>/resources/favicon.ico">
+        <link rel="stylesheet" href="rest/client/css/error.css">
+        <link rel="shortcut icon" type="image/ico" href="rest/client/resources/favicon.ico">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     </head>
     <body> 

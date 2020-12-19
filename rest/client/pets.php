@@ -10,7 +10,7 @@ require_once SERVER_DIR.'/classes/Pet.php';
 $pets = Pet::getForAdoption();
 $title = "Pets";
 
-$javascript_files = [PROTOCOL_CLIENT_URL.'/js/filterPets.js'];
+$javascript_files = ['rest/client/js/filterPets.js'];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/list_pets_for_adoption.php';

@@ -6,7 +6,7 @@
                     <div id="proposal-header">
                         <a href="<?= PROTOCOL_API_URL ?>/user/<?=$request->getUserId()?>">
                             <?php $proposal_pic = User::fromDatabase($request->getUserId())->getPictureUrl();?>
-                            <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                            <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                         </a>
                     </div>
                 <?php } ?>
@@ -58,7 +58,7 @@
                 <div id="proposal-header">
                     <a href="<?= PROTOCOL_API_URL ?>/user/<?=$adoptionRequest->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($adoptionRequest->getUserId())->getPictureUrl();?>
-                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
@@ -79,7 +79,7 @@
                 <div id="proposal-header">
                     <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($reqMessage->getUserId())->getPictureUrl();?>
-                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
@@ -103,7 +103,7 @@
             <div id="proposal-header">
                 <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>">
                     <?php $proposal_pic = User::fromDatabase($_SESSION['username'])->getPictureUrl();?>
-                    <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                    <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                 </a>
             </div>
             <div id="proposal-info">
@@ -111,7 +111,7 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/update.svg"/></button></div>
+                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="rest/client/resources/img/update.svg"/></button></div>
                 </div>  
             </div>
         </div>

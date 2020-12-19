@@ -1,6 +1,6 @@
 <section id="profile">
     <header>
-        <img class="profile-pic" id="profile_img" src="<?php echo (is_null($user->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
+        <img class="profile-pic" id="profile_img" src="<?php echo (is_null($user->getPictureUrl()) ? "rest/client/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
         <span id="name"><?=$user->getName()?></span>
         <span id="username"><?=$user->getUsername()?></span>
     </header>

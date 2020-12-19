@@ -5,7 +5,7 @@
                     <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter->getUsername() ?>"> 
                         <img id="proposal-pic" src="<?php 
                         $shelter_pic = $shelter->getPictureUrl();
-                        echo (is_null($shelter_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $shelter_pic) ?>
+                        echo (is_null($shelter_pic) ? "rest/client/resources/img/no-image.svg" : $shelter_pic) ?>
                         ">
                     </a>
                 </div>

@@ -1,6 +1,6 @@
 <section id="shelter-profile">
     <header>
-        <img class="profile-shelter-pic" id="profile_img" src="<?php echo (is_null($shelter->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $shelter->getPictureUrl()) ?>">
+        <img class="profile-shelter-pic" id="profile_img" src="<?php echo (is_null($shelter->getPictureUrl()) ? "rest/client/resources/img/no-image.svg": $shelter->getPictureUrl()) ?>">
         <span id="name"><?=$shelter->getName()?></span>
         <span id="username"><?=$shelter->getUsername()?></span>
         <?php if (!isset($_SESSION['isShelter']) && isset($_SESSION['username'])) {

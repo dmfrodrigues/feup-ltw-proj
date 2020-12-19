@@ -12,7 +12,7 @@
         <div id="pet-photos">
             <?php
             $photos = $pet->getPictures();
-            if (empty($photos)) $photoSelected = PROTOCOL_CLIENT_URL."/resources/img/no-image.svg";
+            if (empty($photos)) $photoSelected = "rest/client/resources/img/no-image.svg";
             else $photoSelected = $photos[0];
             ?>
             <img id="pet-selected-img" src="<?= $photoSelected ?>" alt="selected photo" />
@@ -26,7 +26,7 @@
         </div>
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
-            <span id="location"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
+            <span id="location"><img src="rest/client/resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
             <span id="postedBy"><a href="<?= PROTOCOL_API_URL ?>/user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($pet->getId());
                 if ($shelter != "") { ?>
@@ -46,11 +46,11 @@
                 <input type="hidden" name="userLink" value="<?=$userLink?>">
                 <?php
                 if (in_array($pet, $favorite_pets)) { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="rest/client/resources/img/anti-heart.svg" height="30px">Remove from favorites</button>
                 <?php } else { ?>
-                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/heart.svg" height="30px">Add to favorites</button>
+                    <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="rest/client/resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
-                <button id="ask" onclick="location.href = '#comments'"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/question-mark.png" height="42px">Ask question</button>
+                <button id="ask" onclick="location.href = '#comments'"><img src="rest/client/resources/img/question-mark.png" height="42px">Ask question</button>
                 <?php  if($_SESSION['username'] != $pet->getPostedById() ) { ?>
                     <div id="adoption-request-button">
                         <?php require_once CLIENT_DIR.'/templates/pets/adoption_request_buttons.php'; ?>
@@ -102,7 +102,7 @@
     if(isset($_SESSION['username']) && $isAuthorized){ ?>
         <section id="action-edit-pet">
             <ul>
-                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></li>
+                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="rest/client/resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php }

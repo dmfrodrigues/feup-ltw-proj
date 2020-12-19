@@ -13,7 +13,7 @@ require_once SERVER_DIR.'/classes/Notification.php';
 
 $title = "Notifications";
 
-$javascript_files = [PROTOCOL_CLIENT_URL.'/js/deleteNotifications.js'];
+$javascript_files = ['rest/client/js/deleteNotifications.js'];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 

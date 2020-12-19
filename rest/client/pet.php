@@ -27,17 +27,17 @@ if (isset($_SESSION['username'])) {
     <script>
         let user = <?= json_encode($user) ?>;
     </script>
-    <script src="<?= PROTOCOL_CLIENT_URL ?>/js/handleFavorites.js" defer></script>
+    <script src="rest/client/js/handleFavorites.js" defer></script>
 <?php
 }
 
 $javascript_files = [
-    PROTOCOL_CLIENT_URL.'/js/utils_elements.js',
-    PROTOCOL_CLIENT_URL.'/js/Comment.js',
-    PROTOCOL_CLIENT_URL.'/js/CommentTree.js',
-    PROTOCOL_CLIENT_URL.'/js/petPhotos.js',
-    PROTOCOL_CLIENT_URL.'/js/commentImage.js',
-    PROTOCOL_CLIENT_URL.'/js/utils_elements.js'
+    'rest/client/js/utils_elements.js',
+    'rest/client/js/Comment.js',
+    'rest/client/js/CommentTree.js',
+    'rest/client/js/petPhotos.js',
+    'rest/client/js/commentImage.js',
+    'rest/client/js/utils_elements.js'
 ];
 
 require_once CLIENT_DIR.'/templates/common/header.php';

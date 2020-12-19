@@ -10,7 +10,7 @@
             <label for="pets-location">Location<input type="text" name="location" placeholder="Pet's location" required></label>
         </div>
         <div class="pets-photos">
-            <a id="add-photo" onclick="addPetPhoto(this.parentNode)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/upload_image.png"></a>
+            <a id="add-photo" onclick="addPetPhoto(this.parentNode)"><img src="rest/client/resources/img/upload_image.png"></a>
             <div id="pet-photos-inputs">
                 <input id="photo-number" name="photo-number" type="hidden" value="0">
             </div>

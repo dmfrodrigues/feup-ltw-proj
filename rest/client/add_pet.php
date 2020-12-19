@@ -11,8 +11,8 @@ require_once SERVER_DIR.'/classes/Notification.php';
 $title = "New pet";
 
 $javascript_files = [
-    PROTOCOL_CLIENT_URL.'/js/utils_elements.js',
-    PROTOCOL_CLIENT_URL.'/js/addPet.js'
+    'rest/client/js/utils_elements.js',
+    'rest/client/js/addPet.js'
 ];
 
 require_once CLIENT_DIR.'/templates/common/header.php';
