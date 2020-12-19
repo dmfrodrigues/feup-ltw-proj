@@ -18,6 +18,13 @@
 
 ## Installing
 
+### Cloning all dependencies
+
+To clone all dependencies (namely PHP libraries), please run
+```sh
+git submodule update --init --recursive
+```
+
 ### Build database
 
 To build the database, run
