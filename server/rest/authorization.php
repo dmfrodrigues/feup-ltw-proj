@@ -27,31 +27,7 @@ namespace Authorization {
             Rules::$rules[$resourceType][$method][] = $rule;
         }
     }
-    
-    // add_rule(Resource::PROFILE                 , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::NOTIFICATION            , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::PET                     , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST        , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::COMMENT                 , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::FAVORITE_PET            , Method::READ , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    
-    // add_rule(Resource::PROFILE                 , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::NOTIFICATION            , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::PET                     , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST        , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::COMMENT                 , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::FAVORITE_PET            , Method::WRITE, function(\User $user, $resource) : bool { return $user->isAdmin(); });
 
-    // add_rule(Resource::PROFILE                 , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::NOTIFICATION            , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::PET                     , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST        , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::ADOPTION_REQUEST_MESSAGE, Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::COMMENT                 , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    // add_rule(Resource::FAVORITE_PET            , Method::EDIT , function(\User $user, $resource) : bool { return $user->isAdmin(); });
-    
     // ======================================================== PROFILE ========================================================
     Rules::add_rule(Resource::PROFILE, Method::READ , function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can see
     Rules::add_rule(Resource::PROFILE, Method::WRITE, function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can write

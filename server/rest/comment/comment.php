@@ -145,7 +145,7 @@ $comment_id_photo_DELETE = function(array $args): void{
     $auth = Authentication\check();
     Authorization\checkAndRespond(
         Authorization\Resource::COMMENT,
-        Authorization\Method  ::READ   ,
+        Authorization\Method  ::WRITE  ,
         $auth,
         $comment
     );
