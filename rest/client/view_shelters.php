@@ -1,6 +1,6 @@
 <?php
 include_once __DIR__.'/../../server.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 Authentication\CSPHeaderSet();
 $CSRFtoken = Authentication\CSRF_GetToken();
 include_once SERVER_DIR.'/database/connection.php';

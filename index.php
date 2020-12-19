@@ -7,7 +7,7 @@ session_start();
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
-require_once __DIR__ . '/api_main.php';
+require_once __DIR__ . '/server.php';
 require_once API_DIR . '/rest-lib/rest-lib.php';
 require_once API_DIR . '/root/root.php';
 require_once API_DIR . '/login/login.php';

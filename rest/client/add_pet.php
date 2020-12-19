@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/../../server.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 session_regenerate_id(true);
 Authentication\CSPHeaderSet();
 $CSRFtoken = Authentication\CSRF_GetToken();
