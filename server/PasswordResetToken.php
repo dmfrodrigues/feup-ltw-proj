@@ -88,16 +88,13 @@ class PasswordResetToken {
     }
 
     static public function cleanOldEntries() : void {
-        /*
+        $now = date("Y-m-d H:i:s");
+
         global $db;
-        $stmt = $db->prepare('SELECT * FROM PasswordResetToken WHERE username=:username');
-        $stmt->bindValue(':username', $username);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'PasswordResetToken');
+        $stmt = $db->prepare('DELETE FROM PasswordResetToken
+        WHERE strftime(expires) < strftime(:now)');
+        $stmt->bindValue(':now', $now);
         $stmt->execute();
-        $reset = $stmt->fetch();
-        if($reset == false) throw new RuntimeException("No such password reset token");
-        return $reset;
-        */
     }
 
     static public function check(string $username, string $token) : ?PasswordResetToken {
