@@ -47,7 +47,7 @@ class PasswordResetToken {
     public function setUser   (string $username) : void { $this->username = $username; }
 
     public function generateToken() : void {
-        $this->token = 'ABC';
+        $this->token = getToken(64);
 
         $this->expires = date("Y-m-d H:i:s", time() + PasswordResetToken::$VALIDITY);
     }
