@@ -3,7 +3,7 @@
 session_start();
 
 require_once __DIR__ . '/../server.php';
-require_once SERVER_DIR . '/connection.php';
+require_once SERVER_DIR . '/database/connection.php';
 require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR . '/classes/User.php';
