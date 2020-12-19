@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__.'/server.php';
+require_once __DIR__.'/../server.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

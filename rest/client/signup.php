@@ -5,7 +5,7 @@ require_once SERVER_DIR . '/rest/authentication.php';
 Authentication\CSPHeaderSet();
 $CSRFtoken = Authentication\CSRF_GetToken();
 require_once SERVER_DIR.'/errors/errors.php';
-require_once SERVER_DIR.'/Shelter.php';
+require_once SERVER_DIR.'/classes/Shelter.php';
 
 $title = "Sign Up";
 $javascript_files = [PROTOCOL_CLIENT_URL.'/js/signup.js'];

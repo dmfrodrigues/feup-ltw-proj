@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/server.php';
+require_once __DIR__.'/../server.php';
 require_once SERVER_DIR.'/files.php';
-require_once 'rest/authentication.php';
-require_once __DIR__.'/Pet.php';
+require_once SERVER_DIR.'/rest/authentication.php';
+require_once SERVER_DIR.'/classes/Pet.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');
 
@@ -370,7 +370,7 @@ class User implements JsonSerializable {
 
 class NoSuchUserException extends RuntimeException{}
 
-require_once __DIR__.'/Shelter.php';
+require_once SERVER_DIR.'/classes/Shelter.php';
 
 /**
  * Add user to database.

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/../server.php';
-require_once SERVER_DIR.'/Email.php';
+require_once SERVER_DIR.'/classes/Email.php';
 
 $email_credentials_file_path = __DIR__.'/email.cred';
 $email_credentials_file = fopen($email_credentials_file_path, 'r');

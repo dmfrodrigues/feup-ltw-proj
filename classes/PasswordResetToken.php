@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/server.php';
+require_once __DIR__.'/../server.php';
 
 // https://stackoverflow.com/a/3291689/12283316
 function crypto_rand_secure($min, $max) {

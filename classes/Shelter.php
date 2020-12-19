@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/server.php';
-require_once SERVER_DIR.'/User.php';
-require_once 'rest/authentication.php';
-require_once __DIR__.'/Pet.php';
+require_once __DIR__.'/../server.php';
+require_once SERVER_DIR.'/classes/User.php';
+require_once SERVER_DIR.'/rest/authentication.php';
+require_once SERVER_DIR.'/classes/Pet.php';
 
 define('SHELTERS_IMAGES_DIR', SERVER_DIR.'/resources/img/shelters');
 
