@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS AdoptionRequest;
 DROP TABLE IF EXISTS AdoptionRequestMessage;
 DROP TABLE IF EXISTS Comment;
 DROP TABLE IF EXISTS FavoritePet;
+DROP TABLE IF EXISTS PasswordResetToken;
 
 DROP TRIGGER IF EXISTS Comment_answerPet;
 DROP TRIGGER IF EXISTS Comment_answerTime;
@@ -152,6 +153,13 @@ CREATE TABLE FavoritePet (
     CONSTRAINT FavoritePet_PK PRIMARY KEY(username, petId),
     CONSTRAINT FavoritePet_FK1 FOREIGN KEY(username) REFERENCES User ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FavoritePet_FK2 FOREIGN KEY(petId) REFERENCES Pet ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE PasswordResetToken (
+    username    VARCHAR     NOT NULL REFERENCES User,
+    token       VARCHAR     NOT NULL,
+    created     TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expires     TIMESTAMP   NOT NULL
 );
 
 CREATE TRIGGER Comment_answerPet

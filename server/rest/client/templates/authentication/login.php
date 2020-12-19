@@ -14,7 +14,7 @@
         <input type="hidden" name="csrf" value="<?=$token?>">
         <input type="submit" class="dark" value="Login" id="submit-login">
     </form>
-    <a href="">Forgot Password?</a>
+    <a href="<?= PROTOCOL_API_URL ?>/passwordReset">Forgot Password?</a>
     <footer>
         <p>New User? <a href="<?= PROTOCOL_API_URL ?>/user/new">Sign up</a></p>
     </footer>

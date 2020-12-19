@@ -11,6 +11,7 @@ require_once __DIR__ . '/api_main.php';
 require_once API_DIR . '/rest-lib/rest-lib.php';
 require_once API_DIR . '/root/root.php';
 require_once API_DIR . '/login/login.php';
+require_once API_DIR . '/passwordReset/passwordReset.php';
 require_once API_DIR . '/user/user.php';
 require_once API_DIR . '/shelter/shelter.php';
 require_once API_DIR . '/pet/pet.php';
@@ -27,11 +28,12 @@ $tree = [
     null                        => new ResourceHandlers($root_GET                       , null, null                            , null                          ),
     'rest'                      => new ResourceHandlers($rest_GET                       , null, null                            , null                          ),
     'login'                     => new ResourceHandlers($login_GET                      , null, null                            , null                          ),
+    'passwordReset'             => new ResourceHandlers($passwordReset_GET              , null, $passwordReset_PUT              , null                          ),
     'user' => [null             => new ResourceHandlers(null                            , null, $user_PUT                       , null                          ),
         'new'                   => new ResourceHandlers($user_new_GET                   , null, null                            , null                          ),
         '[a-zA-Z0-9]+' => [null => new ResourceHandlers($user_id_GET                    , null, $user_id_PUT                    , $user_id_DELETE               ),
             'photo'             => new ResourceHandlers($user_id_photo_GET              , null, $user_id_photo_PUT              , $user_id_photo_DELETE         ),
-            'password' => [
+            'password' => [null => new ResourceHandlers(null                            , null, $user_id_password_PUT           , null                          ),
                 'change'        => new ResourceHandlers($user_id_password_change_GET    , null, null                            , null                          )
             ],
             'edit'              => new ResourceHandlers($user_id_edit_GET               , null, null                            , null                          ),

@@ -62,6 +62,22 @@ Each deploy environment has a specific set of constants. Thus, for each environm
 
 To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from directory `server/`.
 
+### Email service
+To enable email service, you have to provide valid credentials in file `server/rest/email.cred`, following the template:
+```txt
+<email address>
+<password>
+```
+
+For instance:
+```txt
+foreverhomeorg@gmail.com
+password
+```
+
+The actual Gmail email we will use is <foreverhomeorg@gmail.com>.
+The corresponding password is to be kept secret, and as such only available on request to our team.
+
 ## Credentials
 Username/password (role):
 
@@ -77,6 +93,7 @@ Username/password (role):
 
 ## Libraries
 - [Google font *Inter*](https://fonts.google.com/specimen/Inter)
+- [PHPMailer](https://github.com/PHPMailer/PHPMailer) to interact with remote email (SMTP) servers and send password reset emails
 
 ## Features:
 - Security
@@ -120,7 +137,8 @@ Username/password (role):
     - Users can be collaborators of a certain shelter and have permission to edit information about the shelter and any pets for adoption.
     - Users that adopt a pet are able to still post photos of that animal after the adoption.
     - Users should receive a notification anytime something important happens.
-    - Develop a REST API.
+    - Develop a REST API (available at URL `server/rest/rest/`).
+    - Reset password system using emails and random tokens (**implemented after demo and before delivery**)
 
 ## Mockups
 #### Register

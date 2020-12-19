@@ -27,6 +27,8 @@ define('USER_PICTURE_MAX_SIZE', 1000000);
 define('PET_PICTURE_MAX_SIZE', 1000000);
 define('COMMENT_PICTURE_MAX_SIZE', 1000000);
 
+date_default_timezone_set('UTC');
+
 function path2url($file, $Protocol=PROTOCOL): string {
     return
         $Protocol .
