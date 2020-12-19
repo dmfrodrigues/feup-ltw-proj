@@ -5,6 +5,7 @@ PRAGMA encoding="UTF-8";
 PRAGMA foreign_keys=OFF;
 
 DROP TABLE IF EXISTS Shelter;
+DROP TABLE IF EXISTS ShelterInvite;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Admin;
 DROP TABLE IF EXISTS Notification;
