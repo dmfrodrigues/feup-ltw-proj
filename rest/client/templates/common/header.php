@@ -45,18 +45,18 @@
     </head>
     <body>
         <header>
-            <h1><a href="<?= PROTOCOL_API_URL ?>">Forever home</a></h1>
+            <h1><a href="">Forever home</a></h1>
             <div id="authenticate">
             <?php if (!isset($_SESSION['username'])) { ?>
-                <a href="<?= PROTOCOL_API_URL ?>/user/new">Sign up</a>
-                <a href="<?= PROTOCOL_API_URL ?>/login">Login</a>
+                <a href="user/new">Sign up</a>
+                <a href="login">Login</a>
             <?php }  else {
                     if (userHasUnreadNotifications($_SESSION['username'])) { ?>
-                        <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>/notifications"><img src="rest/client/resources/img/new_notifications.svg" ></a>
+                        <a href="user/<?=$_SESSION['username']?>/notifications"><img src="rest/client/resources/img/new_notifications.svg" ></a>
                     <?php } else { ?>
-                        <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>/notifications"><img src="rest/client/resources/img/no_notifications.svg" ></a>
+                        <a href="user/<?=$_SESSION['username']?>/notifications"><img src="rest/client/resources/img/no_notifications.svg" ></a>
                     <?php } ?> 
-                    <span><a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
+                    <span><a href="user/<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
                 <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
             <?php } ?>
@@ -66,9 +66,9 @@
                 <input type="checkbox" id="nav-hamburger"> 
                 <label class="hamburger" for="nav-hamburger"></label>
                 <ul>
-                    <li><a <?php if(isset($title) && $title=="Pets") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/pet">Pets Listed for Adoption</a></li>
-                    <li><a <?php if(isset($title) && $title=="Adopted pets") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/pet/adopted">Adopted Pets</a></li>
-                    <li><a <?php if(isset($title) && $title=="Shelters") echo "class='nav-selected'" ?> href="<?= PROTOCOL_API_URL ?>/shelter">View Shelters</a></li>
+                    <li><a <?php if(isset($title) && $title=="Pets") echo "class='nav-selected'" ?> href="pet">Pets Listed for Adoption</a></li>
+                    <li><a <?php if(isset($title) && $title=="Adopted pets") echo "class='nav-selected'" ?> href="pet/adopted">Adopted Pets</a></li>
+                    <li><a <?php if(isset($title) && $title=="Shelters") echo "class='nav-selected'" ?> href="shelter">View Shelters</a></li>
                 </ul>
         </nav>
         <main>

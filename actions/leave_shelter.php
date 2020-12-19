@@ -19,9 +19,9 @@ if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
     if ($shelter->getUsername() === $userShelter->getUsername()) {
         leaveShelter($_SESSION['username']);
 
-        $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+        $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
 
-        addNotification($shelter, "userLeftShelter", "The user " . $userLink . " left the shelter.");
+        addNotification($shelter, "userLeftShelter", "The user $userLink left the shelter.");
 
         header("Location: " . PROTOCOL_API_URL."/user/" . $_SESSION['username']); 
         die();

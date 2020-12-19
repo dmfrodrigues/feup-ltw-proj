@@ -19,10 +19,10 @@ if (isset($_SESSION['username'])){
     $pet = Pet::fromDatabase($petId);
     $petOwner = $pet->getPostedBy();
 
-    $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
-    $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+    $petNameLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
+    $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
 
-    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for ". $petNameLink . ", by " . $userLink . ".");
+    addNotification($petOwner, "newPetAdoptionProposal", "You have a new adoption proposal for $petNameLink by $userLink.");
 
     header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
 }

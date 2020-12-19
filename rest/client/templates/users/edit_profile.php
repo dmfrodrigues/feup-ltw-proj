@@ -61,7 +61,7 @@ function editProfile(User $user): void {
             <?php } ?>
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="password">
-                    <label for="password">Password<a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername()?>/password/change"><img src="rest/client/resources/img/edit.svg"></a></label>
+                    <label for="password">Password<a href="user/<?= $user->getUsername()?>/password/change"><img src="rest/client/resources/img/edit.svg"></a></label>
                 </section>
             <?php } ?> 
             <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">

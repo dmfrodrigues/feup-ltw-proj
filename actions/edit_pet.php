@@ -47,11 +47,11 @@ if (isset($_SESSION['username'])){
             if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
                 $user = User::fromDatabase($userWhoFavoritePet['username']);
 
-                $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
-                $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet->getUsername() . "'>" . $userWhoPostedPet->getUsername() . "</a>";
-                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+                $petNameLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
+                $userWhoPostedPetLink = "<a href='user/{$userWhoPostedPet->getUsername()}'>{$userWhoPostedPet->getUsername()}</a>";
+                $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
 
-                addNotification($user, "favoriteEdited", "Your favorite pet " . $petNameLink . ", posted by " . $userWhoPostedPetLink . " was edited by " . $userLink . ".");
+                addNotification($user, "favoriteEdited", "Your favorite pet $petNameLink, posted by $userWhoPostedPetLink was edited by $userLink.");
             }
         }
 

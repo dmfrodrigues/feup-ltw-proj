@@ -2,9 +2,9 @@
 <div class="comment">
     <article class="comment">
         <span id="comment-user" class="user">
-            <a href="<?= PROTOCOL_API_URL ?>/user/"></a>
+            <a href="user/"></a>
         </span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/">
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="user/">
             <img class="profile-pic" src="">
         </a>
         <span id="comment-date" class="date">2020-31-12 00:00:00</span>
@@ -58,11 +58,11 @@
         commentElement.id = `comment-${comment.id}`;
 
         let el_user = commentElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
+        el_user.children[0].href = `user/${comment.user}`;
         el_user.children[0].innerHTML = comment.user;
 
         let el_pic = commentElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
+        el_pic.href = `user/${comment.user}`;
         el_pic.children[0].src = API_URL + `user/${comment.user}/photo`;
 
         let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;

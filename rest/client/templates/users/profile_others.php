@@ -10,7 +10,7 @@
     if (!isset($_SESSION['isShelter'])) {
         $shelter = User::fromDatabase($user->getUsername())->getShelterId();
         if ($shelter != "") { ?>
-            <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?=$shelter?>"><?=$shelter?></a></h2>
+            <h2>Associated with shelter <a href="user/<?=$shelter?>"><?=$shelter?></a></h2>
         <?php }
     }
     else if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])) { ?>
@@ -18,7 +18,7 @@
         <?php if (!checkUserBelongsToShelter($user->getUsername())) { 
                 $outcome = shelterInvitationIsPending($user->getUsername(), $_SESSION['username']);
                 if (!$outcome) { ?>
-                    <button onclick="location.href = '<?= PROTOCOL_API_URL ?>/shelter/<?= $_SESSION['username'] ?>/propose/<?=$user->getUsername()?>'">Propose to collaborate</button>
+                    <button onclick="location.href = 'shelter/<?= $_SESSION['username'] ?>/propose/<?=$user->getUsername()?>'">Propose to collaborate</button>
                 <?php }
                 else { ?>
                     <button onclick="location.href = 'actions/remove_collaboration_proposal.php?csrf=<?=$_SESSION['csrf']?>&username=<?=$user->getUsername()?>'">Remove collaboration proposal</button>
@@ -27,7 +27,7 @@
         <?php } else if ($user->getShelterId() === $_SESSION['username']) { ?>
             <button onclick="location.href = 'actions/remove_collaborator.php?csrf=<?=$_SESSION['csrf']?>&username=<?=$user->getUsername()?>'">Remove this collaborator</button>
             <?php } else { ?> 
-                        <h2>This user is already associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getShelterId() ?>"><?= $user->getShelterId() ?></a></h2>
+                        <h2>This user is already associated with shelter <a href="user/<?= $user->getShelterId() ?>"><?= $user->getShelterId() ?></a></h2>
             <?php } ?>
         </div>
     <?php } ?>

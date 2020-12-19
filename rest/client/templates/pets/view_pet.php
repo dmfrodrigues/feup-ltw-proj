@@ -21,25 +21,25 @@
                 <?php for ($i = 1; ($i < count($photos) && $i<6); $i++) { ?>
                     <img src="<?= $photos[$i] ?>" alt="photo <?= $i ?> of <?= $pet->getName() ?>" onclick="selectPhoto()" />
                 <?php } ?>
-                <a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/photo">All Photos</a>
+                <a href="pet/<?= $pet->getId() ?>/photo">All Photos</a>
             </div>
         </div>
         <div id="data">
             <h1><?= $pet->getName() ?></h1>
             <span id="location"><img src="rest/client/resources/img/location.png"><span id="location-text"><?= $pet->getLocation() ?></span></span>
-            <span id="postedBy"><a href="<?= PROTOCOL_API_URL ?>/user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
+            <span id="postedBy"><a href="user/<?= $pet->getPostedById() ?>"><?= $pet->getPostedById() ?></a></span>
             <?php $shelter = getPetShelter($pet->getId());
                 if ($shelter != "") { ?>
                 <section id="shelter">
-                    <h2>Associated with shelter <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter?>"><?= $shelter?></a></h2>
+                    <h2>Associated with shelter <a href="user/<?= $shelter?>"><?= $shelter?></a></h2>
                 </section>
             <?php } ?>
         </div>
         <div id="actions">
             <?php if(isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
                 $favorite_pets = User::fromDatabase($_SESSION['username'])->getFavoritePets(); 
-                $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
-                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+                $petLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
+                $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
                 ?>
                 <input type="hidden" name="petOwner" value="<?=$pet->getPostedById()?>"> 
                 <input type="hidden" name="petName" value="<?=$petLink?>">
@@ -65,7 +65,7 @@
                     if (!$petAdopted && $pet->getPostedById() === $_SESSION['username']) { ?>
                         <section id="view-pet-proposals">
                             <ul>
-                                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/proposals">View Pet Proposals</a></li>
+                                <li><a href="pet/<?= $pet->getId() ?>/proposals">View Pet Proposals</a></li>
                             </ul>
                         </section>
                     <?php } ?>
@@ -102,7 +102,7 @@
     if(isset($_SESSION['username']) && $isAuthorized){ ?>
         <section id="action-edit-pet">
             <ul>
-                <li><a href="<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>/edit"><img src="rest/client/resources/img/edit.svg"></a></li>
+                <li><a href="pet/<?= $pet->getId() ?>/edit"><img src="rest/client/resources/img/edit.svg"></a></li>
             </ul>
         </section>
     <?php }

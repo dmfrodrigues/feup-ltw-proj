@@ -5,15 +5,15 @@
     <input name="answerTo" type="hidden">
     <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <?php 
-    $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
-    $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+    $petLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
+    $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
     ?>
     <input type="hidden" name="petLink" value="<?=$petLink?>">
     <input type="hidden" name="petOwner" value="<?=$pet->getPostedById()?>"> 
     <input type="hidden" name="userLink" value="<?=$userLink?>">
     <article class="comment">
-        <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
+        <span id="comment-user" class="user"><a href="user/#">#</a></span>
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="user/#"><img class="profile-pic" src=""></a>
         <div id="comment-content">
             <textarea class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
@@ -122,11 +122,11 @@
         el_answerTo.value = comment.id;
 
         let el_user = answerElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_API_URL ?>/user/${user.username}`;
+        el_user.children[0].href = `user/${user.username}`;
         el_user.children[0].innerHTML = user.username;
 
         let el_pic = answerElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `<?= PROTOCOL_API_URL ?>/user/${user.username}`;
+        el_pic.href = `user/${user.username}`;
         el_pic.children[0].src = API_URL + `user/${user.username}/photo`;
 
         answerElement.addEventListener('submit', (e) => { newComment_onSubmit(e); });

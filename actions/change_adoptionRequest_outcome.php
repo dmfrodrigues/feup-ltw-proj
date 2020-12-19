@@ -21,7 +21,7 @@ changeAdoptionRequestOutcome($_GET['requestId'], $_GET['outcome']);
 
 $pet = Pet::fromDatabase($_GET['petId']);
 
-$petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
+$petNameLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
 
 if($_GET['outcome'] === 'accepted') {    
     changePetStatus($_GET['petId'], 'adopted');
@@ -29,8 +29,8 @@ if($_GET['outcome'] === 'accepted') {
 
     $userWhoAdopted = Pet::fromDatabase($_GET['petId'])->getAdoptedBy();
     $userWhoPostedPet = $pet->getPostedBy();
-    $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet->getUsername() . "'>" . $userWhoPostedPet->getUsername() . "</a>";
-    $userWhoAdoptedLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoAdopted->getUsername() . "'>" . $userWhoAdopted->getUsername() . "</a>";
+    $userWhoPostedPetLink = "<a href='user/{$userWhoPostedPet->getUsername()}'>{$userWhoPostedPet->getUsername()}</a>";
+    $userWhoAdoptedLink = "<a href='user/{$userWhoAdopted->getUsername()}'>{$userWhoAdopted->getUsername()}</a>";
     addNotification($userWhoAdopted, "adoptionProposalOutcome", "Your proposal for ". $petNameLink . ", posted by " . $userWhoPostedPetLink . " was accepted.");
 
     foreach($refusedUsers as $refusedUser) {
@@ -61,8 +61,8 @@ if($_GET['outcome'] === 'rejected') {
     $adoptionRequest = getAdoptionRequest($_GET['requestId']);
     $userWhoProposed = User::fromDatabase($adoptionRequest['user']);
     $userWhoPostedPet = $adoptionRequest['postedBy'];
-    $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet . "'>" . $userWhoPostedPet . "</a>";
-    addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for ". $petNameLink . ", posted by " . $userWhoPostedPetLink . " was refused.");
+    $userWhoPostedPetLink = "<a href='user/{$userWhoPostedPet}'>{$userWhoPostedPet}</a>";
+    addNotification($userWhoProposed, "adoptionProposalOutcome", "Your proposal for $petNameLink, posted by $userWhoPostedPetLink was refused.");
 }
     
 header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}/proposalstome");

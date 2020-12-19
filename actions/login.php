@@ -26,10 +26,8 @@ try {
         }
     }
 } catch(PDOException $e) {
-    // $errorMessage = urlencode('Something Went Wrong');
     header('Location: ' . PROTOCOL_API_URL . '/login?failed=1&errorCode=-1');
 } catch(Exception $e) {
-    // $errorMessage = urlencode($e->getMessage());
     header('Location: ' . PROTOCOL_API_URL . '/login?failed=1&errorCode=-1');
 }
 
