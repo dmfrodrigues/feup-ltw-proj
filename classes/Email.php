@@ -5,9 +5,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require SERVER_DIR.'/../PHPMailer/src/Exception.php';
-require SERVER_DIR.'/../PHPMailer/src/PHPMailer.php';
-require SERVER_DIR.'/../PHPMailer/src/SMTP.php';
+require SERVER_DIR.'/PHPMailer/src/Exception.php';
+require SERVER_DIR.'/PHPMailer/src/PHPMailer.php';
+require SERVER_DIR.'/PHPMailer/src/SMTP.php';
 
 /*
 $emailServer = new EmailServer_PHPMailer_Gmail(
