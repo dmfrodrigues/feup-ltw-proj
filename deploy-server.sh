@@ -1,8 +1,10 @@
 rm -f *.db
 rm -rf resources
 
+cd database
 sqlite3 database.db ".read script.sql"
 sqlite3 database.db ".read populate.sql"
+cd ..
 
 chmod 777 database.db
 

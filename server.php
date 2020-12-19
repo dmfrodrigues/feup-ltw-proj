@@ -1,9 +1,12 @@
 <?php
 require_once __DIR__ . '/server_constants.php';
+define('SERVER_DIR', __DIR__);
 define('API_DIR', SERVER_DIR.'/rest');
 define('API_URL', SERVER_URL.'/rest');
 
 define('CLIENT_DIR', API_DIR.'/client');
+
+require_once SERVER_DIR.'/utils.php';
 
 /**
  * Get protocol.
@@ -28,13 +31,3 @@ define('PET_PICTURE_MAX_SIZE', 1000000);
 define('COMMENT_PICTURE_MAX_SIZE', 1000000);
 
 date_default_timezone_set('UTC');
-
-function path2url($file, $Protocol=PROTOCOL): string {
-    return
-        $Protocol .
-        str_replace(SERVER_DIR, SERVER_URL, $file);
-}
-
-class CouldNotDeleteFileException extends RuntimeException{}
-
-require_once SERVER_DIR.'/my_response_code.php';

@@ -5,8 +5,8 @@ require_once __DIR__ . '/../authorization.php';
 require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once __DIR__ . '/../email.php';
-require_once SERVER_DIR . '/PasswordResetToken.php';
-require_once SERVER_DIR . '/Email.php';
+require_once SERVER_DIR . '/classes/PasswordResetToken.php';
+require_once SERVER_DIR . '/classes/Email.php';
 
 use function Authentication\yesHTML;
 

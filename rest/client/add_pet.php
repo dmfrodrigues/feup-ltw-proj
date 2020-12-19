@@ -5,8 +5,8 @@ require_once SERVER_DIR . '/rest/authentication.php';
 session_regenerate_id(true);
 Authentication\CSPHeaderSet();
 $CSRFtoken = Authentication\CSRF_GetToken();
-require_once SERVER_DIR.'/connection.php';
-require_once SERVER_DIR.'/Notification.php';
+require_once SERVER_DIR.'/database/connection.php';
+require_once SERVER_DIR.'/classes/Notification.php';
 
 $title = "New pet";
 
