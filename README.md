@@ -93,6 +93,7 @@ Username/password (role):
 
 ## Libraries
 - [Google font *Inter*](https://fonts.google.com/specimen/Inter)
+- [PHPMailer](https://github.com/PHPMailer/PHPMailer) to interact with remote email (SMTP) servers and send password reset emails
 
 ## Features:
 - Security
@@ -136,7 +137,8 @@ Username/password (role):
     - Users can be collaborators of a certain shelter and have permission to edit information about the shelter and any pets for adoption.
     - Users that adopt a pet are able to still post photos of that animal after the adoption.
     - Users should receive a notification anytime something important happens.
-    - Develop a REST API.
+    - Develop a REST API (available at URL `server/rest/rest/`).
+    - Reset password system using emails and random tokens (**implemented after demo and before delivery**)
 
 ## Mockups
 #### Register
