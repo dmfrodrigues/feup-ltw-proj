@@ -10,6 +10,15 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 $raw_uri = $_SERVER["REQUEST_URI"];
 $uri = str_replace(SERVER_URL_PATH, '', $raw_uri);
 
+// For PHP built-in server
+// If using PHP build-in server, returning false from the main script
+// causes the server to serve the requested resource as-is
+// (https://www.php.net/manual/en/features.commandline.webserver.php - Example #3 Using a Router Script)
+if(preg_match("/^\/actions\/.*\.php$/"           , $uri)) return false;
+if(preg_match("/^\/resources\/.*$/"              , $uri)) return false;
+if(preg_match("/^\/rest\/client\/css\/.*\.css$/" , $uri)) return false;
+if(preg_match("/^\/rest\/client\/js\/.*\.js$/"   , $uri)) return false;
+if(preg_match("/^\/rest\/client\/resources\/.*$/", $uri)) return false;
 
 // REST
 require_once API_DIR . '/rest-lib/rest-lib.php';
