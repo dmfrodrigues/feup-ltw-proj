@@ -22,16 +22,15 @@
 
 To build the database, run
 ```sh
-cd server
 ./deploy-server.sh
 ```
 It may be necessary to change the script's permissions.
 
 ### Routing
 
-The REST API component of the server sends requests to `server/rest/<path>` to `server/index.php` which are then routed to the correct functions. This is unlike what apache2 typically does: route the request to the corresponding file in the file system.
+The REST API component of the server sends requests to `rest/<path>` to `server/index.php` which are then routed to the correct functions. This is unlike what apache2 typically does: route the request to the corresponding file in the file system.
 
-To correctly route the requests, the apache2 application must be able to read `server/rest/.htaccess`. To do that, you will probably have to change your apache2 configuration file (usually under `/etc/apache2/apache2.conf`), and set and replace `AllowOverride None` with `AllowOverride All` in the section where apache2 is configured for the directory where you put this repository; usually you put this repository somewhere under `/var/www` or any subfolder of it, so you must change section
+To correctly route the requests, the apache2 application must be able to read `rest/.htaccess`. To do that, you will probably have to change your apache2 configuration file (usually under `/etc/apache2/apache2.conf`), and set and replace `AllowOverride None` with `AllowOverride All` in the section where apache2 is configured for the directory where you put this repository; usually you put this repository somewhere under `/var/www` or any subfolder of it, so you must change section
 ```txt
 <Directory /var/www/>
 	Options Indexes FollowSymLinks
@@ -58,9 +57,9 @@ sudo a2enmod expires
 After changing the apache2 configuration and enabling the modules, restart apache2 by running `sudo service apache2 restart`.
 
 ### Server constants
-Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server/server_constants_<environment>.php`.
+Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server_constants_<environment>.php`.
 
-To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from directory `server/`.
+To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from the repository root.
 
 ### Email service
 To enable email service, you have to provide valid credentials in file `server/rest/email.cred`, following the template:
@@ -137,7 +136,7 @@ Username/password (role):
     - Users can be collaborators of a certain shelter and have permission to edit information about the shelter and any pets for adoption.
     - Users that adopt a pet are able to still post photos of that animal after the adoption.
     - Users should receive a notification anytime something important happens.
-    - Develop a REST API (available at URL `server/rest/rest/`).
+    - Develop a REST API (available at URL `rest/rest/`).
     - Reset password system using emails and random tokens (**implemented after demo and before delivery**)
 
 ## Mockups
