@@ -114,10 +114,3 @@ class PasswordResetToken {
         return ($reset === false ? null : $reset);
     }
 }
-
-require_once SERVER_DIR.'/connection.php';
-
-$reset = new PasswordResetToken();
-$reset->setUser('dmfr');
-$reset->generateToken();
-$reset->addToDatabase();
