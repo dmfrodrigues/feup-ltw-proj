@@ -160,7 +160,7 @@ $pet_id_proposals_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::PET,
-        Authorization\Method::READ,
+        Authorization\Method::EDIT,
         $auth,
         $pet
     );
