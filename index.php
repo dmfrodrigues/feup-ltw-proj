@@ -1,7 +1,5 @@
 <?php
 
-use phpDocumentor\Reflection\Types\Resource_;
-
 session_start();
 
 require_once __DIR__ . '/server.php';
@@ -9,7 +7,9 @@ require_once __DIR__ . '/server.php';
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
-
+$raw_uri = $_SERVER["REQUEST_URI"];
+$base_uri = pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME);
+$uri = str_replace($base_uri, '', $raw_uri);
 
 // REST
 require_once API_DIR . '/rest-lib/rest-lib.php';
@@ -88,5 +88,4 @@ $tree = [
 
 $server = new RestServer($tree);
 
-$url = $_GET['url'];
-$server->serve($url);
+$server->serve($uri);
