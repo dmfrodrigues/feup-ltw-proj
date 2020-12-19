@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="csrf-token" content="<?=$CSRFtoken?>">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <base href="<?= PROTOCOL_SERVER_URL ?>/">
+        <base href="<?= SERVER_URL_PATH ?>/">
         <link rel="stylesheet" href="rest/client/css/docs.css">
         <link rel="stylesheet" href="rest/client/css/main.css">
         <link rel="stylesheet" href="rest/client/css/button.css">
@@ -25,12 +25,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="rest/client/resources/favicon.ico">
-        <script>
-            const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
-        </script>
         <script src="rest/client/js/rest.js"></script>
         <script>
-            var api = new RestApi("<?= PROTOCOL_SERVER_URL ?>");
+            var api = new RestApi("<?= SERVER_URL_PATH ?>");
         </script>
         <?php
             if(isset($javascript_files)){
@@ -57,7 +54,7 @@
                     <?php } ?> 
                     <span><a href="user/<?=$_SESSION['username']?>"><?=$_SESSION['username']?></a></span>
                 
-                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/logout.php">Logout</a>
+                <a href="actions/logout.php">Logout</a>
             <?php } ?>
             </div>
         </header>

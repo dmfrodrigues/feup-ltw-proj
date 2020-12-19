@@ -1,32 +1,22 @@
 <?php
-require_once __DIR__ . '/server_constants.php';
+// DIR constants
 define('SERVER_DIR', __DIR__);
 define('API_DIR', SERVER_DIR.'/rest');
-
 define('CLIENT_DIR', API_DIR.'/client');
 
+// URL constants
+define('SERVER_NAME', $_SERVER['SERVER_NAME']);
+define('SERVER_URL_PATH', pathinfo($_SERVER['PHP_SELF'], PATHINFO_DIRNAME));
 require_once SERVER_DIR.'/utils.php';
-
-/**
- * Get protocol.
- * 
- * Borrowed from anon445699
- * (https://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https)
- *
- * @return string 
- */
-function get_protocol() : string {
-    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-    return $protocol;
-}
 define('PROTOCOL', get_protocol());
 
-define('PROTOCOL_SERVER_URL', PROTOCOL . SERVER_URL);
-
+// Picture sizes
 define('USER_PICTURE_MAX_SIZE', 1000000);
 define('PET_PICTURE_MAX_SIZE', 1000000);
 define('COMMENT_PICTURE_MAX_SIZE', 1000000);
 
+// Time zone
 date_default_timezone_set('UTC');
 
+// Include connection
 require_once SERVER_DIR . '/database/connection.php';

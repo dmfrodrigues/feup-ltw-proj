@@ -2,12 +2,23 @@
 
 require_once CLIENT_DIR.'/error_page.php';
 
+/**
+ * Get protocol.
+ * 
+ * Borrowed from anon445699
+ * (https://stackoverflow.com/questions/4503135/php-get-site-url-protocol-http-vs-https)
+ *
+ * @return string 
+ */
+function get_protocol() : string {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+    return $protocol;
+}
+
 class NoFileSentException extends RuntimeException{}
 
-function path2url($file, $Protocol=PROTOCOL): string {
-    return
-        $Protocol .
-        str_replace(SERVER_DIR, SERVER_URL, $file);
+function path2url($file): string {
+    return str_replace(SERVER_DIR, PROTOCOL . SERVER_NAME . SERVER_URL_PATH, $file);
 }
 
 class CouldNotDeleteFileException extends RuntimeException{}
@@ -148,5 +159,5 @@ function my_response_code(int $response_code) : void {
 }
 
 function header_location(string $url) : void {
-    header('Location: ' . PROTOCOL_SERVER_URL . $url);
+    header('Location: ' . SERVER_URL_PATH . $url);
 }
