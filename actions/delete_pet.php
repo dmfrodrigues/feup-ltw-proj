@@ -12,7 +12,7 @@ $pet = Pet::fromDatabase($_GET['id']);
 
 if (isset($_SESSION['username'])){
     if($_SESSION['username'] != $pet->getPostedById()){
-        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
+        header("Location: " . PROTOCOL_SERVER_URL . "/pet/{$_GET['id']}&failed=1");
         die();
     }
 
@@ -21,6 +21,6 @@ if (isset($_SESSION['username'])){
     Pet::deleteFromDatabase($_GET['id']);
 }
 
-header("Location: " . PROTOCOL_API_URL . "/pet");
+header("Location: " . PROTOCOL_SERVER_URL . "/pet");
 
 die();

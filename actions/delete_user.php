@@ -14,8 +14,8 @@ $user = User::fromDatabase($_GET['username']);
 if(isset($_SESSION['username']) && $_SESSION['username'] == $user->getUsername()) {
     User::deleteFromDatabase($user->getUsername());
     session_destroy();
-    header('Location: ' . PROTOCOL_API_URL);
+    header('Location: ' . PROTOCOL_SERVER_URL);
     die();
 }
 else 
-    header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername().'&failed=1');
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/'.$user->getUsername().'&failed=1');

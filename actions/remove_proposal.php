@@ -14,7 +14,7 @@ $petId = $_GET['id'];
 
 if (isset($_SESSION['username'])){
     withdrawAdoptionRequest($_SESSION['username'], $petId);
-    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
+    header("Location: " . PROTOCOL_SERVER_URL . "/pet/$petId");
 }
 
 die();

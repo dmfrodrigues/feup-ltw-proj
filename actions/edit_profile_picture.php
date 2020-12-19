@@ -10,7 +10,7 @@ require_once SERVER_DIR.'/classes/User.php';
 require_once SERVER_DIR.'/classes/Shelter.php';
 
 if($user->getUsername() != $_SESSION['username']){
-    header("Location: " . PROTOCOL_API_URL . "/user/{$_SESSION['username']}");
+    header("Location: " . PROTOCOL_SERVER_URL . "/user/{$_SESSION['username']}");
 }
 
 $file = $_FILES['profile_picture'];
@@ -18,7 +18,7 @@ $file = $_FILES['profile_picture'];
 try{
     $user->setPicture($file);
 
-    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
+    header("Location: " . PROTOCOL_SERVER_URL . "/user/{$user->getUsername()}");
 } catch (RuntimeException $e) {
     echo $e->getMessage();
     header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);

@@ -31,7 +31,7 @@ if (isset($_SESSION['username'])){
         $_SESSION['username'],
         $tmpFilePaths
     );
-    header("Location: " . PROTOCOL_API_URL . "/pet/$petId");
+    header("Location: " . PROTOCOL_SERVER_URL . "/pet/$petId");
 }
 
 die();

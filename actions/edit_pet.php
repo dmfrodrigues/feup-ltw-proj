@@ -55,11 +55,11 @@ if (isset($_SESSION['username'])){
             }
         }
 
-        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}");
+        header("Location: " . PROTOCOL_SERVER_URL . "/pet/{$_GET['id']}");
         exit();
     }
 
 }
 
-header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
+header("Location: " . PROTOCOL_SERVER_URL . "/pet/{$_GET['id']}&failed=1");
 die();

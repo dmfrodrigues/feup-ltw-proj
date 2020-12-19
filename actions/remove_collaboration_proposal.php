@@ -15,7 +15,7 @@ $shelter = $_SESSION['username'];
 
 if (isset($_SESSION['isShelter']) && isset($shelter)) {
     deleteShelterInvitation($_GET['username'], $shelter);
-    header("Location: " . PROTOCOL_API_URL."/user/" . $shelter);
+    header("Location: " . PROTOCOL_SERVER_URL."/user/" . $shelter);
 }
 
 die();

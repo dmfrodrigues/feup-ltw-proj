@@ -18,15 +18,15 @@ try {
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     $_SESSION['isShelter'] = 1;
-    header('Location: ' . PROTOCOL_API_URL . '/user/'. $_SESSION['username']);
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/'. $_SESSION['username']);
 } catch(PDOException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=-1');
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/new?failed=1&errorCode=-1');
 } catch(UserAlreadyExistsException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=2');
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/new?failed=1&errorCode=2');
 } catch(InvalidUsernameException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=6');
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/new?failed=1&errorCode=6');
 } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=5');
+    header('Location: ' . PROTOCOL_SERVER_URL . '/user/new?failed=1&errorCode=5');
 }
 
 die();

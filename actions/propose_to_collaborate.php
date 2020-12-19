@@ -18,7 +18,7 @@ if (isset($_SESSION['username']) && isset($_SESSION['isShelter'])){
 
     addNotification($user, "shelterInvitation", "The shelter $shelterLink invited you to be a collaborator.");
 
-    header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
+    header("Location: " . PROTOCOL_SERVER_URL . "/user/{$user->getUsername()}");
 }
 
 die();

@@ -26,12 +26,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
         <link rel="shortcut icon" type="image/ico" href="rest/client/resources/favicon.ico">
         <script>
-            const API_URL = `<?= PROTOCOL_API_URL ?>/`;
             const PROTOCOL_SERVER_URL = "<?= PROTOCOL_SERVER_URL ?>";
         </script>
         <script src="rest/client/js/rest.js"></script>
         <script>
-            var api = new RestApi(API_URL);
+            var api = new RestApi("<?= PROTOCOL_SERVER_URL ?>");
         </script>
         <?php
             if(isset($javascript_files)){

@@ -70,7 +70,7 @@ function addCommentToChat(lastInsertedComment, user, petId) {
     proposalHeader.id = "proposal-header";
 
     let aLink = document.createElement("a");
-    aLink.href = API_URL+"/user/" + lastInsertedComment.user;
+    aLink.href = "user/" + lastInsertedComment.user;
 
     let profilePic = document.createElement('img');
     profilePic.id = "proposal-pic";
@@ -87,7 +87,7 @@ function addCommentToChat(lastInsertedComment, user, petId) {
 
     let authorInfo = document.createElement('p');
     authorInfo.innerHTML = `${lastInsertedComment.user} on 
-        ${lastInsertedComment.messageDate} for <a id="proposal-pet" href="${API_URL}/pet/${petId}">${petName}</a></p>`;
+        ${lastInsertedComment.messageDate} for <a id="proposal-pet" href="pet/${petId}">${petName}</a></p>`;
     
     let proposalMsg = document.createElement('div');
     proposalMsg.id = 'proposal-message';

@@ -16,7 +16,7 @@ $user = User::fromDatabase($_GET['username']);
 
 if (isset($shelter) && isset($_SESSION['isShelter'])) {
     deleteShelterInvitation($user->getUsername(), $shelter);
-    header("Location: " . PROTOCOL_API_URL."/user/" . $shelter);
+    header("Location: " . PROTOCOL_SERVER_URL."/user/" . $shelter);
 }
 
 die();
