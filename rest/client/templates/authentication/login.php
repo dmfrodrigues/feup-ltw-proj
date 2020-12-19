@@ -1,6 +1,6 @@
 <section id="login">
     <header><h2>Sign In</h2></header>
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/login.php" method="post">
+    <form action="actions/login.php" method="post">
         <label>
             Username <input type="text" name="username" required>
         </label>

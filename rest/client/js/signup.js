@@ -37,12 +37,12 @@ function switchSignUpForms(formType) {
     removeFormChilds(form);
 
     if(formType == 'user') {
-        form.setAttribute('action', PROTOCOL_SERVER_URL+'/actions/signup.php');
+        form.setAttribute('action', 'actions/signup.php');
         generateUserForm(form);
         changeButtonColour('signup-user-button', 'signup-shelter-button');
     }
     else {
-        form.setAttribute('action', PROTOCOL_SERVER_URL+'/actions/signup_shelter.php');
+        form.setAttribute('action', 'actions/signup_shelter.php');
         generateShelterForm(form);
         changeButtonColour('signup-shelter-button', 'signup-user-button');
     }

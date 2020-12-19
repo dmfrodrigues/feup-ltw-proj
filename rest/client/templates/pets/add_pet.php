@@ -2,7 +2,7 @@
     <header>
         <h1 class="secondary-title">Information about the new pet</h1>
     </header>
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/add_pet.php" method="post" enctype="multipart/form-data">
+    <form action="actions/add_pet.php" method="post" enctype="multipart/form-data">
         <div class="pets-name">
             <label for="pets-name">Name<input type="text" name="name" placeholder="Pet's name" required></label>
         </div>

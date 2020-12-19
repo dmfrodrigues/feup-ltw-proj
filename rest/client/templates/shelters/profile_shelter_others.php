@@ -7,7 +7,7 @@
             $userShelter = User::fromDatabase($_SESSION['username'])->getShelterId();
             if ($userShelter === $shelter->getUsername()) { ?>
                 <a href="<?= PROTOCOL_API_URL ?>/user/<?=$userShelter?>/edit">Edit Shelter Profile</a>
-                <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/leave_shelter.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?=$shelter->getUsername()?>'" id="leaveShelter">Leave Shelter</button>
+                <button onclick="location.href='actions/leave_shelter.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?=$shelter->getUsername()?>'" id="leaveShelter">Leave Shelter</button>
             <?php }
         } ?> 
     </header>

@@ -2,7 +2,7 @@
 $photos = $pet->getPictures();
 ?>
 <article id="edit-pet">
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_pet.php?id=<?= $pet->getId() ?>" method="post" enctype="multipart/form-data">
+    <form action="actions/edit_pet.php?id=<?= $pet->getId() ?>" method="post" enctype="multipart/form-data">
         <header>
             <input type="text" name="name" placeholder="Pet name" value="<?=$pet->getName()?>" required>
             <div id="data">
@@ -72,6 +72,6 @@ $photos = $pet->getPictures();
         <input type="submit" value="Submit" id="submit-edit-pet">
     </form>
     <div id="delete-pet">
-    <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_pet.php?csrf=<?=$_SESSION['csrf']?>&id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
+    <a href="actions/delete_pet.php?csrf=<?=$_SESSION['csrf']?>&id=<?= $pet->getId() ?>" onclick="return confirm('Do you want to remove this pet?')">Remove Pet</a>
     </div>
 </article>

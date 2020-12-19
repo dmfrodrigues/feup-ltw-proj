@@ -40,7 +40,7 @@ function editProfile(User $user): void {
                 </details>
             </div>
         </section>
-        <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile.php?username=<?=$user->getUsername()?>" method="post">
+        <form action="actions/edit_profile.php?username=<?=$user->getUsername()?>" method="post">
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="username">
                     <label for="username">Username<input type="text" name="username" placeholder="user's username" value="<?= $user->getUsername() ?>" required pattern="^[a-zA-Z0-9]+$"></label>
@@ -69,7 +69,7 @@ function editProfile(User $user): void {
         </form>
         <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
             <section id='delete-user'>
-                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+                <a href="actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
             </section>
         <?php } ?> 
     </section>
