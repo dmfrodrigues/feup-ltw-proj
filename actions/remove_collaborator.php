@@ -13,7 +13,7 @@ require_once SERVER_DIR.'/classes/Shelter.php';
 
 if (isset($_SESSION['isShelter']) && isset($_SESSION['username']) ) {
     leaveShelter($user->getId());
-    header("Location: " . PROTOCOL_SERVER_URL."/user/" . $_SESSION['username']);
+    header_location("/user/" . $_SESSION['username']);
 }
 
 die();

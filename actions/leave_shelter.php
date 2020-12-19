@@ -23,11 +23,11 @@ if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
 
         addNotification($shelter, "userLeftShelter", "The user $userLink left the shelter.");
 
-        header("Location: " . PROTOCOL_SERVER_URL."/user/" . $_SESSION['username']); 
+        header_location("/user/" . $_SESSION['username']); 
         die();
     }
 }
 
-header("Location: " . PROTOCOL_SERVER_URL);
+header_location('');
 
 die();

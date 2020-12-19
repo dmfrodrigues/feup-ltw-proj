@@ -14,21 +14,21 @@ try {
             if (User::checkCredentials($_POST['username'], $_POST['password'])) {
                 if (!isShelter($_POST['username'])){
                     $_SESSION['username'] = $_POST['username'];
-                    header('Location: ' . PROTOCOL_SERVER_URL);
+                    header_location('');
                 } else {
                     $_SESSION['username'] = $_POST['username'];
                     $_SESSION['isShelter'] = 1;
-                    header('Location: ' . PROTOCOL_SERVER_URL);
+                    header_location('');
                 }
             } else {
-                header('Location: ' . PROTOCOL_SERVER_URL . '/login?failed=1&errorCode=3');
+                header_location('/login?failed=1&errorCode=3');
             }
         }
     }
 } catch(PDOException $e) {
-    header('Location: ' . PROTOCOL_SERVER_URL . '/login?failed=1&errorCode=-1');
+    header_location('/login?failed=1&errorCode=-1');
 } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_SERVER_URL . '/login?failed=1&errorCode=-1');
+    header_location('/login?failed=1&errorCode=-1');
 }
 
 die();

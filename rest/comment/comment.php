@@ -110,7 +110,7 @@ $comment_id_photo_GET = function(array $args): void{
         $comment
     );
 
-    header("Location: " . PROTOCOL_SERVER_URL . "/resources/img/comments/{$id}.jpg");
+    header_location("/resources/img/comments/{$id}.jpg");
     exit();
 };
 

@@ -146,3 +146,7 @@ function my_response_code(int $response_code) : void {
     }
     http_response_code($response_code);
 }
+
+function header_location(string $url) : void {
+    header('Location: ' . PROTOCOL_SERVER_URL . $url);
+}

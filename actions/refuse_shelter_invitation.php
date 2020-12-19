@@ -20,7 +20,7 @@ if (isset($_SESSION['username']) && isShelter($shelter->getUsername())) {
 
     addNotification($shelter, "invitationOutcome", "The user $userLink refused your invite to be a collaborator.");
     
-    header("Location: " . PROTOCOL_SERVER_URL."/user/" . $_SESSION['username']);
+    header_location("/user/" . $_SESSION['username']);
 }
 
 die();

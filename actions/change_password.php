@@ -17,10 +17,10 @@ if (isset($_SESSION['username'])) {
             $user->getUsername(),
             $_POST['pwd']
         );
-        header('Location: ' . PROTOCOL_SERVER_URL . '/user/'.$user->getUsername());
+        header_location('/user/'.$user->getUsername());
         exit();
     } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_SERVER_URL . '/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
+    header_location('/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
 }
     
 } else { my_response_code(403); die(); }

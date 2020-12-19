@@ -117,7 +117,7 @@ $user_id_photo_GET = function(array $args): void{
 
     if($user == null){ my_response_code(404); die(); }
     $ret = $user->getPictureUrl();
-    if($ret  == null) $ret = 'rest/client/resources/img/no-image.svg';
+    if($ret  == null) $ret = PROTOCOL_SERVER_URL.'/rest/client/resources/img/no-image.svg';
     header("Location: {$ret}");
     exit();
 };

@@ -10,13 +10,13 @@ require_once SERVER_DIR.'/classes/User.php';
 require_once SERVER_DIR.'/classes/Shelter.php';
 
 if($user->getUsername() != $_SESSION['username']){
-    header("Location: " . PROTOCOL_SERVER_URL . "/user/{$_SESSION['username']}");
+    header_location("/user/{$_SESSION['username']}");
 }
 
 try{
     deleteUserPhoto($user->getUsername());
 
-    header("Location: " . PROTOCOL_SERVER_URL . "/user/{$user->getUsername()}");
+    header_location("/user/{$user->getUsername()}");
 } catch(CouldNotDeleteFileException $e){
     echo "Could not delete file";
     header("{$_SERVER['SERVER_PROTOCOL']} 400 Bad Request", true, 400);

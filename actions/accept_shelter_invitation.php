@@ -23,11 +23,11 @@ if (isset($_SESSION['username']) && isShelter($shelterId)) {
         
         addNotification($shelter, "invitationOutcome", "The user " . $userLink . " accepted your invite to be a collaborator.");
 
-        header("Location: " . PROTOCOL_SERVER_URL."/user/{$_SESSION['username']}"); 
+        header_location("/user/{$_SESSION['username']}"); 
         die();
     }    
 }
 
-header("Location: " . PROTOCOL_SERVER_URL."/user/{$_SESSION['username']}/invitations?failed=1&errorCode=1");
+header_location("/user/{$_SESSION['username']}/invitations?failed=1&errorCode=1");
 
 die();
