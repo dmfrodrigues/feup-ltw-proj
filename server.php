@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/server_constants.php';
+define('SERVER_DIR', __DIR__);
 define('API_DIR', SERVER_DIR.'/rest');
 define('API_URL', SERVER_URL.'/rest');
 
