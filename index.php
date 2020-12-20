@@ -7,7 +7,7 @@ require_once __DIR__ . '/server.php';
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
-$raw_uri = $_SERVER["REQUEST_URI"];
+$raw_uri = parse_url($_SERVER["REQUEST_URI"])['path'];
 
 // For PHP built-in server
 // If using PHP build-in server, returning false from the main script
