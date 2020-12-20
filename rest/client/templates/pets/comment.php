@@ -16,8 +16,8 @@
             <img id="action-edit"  class="icon" src="rest/client/resources/img/edit.svg" onclick="onClickCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;" title="Edit comment">
             <form id="action-delete" action="actions/delete_comment.php" method="post" style="display: none;" title="Delete comment">
                 <input id="action-delete-id" name="id" type="hidden">
-                <input id="action-delete-submit" type="submit" style="display: none">
-                <img class="icon" src="rest/client/resources/img/trash.svg" onclick="this.parentNode.querySelector('#action-delete-submit').click()">
+                <input id="action-delete-submit" name="submit" type="submit" style="display: none">
+                <img class="icon" src="rest/client/resources/img/trash.svg" onclick="this.parentNode.querySelector(`input[name='submit']`).click()">
                 <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             </form>
             <img id="action-reply" class="icon" src="rest/client/resources/img/reply.svg" onclick="onClickCommentReply(this.parentNode.parentNode.parentNode)" title="Reply">

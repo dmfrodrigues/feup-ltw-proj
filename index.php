@@ -15,7 +15,7 @@ $uri = str_replace(SERVER_URL_PATH, '', $raw_uri);
 // causes the server to serve the requested resource as-is
 // (https://www.php.net/manual/en/features.commandline.webserver.php - Example #3 Using a Router Script)
 // echo $raw_uri;
-if(preg_match("/^\/(actions\/[a-zA-Z0-9]*\.php)$/", $uri, $matches)){ require_once $matches[1]; exit(); }
+if(preg_match("/^\/(actions\/[a-zA-Z0-9_]*\.php)$/", $uri, $matches)){ require_once $matches[1]; exit(); }
 if(preg_match("/^\/resources\/.*$/"               , $uri)) return false;
 if(preg_match("/^\/rest\/client\/css\/.*\.css$/"  , $uri)) return false;
 if(preg_match("/^\/rest\/client\/js\/.*\.js$/"    , $uri)) return false;

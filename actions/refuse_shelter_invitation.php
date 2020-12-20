@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+// session_start();
 
 require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/database/connection.php';
