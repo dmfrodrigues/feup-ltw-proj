@@ -50,7 +50,7 @@ namespace Authorization {
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if pet was adopted, only the user who adopted it can edit it
         if ($user == null) return false;
         if ($pet->getStatus() === "forAdoption") return false;
-        return ($user == $pet->getAdoptedBy());
+        return ($user->getUsername() == $pet->getAdoptedBy()->getUsername());
     });
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, associated shelter can edit it
         if ($user    == null) return false;
