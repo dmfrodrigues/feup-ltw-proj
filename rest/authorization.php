@@ -31,13 +31,14 @@ namespace Authorization {
     // ======================================================== PROFILE ========================================================
     Rules::add_rule(Resource::PROFILE, Method::READ , function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can see
     Rules::add_rule(Resource::PROFILE, Method::WRITE, function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can write
-    Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool { return $user == $otherUser; }); // Edit itself
+    Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool { return $user == $otherUser ; }); // Edit itself
     Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool {                                 // Collaborators can edit shelter
+        //if ($otherUser == null) return false;
         if (!isShelter($otherUser->getUsername())) return false;
         $shelter = \Shelter::fromDatabase($otherUser->getUsername());
         $collaborators = $shelter->getCollaborators();
         foreach($collaborators as $collaborator) {
-            if ($collaborator->getUsername() == $user) return true;
+            if ($collaborator->getUsername() == $user->getUsername()) return true;
         }
         return false;
      });

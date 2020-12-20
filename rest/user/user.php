@@ -319,7 +319,7 @@ $user_id_proposalstome_GET = function(array $args): void {
         Authorization\Resource::PROFILE,
         Authorization\Method::EDIT,
         $auth,
-        null
+        $user
     );
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
@@ -336,7 +336,7 @@ $user_id_invitations_GET = function(array $args): void {
         Authorization\Resource::PROFILE,
         Authorization\Method::EDIT,
         $auth,
-        null
+        $user
     );
     
     if(strpos($_SERVER['HTTP_ACCEPT'], 'text/html') === false){ my_response_code(415); die(); }
