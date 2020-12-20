@@ -50,7 +50,7 @@
                 <?php } else { ?>
                     <button id="favorite" onclick="handleFavorites(this, '<?= $_SESSION['username'] ?>', <?= $pet->getId() ?>)"><img src="rest/client/resources/img/heart.svg" height="30px">Add to favorites</button>
                 <?php } ?>
-                <button id="ask" onclick="location.href = '#comments'"><img src="rest/client/resources/img/question-mark.png" height="42px">Ask question</button>
+                <button id="ask" onclick="location.href = 'pet/<?= $pet->getId() ?>/#comments'"><img src="rest/client/resources/img/question-mark.png" height="42px">Ask question</button>
                 <?php  if($_SESSION['username'] != $pet->getPostedById() ) { ?>
                     <div id="adoption-request-button">
                         <?php require_once CLIENT_DIR.'/templates/pets/adoption_request_buttons.php'; ?>
