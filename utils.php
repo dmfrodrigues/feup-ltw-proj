@@ -2,6 +2,12 @@
 
 require_once CLIENT_DIR.'/error_page.php';
 
+function endsWith(string $haystack, string $needle){
+    $length = strlen($needle);
+    if($length === 0) return true;
+    return substr($haystack, -$length) === $needle;
+}
+
 /**
  * Get protocol.
  * 
@@ -18,7 +24,7 @@ function get_protocol() : string {
 class NoFileSentException extends RuntimeException{}
 
 function path2url($file): string {
-    return str_replace(SERVER_DIR, PROTOCOL . SERVER_NAME . SERVER_URL_PATH, $file);
+    return str_replace(SERVER_DIR, SERVER_URL_PATH, $file);
 }
 
 class CouldNotDeleteFileException extends RuntimeException{}
