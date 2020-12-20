@@ -169,5 +169,7 @@ function my_response_code(int $response_code) : void {
 }
 
 function header_location(string $url) : void {
-    header('Location: ' . SERVER_URL_PATH . $url);
+    $location = SERVER_URL_PATH . $url;
+    if($location === '') $location = '/';
+    header('Location: ' . $location);
 }
