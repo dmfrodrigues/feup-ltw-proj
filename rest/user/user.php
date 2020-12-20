@@ -197,7 +197,7 @@ $user_id_password_change_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::PROFILE,
-        Authorization\Method::EDIT,
+        Authorization\Method::READ,
         $auth,
         $user
     );
