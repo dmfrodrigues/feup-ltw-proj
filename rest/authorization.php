@@ -103,7 +103,7 @@ namespace Authorization {
 
     // ======================================================== SHELTER_INVITATION ========================================================
     Rules::add_rule(Resource::SHELTER_INVITATION, Method::READ , function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return true; });
-    Rules::add_rule(Resource::SHELTER_INVITATION, Method::WRITE, function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return $user->getUsername() == $shelterInvite->getShelter()->getUsername(); }); // Shelter can write
+    Rules::add_rule(Resource::SHELTER_INVITATION, Method::WRITE, function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return isShelter($user->getUsername()); }); // Shelter can write
     
      function check(int $resourceType, int $method, ?\User $user, $resource): bool{
         if(isset(Rules::$rules[$resourceType])){
