@@ -3,15 +3,13 @@
         <header>
             <h1>Change Password</h1>
         </header>
-        <label>New Password:<br>
+        <label>New Password:
             <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
-        <br>
-        <label> Repeat Password:<br>
+        <label> Repeat Password:
             <input type="password" id="rpt_pwd" placeholder="Password" required></label>
-        <br>
-            <?php if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
-                <p id="simple-fail-msg">Change password failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
-            <?php } ?>
+        <?php if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
+            <p id="simple-fail-msg">Change password failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
+        <?php } ?>
         <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
         <input type="submit" value="Submit" id="submit-password">
     </form>

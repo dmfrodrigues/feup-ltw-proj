@@ -3,12 +3,10 @@
         <header>
             <h1>Change Password</h1>
         </header>
-        <label>New Password:<br>
+        <label>New Password:
             <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
-        <br>
-        <label> Repeat Password:<br>
+        <label> Repeat Password:
             <input type="password" id="rpt_pwd" placeholder="Password" required></label>
-        <br>
         <input type="submit" value="Submit" id="submit-password">
     </form>
 </article>
