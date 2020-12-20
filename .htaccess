@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_URI} !/resources/.*$
+RewriteCond %{REQUEST_URI} !/rest/client/css/.*\.css$
+RewriteCond %{REQUEST_URI} !/rest/client/js/.*\.js$
+RewriteCond %{REQUEST_URI} !/rest/client/resources/.*$
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L,B] 

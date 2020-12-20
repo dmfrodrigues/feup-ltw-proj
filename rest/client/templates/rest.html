@@ -1,0 +1,98 @@
+<article id="docs">
+
+<h2>REST API documentation</h2>
+
+<h3>Allowed request methods</h3>
+
+<table>
+    <thead>
+        <tr><th>Request                                           </th><th>GET                                              </th><th>POST                           </th><th>PUT                                                    </th><th>DELETE                                 </th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>/</code> (root)                             </td><td class="green">Get home page                      </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>rest                                 </code></td><td class="green">Get REST docs                      </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>login                                </code></td><td class="green">Get login page                     </td><td class="blue" >Login to website </td><td class="red"  >                                         </td><td class="blue" >Logout from website      </td></tr>
+        <tr><td><code>user                                 </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Create new user                          </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/new                             </code></td><td class="green">New user page                      </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;                      </code></td><td class="green">Get user data                      </td><td class="red"  >                 </td><td class="green">Edit user data                           </td><td class="green">Delete user              </td></tr>
+        <tr><td><code>user/&lt;id&gt;/photo                </code></td><td class="green">Get profile picture                </td><td class="red"  >                 </td><td class="green">Add/change profile picture               </td><td class="green">Delete profile picture   </td></tr>
+        <tr><td><code>user/&lt;id&gt;/password             </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Change password                          </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/password/change      </code></td><td class="green">Change password page               </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/edit                 </code></td><td class="green">User edit page                     </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/favorite             </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Add pet to user favorites                </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/favorite/&lt;id&gt;  </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="green">Remove pet from favorites</td></tr>
+        <tr><td><code>user/&lt;id&gt;/adopted              </code></td><td class="green">Pets the user adopted              </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/myproposals          </code></td><td class="green">User proposals                     </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/notifications        </code></td><td class="green">Get user notifications             </td><td class="red"  >                 </td><td class="green">Add user notification                    </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/proposalstome        </code></td><td class="green">Proposals to user's pets           </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/invitations          </code></td><td class="green">User shelter invitations           </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>user/&lt;id&gt;/previouslyOwned      </code></td><td class="green">Pets added by user and adopted     </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>shelter                              </code></td><td class="green">Get shelters                       </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/potential         </code></td><td class="green">Get potential shelter collaborators</td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/propose/&lt;id&gt;</code></td><td class="green">New invite page                    </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/invitations       </code></td><td class="green">Get shelter invitations            </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet                                  </code></td><td class="green">Get all pets                       </td><td class="red"  >                 </td><td class="green">Add new pet                              </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/new                              </code></td><td class="green">New pet page                       </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/adopted                          </code></td><td class="green">Get adopted pets                   </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/&lt;id&gt;                       </code></td><td class="green">Get pet data                       </td><td class="red"  >                 </td><td class="green">Edit pet                                 </td><td class="green">Delete pet               </td></tr>
+        <tr><td><code>pet/&lt;id&gt;/comments              </code></td><td class="green">Get pet comments                   </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/&lt;id&gt;/edit                  </code></td><td class="green">Edit pet page                      </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/&lt;id&gt;/photo                 </code></td><td class="green">Pet album page                     </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/&lt;id&gt;/adopt                 </code></td><td class="green">New adoption request page          </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>pet/&lt;id&gt;/proposals             </code></td><td class="green">List of pet adoption proposals     </td><td class="red"  >                 </td><td class="red"  >                                         </td><td class="red"  >                         </td></tr>
+        <tr><td><code>comment                              </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Add new comment                          </td><td class="red"  >                         </td></tr>
+        <tr><td><code>comment/photo                        </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Upload picture                           </td><td class="red"  >                         </td></tr>
+        <tr><td><code>comment/&lt;id&gt;                   </code></td><td class="green">Get comment data                   </td><td class="red"  >                 </td><td class="green">Edit comment                             </td><td class="green">Delete comment           </td></tr>
+        <tr><td><code>comment/&lt;id&gt;/photo             </code></td><td class="green">Get comment picture                </td><td class="red"  >                 </td><td class="green">Add/edit comment picture already uploaded</td><td class="green">Delete comment picture   </td></tr>
+        <tr><td><code>adoptionRequest/&lt;id&gt;/message   </code></td><td class="green">Get request messages               </td><td class="red"  >                 </td><td class="green">Add new message                          </td><td class="red"  >                         </td></tr>
+        <tr><td><code>notification                         </code></td><td class="red"  >                                   </td><td class="red"  >                 </td><td class="green">Add new notification                     </td><td class="red"  >                         </td></tr>
+    </tbody>
+</table>
+
+<h3>Allowed content types for GET requests</h3>
+
+<table>
+    <thead>
+        <tr><th>Request                                           </th><th>JSON          </th><th>HTML          </th><th>Redirect      </th></tr>
+    </thead>
+    <tbody>
+        <tr><td><code>/</code> (root)                             </td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>rest                                 </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>login                                </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user                                 </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>user/new                             </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;                      </code></td><td class="green"></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/photo                </code></td><td class="red"  ></td><td class="red"  ></td><td class="green"></td></tr>
+        <tr><td><code>user/&lt;id&gt;/password/change      </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/edit                 </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/favorite             </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/favorite/&lt;id&gt;  </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/adopted              </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/myproposals          </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/notifications        </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/proposalstome        </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/invitations          </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>user/&lt;id&gt;/previouslyOwned      </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>shelter                              </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/potential         </code></td><td class="blue" ></td><td class="blue" ></td><td class="red"  ></td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/propose/&lt;id&gt;</code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>shelter/&lt;id&gt;/invitations       </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet                                  </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/new                              </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/adopted                          </code></td><td class="blue" ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;                       </code></td><td class="green"></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;/comments              </code></td><td class="green"></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;/edit                  </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;/photo                 </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;/adopt                 </code></td><td class="red"  ></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>pet/&lt;id&gt;/proposals             </code></td><td class="green"></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>comment                              </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>comment/photo                        </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>comment/&lt;id&gt;                   </code></td><td class="green"></td><td class="red"  ></td><td class="red"  ></td></tr>
+        <tr><td><code>comment/&lt;id&gt;/photo             </code></td><td class="red"  ></td><td class="red"  ></td><td class="green"></td></tr>
+        <tr><td><code>adoptionRequest/&lt;id&gt;/message   </code></td><td class="green"></td><td class="green"></td><td class="red"  ></td></tr>
+        <tr><td><code>notification                         </code></td><td class="red"  ></td><td class="red"  ></td><td class="red"  ></td></tr>
+    </tbody>
+</table>
+
+</article>
