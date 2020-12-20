@@ -20,7 +20,7 @@
         let token = "<?= $_GET['token'] ?>";
         let password = el.querySelector('input[name="pwd"]').value;
 
-        let thisRegex = new RegExp('/^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$/');
+        var thisRegex = new RegExp('^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$');
 
         if(!thisRegex.test(password)){
             document.querySelector('p').remove();
