@@ -20,6 +20,19 @@
         let token = "<?= $_GET['token'] ?>";
         let password = el.querySelector('input[name="pwd"]').value;
 
+        let thisRegex = new RegExp('/^(?=.*[!@#$%^&*)(+=._-])(?=.*[A-Z])(?=.{7,}).*$/');
+
+        if(!thisRegex.test(password)){
+            document.querySelector('p').remove();
+            let errorMsg = document.createElement('p');
+            let errorString = "Password needs be at least 7 characters long and contain at least one uppercase letter and 1 special character.";
+            errorMsg.id = 'simple-fail-msg';
+            errorMsg.innerHTML = errorString;
+            if(document.querySelector('form').lastElementChild.previousElementSibling.innerHTML != errorString)
+                document.querySelector('form').insertBefore(errorMsg, document.querySelector('form').lastElementChild);
+            return false;
+        }
+
         api.put(
             "user/<?= $user->getUsername() ?>/password",
             {
