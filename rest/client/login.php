@@ -9,7 +9,15 @@ require_once SERVER_DIR.'/errors/errors.php';
 
 $title = "Login";
 $token = bin2hex(openssl_random_pseudo_bytes(32));
-setcookie("CSRFtoken", $token, time() + 60 * 60 * 24, '/', NULL, NULL, TRUE);
+setcookie('CSRFtoken', $token, [
+    'expires' => time() + 60 * 60 * 24,
+    'path' => '/',
+    'domain' => NULL,
+    'secure' => NULL,
+    'httponly' => true,
+    'samesite' => 'strict',
+]);
+
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/authentication/login.php';
