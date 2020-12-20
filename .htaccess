@@ -1,6 +1,5 @@
 RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !/actions/.*\.php$
 RewriteCond %{REQUEST_URI} !/resources/.*$
 RewriteCond %{REQUEST_URI} !/rest/client/css/.*\.css$
 RewriteCond %{REQUEST_URI} !/rest/client/js/.*\.js$

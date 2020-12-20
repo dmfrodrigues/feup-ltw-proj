@@ -1,4 +1,7 @@
 <?php
+
+chdir(__DIR__);
+
 // DIR constants
 define('SERVER_DIR', __DIR__);
 define('API_DIR', SERVER_DIR.'/rest');
@@ -19,11 +22,10 @@ if(strpos( $_SERVER['SERVER_SOFTWARE'], 'Apache') !== false){
         );
     }
     $server_url_path = pathinfo($this_file_url, PATHINFO_DIRNAME);
-    if($server_url_path[0] === '/') $server_url_path = substr($server_url_path, 1);
 } else if(strpos( $_SERVER['SERVER_SOFTWARE'], 'PHP') !== false){
     $server_url_path = str_replace($_SERVER['DOCUMENT_ROOT'], '', __DIR__);
-    if($server_url_path[0] === '/') $server_url_path = substr($server_url_path, 1);
 }
+if(strlen($server_url_path) > 0 && $server_url_path[0] === '/') $server_url_path = substr($server_url_path, 1);
 define('SERVER_URL_PATH', ($server_url_path === '' ? '' : '/').$server_url_path);
 
 define('PROTOCOL', get_protocol());
