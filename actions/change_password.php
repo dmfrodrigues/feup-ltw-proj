@@ -1,10 +1,7 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR . '/database/connection.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR . '/classes/User.php';
 require_once SERVER_DIR . '/classes/Shelter.php';
@@ -17,10 +14,10 @@ if (isset($_SESSION['username'])) {
             $user->getUsername(),
             $_POST['pwd']
         );
-        header('Location: ' . PROTOCOL_API_URL . '/user/'.$user->getUsername());
+        header_location('/user/'.$user->getUsername());
         exit();
     } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
+    header_location('/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
 }
     
 } else { my_response_code(403); die(); }

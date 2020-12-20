@@ -28,7 +28,7 @@ class Comment implements JsonSerializable {
     public function getAuthorId() : string { return noHTML($this->getUserId())             ; }
     public function getAnswerTo() : ?int   { return noHTML($this->answerTo)                ; }
     public function getPictureUrl() : string {
-        return SERVER_DIR . "resources/img/comments/{$this->getId()}.jpg";
+        return "resources/img/comments/{$this->getId()}.jpg";
     }
     
     public function setId (int $id) : void { 

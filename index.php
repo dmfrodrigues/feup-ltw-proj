@@ -1,13 +1,29 @@
 <?php
 
-use phpDocumentor\Reflection\Types\Resource_;
-
 session_start();
+
+require_once __DIR__ . '/server.php';
 
 header('Access-Control-Allow-Origin: https://fonts.gstatic.com');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, HEAD');
 
-require_once __DIR__ . '/api_main.php';
+$raw_uri = parse_url($_SERVER["REQUEST_URI"])['path'];
+$uri = str_replace(SERVER_URL_PATH, '', $raw_uri);
+
+// For PHP built-in server
+// If using PHP build-in server, returning false from the main script
+// causes the server to serve the requested resource as-is
+// (https://www.php.net/manual/en/features.commandline.webserver.php - Example #3 Using a Router Script)
+// echo $raw_uri;
+if(preg_match("/^\/(actions\/[a-zA-Z0-9_]*\.php)$/", $uri, $matches)){ require_once $matches[1]; exit(); }
+if(preg_match("/^\/resources\/.*$/"               , $uri)) return false;
+if(preg_match("/^\/rest\/client\/css\/.*\.css$/"  , $uri)) return false;
+if(preg_match("/^\/rest\/client\/js\/.*\.js$/"    , $uri)) return false;
+if(preg_match("/^\/rest\/client\/resources\/.*$/" , $uri)) return false;
+
+
+
+// REST
 require_once API_DIR . '/rest-lib/rest-lib.php';
 require_once API_DIR . '/root/root.php';
 require_once API_DIR . '/login/login.php';
@@ -84,5 +100,4 @@ $tree = [
 
 $server = new RestServer($tree);
 
-$url = $_GET['url'];
-$server->serve($url);
+$server->serve($uri);

@@ -1,6 +1,6 @@
 <section id="login">
     <header><h2>Sign In</h2></header>
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/login.php" method="post">
+    <form action="actions/login.php" method="post">
         <label>
             Username <input type="text" name="username" required>
         </label>
@@ -14,8 +14,8 @@
         <input type="hidden" name="csrf" value="<?=$token?>">
         <input type="submit" class="dark" value="Login" id="submit-login">
     </form>
-    <a href="<?= PROTOCOL_API_URL ?>/passwordReset">Forgot Password?</a>
+    <a href="passwordReset">Forgot Password?</a>
     <footer>
-        <p>New User? <a href="<?= PROTOCOL_API_URL ?>/user/new">Sign up</a></p>
+        <p>New User? <a href="user/new">Sign up</a></p>
     </footer>
 </section>

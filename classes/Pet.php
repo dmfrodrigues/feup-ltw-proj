@@ -4,7 +4,7 @@ require_once __DIR__.'/../server.php';
 require_once SERVER_DIR.'/classes/User.php';
 require_once SERVER_DIR.'/classes/Comment.php';
 require_once SERVER_DIR.'/classes/FavoritePet.php';
-require_once SERVER_DIR.'/rest/authentication.php';
+require_once SERVER_DIR.'/authentication.php';
 require_once SERVER_DIR.'/classes/AdoptionRequest.php';
 
 define('PETS_IMAGES_DIR', SERVER_DIR.'/resources/img/pets');
@@ -521,7 +521,7 @@ define('IMAGES_EXTENSIONS', ['jpg']);
  */
 function getPetMainPhoto(Pet $pet) : string {
     $picture = $pet->getMainPicture();
-    return ($picture == null ? PROTOCOL_CLIENT_URL.'/resources/img/no-image.svg' : $picture);
+    return ($picture == null ? 'rest/client/resources/img/no-image.svg' : $picture);
 }
 
 /**

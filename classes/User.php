@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__.'/../server.php';
-require_once SERVER_DIR.'/rest/authentication.php';
+require_once SERVER_DIR.'/authentication.php';
 require_once SERVER_DIR.'/classes/Pet.php';
 
 define('USERS_IMAGES_DIR', SERVER_DIR.'/resources/img/profiles');

@@ -6,8 +6,8 @@
 
 - **Project name:** Forever Home
 - **Short description:** A website for posting and adopting pets
-- **Environment:** Unix
-- **Tools:** HTML/CSS, Javascript, PHP
+- **Environment:** Apache2 and PHP built-in server (Unix)
+- **Tools:** HTML/CSS, Javascript, PHP, SQL
 - **Institution:** [FEUP](https://sigarra.up.pt/feup/en/web_page.Inicial)
 - **Course:** [LTW](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459485) (Web Languages and Technologies)
 <!-- - **Project grade:** ??.?/20.0 -->
@@ -20,6 +20,13 @@
 
 ## Installing
 
+### Cloning all dependencies
+
+To clone all dependencies (namely PHP libraries), please run
+```sh
+git submodule update --init --recursive
+```
+
 ### Build database
 
 To build the database, run
@@ -30,9 +37,11 @@ It may be necessary to change the script's permissions.
 
 ### Routing
 
-The REST API component of the server sends requests to `rest/<path>` to `server/index.php` which are then routed to the correct functions. This is unlike what apache2 typically does: route the request to the corresponding file in the file system.
+The REST API component of the server sends requests through `index.php` which are then routed to the correct functions/files. This is unlike what web servers typically do: route the request to the corresponding file in the file system.
 
-To correctly route the requests, the apache2 application must be able to read `rest/.htaccess`. To do that, you will probably have to change your apache2 configuration file (usually under `/etc/apache2/apache2.conf`), and set and replace `AllowOverride None` with `AllowOverride All` in the section where apache2 is configured for the directory where you put this repository; usually you put this repository somewhere under `/var/www` or any subfolder of it, so you must change section
+#### Apache2
+
+To correctly route the requests, the apache2 application must be able to read `rest/.htaccess`. To do that, you will probably have to change your apache2 configuration file (usually under `/etc/apache2/apache2.conf`), and replace `AllowOverride None` with `AllowOverride All` in the section where apache2 is configured for the directory where you put this repository; usually you put this repository somewhere under `/var/www` or any subfolder of it, so you must change section
 ```txt
 <Directory /var/www/>
 	Options Indexes FollowSymLinks
@@ -58,13 +67,11 @@ sudo a2enmod expires
 
 After changing the apache2 configuration and enabling the modules, restart apache2 by running `sudo service apache2 restart`.
 
-### Server constants
-Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server_constants_<environment>.php`.
-
-To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from the repository root.
+#### PHP built-in server
+For the PHP built-in server, if you set `index.php` as request router then you're fine, since all requests will be properly routed by `index.php` (this script returns false to signal the PHP built-in server to serve the actual file in the file system instead of proceeding in running PHP code).
 
 ### Email service
-To enable email service, you have to provide valid credentials in file `server/rest/email.cred`, following the template:
+To enable email service, you have to provide valid credentials in file `rest/email.cred`, following the template:
 ```txt
 <email address>
 <password>
@@ -78,6 +85,14 @@ password
 
 The actual Gmail email we will use is <foreverhomeorg@gmail.com>.
 The corresponding password is to be kept secret, and as such only available on request to our team.
+
+### Running with PHP built-in server
+
+To run this project with the built-in PHP server, you have to run it with the proper arguments so that requests are routed to `index.php`:
+
+```sh
+php -S localhost:4000 index.php
+```
 
 ## Credentials
 Username/password (role):
@@ -112,6 +127,7 @@ Username/password (role):
     - Other:
         - Regenerate session: yes
         - Usernames are case insensitive: yes
+        - Password reset with randomly-generated token
 
 - Technologies
     - Separated logic/database/presentation: yes

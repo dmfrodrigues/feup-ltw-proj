@@ -1,6 +1,6 @@
 <?php
 namespace Authorization {
-    require_once __DIR__.'/../server.php';
+    require_once __DIR__.'/server.php';
     require_once SERVER_DIR.'/classes/User.php';
     require_once SERVER_DIR.'/classes/Pet.php';
     require_once SERVER_DIR.'/classes/Shelter.php';

@@ -11,6 +11,8 @@ class RestApi {
      */
     constructor(api_url){
         this._api_url = api_url;
+        if(this._api_url !== "" && this._api_url[this._api_url.length-1] !== '/')
+            this._api_url += '/';
     }
 
     /**

@@ -1,10 +1,7 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/database/connection.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 require_once SERVER_DIR.'/classes/Shelter.php';
 
 try {
@@ -18,15 +15,15 @@ try {
     );
     $_SESSION['username'] = htmlspecialchars($_POST['username']);
     $_SESSION['isShelter'] = 1;
-    header('Location: ' . PROTOCOL_API_URL . '/user/'. $_SESSION['username']);
+    header_location('/user/'. $_SESSION['username']);
 } catch(PDOException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=-1');
+    header_location('/user/new?failed=1&errorCode=-1');
 } catch(UserAlreadyExistsException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=2');
+    header_location('/user/new?failed=1&errorCode=2');
 } catch(InvalidUsernameException $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=6');
+    header_location('/user/new?failed=1&errorCode=6');
 } catch(Exception $e) {
-    header('Location: ' . PROTOCOL_API_URL . '/user/new?failed=1&errorCode=5');
+    header_location('/user/new?failed=1&errorCode=5');
 }
 
 die();

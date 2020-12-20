@@ -32,7 +32,7 @@
         let email    = el.querySelector('#email'   ).value;
         let name     = el.querySelector('#name'    ).value;
         if (username === "new") {
-          location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
+          location.href = `user/new?failed=1&errorCode=6`;
           return false;
         } 
         api.put(
@@ -46,15 +46,15 @@
         )
         .then(function (response) {
           if(response.status == 409)
-            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=2`;
+            location.href = `user/new?failed=1&errorCode=2`;
           if(response.status == 412)
-            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=6`;
+            location.href = `user/new?failed=1&errorCode=6`;
           else if(response.status != 400)
-            location.href = `<?= PROTOCOL_API_URL ?>/user/${username}`;
+            location.href = `user/${username}`;
           else if(!/[\w]+/.test(username))
-            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=4`;
+            location.href = `user/new?failed=1&errorCode=4`;
           else
-            location.href = `<?= PROTOCOL_API_URL ?>/user/new?failed=1&errorCode=5`;
+            location.href = `user/new?failed=1&errorCode=5`;
         })
         .catch(function (error) {
           console.error(error);

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../api_main.php';
-require_once __DIR__ . '/../authentication.php';
-require_once __DIR__ . '/../authorization.php';
+require_once __DIR__ . '/../../server.php';
+require_once __DIR__ . '/../../authentication.php';
+require_once __DIR__ . '/../../authorization.php';
 require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once __DIR__ . '/../email.php';
@@ -36,7 +36,7 @@ $passwordReset_PUT = function(array $args): void {
         "with the email address {$email}.\r\n".
         "\r\n".
         "Please click the following link to reset your password:\r\n".
-        PROTOCOL_API_URL."/user/{$user->getUsername()}/password/change/?token={$reset->getToken()}\r\n".
+        PROTOCOL . $_SERVER['HTTP_HOST'] . SERVER_URL_PATH . "/user/{$user->getUsername()}/password/change/?token={$reset->getToken()}\r\n".
         "This link is only available for 24h.\r\n".
         "\r\n".
         "Best regards,\r\n".

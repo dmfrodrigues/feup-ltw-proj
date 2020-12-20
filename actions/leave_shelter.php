@@ -1,10 +1,7 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/database/connection.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR.'/classes/Notification.php';
 require_once SERVER_DIR.'/classes/User.php';
@@ -19,15 +16,15 @@ if (isset($_SESSION['username']) && !isset($_SESSION['isShelter'])) {
     if ($shelter->getUsername() === $userShelter->getUsername()) {
         leaveShelter($_SESSION['username']);
 
-        $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+        $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
 
-        addNotification($shelter, "userLeftShelter", "The user " . $userLink . " left the shelter.");
+        addNotification($shelter, "userLeftShelter", "The user $userLink left the shelter.");
 
-        header("Location: " . PROTOCOL_API_URL."/user/" . $_SESSION['username']); 
+        header_location("/user/" . $_SESSION['username']); 
         die();
     }
 }
 
-header("Location: " . PROTOCOL_API_URL);
+header_location('');
 
 die();

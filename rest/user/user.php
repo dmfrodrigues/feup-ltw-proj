@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../api_main.php';
-require_once __DIR__ . '/../authentication.php';
-require_once __DIR__ . '/../authorization.php';
+require_once __DIR__ . '/../../server.php';
+require_once __DIR__ . '/../../authentication.php';
+require_once __DIR__ . '/../../authorization.php';
 require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/classes/User.php';
@@ -117,7 +117,7 @@ $user_id_photo_GET = function(array $args): void{
 
     if($user == null){ my_response_code(404); die(); }
     $ret = $user->getPictureUrl();
-    if($ret  == null) $ret = PROTOCOL_CLIENT_URL . '/resources/img/no-image.svg';
+    if($ret  == null) $ret = SERVER_URL_PATH.'/rest/client/resources/img/no-image.svg';
     header("Location: {$ret}");
     exit();
 };
@@ -197,7 +197,7 @@ $user_id_password_change_GET = function(array $args): void {
     $auth = Authentication\check(true);
     Authorization\checkAndRespond(
         Authorization\Resource::PROFILE,
-        Authorization\Method::EDIT,
+        Authorization\Method::READ,
         $auth,
         $user
     );

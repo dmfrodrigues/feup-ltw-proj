@@ -4,17 +4,17 @@
             <div id="proposal"> 
                 <?php if($isMyPetProposal) { ?>
                     <div id="proposal-header">
-                        <a href="<?= PROTOCOL_API_URL ?>/user/<?=$request->getUserId()?>">
+                        <a href="user/<?=$request->getUserId()?>">
                             <?php $proposal_pic = User::fromDatabase($request->getUserId())->getPictureUrl();?>
-                            <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                            <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                         </a>
                     </div>
                 <?php } ?>
             <div id="proposal-info-box">
                 <?php if($isMyPetProposal) { ?>
-                    <p><?=$request->getUserId()?> on <?=$request->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
+                    <p><?=$request->getUserId()?> on <?=$request->getDate()?> for <a id="proposal-pet" href="pet/<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
                 <?php } else { ?>
-                    <p>                              <?=$request->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
+                    <p>                              <?=$request->getDate()?> for <a id="proposal-pet" href="pet/<?=$request->getPetId()?>"><?=$request->getPet()->getName()?></a></p>
                 <?php } ?>
                 
                 <div id="proposal-message">
@@ -22,12 +22,12 @@
                 </div>  
                 
                 <?php if($isMyPetProposal) { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">Answer Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=accepted&petId=<?=$request->getPetId()?>'" id="acceptRequest">Accept Request</button>
+                    <button onclick="location.href='adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">Answer Request</button>
+                    <button onclick="location.href='actions/change_adoptionRequest_outcome.php?csrf=<?=$_SESSION['csrf']?>&requestId=<?=$request->getId()?>&username=<?=$_SESSION['username']?>&outcome=rejected&petId=<?=$request->getPetId()?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/remove_proposal.php?csrf=<?=$_SESSION['csrf']?>&id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_API_URL ?>/adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">View Chat</button>
+                    <button onclick="location.href='actions/remove_proposal.php?csrf=<?=$_SESSION['csrf']?>&id=<?=$request->getPetId()?>'"id="cancelRequest">Cancel Request</button>
+                    <button onclick="location.href='adoptionRequest/<?=$request->getId()?>/message'" id="answerRequest">View Chat</button>
                 <?php } ?>
 
             </div>
@@ -39,10 +39,10 @@
 
     function drawAdoptionRequestInitialMessage($adoptionRequest) { 
             $userWhoProposed = $adoptionRequest->getUser()->getUsername();
-            $userWhoProposedLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoProposed . "'>" . $userWhoProposed . "</a>";
+            $userWhoProposedLink = "<a href='user/{$userWhoProposed}'>{$userWhoProposed}</a>";
             $petOwner = $adoptionRequest->getPet()->getPostedById();
-            $petOwnerLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $petOwner . "'>" . $petOwner . "</a>";
-            $petLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $adoptionRequest->getPet()->getId() . "'>" . $adoptionRequest->getPet()->getName() . "</a>";
+            $petOwnerLink = "<a href='user/{$petOwner}'>{$petOwner}</a>";
+            $petLink = "<a href='pet/{$adoptionRequest->getPet()->getId()}'>{$adoptionRequest->getPet()->getName()}</a>";
         ?>
         <input type="hidden" name="isOwnerSending" value="<?=$_SESSION['username'] === $petOwner ?>">
         <input type="hidden" name="userWhoProposed" value="<?=$userWhoProposed ?>">
@@ -56,13 +56,13 @@
             <div id="proposal-msg"> 
                 <input type="hidden" value="<?=$_SESSION['username'] == $adoptionRequest->getUserId() ?>">
                 <div id="proposal-header">
-                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$adoptionRequest->getUserId()?>">
+                    <a href="user/<?=$adoptionRequest->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($adoptionRequest->getUserId())->getPictureUrl();?>
-                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$adoptionRequest->getUserId()?> on <?=$adoptionRequest->getDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$adoptionRequest->getPetId()?>"><?=$adoptionRequest->getPet()->getName()?></a></p>
+                        <p><?=$adoptionRequest->getUserId()?> on <?=$adoptionRequest->getDate()?> for <a id="proposal-pet" href="pet/<?=$adoptionRequest->getPetId()?>"><?=$adoptionRequest->getPet()->getName()?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$adoptionRequest->getText()?></textarea>
@@ -77,13 +77,13 @@
         foreach($adoptionRequestMessages as $reqMessage) { ?>
             <div id="proposal-msg"> 
                 <div id="proposal-header">
-                    <a href="<?= PROTOCOL_API_URL ?>/user/<?=$reqMessage->getUserId()?>">
+                    <a href="user/<?=$reqMessage->getUserId()?>">
                         <?php $proposal_pic = User::fromDatabase($reqMessage->getUserId())->getPictureUrl();?>
-                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                        <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                     </a>
                 </div>
                 <div id="proposal-info">
-                        <p><?=$reqMessage->getUserId()?> on <?=$reqMessage->getMessageDate()?> for <a id="proposal-pet" href="<?= PROTOCOL_API_URL ?>/pet/<?=$reqMessage->getPet()->getName()?>"><?=$reqMessage->getPet()->getName()?></a></p>
+                        <p><?=$reqMessage->getUserId()?> on <?=$reqMessage->getMessageDate()?> for <a id="proposal-pet" href="pet/<?=$reqMessage->getPet()->getName()?>"><?=$reqMessage->getPet()->getName()?></a></p>
                     
                     <div id="proposal-message">
                         <textarea readonly>&nbsp;<?=$reqMessage->getText()?></textarea>
@@ -101,9 +101,9 @@
             <input type="hidden" name="requestID" value="<?= $request->getId()?>">
             <input type="hidden" name="username" value="<?= $_SESSION['username']?>">
             <div id="proposal-header">
-                <a href="<?= PROTOCOL_API_URL ?>/user/<?=$_SESSION['username']?>">
+                <a href="user/<?=$_SESSION['username']?>">
                     <?php $proposal_pic = User::fromDatabase($_SESSION['username'])->getPictureUrl();?>
-                    <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $proposal_pic)?>">
+                    <img id="proposal-pic" src="<?php echo (is_null($proposal_pic) ? "rest/client/resources/img/no-image.svg" : $proposal_pic)?>">
                 </a>
             </div>
             <div id="proposal-info">
@@ -111,7 +111,7 @@
                 <div id="proposal-message-submit">
                     <textarea></textarea>
                     <button class="dark" onclick="addNewAdoptionRequestMsg()" id="submitAnswer">Submit</button>
-                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/update.svg"/></button></div>
+                    <div id="proposal-messages-refresh"><button id="update" class="image" onclick="onClickedUpdateChat(this)"><img src="rest/client/resources/img/update.svg"/></button></div>
                 </div>  
             </div>
         </div>

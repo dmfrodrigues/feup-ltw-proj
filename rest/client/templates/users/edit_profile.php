@@ -9,7 +9,7 @@ function editProfile(User $user): void {
         <section id="profile-photo">
             <h3>Profile photo</h3>
             <div id="photo">
-                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
+                <img class="profile-pic" src="<?php echo (is_null($user->getPictureUrl()) ? "rest/client/resources/img/no-image.svg": $user->getPictureUrl()) ?>">
                 <details>
                     <summary>
                         <div class="dropdown-main" id="edit">✎ Edit</button>
@@ -40,7 +40,7 @@ function editProfile(User $user): void {
                 </details>
             </div>
         </section>
-        <form action="<?= PROTOCOL_SERVER_URL ?>/actions/edit_profile.php?username=<?=$user->getUsername()?>" method="post">
+        <form action="actions/edit_profile.php?username=<?=$user->getUsername()?>" method="post">
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="username">
                     <label for="username">Username<input type="text" name="username" placeholder="user's username" value="<?= $user->getUsername() ?>" required pattern="^[a-zA-Z0-9]+$"></label>
@@ -61,7 +61,7 @@ function editProfile(User $user): void {
             <?php } ?>
             <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
                 <section id="password">
-                    <label for="password">Password<a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername()?>/password/change"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg"></a></label>
+                    <label for="password">Password<a href="user/<?= $user->getUsername()?>/password/change"><img src="rest/client/resources/img/edit.svg"></a></label>
                 </section>
             <?php } ?> 
             <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
@@ -69,7 +69,7 @@ function editProfile(User $user): void {
         </form>
         <?php if (isset($_SESSION['username']) && $_SESSION['username'] === $user->getUsername()) { ?>
             <section id='delete-user'>
-                <a href="<?= PROTOCOL_SERVER_URL ?>/actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
+                <a href="actions/delete_user.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>" onclick="return confirm('Do you want to delete this account?')">⚠ Delete Account</a>
             </section>
         <?php } ?> 
     </section>

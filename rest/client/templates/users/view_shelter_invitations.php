@@ -2,10 +2,10 @@
     function drawInvitation(User $user, Shelter $shelter, $text, $requestDate, $isShelter): void { ?>
             <div id="proposal"> 
                 <div id="proposal-header">
-                    <a href="<?= PROTOCOL_API_URL ?>/user/<?= $shelter->getUsername() ?>"> 
+                    <a href="user/<?= $shelter->getUsername() ?>"> 
                         <img id="proposal-pic" src="<?php 
                         $shelter_pic = $shelter->getPictureUrl();
-                        echo (is_null($shelter_pic) ? PROTOCOL_CLIENT_URL."/resources/img/no-image.svg" : $shelter_pic) ?>
+                        echo (is_null($shelter_pic) ? "rest/client/resources/img/no-image.svg" : $shelter_pic) ?>
                         ">
                     </a>
                 </div>
@@ -13,17 +13,17 @@
                 <?php if (!$isShelter) { ?>
                     <p><?= $shelter->getUsername() ?> on <?=$requestDate?></p>
                 <?php } else { ?>
-                    <p>To <a href="<?= PROTOCOL_API_URL ?>/user/<?= $user->getUsername() ?>"><?= $user->getUsername() ?></a> on <?=$requestDate?></p>
+                    <p>To <a href="user/<?= $user->getUsername() ?>"><?= $user->getUsername() ?></a> on <?=$requestDate?></p>
                 <?php } ?>
                 <div id="proposal-message">
                     <textarea readonly><?=$text?></textarea>
                 </div>  
                 
                 <?php if(!$isShelter) { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/accept_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="acceptRequest">Accept Request</button>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/refuse_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="refuseRequest">Refuse Request</button>
+                    <button onclick="location.href='actions/accept_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="acceptRequest">Accept Request</button>
+                    <button onclick="location.href='actions/refuse_shelter_invitation.php?csrf=<?=$_SESSION['csrf']?>&shelter=<?= $shelter->getUsername() ?>'" id="refuseRequest">Refuse Request</button>
                 <?php } else { ?>
-                    <button onclick="location.href='<?= PROTOCOL_SERVER_URL ?>/actions/shelter_cancel_invitation.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>'" id="refuseRequest">Remove Request</button>
+                    <button onclick="location.href='actions/shelter_cancel_invitation.php?csrf=<?=$_SESSION['csrf']?>&username=<?= $user->getUsername() ?>'" id="refuseRequest">Remove Request</button>
                 <?php } ?>
             </div>
         </div>

@@ -4,16 +4,16 @@
     <input name="picture" type="file" style="display:none;" onchange="onChangeCommentPictureInput(this)">
     <input name="deleteFile" type="hidden" value="0">
     <article class="comment">
-        <span id="comment-user" class="user"><a href="<?= PROTOCOL_API_URL ?>/user/#">#</a></span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/#"><img class="profile-pic" src=""></a>
+        <span id="comment-user" class="user"><a href="user/#">#</a></span>
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="user/#"><img class="profile-pic" src=""></a>
         <div id="comment-content">
             <textarea class="comment-text" name="text" placeholder="Write a comment..." rows="1"
                     oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
-            <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
+            <img class="icon" src="rest/client/resources/img/annex.svg" onclick="this.parentNode.parentNode.parentNode.querySelector(`input[name='picture']`).click()" title="Add picture">
+            <img class="icon" src="rest/client/resources/img/cross.svg" onclick="editComment_removePicture(this.parentNode.parentNode.parentNode)" title="Erase picture">
             <input type="submit" class="comment-submit" value="Submit">
         </div>
     </article>
@@ -85,12 +85,12 @@
         el_commentId.value = comment.id;
 
         let el_user = editElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
+        el_user.children[0].href = `user/${comment.user}`;
         el_user.children[0].innerHTML = comment.user;
 
         let el_userPic = editElement.querySelector("#comment-profile-pic-a");
-        el_userPic.href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
-        el_userPic.children[0].src = API_URL + `user/${comment.user}/photo?csrf=<?=$_SESSION['csrf']?>`;
+        el_userPic.href = `user/${comment.user}`;
+        el_userPic.children[0].src = `user/${comment.user}/photo?csrf=<?=$_SESSION['csrf']?>`;
 
         let el_text = editElement.querySelector('textarea[name="text"]');
         el_text.value = comment.text;
@@ -98,7 +98,7 @@
         let el_img = editElement.querySelector("#comment-picture");
         api.head(`comment/${comment.id}/photo`)
         .then(function(response){
-            if(response.status == 200) el_img.src = API_URL + `comment/${comment.id}/photo?csrf=<?=$_SESSION['csrf']?>`;
+            if(response.status == 200) el_img.src = `comment/${comment.id}/photo?csrf=<?=$_SESSION['csrf']?>`;
             else                       el_img.src = '';
         })
         .catch(function(error){

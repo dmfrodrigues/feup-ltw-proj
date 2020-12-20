@@ -2,9 +2,9 @@
 <div class="comment">
     <article class="comment">
         <span id="comment-user" class="user">
-            <a href="<?= PROTOCOL_API_URL ?>/user/"></a>
+            <a href="user/"></a>
         </span>
-        <a id="comment-profile-pic-a" class="profile-pic-a" href="<?= PROTOCOL_API_URL ?>/user/">
+        <a id="comment-profile-pic-a" class="profile-pic-a" href="user/">
             <img class="profile-pic" src="">
         </a>
         <span id="comment-date" class="date">2020-31-12 00:00:00</span>
@@ -13,14 +13,14 @@
             <img id="comment-picture" class="comment-picture" src="">
         </div>
         <div id="comment-actions" class="actions" style="display: none;">
-            <img id="action-edit"  class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/edit.svg" onclick="onClickCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;" title="Edit comment">
-            <form id="action-delete" action="<?= PROTOCOL_SERVER_URL ?>/actions/delete_comment.php" method="post" style="display: none;" title="Delete comment">
+            <img id="action-edit"  class="icon" src="rest/client/resources/img/edit.svg" onclick="onClickCommentEdit (this.parentNode.parentNode.parentNode)" style="display: none;" title="Edit comment">
+            <form id="action-delete" action="actions/delete_comment.php" method="post" style="display: none;" title="Delete comment">
                 <input id="action-delete-id" name="id" type="hidden">
-                <input id="action-delete-submit" type="submit" style="display: none">
-                <img class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/trash.svg" onclick="this.parentNode.querySelector('#action-delete-submit').click()">
+                <input id="action-delete-submit" name="submit" type="submit" style="display: none">
+                <img class="icon" src="rest/client/resources/img/trash.svg" onclick="this.parentNode.querySelector(`input[name='submit']`).click()">
                 <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             </form>
-            <img id="action-reply" class="icon" src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/reply.svg" onclick="onClickCommentReply(this.parentNode.parentNode.parentNode)" title="Reply">
+            <img id="action-reply" class="icon" src="rest/client/resources/img/reply.svg" onclick="onClickCommentReply(this.parentNode.parentNode.parentNode)" title="Reply">
         </div>
     </article>
     <details id="comment-answers" class="comment-details" open>
@@ -58,12 +58,12 @@
         commentElement.id = `comment-${comment.id}`;
 
         let el_user = commentElement.querySelector("#comment-user");
-        el_user.children[0].href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
+        el_user.children[0].href = `user/${comment.user}`;
         el_user.children[0].innerHTML = comment.user;
 
         let el_pic = commentElement.querySelector("#comment-profile-pic-a");
-        el_pic.href = `<?= PROTOCOL_API_URL ?>/user/${comment.user}`;
-        el_pic.children[0].src = API_URL + `user/${comment.user}/photo`;
+        el_pic.href = `user/${comment.user}`;
+        el_pic.children[0].src = `user/${comment.user}/photo`;
 
         let el_date = commentElement.querySelector("#comment-date"); el_date.innerHTML = comment.postedOn;
         let el_text = commentElement.querySelector("#comment-text"); el_text.innerHTML = comment.text;
@@ -71,7 +71,7 @@
         let el_img = commentElement.querySelector("#comment-picture");
         api.head(`comment/${comment.id}/photo`)
         .then(function(response){
-            if(response.status == 200) el_img.src = API_URL + `comment/${comment.id}/photo`;
+            if(response.status == 200) el_img.src = `comment/${comment.id}/photo`;
             else                       el_img.src = '';
         })
         .catch(function(error){

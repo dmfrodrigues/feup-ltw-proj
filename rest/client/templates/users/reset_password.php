@@ -26,7 +26,7 @@
         )
         .then(function (response){
             if(response.status === 200){
-                location.href = "<?= PROTOCOL_API_URL ?>/login/";
+                location.href = "login/";
             } else {
                 console.error(response);
             }

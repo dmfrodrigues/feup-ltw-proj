@@ -1,6 +1,6 @@
 <?php
 namespace Authentication {
-    require_once __DIR__ . '/api_main.php';
+    require_once __DIR__ . '/server.php';
     require_once SERVER_DIR . '/classes/User.php';
     require_once SERVER_DIR . '/classes/Shelter.php';
 

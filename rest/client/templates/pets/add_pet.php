@@ -2,7 +2,7 @@
     <header>
         <h1 class="secondary-title">Information about the new pet</h1>
     </header>
-    <form action="<?= PROTOCOL_SERVER_URL ?>/actions/add_pet.php" method="post" enctype="multipart/form-data">
+    <form action="actions/add_pet.php" method="post" enctype="multipart/form-data">
         <div class="pets-name">
             <label for="pets-name">Name<input type="text" name="name" placeholder="Pet's name" required></label>
         </div>
@@ -10,7 +10,7 @@
             <label for="pets-location">Location<input type="text" name="location" placeholder="Pet's location" required></label>
         </div>
         <div class="pets-photos">
-            <a id="add-photo" onclick="addPetPhoto(this.parentNode)"><img src="<?= PROTOCOL_CLIENT_URL ?>/resources/img/upload_image.png"></a>
+            <a id="add-photo" onclick="addPetPhoto(this.parentNode)"><img src="rest/client/resources/img/upload_image.png"></a>
             <div id="pet-photos-inputs">
                 <input id="photo-number" name="photo-number" type="hidden" value="0">
             </div>

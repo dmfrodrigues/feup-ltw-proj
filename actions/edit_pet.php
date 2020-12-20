@@ -1,10 +1,7 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR.'/database/connection.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR.'/classes/Notification.php';
 require_once SERVER_DIR.'/classes/User.php';
@@ -47,19 +44,19 @@ if (isset($_SESSION['username'])){
             if ($userWhoFavoritePet['username'] !== $_SESSION['username']) {
                 $user = User::fromDatabase($userWhoFavoritePet['username']);
 
-                $petNameLink = "<a href='" . PROTOCOL_API_URL . '/pet/' . $pet->getId() . "'>" . $pet->getName() . "</a>";
-                $userWhoPostedPetLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $userWhoPostedPet->getUsername() . "'>" . $userWhoPostedPet->getUsername() . "</a>";
-                $userLink = "<a href='" . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . "'>" . $_SESSION['username'] . "</a>";
+                $petNameLink = "<a href='pet/{$pet->getId()}'>{$pet->getName()}</a>";
+                $userWhoPostedPetLink = "<a href='user/{$userWhoPostedPet->getUsername()}'>{$userWhoPostedPet->getUsername()}</a>";
+                $userLink = "<a href='user/{$_SESSION['username']}'>{$_SESSION['username']}</a>";
 
-                addNotification($user, "favoriteEdited", "Your favorite pet " . $petNameLink . ", posted by " . $userWhoPostedPetLink . " was edited by " . $userLink . ".");
+                addNotification($user, "favoriteEdited", "Your favorite pet $petNameLink, posted by $userWhoPostedPetLink was edited by $userLink.");
             }
         }
 
-        header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}");
+        header_location("/pet/{$_GET['id']}");
         exit();
     }
 
 }
 
-header("Location: " . PROTOCOL_API_URL . "/pet/{$_GET['id']}&failed=1");
+header_location("/pet/{$_GET['id']}&failed=1");
 die();

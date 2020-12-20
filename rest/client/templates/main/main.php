@@ -3,7 +3,7 @@
         <h2>A website where users can list rescue pets for adoption and offer them a forever home .</h2>
     </header>
     <section class="pets-main-page">
-        <h1><a href="<?= PROTOCOL_API_URL ?>/pet">Pets Available for Adoption</a></h1>
+        <h1><a href="pet">Pets Available for Adoption</a></h1>
         <div>
         <?php
         if(count($petsForAdoption) < 3)
@@ -15,7 +15,7 @@
             $intro = explode(PHP_EOL, $pet->getDescription())[0];
             $photoUrl = getPetMainPhoto($pet);
         ?>
-        <article class="pet-card" onclick="location.href = '<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>';">
+        <article class="pet-card" onclick="location.href = 'pet/<?= $pet->getId() ?>';">
             <div class="pet-card-inner">
                 <div class="pet-card-front">
                     <img src="<?= $photoUrl ?>">
@@ -37,10 +37,10 @@
     </section>
 
     <section class="pets-main-page">
-        <h1><a href="<?= PROTOCOL_API_URL ?>/pet/adopted">Recently Adopted Pets</a></h1>
+        <h1><a href="pet/adopted">Recently Adopted Pets</a></h1>
         <?php  
         if(count($petsAdopted) == 0)
-            echo '<h3><a href="'.PROTOCOL_API_URL.'/pet">You can be the first to adopt a pet!</a></h3>';
+            echo '<h3><a href="pet">You can be the first to adopt a pet!</a></h3>';
         else{ ?>
         <div>
         <?php
@@ -51,7 +51,7 @@
             $intro = explode(PHP_EOL, $pet->getDescription())[0];
             $photoUrl = getPetMainPhoto($pet);
         ?>
-        <article class="pet-card" onclick="location.href = '<?= PROTOCOL_API_URL ?>/pet/<?= $pet->getId() ?>';">
+        <article class="pet-card" onclick="location.href = 'pet/<?= $pet->getId() ?>';">
             <div class="pet-card-inner">
                 <div class="pet-card-front">
                     <img src="<?= $photoUrl ?>">

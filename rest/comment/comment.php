@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../api_main.php';
-require_once __DIR__ . '/../authentication.php';
-require_once __DIR__ . '/../authorization.php';
+require_once __DIR__ . '/../../server.php';
+require_once __DIR__ . '/../../authentication.php';
+require_once __DIR__ . '/../../authorization.php';
 require_once __DIR__ . '/../read.php';
 require_once __DIR__ . '/../print.php';
 require_once SERVER_DIR . '/classes/Pet.php';
@@ -110,8 +110,7 @@ $comment_id_photo_GET = function(array $args): void{
         $comment
     );
 
-    $url = PROTOCOL_SERVER_URL . "/resources/img/comments/{$id}.jpg";
-    header("Location: {$url}");
+    header_location("/resources/img/comments/{$id}.jpg");
     exit();
 };
 

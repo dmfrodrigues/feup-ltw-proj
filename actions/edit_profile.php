@@ -1,10 +1,7 @@
 <?php
 
-session_start();
-
-require_once __DIR__ . '/../server.php';
 require_once SERVER_DIR . '/database/connection.php';
-require_once SERVER_DIR . '/rest/authentication.php';
+require_once SERVER_DIR . '/authentication.php';
 Authentication\verifyCSRF_Token();
 require_once SERVER_DIR . '/classes/User.php';
 require_once SERVER_DIR . '/classes/Shelter.php';
@@ -35,13 +32,13 @@ if(isShelter($user->getUsername())) {
                 $usernameChanged = true;
                 $failed = false;
             } catch(UserAlreadyExistsException $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
+                header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
                 die();
             } catch(InvalidUsernameException $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
+                header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
                 die();
             } catch(Exception $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
+                header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
                 die();
             }
             
@@ -62,13 +59,13 @@ if(isShelter($user->getUsername())) {
                 $failed = false;
                 $shelterId = $shelter->getUsername();
             } catch(UserAlreadyExistsException $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=2');
+                header_location('/user/' . $userShelter . '/edit?failed=1&errorCode=2');
                 die();
             } catch(InvalidUsernameException $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=6');
+                header_location('/user/' . $userShelter . '/edit?failed=1&errorCode=6');
                 die();
             } catch(Exception $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $userShelter . '/edit?failed=1&errorCode=5');
+                header_location('/user/' . $userShelter . '/edit?failed=1&errorCode=5');
                 die();
             }
             
@@ -90,13 +87,13 @@ else {
             $usernameChanged = true;
             $failed = false;
         } catch(UserAlreadyExistsException $e) {
-                header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
+                header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=2');
                 die();
         } catch(InvalidUsernameException $e) {
-            header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
+            header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=6');
             die();
         } catch(Exception $e) {
-            header('Location: ' . PROTOCOL_API_URL . '/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
+            header_location('/user/' . $_SESSION['username'] . '/edit?failed=1&errorCode=5');
             die();
         }
         
@@ -106,11 +103,11 @@ else {
 if (!$failed) {
 
     if ($shelterId !== null)
-        header("Location: " . PROTOCOL_API_URL . "/user/{$shelterId}");
+        header_location("/user/{$shelterId}");
     else if ($usernameChanged)
-        header("Location: " . PROTOCOL_API_URL . "/user/{$_POST['username']}");
+        header_location("/user/{$_POST['username']}");
     else
-        header("Location: " . PROTOCOL_API_URL . "/user/{$user->getUsername()}");
+        header_location("/user/{$user->getUsername()}");
 } 
 
 die();

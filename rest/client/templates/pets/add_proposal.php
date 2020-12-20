@@ -4,7 +4,7 @@
     </header>
     <section id="proposal-request">
         <h3>Please enter a proposal message:</h3>
-        <form action="<?= PROTOCOL_SERVER_URL ?>/actions/add_proposal.php?id=<?= $pet->getId() ?>" method="post">
+        <form action="actions/add_proposal.php?id=<?= $pet->getId() ?>" method="post">
             <textarea name="description" rows="10" cols="50"></textarea>
             <input type="hidden" name="csrf" value="<?=$_SESSION['csrf']?>">
             <input type="submit" value="Submit" id="add-proposal-submit">
