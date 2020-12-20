@@ -63,13 +63,8 @@ sudo a2enmod expires
 
 After changing the apache2 configuration and enabling the modules, restart apache2 by running `sudo service apache2 restart`.
 
-### Server constants
-Each deploy environment has a specific set of constants. Thus, for each environment you are required to use a different set of constants. Our suggestion is that, when you want to add a set of server constants for a new environment you should create a file `server_constants_<environment>.php`.
-
-To use a certain set of server constants, create a symbolic link named `server_constants.php` and make it point to the environment constants file; for instance, for local development you should simply run `ln -s server_constants_localhost.php server_constants.php` from the repository root.
-
 ### Email service
-To enable email service, you have to provide valid credentials in file `server/rest/email.cred`, following the template:
+To enable email service, you have to provide valid credentials in file `rest/email.cred`, following the template:
 ```txt
 <email address>
 <password>
@@ -83,6 +78,14 @@ password
 
 The actual Gmail email we will use is <foreverhomeorg@gmail.com>.
 The corresponding password is to be kept secret, and as such only available on request to our team.
+
+### Running with PHP built-in server
+
+To run this project with the built-in PHP server, you have to run it with the proper arguments so that requests are routed to `index.php`:
+
+```sh
+php -S localhost:4000 index.php
+```
 
 ## Credentials
 Username/password (role):
