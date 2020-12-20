@@ -31,13 +31,14 @@ namespace Authorization {
     // ======================================================== PROFILE ========================================================
     Rules::add_rule(Resource::PROFILE, Method::READ , function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can see
     Rules::add_rule(Resource::PROFILE, Method::WRITE, function(?\User $user, ?\User $otherUser) : bool { return true                ; }); // Everyone can write
-    Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool { return $user === $otherUser; }); // Edit itself
+    Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool { return $user == $otherUser ; }); // Edit itself
     Rules::add_rule(Resource::PROFILE, Method::EDIT , function(?\User $user, ?\User $otherUser) : bool {                                 // Collaborators can edit shelter
+        //if ($otherUser == null) return false;
         if (!isShelter($otherUser->getUsername())) return false;
         $shelter = \Shelter::fromDatabase($otherUser->getUsername());
         $collaborators = $shelter->getCollaborators();
         foreach($collaborators as $collaborator) {
-            if ($collaborator->getUsername() == $user) return true;
+            if ($collaborator->getUsername() == $user->getUsername()) return true;
         }
         return false;
      });
@@ -49,7 +50,7 @@ namespace Authorization {
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if pet was adopted, only the user who adopted it can edit it
         if ($user == null) return false;
         if ($pet->getStatus() === "forAdoption") return false;
-        return ($user == $pet->getAdoptedBy());
+        return ($user->getUsername() == $pet->getAdoptedBy()->getUsername());
     });
     Rules::add_rule(Resource::PET, Method::EDIT , function(?\User $user, ?\Pet $pet) : bool {                                        // if the pet if for adoption, associated shelter can edit it
         if ($user    == null) return false;
@@ -102,7 +103,7 @@ namespace Authorization {
 
     // ======================================================== SHELTER_INVITATION ========================================================
     Rules::add_rule(Resource::SHELTER_INVITATION, Method::READ , function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return true; });
-    Rules::add_rule(Resource::SHELTER_INVITATION, Method::WRITE, function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return $user->getUsername() == $shelterInvite->getShelter()->getUsername(); }); // Shelter can write
+    Rules::add_rule(Resource::SHELTER_INVITATION, Method::WRITE, function(?\User $user, ?\ShelterInvite $shelterInvite) : bool { return isShelter($user->getUsername()); }); // Shelter can write
     
      function check(int $resourceType, int $method, ?\User $user, $resource): bool{
         if(isset(Rules::$rules[$resourceType])){

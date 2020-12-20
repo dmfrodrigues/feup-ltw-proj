@@ -225,8 +225,15 @@
 	text-align: center;
 }
 
+#change-password h1 {
+	margin-bottom: 1.5em;
+}
+
 #change-password input {
-	margin: 1em;
+	display: block;
+	margin: 0.7em auto 2em auto;
+	padding: 0.7em;
+	border-radius: 10px;
 }
 
 #change-password #submit-password {
@@ -234,4 +241,9 @@
 	color: white;
 	background-color: var(--main-color);
 	padding: 0.5em 1em 0.5em 1em;
+}
+
+#change-password #submit-password:hover {
+	color: black;
+	background-color: var(--main-color-light);
 }
