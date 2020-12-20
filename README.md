@@ -4,18 +4,18 @@
 
 [Link to website deployment](https://web.fe.up.pt/~up201806429/feup/3/1/ltw-project-g22/)
 
--   **Project name:** Forever Home
--   **Short description:** A website for posting and adopting pets
--   **Environment:** Apache2 and PHP built-in server (Unix)
--   **Tools:** HTML/CSS, Javascript, PHP, SQL
--   **Institution:** [FEUP](https://sigarra.up.pt/feup/en/web_page.Inicial)
--   **Course:** [LTW](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459485) (Web Languages and Technologies)
+- **Project name:** Forever Home
+- **Short description:** A website for posting and adopting pets
+- **Environment:** Apache2 and PHP built-in server (Unix)
+- **Tools:** HTML/CSS, Javascript, PHP, SQL
+- **Institution:** [FEUP](https://sigarra.up.pt/feup/en/web_page.Inicial)
+- **Course:** [LTW](https://sigarra.up.pt/feup/en/UCURR_GERAL.FICHA_UC_VIEW?pv_ocorrencia_id=459485) (Web Languages and Technologies)
 <!-- - **Project grade:** ??.?/20.0 -->
--   **Group members:**
-    -   [Breno Accioly de Barros Pimentel](https://github.com/BrenoAccioly) (<up201800170@fe.up.pt>)
-    -   [Diogo Miguel Ferreira Rodrigues](https://github.com/dmfrodrigues) (<up201806429@fe.up.pt>)
-    -   [Rui Filipe Mendes Pinto](https://github.com/2dukes) (<up201806441@fe.up.pt>)
-    -   [Tiago Gonçalves Gomes](https://github.com/TiagooGomess) (<up201806658@fe.up.pt>)
+- **Group members:**
+    - [Breno Accioly de Barros Pimentel](https://github.com/BrenoAccioly) (<up201800170@fe.up.pt>)
+    - [Diogo Miguel Ferreira Rodrigues](https://github.com/dmfrodrigues) (<up201806429@fe.up.pt>)
+    - [Rui Filipe Mendes Pinto](https://github.com/2dukes) (<up201806441@fe.up.pt>)
+    - [Tiago Gonçalves Gomes](https://github.com/TiagooGomess) (<up201806658@fe.up.pt>)
 
 ## Installing
 
