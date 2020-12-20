@@ -24,7 +24,11 @@ function get_protocol() : string {
 class NoFileSentException extends RuntimeException{}
 
 function path2url($file): string {
-    return str_replace(SERVER_DIR, SERVER_URL_PATH, $file);
+    return str_replace(
+        SERVER_DIR.'/',
+        SERVER_URL_PATH.'/',
+        $file
+    );
 }
 
 class CouldNotDeleteFileException extends RuntimeException{}

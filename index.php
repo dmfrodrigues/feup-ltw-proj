@@ -14,11 +14,11 @@ $raw_uri = $_SERVER["REQUEST_URI"];
 // causes the server to serve the requested resource as-is
 // (https://www.php.net/manual/en/features.commandline.webserver.php - Example #3 Using a Router Script)
 // echo $raw_uri;
-if(preg_match("/^\/actions\/.*\.php$/"           , $raw_uri)) return false;
-if(preg_match("/^\/resources\/.*$/"              , $raw_uri)) return false;
-if(preg_match("/^\/rest\/client\/css\/.*\.css$/" , $raw_uri)) return false;
-if(preg_match("/^\/rest\/client\/js\/.*\.js$/"   , $raw_uri)) return false;
-if(preg_match("/^\/rest\/client\/resources\/.*$/", $raw_uri)) return false;
+if(preg_match("/.*actions\/.*\.php$/"           , $raw_uri)) return false;
+if(preg_match("/.*resources\/.*$/"              , $raw_uri)) return false;
+if(preg_match("/.*rest\/client\/css\/.*\.css$/" , $raw_uri)) return false;
+if(preg_match("/.*rest\/client\/js\/.*\.js$/"   , $raw_uri)) return false;
+if(preg_match("/.*rest\/client\/resources\/.*$/", $raw_uri)) return false;
 
 $uri = str_replace(SERVER_URL_PATH, '', $raw_uri);
 
