@@ -17,7 +17,6 @@ if (isset($_SESSION['username'])) {
         header_location('/user/'.$user->getUsername());
         exit();
     } catch(Exception $e) {
-    header_location('/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
-}
-    
+        header_location('/user/' . $_SESSION['username'] .'/password/change?failed=1&errorCode=5');
+    }   
 } else { my_response_code(403); die(); }

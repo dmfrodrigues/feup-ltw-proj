@@ -180,12 +180,23 @@ $user_id_password_PUT = function(array $args): void {
     }
 
     if($isSameUser){
-        $user->setPassword($_PUT['password'], false);
-        $user->updateDatabase();
+        try {
+            $user->setPassword($_PUT['password'], false);
+            $user->updateDatabase();
+        } catch(InvalidArgumentException $e){
+            my_response_code(400);
+            die();
+        }
+       
     } else if($hasToken){
-        $reset->deleteFromDatabase();
-        $user->setPassword($_PUT['password'], false);
-        $user->updateDatabase();
+        try {
+            $reset->deleteFromDatabase();
+            $user->setPassword($_PUT['password'], false);
+            $user->updateDatabase();
+        } catch(InvalidArgumentException $e){
+            my_response_code(400);
+            die();
+        } 
     } else { my_response_code(403); die(); }
 };
 

@@ -7,6 +7,9 @@
             <input type="password" id="pwd" name="pwd" placeholder="Password" required></label>
         <label> Repeat Password:
             <input type="password" id="rpt_pwd" placeholder="Password" required></label>
+        <?php if(isset($_GET['failed']) && isset($_GET['errorCode'])) { ?>
+            <p id="simple-fail-msg">Change password failed! - <?= $errorsArray[$_GET['errorCode']] ?></p>
+        <?php } ?>
         <input type="submit" value="Submit" id="submit-password">
     </form>
 </article>
@@ -28,7 +31,7 @@
             if(response.status === 200){
                 location.href = "login/";
             } else {
-                console.error(response);
+                location.href = `user/<?= $user->getUsername() ?>/password/change/?token=` + token + `&failed=1&errorCode=5`;
             }
         })
         .catch(function (error){
