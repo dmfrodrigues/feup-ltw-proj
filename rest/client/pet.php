@@ -21,16 +21,6 @@ let comments = <?= json_encode($comments) ?>;
 </script>
 <?php
 
-if (isset($_SESSION['username'])) {
-    $user = User::fromDatabase($_SESSION['username']);
-?>
-    <script>
-        let user = <?= json_encode($user) ?>;
-    </script>
-    <script src="rest/client/js/handleFavorites.js" defer></script>
-<?php
-}
-
 $javascript_files = [
     'rest/client/js/utils_elements.js',
     'rest/client/js/Comment.js',
@@ -39,6 +29,16 @@ $javascript_files = [
     'rest/client/js/commentImage.js',
     'rest/client/js/utils_elements.js'
 ];
+
+if (isset($_SESSION['username'])) {
+    $user = User::fromDatabase($_SESSION['username']);
+?>
+    <script>
+        let user = <?= json_encode($user) ?>;
+    </script>
+<?php
+    $javascript_files[] = 'rest/client/js/handleFavorites.js';
+}
 
 require_once CLIENT_DIR.'/templates/common/header.php';
 require_once CLIENT_DIR.'/templates/pets/view_pet.php';
