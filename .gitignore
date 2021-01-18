@@ -8,7 +8,7 @@ server_constants_localhost_dmfr.php
 
 vendor
 psalm.xml
-composer.json
+# composer.json
 composer.lock
 
 # Created by https://www.gitignore.io/api/intellij
