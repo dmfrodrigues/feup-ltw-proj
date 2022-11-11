@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-[Link to website deployment](https://web.fe.up.pt/~up201806429/feup/3/1/ltw-project-g22/)
+[Link to website deployment](https://web.fe.up.pt/~up201806429/feup/3S1/feup-ltw-project/)
 
 - **Project name:** Forever Home
 - **Short description:** A website for posting and adopting pets
